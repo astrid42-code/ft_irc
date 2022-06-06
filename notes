@@ -1,0 +1,36 @@
+// Notes diverses 
+
+/ indique l'envoi d'une commande et non d'un msg
+
+/join #NomDuChannel > cree ou join le channel demande
+
+# suivi dun nom de channel
+
+pas de - devant un login
+
+msg  a l'inscription en cas de doublon *** Nickname Fred007 is already in use, type /nick newnick to use another.
+accepte le login doublon mais possibilite de changer avec la cmd donnee
+
+dans un channel, 
+- 2 boutons : 
+Status > msgs adminsys
+#NomDuChannel > acces au channel
+- fenetre de gauche : chat 
+- fenetre de droite > liste des users : avec @login (channel operators), 
+                                        avec +login (users allowed to chat when the channel is moderated)
+                                        avec login seul (normal channel users)
+- fenetre en bas pour taper son msg
+- boutons en haut a droite : ?
+                             outil
+                             X pour fermer le channel
+
+/msg envoie un msg a tout le monde (pas seulement dans le channel?)
+a la diff des msgs prives : selectionner login, Query et ecrire msg (ca ouvrira une nouvelle fenetre avec la personne)
+
+Whois (pour en savoir plus sur un user) soit avec /Whois login soit cliquer sur le user
+infos apparaissent soit dans la fenetre de chat prive avec la personne soit dans dans le current chat window (si pas de discussion pv)
+pour le 2eme cas : fenetre passe en mode status
+
+
+
+http://www.ircnet.org/
