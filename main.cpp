@@ -6,13 +6,15 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/06 17:03:15 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:18:17 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 
 int main(int ac, char **av){
+    // nbr d'args obligatoires a verifier (il peut aussi y en avoir des optionnels?)
+    
     while (ac != 3){ // ou if et return (0) 
         std::cout << "There is an error in arguments" << std::endl;
         // return (0);
