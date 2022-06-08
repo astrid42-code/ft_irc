@@ -46,6 +46,8 @@ les spaces sont interdits dans le nom d'un channel (avec les virgules, ce sont d
 
 Message details / msgs lies aux cmds (cmds a implementer OBLIGATOIREMENT)  : section 3
 
+Cmds (msgs de cmds) : 5.1
+Errors (types d'erreurs et msgs) : 5.2
 
 
 
@@ -60,9 +62,13 @@ Idees pour le bonus (le bot) : faire un bot qui reconnait certaines insultes et 
 
 1eres idees parsing des cmds :
 - separer le 1er mot des autres et switch en fct du mot (maj/min indifferent??) [faire le switch apres analyses des mots-cles, voir ci-dessous, ou faire le switch des le debut et analyser en fct de la cmd?]
+> une fois qu'on a la cmd, rechercher dans un tableau de ptrs sur fcts / map : key = string et value = un ptr sur la fct qui correspond a la cmd 
 - split 1 : avec les espaces pour separer les differents mots cles et les stocker dans des blocs
 - split 2 (si necessaire) : avec les virgules, a l'interieur de chaque bloc stocke dans le 1er split
 - stocker dans des vectors ou utiliser des maps?
 - en fct de chaque cmd (ex avec JOIN), verifier si : bon nbr d'arg, pas de caracteres interdits / caracteres obligatoires s'il y en a
 - si erreur dans les params/args, mettre le bon msg d'erreur et sortir (ou demander de refaire?) > voir partie 3 du rfc 2812
 ATTENTION : certains args peuvent etre optionnels
+
+
+

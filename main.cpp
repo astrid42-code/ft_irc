@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/07 14:18:17 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:13:24 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int main(int ac, char **av){
     // nbr d'args obligatoires a verifier (il peut aussi y en avoir des optionnels?)
     
-    while (ac != 3){ // ou if et return (0) 
-        std::cout << "There is an error in arguments" << std::endl;
-        // return (0);
+    if (ac != 3){
+        std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
+        return (1);
     }
     // 1 verifier le port > si c'est le bon continuer, sinon modifier
     // comment verifier le port (qui le choisit?)
