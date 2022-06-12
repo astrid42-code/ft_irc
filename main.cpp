@@ -19,11 +19,15 @@ int main(int ac, char **av){
         std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
         return (1);
     }
-    // 1 verifier le port > si c'est le bon continuer, sinon modifier
-    // comment verifier le port (qui le choisit?)
-    // 2 verifier le pwd > idem que pour le port
-    // ATTENTION : msgs d'erreurs a reproduire comme dans le veritable irc en fct du type d'erreur
-    // 3 tout est ok lancer le programme
+    // 1 creer un objet de la class irc::Server server > définir ce que l'objet server contient
+    // > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
+    // + récupérer le user (prévoir qu'il peut y en avoir plsrs, les mettre dans un tableau / vector)
+    // + pvr delete les users
+    // + de même avec les channels
+    // 2 signal?
+    // 3 set le port et le pwd du server avec av1 et 2 (des possibilités d'erreurs ici???)
+    // 4 initialiser (lancer?) le server
+    // 5 lancer le programme dans une boucle (while (!end) end = c'est pas fini ici)
     
     return (0);
 }
