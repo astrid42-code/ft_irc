@@ -6,7 +6,7 @@
 #    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/06/06 16:20:55 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/06/13 14:00:52 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,16 @@ CXXFLAGS	=	-Wall -Wextra -Werror --std=c++98 -g3
 
 RM			=	rm -f
 
-SRCS		=	main.cpp
+SRCS		=	main.cpp Server/Server.cpp 
+
+INC			=	Server
+
+ARGS		=	6667 pwd
 
 OBJS_FILE	=	$(SRCS:.cpp=.o)
 
 .c.o:
-			$(CXX) $(CXXFLAGS) -g -c $< -o $(<:.cpp=.o)
+			$(CXX) $(CXXFLAGS) -I $(INC) -g -c $< -o $(<:.cpp=.o)
 
 $(NAME):	$(OBJS_FILE)
 			$(CXX) $(CXXFLAGS) $(OBJS_FILE) -o $(NAME)
