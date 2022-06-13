@@ -2,6 +2,7 @@
 #define SERVER_HPP
 
 #include <iostream>
+#include <locale>
 
 namespace irc{
 
@@ -14,13 +15,14 @@ namespace irc{
 
             Server  & operator=(const Server &serv_cp);
 
-            int get_port() const;
+            std::string get_port() const;
             std::string get_pwd() const;
-            bool set_pp(int port, std::string pwd); // parse et set le port et le pwd
+            bool set_pp(std::string port, std::string pwd); // parse et set le port et le pwd
 
+            std::locale loc;
         
         private:
-            const int    _port;
+            std::string  _port;
             std::string  _pwd;
     };
 
