@@ -8,8 +8,7 @@
 
 pas de - devant un login
 
-msg  a l'inscription en cas de doublon *** Nickname Fred007 is already in use, type /nick newnick to use another.
-accepte le login doublon mais possibilite de changer avec la cmd donnee
+
 
 dans un channel, 
 - 2 boutons : 
