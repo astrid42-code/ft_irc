@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/13 18:12:51 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/06/14 11:15:47 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,15 @@ std::string Server::get_pwd() const{
 
 bool	Server::set_pp(std::string port, std::string pwd){
 	_port = port;
-	if (_port.size() != 4 || !std::isdigit(port, loc)){
+	if (_port.size() != 4){
 		std::cout << "There is an error in arguments!" << std::endl;
 		return (false);
+	}
+	for (int i = 0; i < 4; i++){
+		 if (!std::isdigit(_port[i], loc)){
+			std::cout << "There is an error in arguments!" << std::endl;
+			return (false);
+		}
 	}
 	_pwd = pwd;
 	return (true);
@@ -57,6 +63,5 @@ bool	Server::set_pp(std::string port, std::string pwd){
 
 }
 
-// pbs :
-// 1 si erreur, mets bien le msg (mais cree le serveur donc a faire plutot dans le constructeur??)
-// 2 si pas d'erreur std::bad_cast
+// pb :
+// si erreur, mets bien le msg (mais cree le serveur donc a faire plutot avant la creation du server??)
