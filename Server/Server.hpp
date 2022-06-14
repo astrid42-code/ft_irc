@@ -3,8 +3,11 @@
 
 #include <iostream>
 #include <locale>
+#include "User/User.hpp"
 
 namespace irc{
+
+    class User;
 
     class Server{
         public:
@@ -18,6 +21,8 @@ namespace irc{
             std::string get_port() const;
             std::string get_pwd() const;
             bool set_pp(std::string port, std::string pwd); // parse et set le port et le pwd
+
+            // User & Server::get_user() const;
 
             std::locale loc;
         

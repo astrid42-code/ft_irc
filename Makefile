@@ -6,7 +6,7 @@
 #    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/06/13 14:00:52 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/06/14 14:18:06 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ CXXFLAGS	=	-Wall -Wextra -Werror --std=c++98 -g3
 
 RM			=	rm -f
 
-SRCS		=	main.cpp Server/Server.cpp 
+SRCS		=	main.cpp Server/Server.cpp User/User.cpp 
 
-INC			=	Server
+INC			=	Server User
 
 ARGS		=	6667 pwd
 

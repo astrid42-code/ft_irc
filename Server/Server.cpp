@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/14 11:15:47 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:16:36 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ bool	Server::set_pp(std::string port, std::string pwd){
 	_pwd = pwd;
 	return (true);
 }
+
+// recuperer la data du User
+// User & Server::get_user() const { // reference or ptr? 
+	
+// }
 
 }
 
