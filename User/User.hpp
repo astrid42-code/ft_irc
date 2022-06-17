@@ -2,6 +2,7 @@
 #define USER_HPP
 
 #include <iostream>
+// #include "Server/Server.hpp"
 
 namespace irc{
 

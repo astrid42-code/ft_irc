@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/15 18:20:03 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:07:06 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ int	Server::init(){
 //    memcpy(&addr.sin6_addr, &in6addr_any, sizeof(in6addr_any));
 //    addr.sin6_port        = htons(SERVER_PORT);
    
-   if ((rc = bind(listen_sd,
-             (struct sockaddr *)&addr, sizeof(addr))) < 0)
+   if ((rc = bind(listen_sd, (struct sockaddr *)&addr, sizeof(addr))) < 0)
    {
       perror("bind() failed");
       close(listen_sd);

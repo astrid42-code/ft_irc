@@ -6,7 +6,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "User/User.hpp"
+#include <stdlib.h>
+
 
 namespace irc{
 
