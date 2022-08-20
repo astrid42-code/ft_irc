@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/16 18:07:06 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:51:18 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ Server::Server() : _port("6667"), _pwd("pwd"){
 	std::cout << "Hi there, nice to see you!" << std::endl;
 }
 
-// Server::Server(int port, std::string pwd) : _port(port), _pwd(pwd){
-// 	// parser port et pwd ici ou dans une fct set plutot?
-// 	// si tout ok, msg de bienvenue; sinon 
-// }
+Server::Server(std::string port, std::string pwd) : _port(port), _pwd(pwd){
+	// parser port et pwd ici ou dans une fct set plutot?
+	// si tout ok, msg de bienvenue; sinon 
+}
 
 Server::Server(const Server &serv_cp){
 	*this = serv_cp;
@@ -61,6 +61,7 @@ bool	Server::set_pp(std::string port, std::string pwd){
 		}
 	}
 	_pwd = pwd;
+	// verifier la taille du pwd? (verifier dans les regles si taille min/max)
 	return (true);
 }
 

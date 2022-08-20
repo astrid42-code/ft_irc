@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/13 18:10:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:02:56 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int main(int ac, char **av){
 	
 	// 2 signal?
 	// 3 set le port et le pwd du server avec av1 et 2 (des possibilités d'erreurs ici)
-	if (server.set_pp(av[1], av[2]) != true){
-		// std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
-		return (1);
-	}
+	// if (server.set_pp(av[1], av[2]) != true){
+	// 	// std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
+	// 	return (1);
+	// }
 	
 	// 4 initialiser (lancer?) le server
 	// 5 lancer le programme dans une boucle (while (!end) end = c'est pas fini ici)

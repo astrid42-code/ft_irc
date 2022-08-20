@@ -7,16 +7,18 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <netinet/in.h>
+#include <map>
 
 namespace irc{
 
     class User;
+    class Channel;
 
     class Server{
         public:
             Server();
-            Server(int port, std::string pwd);
+            Server(std::string port, std::string pwd);
             Server(const Server &serv_op);
 			~Server();
 
@@ -28,13 +30,16 @@ namespace irc{
 
             int	init();
 
-            // User & Server::get_user() const;
+
+            User & get_user() const;
 
             std::locale loc;
         
         private:
-            std::string  _port;
-            std::string  _pwd;
+            std::string		_port; // doit etre une string car recupere av[1]	
+            std::string		_pwd;
+            std::map< std::string, Channel > _channels;
+            std::map< int, User *>	_users;
     };
 
 }

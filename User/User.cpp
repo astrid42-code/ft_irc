@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/06/14 12:37:19 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/20 14:38:18 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ User::~User(){
 	// delete les differents users	
 }
 
-User & operator=(const User & user_cp){
+User & User::operator=(const User & user_cp){
 	_name = user_cp._name;
 	return (*this);
 }
@@ -48,8 +48,8 @@ void	User::set_pwd(std::string pwd){
 }
 
 // a faire avant de stocker le user dans une map/un vector
-bool	check_user(){
-	if (_user.size() > 9){
+bool	User::check_user(){
+	if (_name.size() > 9){
 		std::cout << "Login is too long : 9 characters max" << std::endl; 
 		return (false);
 	}

@@ -69,6 +69,13 @@ Idees pour le bonus (le bot) : faire un bot qui reconnait certaines insultes et 
 - si erreur dans les params/args, mettre le bon msg d'erreur et sortir (ou demander de refaire?) > voir partie 3 du rfc 2812
 ATTENTION : certains args peuvent etre optionnels
 
+> questions : 
+ou lance-t-on la fct qui va checker? dans server?
+comment structurer ce ptr sur fct? avec un switch (comme dans karen)?
+
+
+
+
 
 sockets :
 http://sdz.tdct.org/sdz/les-sockets.html
