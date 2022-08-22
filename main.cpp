@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 #include "Server/Server.hpp"
 
 int main(int ac, char **av){
@@ -29,6 +28,7 @@ int main(int ac, char **av){
 	// + de même avec les channels
 
 	irc::Server server = irc::Server();
+	server.init();
 	
 	// 2 signal?
 	// 3 set le port et le pwd du server avec av1 et 2 (des possibilités d'erreurs ici)

@@ -35,8 +35,9 @@ Server::~Server(){
 }
 
 Server  & Server::operator=(const Server &serv_op){
-	_port = serv_op._port;
-	_pwd = serv_op._pwd;
+	(void)serv_op;
+	// _port = serv_op._port;
+	// _pwd = serv_op._pwd;
 	return (*this);
 }
 
@@ -49,84 +50,130 @@ std::string Server::get_pwd() const{
 }
 
 bool	Server::set_pp(std::string port, std::string pwd){
-	_port = port;
-	if (_port.size() != 4){
-		std::cout << "There is an error in arguments!" << std::endl;
-		return (false);
-	}
-	for (int i = 0; i < 4; i++){
-		 if (!std::isdigit(_port[i], loc)){
-			std::cout << "There is an error in arguments!" << std::endl;
-			return (false);
-		}
-	}
-	_pwd = pwd;
+	 _port = port;
+	 (void)pwd;
+	// if (_port.size() != 4){
+	// 	std::cout << "There is an error in arguments!" << std::endl;
+	// 	return (false);
+	// }
+	// for (int i = 0; i < 4; i++){
+	// 	 if (!std::isdigit(_port[i], loc)){
+	// 		std::cout << "There is an error in arguments!" << std::endl;
+	// 		return (false);
+	// 	}
+	// }
+	// _pwd = pwd;
 	// verifier la taille du pwd? (verifier dans les regles si taille min/max)
 	return (true);
 }
+/*
+    void onCmdReceived(std::string cmd) // /connect 127.0.0.1 6667 // /join ChannelID // msg "ID" "salut" // "wdhqiwudhqwuidhqwudhqwiudhwquidhqwiuhdqwuihdqwhiudqwhuidhq"
+	{
+		// appeler les fonctions onConnection, onMessageReceived, onDeconnection ... en fonction 
+		// du retour du parsing
+	}
 
+	void onConnection(Channel chan, User usr)
+	{
+		//appeler la fonction chan.addUser(User usr) qui doit ajouter le User usr au Channel chan
+	}
+
+	void onMessageReceived(Channel chan, User usr, std::string msg)
+	{
+		// appeler la fonction chan.message(User usr, std::string msg) qui doit envoyer le message msg
+		// a tout les User de chan sauf usr 
+	}
+
+	void onDeconnection(Channel chan, User usr)
+	{
+		//appeler la fonction chan.delUser() qui doit remove le User usr du Channel chan
+	}
+*/
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int	Server::init(){
-	int		i, len, rc, on = 1;
-	int		listen_sd, max_sd, new_sd;
-	int		desc_ready, end_server = false;
-	int		close_conn;
-	char	buffer[80];
-	struct sockaddr_in6	addr;
-	struct timeval		timeout;
-	fd_set				master_set, working_set;
-
-   /*************************************************************/
-   /* Create an AF_INET6 stream socket to receive incoming      */
-   /* connections on                                            */
-   /*************************************************************/
-   
-   if ((listen_sd = socket(AF_INET6, SOCK_STREAM, 0)) < 0)
+	int fd;
+	int ret;
+   //	char	buffer[80];
+	addrinfo *test;
+	ret = getaddrinfo("test", "blabla", NULL, &test);
+	if ((fd = socket(PF_INET, SOCK_STREAM, 0)) < 0)
    {
       perror("socket() failed");
       exit(-1);
    }
+	printf("addrinfo : ret : %d", ret);
 
-   /*************************************************************/
-   /* Allow socket descriptor to be reuseable                   */
-   /*************************************************************/
-   
-   if ((rc = setsockopt(listen_sd, SOL_SOCKET,  SO_REUSEADDR,
-                   (char *)&on, sizeof(on))) < 0)
-   {
-      perror("setsockopt() failed");
-      close(listen_sd); // mettre une fct cpp a la place
-      exit(-1);
-   }
 
-	/*************************************************************/
-   /* Set socket to be nonblocking. All of the sockets for      */
-   /* the incoming connections will also be nonblocking since   */
-   /* they will inherit that state from the listening socket.   */
-   /*************************************************************/
+
+
+
+
+
+
+
+
+
+
+// 	int		i, len, rc, on = 1;
+// 	int		listen_sd, max_sd, new_sd;
+// 	int		desc_ready, end_server = false;
+// 	int		close_conn;	
+// 	char	buffer[80];
+// 	struct sockaddr_in6	addr;
+// 	struct timeval		timeout;
+// 	fd_set				master_set, working_set;
+
+//    /*************************************************************/
+//    /* Create an AF_INET6 stream socket to receive incoming      */
+//    /* connections on                                            */
+//    /*************************************************************/
    
-//    if ((rc = ioctl(listen_sd, FIONBIO, (char *)&on)) < 0)
+//    if ((listen_sd = socket(AF_INET6, SOCK_STREAM, 0)) < 0)
 //    {
-//       perror("ioctl() failed");
-//       close(listen_sd);
+//       perror("socket() failed");
 //       exit(-1);
 //    }
 
-   /*************************************************************/
-   /* Bind the socket                                           */
-   /*************************************************************/
-//    memset(&addr, 0, sizeof(addr));
-//    addr.sin6_family      = AF_INET6;
-//    memcpy(&addr.sin6_addr, &in6addr_any, sizeof(in6addr_any));
-//    addr.sin6_port        = htons(SERVER_PORT);
+//    /*************************************************************/
+//    /* Allow socket descriptor to be reuseable                   */
+//    /*************************************************************/
    
-   if ((rc = bind(listen_sd, (struct sockaddr *)&addr, sizeof(addr))) < 0)
-   {
-      perror("bind() failed");
-      close(listen_sd);
-      exit(-1);
-   }
+//    if ((rc = setsockopt(listen_sd, SOL_SOCKET,  SO_REUSEADDR,
+//                    (char *)&on, sizeof(on))) < 0)
+//    {
+//       perror("setsockopt() failed");
+//       close(listen_sd); // mettre une fct cpp a la place
+//       exit(-1);
+//    }
 
+// 	/*************************************************************/
+//    /* Set socket to be nonblocking. All of the sockets for      */
+//    /* the incoming connections will also be nonblocking since   */
+//    /* they will inherit that state from the listening socket.   */
+//    /*************************************************************/
+   
+// //    if ((rc = ioctl(listen_sd, FIONBIO, (char *)&on)) < 0)
+// //    {
+// //       perror("ioctl() failed");
+// //       close(listen_sd);
+// //       exit(-1);
+// //    }
+
+//    /*************************************************************/
+//    /* Bind the socket                                           */
+//    /*************************************************************/
+// //    memset(&addr, 0, sizeof(addr));
+// //    addr.sin6_family      = AF_INET6;
+// //    memcpy(&addr.sin6_addr, &in6addr_any, sizeof(in6addr_any));
+// //    addr.sin6_port        = htons(SERVER_PORT);
+   
+//    if ((rc = bind(listen_sd, (struct sockaddr *)&addr, sizeof(addr))) < 0)
+//    {
+//       perror("bind() failed");
+//       close(listen_sd);
+//       exit(-1);
+//    }
+	return (0);
 }
 
 // recuperer la data du User

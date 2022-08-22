@@ -18,7 +18,9 @@ CXXFLAGS	=	-Wall -Wextra -Werror --std=c++98 -g3
 
 RM			=	rm -f
 
-SRCS		=	main.cpp Server/Server.cpp User/User.cpp 
+SRCS		=	main.cpp \
+				Server/Server.cpp \
+				User/User.cpp 
 
 INC			=	Server User
 

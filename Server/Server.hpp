@@ -9,7 +9,8 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <map>
-
+#include <netdb.h>
+#include "../Channel/Channel.hpp"
 namespace irc{
 
     class User;
@@ -27,10 +28,11 @@ namespace irc{
             std::string get_port() const;
             std::string get_pwd() const;
             bool set_pp(std::string port, std::string pwd); // parse et set le port et le pwd
-
+            void onCmdReceived(std::string cmd);
+            void onConnection(Channel chan);
+            void onMessageReceived(Channel chan, User usr);
+            void onDeconnection(Channel chan);
             int	init();
-
-
             User & get_user() const;
 
             std::locale loc;
@@ -38,8 +40,8 @@ namespace irc{
         private:
             std::string		_port; // doit etre une string car recupere av[1]	
             std::string		_pwd;
-            std::map< std::string, Channel > _channels;
-            std::map< int, User *>	_users;
+            //std::map< std::string, Channel > _channels;
+            //std::map< int, User *>	_users;
     };
 
 }
