@@ -19,25 +19,25 @@ class Cmd{
 		}				Command;
 
 		// ptr sur fonction des cmds qui prend une ref sur ma struct Command
-		typedef void (*ptr_ft)(Command &);
+		typedef void (*ptr_ft)(Command & command);
     
 	private:
     	std::map<std::string, ptr_ft>	_cmd;
 };
 
-//parametre : ref sur la struct avec les donnes utiles a utiliser pour les cds (args, )
+//parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (args, )
 void test(Cmd::Command & command);
-void ft_join(Cmd::Command & command);
-void ft_user(Cmd::Command & command);
-void ft_invite(Cmd::Command & command);
-void ft_kick(Cmd::Command & command);
-void ft_nick(Cmd::Command & command);
-void ft_oper(Cmd::Command & command);
-void ft_kick(Cmd::Command & command);
-void ft_user(Cmd::Command & command);
-void ft_kill(Cmd::Command & command);
-void ft_privmsg(Cmd::Command & command);
-void ft_who(Cmd::Command & command);
-void ft_whois(Cmd::Command & command);
+// void ft_join(Cmd::Command & command);
+// void ft_user(Cmd::Command & command);
+// void ft_invite(Cmd::Command & command);
+// void ft_kick(Cmd::Command & command);
+// void ft_nick(Cmd::Command & command);
+// void ft_oper(Cmd::Command & command);
+// void ft_kick(Cmd::Command & command);
+// void ft_user(Cmd::Command & command);
+// void ft_kill(Cmd::Command & command);
+// void ft_privmsg(Cmd::Command & command);
+// void ft_who(Cmd::Command & command);
+// void ft_whois(Cmd::Command & command);
 
 #endif
