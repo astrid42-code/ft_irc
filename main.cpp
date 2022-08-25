@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/24 18:33:49 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/25 13:49:11 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int main(int ac, char **av){
 	
 	Cmd	cmd = Cmd();
 
-	// test(&cmd);
 	
 	// test();
 	// 2 signal?

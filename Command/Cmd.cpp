@@ -1,5 +1,7 @@
 #include "Cmd.hpp"
 
+
+
 Cmd::Cmd(){
 	// build les fcts cmds en reliant une string a la fct 
 	_cmd["TEST"] = test; // a retirer quand le test pour utiliser le ptr sur fct marche
@@ -15,15 +17,19 @@ Cmd::Cmd(){
 	// _cmd["PRIVMSG"] = ft_privmsg;
 	// _cmd["WHO"] = ft_who;
 	// _cmd["WHOIS"] = ft_whois;
+
+	std::cout << "blabla" << '\n';
 }
 
 Cmd::Cmd(const Cmd & cp){
 	*this = cp;
 }
 
-Cmd::~Cmd(){}
+Cmd::~Cmd(){
+	std::cout << "bye" << '\n';
+}
 
-// void   ft_cmd() {
+// void   create_map() {
 // 	void *ptr[] () = {
 //     &test, &ft_join
 // };
@@ -35,8 +41,6 @@ void test(Cmd::Command & command){
 	(void)command;
     std::cout << "blabla test" << '\n';
 }
-
-
 
 //autres cmds possibles?
 // - LIST
