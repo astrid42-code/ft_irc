@@ -15,6 +15,7 @@ Cmd::Cmd(){
 	// _cmd["PRIVMSG"] = ft_privmsg;
 	// _cmd["WHO"] = ft_who;
 	// _cmd["WHOIS"] = ft_whois;
+	com_str.str_cmd = "TEST";
 }
 
 Cmd::Cmd(const Cmd & cp){
@@ -28,12 +29,18 @@ Cmd::~Cmd(){}
 //     &test, &ft_join
 // };
 
+int Cmd::ex_cmd(std::string key)
+{
+
+	_cmd[key](com_str);
+	return (1);
+}
 
 // fcts a faire ensuite
 
-void test(Cmd::Command & command){
-	(void)command;
+void test(Cmd::Command &command){ 
     std::cout << "blabla test" << '\n';
+	std::cout << command.str_cmd << std::endl;
 }
 
 
