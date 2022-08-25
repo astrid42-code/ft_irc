@@ -32,6 +32,7 @@ int main(int ac, char **av){
 	// server.init();
 	
 	Cmd	cmd = Cmd();
+	cmd.ex_cmd("TEST");
 
 	
 	// test();

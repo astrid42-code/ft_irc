@@ -20,7 +20,8 @@ RM			=	rm -f
 
 SRCS		=	main.cpp \
 				Server/Server.cpp \
-				User/User.cpp 
+				User/User.cpp 	  \
+				Command/Cmd.cpp
 
 INC			=	Server User
 
