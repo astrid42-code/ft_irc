@@ -19,6 +19,7 @@ Cmd::Cmd(){
 	// _cmd["WHOIS"] = ft_whois;
 
 	com_str.str_cmd = "TEST";
+	std::cout << com_str.str_cmd << '\n';
 }
 
 Cmd::Cmd(const Cmd & cp){
