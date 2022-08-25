@@ -18,7 +18,7 @@ Cmd::Cmd(){
 	// _cmd["WHO"] = ft_who;
 	// _cmd["WHOIS"] = ft_whois;
 
-	std::cout << "blabla" << '\n';
+	com_str.str_cmd = "TEST";
 }
 
 Cmd::Cmd(const Cmd & cp){
@@ -26,7 +26,7 @@ Cmd::Cmd(const Cmd & cp){
 }
 
 Cmd::~Cmd(){
-	std::cout << "bye" << '\n';
+	// std::cout << "bye" << '\n';
 }
 
 // void   create_map() {
@@ -34,7 +34,7 @@ Cmd::~Cmd(){
 //     &test, &ft_join
 // };
 
-int Cmd::ex_cmd(std::string key)
+int Cmd::exec_cmd(std::string key)
 {
 
 	_cmd[key](com_str);
