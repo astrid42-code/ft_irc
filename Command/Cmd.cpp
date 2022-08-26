@@ -5,20 +5,18 @@
 Cmd::Cmd(){
 	// build les fcts cmds en reliant une string a la fct 
 	_cmd["TEST"] = test; // a retirer quand le test pour utiliser le ptr sur fct marche
-	// _cmd["JOIN"] = ft_join;
-	// _cmd["USER"] = ft_user;
-	// _cmd["INVITE"] = ft_invite;
-	// _cmd["KICK"] = ft_kick;
-	// _cmd["NICK"] = ft_nick;
-	// _cmd["OPER"] = ft_oper;
-	// _cmd["QUIT"] = ft_kick;
-	// _cmd["USER"] = ft_user;
-	// _cmd["KILL"] = ft_kill;
-	// _cmd["PRIVMSG"] = ft_privmsg;
-	// _cmd["WHO"] = ft_who;
-	// _cmd["WHOIS"] = ft_whois;
-
-	com_str.str_cmd = "TEST";
+	_cmd["JOIN"] = join;
+	_cmd["USER"] = user;
+	_cmd["INVITE"] = invite;
+	_cmd["KICK"] = kick;
+	_cmd["NICK"] = nick;
+	_cmd["OPER"] = oper;
+	_cmd["QUIT"] = kick;
+	_cmd["KILL"] = kill;
+	_cmd["PRIVMSG"] = privmsg;
+	_cmd["WHO"] = who;
+	_cmd["WHOIS"] = whois;
+	
 }
 
 Cmd::Cmd(const Cmd & cp){
@@ -36,8 +34,8 @@ Cmd::~Cmd(){
 
 int Cmd::exec_cmd(std::string key)
 {
-
 	_cmd[key](com_str);
+	std::cout << "str_cmd = " << com_str.str_cmd << '\n';
 	return (1);
 }
 

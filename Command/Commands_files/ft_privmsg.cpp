@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_join.cpp                                        :+:      :+:    :+:   */
+/*   ft_privmsg.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/24 17:36:58 by asgaulti         ###   ########.fr       */
+/*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
+/*   Updated: 2022/08/26 11:14:18 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cmd.hpp"
+#include "../Cmd.hpp"
 
 
-void join(Cmd::Command & command){
-    std::cout << "join test" << '\n';
+void privmsg(Cmd::Command & command){
+    command.str_cmd = "PRIVMSG";
+    std::cout << "privmsg test" << '\n';
 }

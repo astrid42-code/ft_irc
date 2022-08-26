@@ -1,13 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_user.cpp                                        :+:      :+:    :+:   */
+/*   ft_nick.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/24 17:18:57 by asgaulti         ###   ########.fr       */
+/*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
+/*   Updated: 2022/08/26 11:14:11 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cmd.hpp"
+#include "../Cmd.hpp"
+
+
+void nick(Cmd::Command & command){
+    command.str_cmd = "NICK";
+    std::cout << "nick test" << '\n';
+}

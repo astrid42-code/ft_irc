@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <iterator>
+// #include "Command/Commands_files"
 
 
 class Cmd{
@@ -33,19 +34,17 @@ class Cmd{
 };
 
 //parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (args, )
-		void test(Cmd::Command & command);
-		void ft_join(Cmd::Command & command);
-// void ft_join(Cmd::Command & command);
-// void ft_user(Cmd::Command & command);
-// void ft_invite(Cmd::Command & command);
-// void ft_kick(Cmd::Command & command);
-// void ft_nick(Cmd::Command & command);
-// void ft_oper(Cmd::Command & command);
-// void ft_kick(Cmd::Command & command);
-// void ft_user(Cmd::Command & command);
-// void ft_kill(Cmd::Command & command);
-// void ft_privmsg(Cmd::Command & command);
-// void ft_who(Cmd::Command & command);
-// void ft_whois(Cmd::Command & command);
+void test(Cmd::Command & command);
+void join(Cmd::Command & command);
+void user(Cmd::Command & command);
+void invite(Cmd::Command & command);
+void kick(Cmd::Command & command);
+void nick(Cmd::Command & command);
+void oper(Cmd::Command & command);
+void quit(Cmd::Command & command);
+void kill(Cmd::Command & command);
+void privmsg(Cmd::Command & command);
+void who(Cmd::Command & command);
+void whois(Cmd::Command & command);
 
 #endif
