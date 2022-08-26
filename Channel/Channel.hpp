@@ -22,7 +22,7 @@ namespace irc{
 
 		private:
 			std::map< int, User *>	_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
-			
+
 	};
 }
 
