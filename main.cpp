@@ -29,7 +29,6 @@ int main(int ac, char **av){
 
 	irc::Server server = irc::Server();
 	server.init();
-	
 	// 2 signal?
 	// 3 set le port et le pwd du server avec av1 et 2 (des possibilités d'erreurs ici)
 	// if (server.set_pp(av[1], av[2]) != true){
