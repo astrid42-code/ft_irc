@@ -34,7 +34,8 @@ Cmd::~Cmd(){
 
 int Cmd::exec_cmd(std::string key)
 {
-	if (key == "")
+	if (key == "" || key != "JOIN" || key != "USER" || key != "INVITE" || key != "KICK" || key != "NICK" || key != "OPER" || key != "QUIT" 
+			|| key != "KILL" || key != "PRIVMSG" || key != "WHO" || key != "WHOIS")
 		return (1);
 	_cmd[key](com_str);
 	std::cout << "str_cmd = " << com_str.str_cmd << '\n';

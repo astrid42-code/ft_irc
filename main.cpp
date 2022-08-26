@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 14:25:18 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/26 16:25:08 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int main(int ac, char **av){
 	// + pvr delete les users
 	// + de même avec les channels
 
-	 irc::Server server = irc::Server();
-	 server.init();
+	//  irc::Server server = irc::Server();
+	//  server.init();
 	
 	Cmd	cmd = Cmd();
-	cmd.exec_cmd(""); // recupere la string donnee au debut
+	cmd.exec_cmd("JOIN"); // recupere la string donnee au debut
 
 	
 	// test();
