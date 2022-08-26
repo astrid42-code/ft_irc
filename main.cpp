@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/20 17:02:56 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/26 11:04:32 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server/Server.hpp"
+#include "Command/Cmd.hpp"
 
 int main(int ac, char **av){
 
@@ -27,8 +28,14 @@ int main(int ac, char **av){
 	// + pvr delete les users
 	// + de même avec les channels
 
-	irc::Server server = irc::Server();
-	server.init();
+	 irc::Server server = irc::Server();
+	 server.init();
+	
+	Cmd	cmd = Cmd();
+	cmd.exec_cmd("WHOIS");
+
+	
+	// test();
 	// 2 signal?
 	// 3 set le port et le pwd du server avec av1 et 2 (des possibilités d'erreurs ici)
 	// if (server.set_pp(av[1], av[2]) != true){
