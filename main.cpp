@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:04:32 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/26 14:25:18 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int ac, char **av){
 	// server.init();
 	
 	Cmd	cmd = Cmd();
-	cmd.exec_cmd("WHOIS");
+	cmd.exec_cmd(""); // recupere la string donnee au debut
 
 	
 	// test();

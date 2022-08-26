@@ -4,7 +4,7 @@
 
 Cmd::Cmd(){
 	// build les fcts cmds en reliant une string a la fct 
-	_cmd["TEST"] = test; // a retirer quand le test pour utiliser le ptr sur fct marche
+
 	_cmd["JOIN"] = join;
 	_cmd["USER"] = user;
 	_cmd["INVITE"] = invite;
@@ -34,17 +34,17 @@ Cmd::~Cmd(){
 
 int Cmd::exec_cmd(std::string key)
 {
+	if (key == "")
+		return (1);
 	_cmd[key](com_str);
 	std::cout << "str_cmd = " << com_str.str_cmd << '\n';
 	return (1);
 }
 
-// fcts a faire ensuite
-
-void test(Cmd::Command &command){ 
-    std::cout << "blabla test" << '\n';
-	std::cout << command.str_cmd << std::endl;
-}
+// void test(Cmd::Command &command){ 
+//     std::cout << "blabla test" << '\n';
+// 	std::cout << command.str_cmd << std::endl;
+// }
 
 //autres cmds possibles?
 // - LIST

@@ -5,7 +5,6 @@
 #include <map>
 #include <vector>
 #include <iterator>
-// #include "Command/Commands_files"
 
 
 class Cmd{
@@ -34,7 +33,6 @@ class Cmd{
 };
 
 //parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (args, )
-void test(Cmd::Command & command);
 void join(Cmd::Command & command);
 void user(Cmd::Command & command);
 void invite(Cmd::Command & command);
