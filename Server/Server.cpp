@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/20 16:51:18 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/27 16:18:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,6 +338,3 @@ int	Server::init(){
 // }
 
 }
-
-// pb :
-// si erreur, mets bien le msg (mais cree le serveur donc a faire plutot avant la creation du server??)
