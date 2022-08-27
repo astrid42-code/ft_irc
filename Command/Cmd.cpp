@@ -42,10 +42,19 @@ int Cmd::exec_cmd(std::string key)
 	return (1);
 }
 
-// void test(Cmd::Command &command){ 
-//     std::cout << "blabla test" << '\n';
-// 	std::cout << command.str_cmd << std::endl;
+// void parse_cmd(std::string str){
+// 	std::string key; // va recuperer la key (1er mot de str)
+// 	int result;
+
+// 	for (int i = 0; str[i] != " "; i++)
+// 		result = i;
+// 	key = str.substr(0, result);
+// 	if (key != "JOIN" || key != "USER" || key != "INVITE" || key != "KICK" || key != "NICK" || key != "OPER" || key != "QUIT" 
+// 			|| key != "KILL" || key != "PRIVMSG" || key != "WHO" || key != "WHOIS")
+// 			return ;
+	
 // }
+
 
 //autres cmds possibles?
 // - LIST

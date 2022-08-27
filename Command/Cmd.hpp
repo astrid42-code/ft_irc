@@ -27,6 +27,7 @@ class Cmd{
 		std::map<std::string, ptr_ft>::iterator	it;
 
 		int exec_cmd(std::string key);
+		void parse_cmd(std::string str);
     
 	private:
     	std::map<std::string, ptr_ft>	_cmd;
