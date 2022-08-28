@@ -46,13 +46,14 @@ const std::string&	Cmd::get_key(void) const{
 
 int Cmd::exec_cmd(std::string key)
 {
-	// if (!(key.compare("") || key.compare("JOIN") || key.compare("USER") || key.compare("INVITE") || key.compare("KICK") || key.compare("NICK") || key.compare("OPER") || key.compare("QUIT") 
-	// 		|| key.compare("KILL") || key.compare("PRIVMSG") || key.compare("WHO") || key.compare("WHOIS"))){
-	// 			return (1);
-	// 		}
-	_cmd[key](com_str);
+	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0 || key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
+			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0){
+			_cmd[key](com_str);
+			// et continuer le parsing 
+			return (0);
+		}
 	std::cout << "prout2 " << "_key = " << com_str._key << '\n';
-	return (0);
+	return (1);
 }
 
 std::string Cmd::parse_cmd(std::string const str){ // a mettre en void quand tests fct termines
@@ -68,7 +69,7 @@ std::string Cmd::parse_cmd(std::string const str){ // a mettre en void quand tes
 			// || key.compare("KILL") != 0 || key.compare("PRIVMSG") != 0 || key.compare("WHO") != 0 || key.compare("WHOIS") != 0)
 	if (!(key.compare("JOIN") || key.compare("USER") || key.compare("INVITE") || key.compare("KICK") || key.compare("NICK") || key.compare("OPER") || key.compare("QUIT")
 			|| key.compare("KILL") || key.compare("PRIVMSG") || key.compare("WHO") || key.compare("WHOIS")))		{
-	std::cout << key << '\n';
+	// std::cout << key << '\n';
 			return ("");
 			}
 	set_key(key);
