@@ -30,6 +30,8 @@ class Cmd{
 
 		void set_key(std::string key) ;
 		const std::string &	get_key(void) const;
+	//	void set_value(std::string value);
+	//	const std::string &	get_value(void) const;
 
 		int exec_cmd(std::string key);
 		void parse_cmd(std::string str);

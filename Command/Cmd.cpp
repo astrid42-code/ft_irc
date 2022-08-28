@@ -43,15 +43,18 @@ void Cmd::set_key(std::string key) {
 const std::string&	Cmd::get_key(void) const{
 	return (com_str._key);
 }
+/*
+void Cmd::set_value(std::string value) {
+	com_str._value = value;
+}
 
+const std::string&	Cmd::get_value(void) const{
+	return (com_str._value);
+}
+*/
 int Cmd::exec_cmd(std::string key)
 {
-	// if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0 || key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
-	// 		|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0){
-	// 		_cmd[key](com_str);
-	// 		// et continuer le parsing 
-	// 		return (0);
-	// 	}
+
 	(void)key;
 	// std::cout << "prout2 " << "_key = " << com_str._key << '\n';
 	return (1);
@@ -60,6 +63,10 @@ int Cmd::exec_cmd(std::string key)
 void Cmd::parse_cmd(std::string const str){ 
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
+	size_t start;
+	size_t end = 0;
+	std::vector<std::string> tokens;
+	 int i = 0;
 
 	for (int i = 0; str[i] != ' '; i++)
 		result = i;
@@ -69,6 +76,16 @@ void Cmd::parse_cmd(std::string const str){
 			set_key(key);
 			com_str._key = get_key();
 		}
+//	com_str._value = split(str, ' ');
+	while ((start = str.find_first_not_of(' ', end)) != std::string::npos){
+		end = str.find(' ', start);
+		tokens.push_back(str.substr(start, end - start));
+		//std::cout << "value[ " << i << "] = " << com_str._value[i] << '\n';
+	//	set_value(com_str._value);
+		std::cout << "value = " << tokens[i] << '\n';
+		i++;
+	}
+	
 }
 
 
