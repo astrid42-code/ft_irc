@@ -66,7 +66,8 @@ void Cmd::parse_cmd(std::string const str){
 	size_t start;
 	size_t end = 0;
 	std::vector<std::string> tokens;
-	 int i = 0;
+	std::string tmp_val;
+	int i = 0;
 
 	for (int i = 0; str[i] != ' '; i++)
 		result = i;
@@ -76,10 +77,10 @@ void Cmd::parse_cmd(std::string const str){
 			set_key(key);
 			com_str._key = get_key();
 		}
-//	com_str._value = split(str, ' ');
-	while ((start = str.find_first_not_of(' ', end)) != std::string::npos){
-		end = str.find(' ', start);
-		tokens.push_back(str.substr(start, end - start));
+	tmp_val = str.substr(result + 1, str.size());
+	while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos){
+		end = tmp_val.find(' ', start);
+		tokens.push_back(tmp_val.substr(start, end - start));
 		//std::cout << "value[ " << i << "] = " << com_str._value[i] << '\n';
 	//	set_value(com_str._value);
 		std::cout << "value = " << tokens[i] << '\n';

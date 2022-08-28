@@ -32,7 +32,7 @@ int main(int ac, char **av){
 	// server.init();
 	
 	Cmd	cmd = Cmd();
-	cmd.parse_cmd("JOIN -a tata");
+	cmd.parse_cmd("INVITE -a toto");
 	std::string key = cmd.com_str._key;
 	// std::cout << "prout3 " << key << '\n';
 	if (key != ""){
