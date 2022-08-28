@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/28 16:07:15 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 16:07:49 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int main(int ac, char **av){
 	Cmd	cmd = Cmd();
 	cmd.parse_cmd("");
 	std::string key = cmd.com_str._key;
-	std::cout << "prout3 " << key << '\n';
+	// std::cout << "prout3 " << key << '\n';
 	if (key != ""){
-		std::cout << "coucou" << '\n';
+		// std::cout << "coucou" << '\n';
 		cmd.exec_cmd(key); // recupere la string donnee au debut
 	}
 

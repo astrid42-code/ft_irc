@@ -53,7 +53,7 @@ int Cmd::exec_cmd(std::string key)
 	// 		return (0);
 	// 	}
 	(void)key;
-	std::cout << "prout2 " << "_key = " << com_str._key << '\n';
+	// std::cout << "prout2 " << "_key = " << com_str._key << '\n';
 	return (1);
 }
 
