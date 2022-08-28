@@ -32,14 +32,15 @@ int main(int ac, char **av){
 	// server.init();
 	
 	Cmd	cmd = Cmd();
-	cmd.parse_cmd("INVITE -a toto");
+	cmd.parse_cmd("JOIN -a toto");
 	std::string key = cmd.com_str._key;
 	// std::cout << "prout3 " << key << '\n';
-	if (key != ""){
+/*	if (key != ""){
 		// std::cout << "coucou" << '\n';
 		cmd.exec_cmd(key); // recupere la string donnee au debut
-	}
 
+	}
+*/
 	
 	// test();
 	// 2 signal?

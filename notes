@@ -91,7 +91,7 @@ je recupere la ligne de cmd envoyee (par le main pour l'instant0)
 4 je checke si le mot fait bien partie de ma liste de cmds autorisees
 5 si non : return ; (car on ne fait rien, pas de msg d'erreur) > ou pas necessaire puisque ce sera fait avec la fct find dans 7 et suivant
 6 si oui je splite la suite de la string et je stocke chaque "morceau" dans mon vector value
-7 avec mon iterator je parcours ma map en envoyant la key (str_cmd)
+7 avec mon iterator je parcours ma map en envoyant la key (_key)
 8 si it != end() > je vais dans la value (la fct qui correspond a ma key)
 9 sinon return ;
 10 attention, certaines cmds demanderont un comportement specifique (ex quit ou kill?)
