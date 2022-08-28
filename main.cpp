@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/28 14:48:27 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 15:45:21 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ int main(int ac, char **av){
 	// server.init();
 	
 	Cmd	cmd = Cmd();
-	std::string key = cmd.parse_cmd("JOIN");
-	std::cout << "prout3 " << '\n';
-	cmd.exec_cmd(key); // recupere la string donnee au debut
+	std::string key = cmd.parse_cmd("");
+	std::cout << "prout3 " << key << '\n';
+	if (key != ""){
+		std::cout << "coucou" << '\n';
+		cmd.exec_cmd(key); // recupere la string donnee au debut
+	}
 
 	
 	// test();

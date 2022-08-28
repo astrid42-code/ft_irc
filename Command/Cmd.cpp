@@ -46,11 +46,10 @@ const std::string&	Cmd::get_key(void) const{
 
 int Cmd::exec_cmd(std::string key)
 {
-	if (!(key.compare("") || key.compare("JOIN") || key.compare("USER") || key.compare("INVITE") || key.compare("KICK") || key.compare("NICK") || key.compare("OPER") || key.compare("QUIT") 
-			|| key.compare("KILL") || key.compare("PRIVMSG") || key.compare("WHO") || key.compare("WHOIS"))){
-				std::cout << "prout1 " << com_str._key << '\n';
-				return (1);
-			}
+	// if (!(key.compare("") || key.compare("JOIN") || key.compare("USER") || key.compare("INVITE") || key.compare("KICK") || key.compare("NICK") || key.compare("OPER") || key.compare("QUIT") 
+	// 		|| key.compare("KILL") || key.compare("PRIVMSG") || key.compare("WHO") || key.compare("WHOIS"))){
+	// 			return (1);
+	// 		}
 	_cmd[key](com_str);
 	std::cout << "prout2 " << "_key = " << com_str._key << '\n';
 	return (0);
@@ -65,11 +64,13 @@ std::string Cmd::parse_cmd(std::string const str){ // a mettre en void quand tes
 	key = str.substr(0, result);
 	// if (key != "JOIN" || key != "USER" || key != "INVITE" || key != "KICK" || key != "NICK" || key != "OPER" || key != "QUIT" 
 	// 		|| key != "KILL" || key != "PRIVMSG" || key != "WHO" || key != "WHOIS"){
-	if (!(key.compare("JOIN") || key.compare("USER") || key.compare("INVITE") || key.compare("KICK") || key.compare("NICK") || key.compare("OPER") || key.compare("QUIT") 
-			|| key.compare("KILL") || key.compare("PRIVMSG") || key.compare("WHO") || key.compare("WHOIS"))){
-			return key;
+	// if (key.compare("JOIN") != 0 || key.compare("USER") != 0 || key.compare("INVITE") != 0 || key.compare("KICK") != 0 || key.compare("NICK") != 0 || key.compare("OPER") != 0 || key.compare("QUIT") != 0 
+			// || key.compare("KILL") != 0 || key.compare("PRIVMSG") != 0 || key.compare("WHO") != 0 || key.compare("WHOIS") != 0)
+	if (!(key.compare("JOIN") || key.compare("USER") || key.compare("INVITE") || key.compare("KICK") || key.compare("NICK") || key.compare("OPER") || key.compare("QUIT")
+			|| key.compare("KILL") || key.compare("PRIVMSG") || key.compare("WHO") || key.compare("WHOIS")))		{
+	std::cout << key << '\n';
+			return ("");
 			}
-	// std::cout << key << '\n';
 	set_key(key);
 	com_str._key = get_key();
 	// std::cout << com_str._key << '\n';
