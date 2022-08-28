@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:24 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:37 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void user(Cmd::Command & command){
-    command.str_cmd = "USER";
+    command._key = "USER";
     std::cout << "user test" << '\n';
 }

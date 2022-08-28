@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:18 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:30 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void privmsg(Cmd::Command & command){
-    command.str_cmd = "PRIVMSG";
+    command._key = "PRIVMSG";
     std::cout << "privmsg test" << '\n';
 }

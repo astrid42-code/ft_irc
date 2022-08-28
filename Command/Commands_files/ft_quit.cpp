@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:21 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:34 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void quit(Cmd::Command & command){
-    command.str_cmd = "QUIT";
+    command._key = "QUIT";
     std::cout << "quit test" << '\n';
 }

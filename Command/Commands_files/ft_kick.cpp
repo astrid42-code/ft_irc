@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:19 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:04 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:16 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void kick(Cmd::Command & command){
-    command.str_cmd = "KICK";
+    command._key = "KICK";
     std::cout << "kick test" << '\n';
 }

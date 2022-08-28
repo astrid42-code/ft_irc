@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:15:32 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:13 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void join(Cmd::Command & command){
-    command.str_cmd = "JOIN";
+    command._key = "JOIN";
     std::cout << "join test" << '\n';
 }

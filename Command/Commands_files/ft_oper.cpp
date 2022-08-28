@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:00:36 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:14 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:28 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void oper(Cmd::Command & command){
-    command.str_cmd = "OPER";
+    command._key = "OPER";
     std::cout << "oper test" << '\n';
 }

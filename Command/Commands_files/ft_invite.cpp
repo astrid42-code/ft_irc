@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:13:31 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:06 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void invite(Cmd::Command & command){
-    command.str_cmd = "INVITE";
+    command._key = "INVITE";
     std::cout << "invite test" << '\n';
 }

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:42 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:27 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:41 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void who(Cmd::Command & command){
-    command.str_cmd = "WHO";
+    command._key = "WHO";
     std::cout << "who test" << '\n';
 }

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:11 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:24 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void nick(Cmd::Command & command){
-    command.str_cmd = "NICK";
+    command._key = "NICK";
     std::cout << "nick test" << '\n';
 }

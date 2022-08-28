@@ -14,10 +14,12 @@ class Cmd{
 		Cmd(const Cmd & cp);
 		~Cmd();
 
+		Cmd & operator=(const Cmd & cmd_op);
+
 		// struct contenant les elements utiles au parsing
 		typedef struct Command{
-			std::string					str_cmd; // la string du 1er element recu (la key de ma map)
-			std::vector<std::string>	args; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
+			std::string					_key; // la string du 1er element recu (la key de ma map)
+			std::vector<std::string>	_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
 		} Command;
 		Command com_str;
 		
@@ -26,14 +28,17 @@ class Cmd{
 		typedef void (*ptr_ft)(Command & command);
 		std::map<std::string, ptr_ft>::iterator	it;
 
+		void set_key(std::string key) ;
+		const std::string &	get_key(void) const;
+
 		int exec_cmd(std::string key);
-		void parse_cmd(std::string str);
+		std::string parse_cmd(std::string str);
     
 	private:
     	std::map<std::string, ptr_ft>	_cmd;
 };
 
-//parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (args, )
+//parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (_value/args, )
 void join(Cmd::Command & command);
 void user(Cmd::Command & command);
 void invite(Cmd::Command & command);

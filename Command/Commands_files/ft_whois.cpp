@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:04:08 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:30 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:06:43 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 
 void whois(Cmd::Command & command){
-    command.str_cmd = "WHOIS";
+    command._key = "WHOIS";
     std::cout << "whois test" << '\n';
 }
