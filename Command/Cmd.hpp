@@ -5,7 +5,9 @@
 #include <map>
 #include <vector>
 #include <iterator>
+#include "User.hpp"
 
+class User;
 
 class Cmd{
 
@@ -20,6 +22,9 @@ class Cmd{
 		typedef struct Command{
 			std::string					_key; // la string du 1er element recu (la key de ma map)
 			std::vector<std::string>	_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
+			// int							_err;
+			User *						_user; // recuperer les infos d'un user (nick, pwd, ...) 
+			// pour checker les erreurs (ex nick already registered), ou envoyer des msgs, ...
 		} Command;
 		Command com_str;
 		
@@ -41,16 +46,22 @@ class Cmd{
 };
 
 //parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (_value/args, )
-void join(Cmd::Command & command);
-void user(Cmd::Command & command);
-void invite(Cmd::Command & command);
-void kick(Cmd::Command & command);
 void nick(Cmd::Command & command);
-void oper(Cmd::Command & command);
+void user(Cmd::Command & command);
 void quit(Cmd::Command & command);
-void kill(Cmd::Command & command);
+
+void join(Cmd::Command & command);
+void list(Cmd::Command & command);
+
 void privmsg(Cmd::Command & command);
 void who(Cmd::Command & command);
+
+void invite(Cmd::Command & command);
+void kick(Cmd::Command & command);
+void oper(Cmd::Command & command);
+void kill(Cmd::Command & command);
 void whois(Cmd::Command & command);
+void pass(Cmd::Command & command);
+void names(Cmd::Command & command);
 
 #endif

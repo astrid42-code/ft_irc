@@ -6,7 +6,7 @@
 #    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/08/26 11:13:06 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/08/29 15:59:33 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,10 @@ SRCS		=	main.cpp \
 				Command/Commands_files/ft_quit.cpp \
 				Command/Commands_files/ft_user.cpp \
 				Command/Commands_files/ft_who.cpp \
-				Command/Commands_files/ft_whois.cpp 
+				Command/Commands_files/ft_whois.cpp \
+				Command/Commands_files/ft_list.cpp \
+				Command/Commands_files/ft_pass.cpp \
+				Command/Commands_files/ft_names.cpp
 
 INC			=	Server User
 

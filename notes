@@ -79,6 +79,9 @@ comment structurer ce ptr sur fct? avec un switch (comme dans karen)?
 
 sockets :
 http://sdz.tdct.org/sdz/les-sockets.html
+https://oramind.com/tutorial-how-to-make-an-irc-server-connection/
+fct recv() : https://docs.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-recv
+
 
 
 dans commande :
