@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:00:36 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:19:45 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:42 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@
 
 
 void oper(Cmd::Command & command){
+    (void)command;
     std::cout << "oper test" << '\n';
 }

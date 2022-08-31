@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:22:08 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:11 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@
 //                                    on channel #Twilight_zone
 
 void join(Cmd::Command & command){
+    (void)command;
     std::cout << "join test" << '\n';
 }

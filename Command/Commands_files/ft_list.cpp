@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 11:38:02 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:24:02 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:29 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@
 //                                    #twilight_zone and #42
 
 void list(Cmd::Command & command){
+    (void)command;
     std::cout << "list test" << '\n';
 }

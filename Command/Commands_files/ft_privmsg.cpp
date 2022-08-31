@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:25:16 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:48 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@
 //            RPL_AWAY
 
 void privmsg(Cmd::Command & command){
+    (void)command;
     std::cout << "privmsg test" << '\n';
 }

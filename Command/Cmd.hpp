@@ -5,9 +5,9 @@
 #include <map>
 #include <vector>
 #include <iterator>
-#include "User.hpp"
+#include "../User/User.hpp"
 
-class User;
+// class User;
 
 class Cmd{
 
@@ -23,10 +23,10 @@ class Cmd{
 			std::string					_key; // la string du 1er element recu (la key de ma map)
 			std::vector<std::string>	_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
 			// int							_err;
-			User *						_user; // recuperer les infos d'un user (nick, pwd, ...) 
+			// irc::User *						_user; // recuperer les infos d'un user (nick, pwd, ...) 
 			// pour checker les erreurs (ex nick already registered), ou envoyer des msgs, ...
 		} Command;
-		Command com_str;
+		Command command;
 		
 
 		// ptr sur fonction des cmds qui prend une ref sur ma struct Command

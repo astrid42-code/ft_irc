@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:24:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:07 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@
 //                                    #Twilight_zone
 
 void invite(Cmd::Command & command){
+    (void)command;
     std::cout << "invite test" << '\n';
 }

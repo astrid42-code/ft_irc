@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:04:08 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:27:13 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:08:05 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@
 //                                    information  about trillian
                                    
 void whois(Cmd::Command & command){
+    (void)command;
     std::cout << "whois test" << '\n';
 }

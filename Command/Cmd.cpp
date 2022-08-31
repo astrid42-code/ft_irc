@@ -48,26 +48,26 @@ Cmd & Cmd::operator=(const Cmd & cmd_op){
 // };
 
 void Cmd::set_key(std::string key) {
-	com_str._key = key;
+	command._key = key;
 }
 
 const std::string&	Cmd::get_key(void) const{
-	return (com_str._key);
+	return (command._key);
 }
 
 // void Cmd::set_value(std::string value) {
-// 	com_str._value = value;
+// 	command._value = value;
 // }
 
 // const std::string&	Cmd::get_value(void) const{
-// 	return (com_str._value);
+// 	return (command._value);
 // }
 
 int Cmd::exec_cmd(std::string key)
 {
 
-	_cmd[key](com_str);
-	// std::cout << "prout2 " << "_key = " << com_str._key << '\n';
+	_cmd[key](command);
+	// std::cout << "prout2 " << "_key = " << command._key << '\n';
 	return (1);
 }
 
@@ -88,15 +88,15 @@ void Cmd::parse_cmd(std::string const str){
 			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
 			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0) {
 			set_key(key);
-			com_str._key = get_key();
+			command._key = get_key();
 			tmp_val = str.substr(result + 1, str.size());
 			while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos){
 				end = tmp_val.find(' ', start);
-				com_str._value.push_back(tmp_val.substr(start, end - start));
-				std::cout << "value = " << com_str._value[i] << '\n';
+				command._value.push_back(tmp_val.substr(start, end - start));
+				std::cout << "value = " << command._value[i] << '\n';
 				i++;
 			}
-			exec_cmd(com_str._key);
+			exec_cmd(command._key);
 		}
 		else
 			return;
@@ -104,7 +104,7 @@ void Cmd::parse_cmd(std::string const str){
 /*	
 a revoir : exception caught + abort
 // comment récuperer et lancer la fct? a t on besoin d'un it ici?
-	it = _cmd.find(com_str._key);
+	it = _cmd.find(command._key);
 	if (it != _cmd.end()) { // sauf pour exit et autres fcts speciales
 	}
 */

@@ -98,3 +98,6 @@ je recupere la ligne de cmd envoyee (par le main pour l'instant0)
 8 si it != end() > je vais dans la value (la fct qui correspond a ma key)
 9 sinon return ;
 10 attention, certaines cmds demanderont un comportement specifique (ex quit ou kill?)
+
+gestion de la connexion (cmds a faire specifiquement pour la co)
+https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3

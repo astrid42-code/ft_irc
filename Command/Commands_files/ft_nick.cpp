@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:15:29 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:39 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@
 //                            nickname to Kilroy.
 
 void nick(Cmd::Command & command){
+    (void)command;
     std::cout << "nick test" << '\n';
 }

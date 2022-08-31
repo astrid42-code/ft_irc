@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:21:12 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@
 
 
 void quit(Cmd::Command & command){
+    (void)command;
     std::cout << "quit test" << '\n';
 }

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:58:21 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:23:39 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:33 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@
 //                                    channels and users
 
 void names(Cmd::Command & command){
+    (void)command;
     std::cout << "name test" << '\n';
 }

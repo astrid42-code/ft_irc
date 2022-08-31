@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:42 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/29 16:26:41 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:08:02 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@
 //                                    operator.
 
 void who(Cmd::Command & command){
+    (void)command;
     std::cout << "who test" << '\n';
 }
