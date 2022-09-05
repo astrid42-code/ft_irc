@@ -101,3 +101,31 @@ je recupere la ligne de cmd envoyee (par le main pour l'instant0)
 
 gestion de la connexion (cmds a faire specifiquement pour la co)
 https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
+
+
+
+msgs de depart (lances au moment de la co :)
+exemple du server shibrc
+
+ Irssi v1.2.2-1ubuntu1.1 - https://irssi.org                                                                                                                                                                                                       
+16:54 -!- Irssi: Looking up shibrc.ml
+16:54 -!- Irssi: Connecting to shibrc.ml [51.210.4.233] port 6667
+16:54 -!- Irssi: Connection to shibrc.ml established
+16:54 -!- You're now known as kakou
+16:54 -!- Welcome to the Internet Relay Network kakou!asgaulti@62.210.33.192
+16:54 -!- Your host is 62.210.33.192, running version 1.69
+16:54 -!- This server was created Thu Aug 11 12:49:46 2022
+16:54 -!- ShibRC 1.69 aiwro Oovimnptkl
+16:54 -!- There are 1 users and 0 invisible on 1 servers
+16:54 -!- 0 operator(s) online
+16:54 -!- 0 unknown connection(s)
+16:54 -!- 0 channels formed
+16:54 -!- I have 1 clients and 0 servers
+16:54 -!- - ShibRC Message of the day - 
+
+(puis dessin )
+
+16:54 -!- Welcome to ShibRC, enjoy your stay !
+16:54 -!- - 
+16:54 -!- End of /MOTD command
+16:54 -!- Your user mode is [+wi]

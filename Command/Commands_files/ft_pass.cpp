@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/31 15:03:30 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:39:30 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 void pass(Cmd::Command & command){
     std::cout << "pass test " << command._key << '\n';
     // if (command._value.size() != 1){
-    //     server._msg = ERR_NEEDMOREPARAMS(command._key)); 
+    //     server.get_msg = (ERR_NEEDMOREPARAMS(command._key)); 
     //  dans server : faire une fct qui recupere le define / le msg complet et qui l'imprime
     // }
     // if (command._value[0] == server.get_name()){// value[0] etant le login (get_name())

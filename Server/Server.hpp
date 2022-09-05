@@ -35,6 +35,7 @@ namespace irc{
             int	init();
             User & get_user() const;
             std::locale loc;
+            void get_msg(std::string msg);
             // faire une fct qui recupere les msg et les imprime (stocke dans _msg)
         
         private:

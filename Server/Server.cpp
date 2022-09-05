@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/27 16:18:52 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:39:30 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ std::string Server::get_pwd() const{
 
 bool	Server::set_pp(std::string port, std::string pwd){
 	 _port = port;
-	 (void)pwd;
+	_pwd = pwd;
 	// if (_port.size() != 4){
 	// 	std::cout << "There is an error in arguments!" << std::endl;
 	// 	return (false);
@@ -78,7 +78,6 @@ bool	Server::set_pp(std::string port, std::string pwd){
 	// 		return (false);
 	// 	}
 	// }
-	// _pwd = pwd;
 	// verifier la taille du pwd? (verifier dans les regles si taille min/max)
 	return (true);
 }
@@ -105,6 +104,19 @@ bool	Server::set_pp(std::string port, std::string pwd){
 		//appeler la fonction chan.delUser() qui doit remove le User usr du Channel chan
 	}
 */
+
+void Server::get_msg(std::string msg){
+	// pour chaque msg : cela commence systematiquement par l'heure actuelle
+	// (fct strtime() a utiliser?)
+	
+	// if (msg = les msgs 001 002 ou 003)
+	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
+
+	// else
+	
+}
+
+
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int	Server::init(){
     int is_ok = 1;

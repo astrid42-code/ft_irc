@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:39 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:50:23 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@
 //                            nickname to Kilroy.
 
 void nick(Cmd::Command & command){
-    (void)command;
     std::cout << "nick test" << '\n';
+    if (command._value.size() == 0){
+        std::cout << "blabla" << '\n';
+        // std::cout << "Your nickname is" << command._user.getName() << '\n';
+        return;
+    }
+    // else {
+    //     if (command._value[0] != command._user.getName()){
+    //         // std::cout << "You're now known as " << command._value[0] << '\n';
+    //     }
+    //     else if (command._value[0] == command._user.getName()){
+    //         server.get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
+    //     }
+    // } 
 }
+
+// test :
+// - /nick renvoie Your nickname is [nick]
+// - /nick [nouveau nickname] renvoie "You're now known as [nouveau nick]"
+// - /nick [meme nickname] renvoie "Nick [nick] is already in use" (err 433)
