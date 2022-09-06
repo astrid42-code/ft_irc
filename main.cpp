@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:11:35 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:30:10 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int ac, char **av){
 	// server.init();
 	
 	Cmd	cmd = Cmd();
-	cmd.parse_cmd("PASS toto");
+	cmd.parse_cmd("NICK");
 	std::string key = cmd.command._key;
 	// std::cout << "prout3 " << key << '\n';
 /*	if (key != ""){

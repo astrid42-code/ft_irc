@@ -35,7 +35,7 @@ Cmd::Cmd(const Cmd & cp){
 }
 
 Cmd::~Cmd(){
-	// std::cout << "bye" << '\n';
+	std::cout << "bye" << '\n';
 }
 
 Cmd & Cmd::operator=(const Cmd & cmd_op){
@@ -71,7 +71,7 @@ int Cmd::exec_cmd(std::string key)
 	return (1);
 }
 
-void Cmd::parse_cmd(std::string const str){ 
+void Cmd::parse_cmd(std::string str){ 
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
 	size_t start;

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/05 17:39:30 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:29:23 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ bool	Server::set_pp(std::string port, std::string pwd){
 */
 
 void Server::get_msg(std::string msg){
+	(void)msg;
 	// pour chaque msg : cela commence systematiquement par l'heure actuelle
 	// (fct strtime() a utiliser?)
 	

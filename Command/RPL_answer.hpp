@@ -80,8 +80,7 @@
 // Returned by the server to indicate that the attempted INVITE message was successful and is
 // being passed onto the end client.
 
-#define RPL_WHOREPLY(channel, user, host, nick, hopcount, name) (channel + " " + user + " " + host + " " + SERVER + " " + nick \
-		+ "( "H" / "G" > ["*"] [ ( "@" / "+" ) ]) : " + hopcount + " " + name + "\r\n") // 352
+// #define RPL_WHOREPLY(channel, user, host, nick, hopcount, name) (channel + " " + user + " " + host + " " + SERVER + " " + nick + "( "H" / "G" > ["*"] [ ( "@" / "+" ) ]) : " + hopcount + " " + name + "\r\n") // 352
 	// envoyer les args
 
 #define RPL_NAMREPLY(channel, nick) ("( "=" / "*" / "@" )" + channel + " :[ "@" / "+" ] " + nick + " *( " " [ "@" / "+" ] " + nick + "\r\n") // 353
