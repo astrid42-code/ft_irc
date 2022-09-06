@@ -23,6 +23,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <unistd.h>
 #include <unistd.h>
 #include <algorithm>
@@ -52,7 +53,7 @@ Server::~Server(){
 
 Server  & Server::operator=(const Server &serv_op){
 	(void)serv_op;
-	// _port = serv_op._port;
+	// _port = sefilerv_op._port;
 	// _pwd = serv_op._pwd;
 	return (*this);
 }
@@ -112,7 +113,11 @@ int	Server::init(){
     struct sockaddr_in address;
 	char buf[513];
 	int cfd;
+	std::ifstream	test;
+	std::string RPL_WELCOME = "Welcome to the Internet Relay Network dasanter!dasanter@127.0.0.1\r\n";
 
+
+	
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
 		std::cout << "fail socket" << std::endl;
@@ -153,7 +158,8 @@ int	Server::init(){
 			buf[ret] = 0;
 			printf("%s\n", buf);
 		}
-		//printf("%d\n", ret);
+		printf("%d\n", ret);
+		send(cfd ,RPL_WELCOME.c_str(), RPL_WELCOME.length(), MSG_NOSIGNAL);
     }
 //     int master_sock , addrlen , new_sock , client_sock[30] ,
 //             maximum_clients = 30 , act, i , value_read , sock_descriptor;

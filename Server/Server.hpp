@@ -35,7 +35,6 @@ namespace irc{
             int	init();
             User & get_user() const;
             std::locale loc;
-        
         private:
             std::string		_port; // doit etre une string car recupere av[1] -> a transformer en int pour plus de simplicite	
             std::string		_pwd;
