@@ -6,7 +6,7 @@
 /*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 15:35:59 by tamigore         ###   ########.fr       */
+/*   Updated: 2022/09/06 19:40:52 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,35 @@
 
 void nick(Cmd::Command &command){
     std::cout << "nick test" << '\n';
-    if (!command._value.size())
-    {
-        // std::cout << "Your nickname is " << DEFAULT_NAME << '\n';
-        std::cout << "Your nickname is" << command._user->get_user() << '\n';
+    if (!command._value.size()){
+        std::cout << "Your nickname is " << DEFAULT_NAME << '\n'; // en attendant de recuperer le ptr sur user
+        // a tester quand class user terminee
+        // command._user->set_user(DEFAULT_NAME);
+        // std::cout << "Your nickname is" << command._user->get_user() << '\n';
         return;
     }
-    std::cout << "lol" << '\n';
-    // else {
-    //     if (command._value[0] != command._user.getName()){
-    //         // std::cout << "You're now known as " << command._value[0] << '\n';
-    //     }
-    //     else if (command._value[0] == command._user.getName()){
-    //         server.get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
-    //     }
-    // } 
+    //  a tester quand class user terminee
+     
+    else {
+            std::cout << command._user->get_user() << '\n';
+    // attention : tester avec ou sans la casse
+        if (command._value[0] != command._user->get_user()){
+            std::cout << "You're now known as " << command._value[0] << '\n';
+        }
+        else if (command._value[0] == command._user->get_user()){
+            std::cout << "prout2 " << '\n';
+            command._server.get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
+        }
+    
+    //         else if (si chgmt de nick dans un autre serveur et nouveau nick deja enregistre)
+    //          envoyer cmd kill 
+    //         + ERR_NICKCOLLISION pour que client(l'utilisateur?) deconnecte les 2 clients
+    //          https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
+    // // } 
 }
 
 // test :
 // - /nick renvoie Your nickname is [nick]
 // - /nick [nouveau nickname] renvoie "You're now known as [nouveau nick]"
+// // penser a recuperer le nouveau nom de user et a le changer dans les infos du user actuel
 // - /nick [meme nickname] renvoie "Nick [nick] is already in use" (err 433)

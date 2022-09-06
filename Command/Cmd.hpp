@@ -6,9 +6,10 @@
 #include <vector>
 #include <iterator>
 #include "../User/User.hpp"
+#include "../Server/Server.hpp"
 #include "RPL_answer.hpp"
 
-class User;
+// class User;
 
 class Cmd
 {
@@ -27,6 +28,7 @@ class Cmd
 			// int							_err;
 			User					*_user; // recuperer les infos d'un user (nick, pwd, ...) 
 			// pour checker les erreurs (ex nick already registered), ou envoyer des msgs, ...
+			irc::Server					_server;
 		} Command;
 		Command command;
 		
