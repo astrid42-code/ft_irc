@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 11:18:37 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 12:53:39 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 
 void nick(Cmd::Command & command){
     std::cout << "nick test" << '\n';
-    if (command._value.size() == 0){
-        std::cout << "blabla" << '\n';
+    if (!command._value.size()){
+        std::cout << "Your nickname is " << DEFAULT_NAME << '\n';
         // std::cout << "Your nickname is" << command._user.getName() << '\n';
         return;
     }
