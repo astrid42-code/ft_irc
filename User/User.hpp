@@ -3,6 +3,7 @@
 
 #include <iostream>
 // #include "Server/Server.hpp"
+#include "../Command/Cmd.hpp"
 
 namespace irc{
 

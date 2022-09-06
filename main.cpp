@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:04:32 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:30:10 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,19 @@ int main(int ac, char **av){
 	// + pvr delete les users
 	// + de même avec les channels
 
-	 irc::Server server = irc::Server();
-	 server.init();
+	// irc::Server server = irc::Server();
+	// server.init();
 	
 	Cmd	cmd = Cmd();
-	cmd.exec_cmd("WHOIS");
+	cmd.parse_cmd("NICK");
+	std::string key = cmd.command._key;
+	// std::cout << "prout3 " << key << '\n';
+/*	if (key != ""){
+		// std::cout << "coucou" << '\n';
+		cmd.exec_cmd(key); // recupere la string donnee au debut
 
+	}
+*/
 	
 	// test();
 	// 2 signal?

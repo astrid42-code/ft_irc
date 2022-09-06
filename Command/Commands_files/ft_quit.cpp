@@ -6,14 +6,31 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/26 11:14:21 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:07:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
 
+// Command: QUIT
+//    Parameters: [ <Quit Message> ]
+
+//    A client session is terminated with a quit message.  The server
+//    acknowledges this by sending an ERROR message to the client.
+
+//    Numeric Replies:
+
+//            None.
+
+//    Example:
+
+//    QUIT :Gone to have lunch        ; Preferred message format.
+
+//    :syrk!kalt@millennium.stealth.net QUIT :Gone to have lunch ; User
+//                                    syrk has quit IRC to have lunch.
+
 
 void quit(Cmd::Command & command){
-    command.str_cmd = "QUIT";
+    (void)command;
     std::cout << "quit test" << '\n';
 }

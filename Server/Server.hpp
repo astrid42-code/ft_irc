@@ -35,10 +35,14 @@ namespace irc{
             int	init();
             User & get_user() const;
             std::locale loc;
+            void get_msg(std::string msg);
+            // faire une fct qui recupere les msg et les imprime (stocke dans _msg)
+        
         private:
             std::string		_port; // doit etre une string car recupere av[1] -> a transformer en int pour plus de simplicite	
             std::string		_pwd;
             int fd;
+            std::string     _msg; // msg envoye par le serveur (ex : msgs d'erreurs)
             //std::map< std::string, Channel > _channels;
             //std::map< int, User *>	_users;
     };

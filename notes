@@ -79,3 +79,53 @@ comment structurer ce ptr sur fct? avec un switch (comme dans karen)?
 
 sockets :
 http://sdz.tdct.org/sdz/les-sockets.html
+https://oramind.com/tutorial-how-to-make-an-irc-server-connection/
+fct recv() : https://docs.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-recv
+
+
+
+dans commande :
+je recupere la ligne de cmd envoyee (par le main pour l'instant0)
+-> void parser(std::string str) ; qui envoie la ligne envoyee par l'utilisateur ex JOIN tata
+1 je splite le 1er mot 
+2 je verifie que str_cmd == \ > nope
+3 si oui je prends le mot et je le stocke dans str_cmd
+
+4 je checke si le mot fait bien partie de ma liste de cmds autorisees
+5 si non : return ; (car on ne fait rien, pas de msg d'erreur) > ou pas necessaire puisque ce sera fait avec la fct find dans 7 et suivant
+6 si oui je splite la suite de la string et je stocke chaque "morceau" dans mon vector value
+7 avec mon iterator je parcours ma map en envoyant la key (_key)
+8 si it != end() > je vais dans la value (la fct qui correspond a ma key)
+9 sinon return ;
+10 attention, certaines cmds demanderont un comportement specifique (ex quit ou kill?)
+
+gestion de la connexion (cmds a faire specifiquement pour la co)
+https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
+
+
+
+msgs de depart (lances au moment de la co :)
+exemple du server shibrc
+
+ Irssi v1.2.2-1ubuntu1.1 - https://irssi.org                                                                                                                                                                                                       
+16:54 -!- Irssi: Looking up shibrc.ml
+16:54 -!- Irssi: Connecting to shibrc.ml [51.210.4.233] port 6667
+16:54 -!- Irssi: Connection to shibrc.ml established
+16:54 -!- You're now known as kakou
+16:54 -!- Welcome to the Internet Relay Network kakou!asgaulti@62.210.33.192
+16:54 -!- Your host is 62.210.33.192, running version 1.69
+16:54 -!- This server was created Thu Aug 11 12:49:46 2022
+16:54 -!- ShibRC 1.69 aiwro Oovimnptkl
+16:54 -!- There are 1 users and 0 invisible on 1 servers
+16:54 -!- 0 operator(s) online
+16:54 -!- 0 unknown connection(s)
+16:54 -!- 0 channels formed
+16:54 -!- I have 1 clients and 0 servers
+16:54 -!- - ShibRC Message of the day - 
+
+(puis dessin )
+
+16:54 -!- Welcome to ShibRC, enjoy your stay !
+16:54 -!- - 
+16:54 -!- End of /MOTD command
+16:54 -!- Your user mode is [+wi]
