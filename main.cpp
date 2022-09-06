@@ -6,12 +6,13 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 12:53:54 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 14:38:49 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server/Server.hpp"
 #include "Command/Cmd.hpp"
+#include "User/User.hpp"
 
 int main(int ac, char **av){
 

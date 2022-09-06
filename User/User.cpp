@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/20 14:38:18 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 14:33:59 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ namespace irc
 {
 //}
 	
-User::User(){
+User::User() : _name("toto"), _pwd("pwd") {
+	std::cout << _name << '\n';
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user?
 	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
