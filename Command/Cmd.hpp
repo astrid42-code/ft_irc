@@ -6,9 +6,10 @@
 #include <vector>
 #include <iterator>
 #include "../User/User.hpp"
+#include "../Server/Server.hpp"
 #include "RPL_answer.hpp"
 
-class User;
+// class User;
 
 class Cmd{
 
@@ -24,8 +25,9 @@ class Cmd{
 			std::string					_key; // la string du 1er element recu (la key de ma map)
 			std::vector<std::string>	_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
 			// int							_err;
-			User *						_user; // recuperer les infos d'un user (nick, pwd, ...) 
+			irc::User *					_user; // recuperer les infos d'un user (nick, pwd, ...) 
 			// pour checker les erreurs (ex nick already registered), ou envoyer des msgs, ...
+			irc::Server					_server;
 		} Command;
 		Command command;
 		
