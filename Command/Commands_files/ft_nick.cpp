@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_nick.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 14:25:42 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 15:35:59 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@
 //                            ; Server telling that WiZ changed his
 //                            nickname to Kilroy.
 
-void nick(Cmd::Command & command){
+void nick(Cmd::Command &command){
     std::cout << "nick test" << '\n';
-    if (!command._value.size()){
+    if (!command._value.size())
+    {
         // std::cout << "Your nickname is " << DEFAULT_NAME << '\n';
         std::cout << "Your nickname is" << command._user->get_user() << '\n';
         return;

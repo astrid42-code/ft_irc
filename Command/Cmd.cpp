@@ -72,7 +72,18 @@ int Cmd::exec_cmd(std::string key)
 	return (1);
 }
 
-void Cmd::parse_cmd(std::string str){ 
+int check_condition(std::string key)
+{
+	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
+			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
+			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
+			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0)
+		return (1);
+	return (0);
+}
+
+void Cmd::parse_cmd(std::string str)
+{ 
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
 	size_t start;
@@ -85,25 +96,23 @@ void Cmd::parse_cmd(std::string str){
 		result = i + 1;
 	key = str.substr(0, result);
 	size = str.size() - key.size();
-	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
-			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
-			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
-			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0) {
-			set_key(key);
-			command._key = get_key();
-			if (size == 0){
-				exec_cmd(command._key);
-				return;
-			}
-			tmp_val = str.substr(result, str.size());
-			while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos){
-				end = tmp_val.find(' ', start);
-				command._value.push_back(tmp_val.substr(start, end - start));
-				std::cout << "value = " << command._value[i] << '\n';
-				i++;
-			}
+	if (check_condition(key))
+	{
+		set_key(key);
+		command._key = get_key();
+		if (size == 0){
 			exec_cmd(command._key);
+			return;
 		}
+		tmp_val = str.substr(result, str.size());
+		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos){
+			end = tmp_val.find(' ', start);
+			command._value.push_back(tmp_val.substr(start, end - start));
+			std::cout << "value = " << command._value[i] << '\n';
+			i++;
+		}
+		exec_cmd(command._key);
+	}
 		else
 			return;
 

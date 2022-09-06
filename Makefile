@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
+#    By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/08/30 17:06:49 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/09/06 19:34:03 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRCS		=	main.cpp \
 				Command/Commands_files/ft_whois.cpp \
 				Command/Commands_files/ft_list.cpp \
 				Command/Commands_files/ft_names.cpp \
-				Command/Commands_files/ft_user.cpp 
+				Command/Commands_files/ft_user.cpp \
+				Channel/Channel.cpp
 
 INC			=	Server User
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 14:38:49 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 15:35:46 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "Command/Cmd.hpp"
 #include "User/User.hpp"
 
-int main(int ac, char **av){
-
+int main(int ac, char **av)
+{
 	(void)av;
 	
 	if (ac != 3){
@@ -23,14 +23,14 @@ int main(int ac, char **av){
 		return (1);
 	}
     
-	// 1 creer un objet de la class irc::Server server > définir ce que l'objet server contient
+	// 1 creer un objet de la class Server server > définir ce que l'objet server contient
 	// > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
 	// + récupérer le user (prévoir qu'il peut y en avoir plsrs, les mettre dans un tableau / vector)
 	// + pvr delete les users
 	// + de même avec les channels
 
-	// irc::Server server = irc::Server();
-	// server.init();
+	Server server = Server();
+	server.init();
 	
 	Cmd	cmd = Cmd();
 	cmd.parse_cmd("NICK");

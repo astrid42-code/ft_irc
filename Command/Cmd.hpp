@@ -10,7 +10,8 @@
 
 class User;
 
-class Cmd{
+class Cmd
+{
 
 	public:
 		Cmd();
@@ -24,7 +25,7 @@ class Cmd{
 			std::string					_key; // la string du 1er element recu (la key de ma map)
 			std::vector<std::string>	_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
 			// int							_err;
-			User *						_user; // recuperer les infos d'un user (nick, pwd, ...) 
+			User					*_user; // recuperer les infos d'un user (nick, pwd, ...) 
 			// pour checker les erreurs (ex nick already registered), ou envoyer des msgs, ...
 		} Command;
 		Command command;

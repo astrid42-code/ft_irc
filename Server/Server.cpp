@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 11:29:23 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:47:47 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 #include <algorithm>
 #include <sys/types.h>
 #include <netdb.h>
-namespace irc{
 	
 Server::Server() : _port("6667"), _pwd("pwd"){
 	std::cout << "Hi there, nice to see you!" << std::endl;
@@ -83,7 +82,7 @@ bool	Server::set_pp(std::string port, std::string pwd){
 	return (true);
 }
 /*
-    void onCmdReceived(std::string cmd) // /connect 127.0.0.1 6667 // /join ChannelID // msg "ID" "salut" // "wdhqiwudhqwuidhqwudhqwiudhwquidhqwiuhdqwuihdqwhiudqwhuidhq"
+	void onCmdReceived(std::string cmd) // /connect 127.0.0.1 6667 // /join ChannelID // msg "ID" "salut" // "wdhqiwudhqwuidhqwudhqwiudhwquidhqwiuhdqwuihdqwhiudqwhuidhq"
 	{
 		// appeler les fonctions onConnection, onMessageReceived, onDeconnection ... en fonction 
 		// du retour du parsing
@@ -106,7 +105,8 @@ bool	Server::set_pp(std::string port, std::string pwd){
 	}
 */
 
-void Server::get_msg(std::string msg){
+void Server::get_msg(std::string msg)
+{
 	(void)msg;
 	// pour chaque msg : cela commence systematiquement par l'heure actuelle
 	// (fct strtime() a utiliser?)
@@ -120,52 +120,51 @@ void Server::get_msg(std::string msg){
 
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
-int	Server::init(){
-    int is_ok = 1;
+int	Server::init()
+{
+	int is_ok = 1;
 	int ret;
-    struct sockaddr_in address;
+	struct sockaddr_in address;
 	char buf[513];
 	int cfd;
 	std::ifstream	test;
 	std::string RPL_WELCOME = "Welcome to the Internet Relay Network dasanter!dasanter@127.0.0.1\r\n";
 
-
-	
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
-    {
+	{
 		std::cout << "fail socket" << std::endl;
-        return 0;
-    }
+		return 0;
+	}
 	std::cout << fd << std::endl;
-    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &is_ok, sizeof(is_ok)))
-    {
+	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &is_ok, sizeof(is_ok)))
+	{
 		std::cout << "fail setsockopt" << std::endl;
-        return 0;
-    }
-    // if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
-    // {
-    //         return 0;
-    // }
-    address.sin_family = AF_INET;
+		return 0;
+	}
+	// if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
+	// {
+	//         return 0;
+	// }
+	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(PORT);
 	struct addrinfo *res = NULL;
 	getaddrinfo("127.0.0.1", "6667", (const struct addrinfo*)&address, &res);
-    if (bind(fd, (struct sockaddr *)&address, sizeof(address)) < 0)
-    {
+	if (bind(fd, (struct sockaddr *)&address, sizeof(address)) < 0)
+	{
 		std::cout << "fail bind" << std::endl;
-        return 0;
-    }
-    if (listen(fd, address.sin_port) < 0)
-    {
+		return 0;
+	}
+	if (listen(fd, address.sin_port) < 0)
+	{
 		std::cout << "fail listen" << std::endl;
-        return 0;
-    }
-    while (1)
-    {
+		return 0;
+	}
+	while (1)
+	{
 		cfd = accept(fd, (struct sockaddr *)NULL, NULL);
 
-        ret = recv(cfd, buf, 513, 0);
+		ret = recv(cfd, buf, 513, 0);
 		if (ret > 0)
 		{
 			buf[ret] = 0;
@@ -173,7 +172,7 @@ int	Server::init(){
 		}
 		printf("%d\n", ret);
 		send(cfd ,RPL_WELCOME.c_str(), RPL_WELCOME.length(), MSG_NOSIGNAL);
-    }
+	}
 //     int master_sock , addrlen , new_sock , client_sock[30] ,
 //             maximum_clients = 30 , act, i , value_read , sock_descriptor;
 //     int maximum_socket_descriptor;
@@ -181,7 +180,7 @@ int	Server::init(){
 
 //     char buff[1025];  //data buffer of 1K
 //     fd_set readfds; //set of socket file descriptors
-    
+	
 //     for (i = 0; i < maximum_clients; i++) //initialise all client_sock to 0 
 //     {
 //         client_sock[i] = 0;
@@ -197,36 +196,36 @@ int	Server::init(){
 //     adr.sin_family = AF_INET;
 //     adr.sin_addr.s_addr = INADDR_ANY;
 //     adr.sin_port = htons( PORT );
-    
+	
 //     if (bind(master_sock, (struct sockaddr *)&adr, sizeof(adr))<0) //bind the socket to localhost port 5500
 //     {
 //         perror("Failed_Bind");
 //         exit(EXIT_FAILURE);
 //     }
 //     printf("Port having listener:  %d \\n", PORT);
-    
+	
 //     if (listen(master_sock, 3) < 0) //Specify 3 as maximum pending connections for master socket
 //     {
 //         perror("listen");
 //         exit(EXIT_FAILURE);
 //     }
-    
+	
 //     addrlen = sizeof(adr); //Accepting the Incoming Connection 
 //     puts("Looking For Connections");
-    
+	
 //     //*******************************//
 //     // Here we start using select functions and the macros for multiple client handling
-    
+	
 //     while(TRUE)
 //     {
 //         FD_ZERO(&readfds); //Clearing the socket set
 //         FD_SET(master_sock, &readfds); //Adding the master socket to the set 
 //         maximum_socket_descriptor = master_sock;
-        
+		
 //         for ( i = 0 ; i < maximum_clients ; i++) //Adding child sockets to set 
 //         {
 //             sock_descriptor = client_sock[i]; //Descriptor for Socket 
-            
+			
 //             if(sock_descriptor > 0) //if the socket descriptor is valid then adding it to the read list 
 //                 FD_SET( sock_descriptor , &readfds);
 
@@ -352,8 +351,17 @@ int	Server::init(){
 }
 
 // recuperer la data du User
-// User & Server::get_user() const { // reference or ptr? 
+User *Server::get_user(int key)
+{ // reference or ptr? 
+	User	*user = NULL;
+	std::map< int, User *>::iterator it = this->_users.begin();
 	
-// }
-
+	while (it != this->_users.end())
+	{
+		std::cout << it->first << " => " << it->second << std::endl;
+		if (key == it->first)
+			user = it->second;
+		it++;
+	}
+	return (user); // if user == NULL no user for key
 }
