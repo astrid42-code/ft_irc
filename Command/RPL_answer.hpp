@@ -5,7 +5,7 @@
 #include "Cmd.hpp"
 
 #define SERVERNAME "irc_dta"
-#define SERVER "adresse ip"  // adresse ip ex : Your host is 62.210.33.192, running version 1.69
+#define SERVER "127.0.0.1"  // adresse ip ex : Your host is 62.210.33.192, running version 1.69
 #define VERSION "1.69" // version actuelle a verifier
 #define DATE "Mon Aug 5 16:57:33 2022"
 

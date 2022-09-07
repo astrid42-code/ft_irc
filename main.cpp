@@ -28,8 +28,8 @@ int main(int ac, char **av){
 	// + pvr delete les users
 	// + de même avec les channels
 
-	// irc::Server server = irc::Server();
-	// server.init();
+	irc::Server server = irc::Server();
+	server.init();
 	
 	Cmd	cmd = Cmd();
 	cmd.parse_cmd("NICK");
