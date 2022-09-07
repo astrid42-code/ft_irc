@@ -38,7 +38,7 @@ SRCS		=	main.cpp \
 				Command/Commands_files/ft_user.cpp \
 				Channel/Channel.cpp
 
-INC			=	Server User
+INC			=	Server User Command Channel
 
 ARGS		=	6667 pwd
 

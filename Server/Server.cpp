@@ -174,6 +174,9 @@ int	Server::init()
 	}
 	while (1)
 	{
+		Cmd	cmd = Cmd();
+		cmd.parse_cmd("NICK toto");
+		std::string key = cmd.command._key;
 		cfd = accept(fd, (struct sockaddr *)NULL, NULL);
 
 		ret = recv(cfd, buf, 513, 0);
@@ -366,17 +369,39 @@ int	Server::init()
 }
 
 // recuperer la data du User
-User *Server::get_user(int key)
-{ // reference or ptr? 
-	User	*user = NULL;
-	std::map< int, User *>::iterator it = this->_users.begin();
+Channel	Server::get_chan(std::string key)
+{
+	std::map<std::string, Channel>::iterator it;
 	
-	while (it != this->_users.end())
-	{
-		std::cout << it->first << " => " << it->second << std::endl;
-		if (key == it->first)
-			user = it->second;
-		it++;
-	}
-	return (user); // if user == NULL no user for key
+	it = _channels.find(key);
+	if (it == _channels.end())
+		return (Channel());
+	return (it->second);
+}
+// insert user in map
+bool	Server::set_chan(Channel chan)
+{
+	std::pair<std::map<std::string, Channel>::iterator, bool> p;
+
+	p = _channels.insert(make_pair(chan.get_name(), chan));
+	return (p.second); // if bool == true user succesfully join server else nick name already in use
+}
+
+// recuperer la data du User
+User	Server::get_user(std::string key)
+{
+	std::map<std::string, User>::iterator it;
+	
+	it = _users.find(key);
+	if (it == _users.end())
+		return (User());
+	return (it->second);
+}
+// insert user in map
+bool			Server::set_user(User user)
+{
+	std::pair<std::map<std::string, User>::iterator, bool> p;
+
+	p = _users.insert(make_pair(user.get_nick(), user));
+	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }

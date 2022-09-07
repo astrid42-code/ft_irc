@@ -98,6 +98,7 @@ void Cmd::parse_cmd(std::string str)
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
+		cmd.command._user()
 		set_key(key);
 		command._key = get_key();
 		if (size == 0){
@@ -113,8 +114,8 @@ void Cmd::parse_cmd(std::string str)
 		}
 		exec_cmd(command._key);
 	}
-		else
-			return;
+	else
+		return;
 
 /*	
 a revoir : exception caught + abort

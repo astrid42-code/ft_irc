@@ -9,7 +9,9 @@
 #include "../Server/Server.hpp"
 #include "RPL_answer.hpp"
 
-// class User;
+class User;
+
+class Server;
 
 class Cmd
 {
@@ -20,18 +22,19 @@ class Cmd
 		~Cmd();
 
 		Cmd & operator=(const Cmd & cmd_op);
-
+		
 		// struct contenant les elements utiles au parsing
-		typedef struct Command{
+		typedef struct Command
+		{
 			std::string					_key; // la string du 1er element recu (la key de ma map)
 			std::vector<std::string>	_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
 			// int							_err;
 			User					*_user; // recuperer les infos d'un user (nick, pwd, ...) 
 			// pour checker les erreurs (ex nick already registered), ou envoyer des msgs, ...
-			Server					_server;
+			Server					*_server;
 		} Command;
+
 		Command command;
-		
 
 		// ptr sur fonction des cmds qui prend une ref sur ma struct Command
 		typedef void (*ptr_ft)(Command & command);

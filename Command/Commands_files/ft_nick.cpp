@@ -33,26 +33,32 @@
 //                            ; Server telling that WiZ changed his
 //                            nickname to Kilroy.
 
-void nick(Cmd::Command &command){
+void nick(Cmd::Command &command)
+{
     std::cout << "nick test" << '\n';
-    if (!command._value.size()){
+    if (!command._value.size())
+    {
         std::cout << "Your nickname is " << DEFAULT_NAME << '\n'; // en attendant de recuperer le ptr sur user
         // a tester quand class user terminee
         // command._user->set_user(DEFAULT_NAME);
         // std::cout << "Your nickname is" << command._user->get_user() << '\n';
         return;
-    }
-    //  a tester quand class user terminee
-     
-    else {
-            std::cout << command._user->get_user() << '\n';
+    } //  a tester quand class user terminee
+    else
+    {
+            std::cout << "wrong..." << std::endl;
+            std::cout << command._key << std::endl;
+            std::cout << command._value.front() << std::endl;
+            std::cout << "wright?" << std::endl;
+            std::cout << command._user->get_user() << std::endl;
+            std::cout << "wright!" << std::endl;
     // attention : tester avec ou sans la casse
         if (command._value[0] != command._user->get_user()){
             std::cout << "You're now known as " << command._value[0] << '\n';
         }
         else if (command._value[0] == command._user->get_user()){
             std::cout << "prout2 " << '\n';
-            command._server.get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
+            command._server->get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
         }
     }
     

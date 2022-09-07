@@ -32,9 +32,9 @@ int main(int ac, char **av)
 	Server server = Server();
 	server.init();
 	
-	Cmd	cmd = Cmd();
-	cmd.parse_cmd("NICK toto");
-	std::string key = cmd.command._key;
+	// Cmd	cmd = Cmd();
+	// cmd.parse_cmd("NICK toto");
+	// std::string key = cmd.command._key;
 	// std::cout << "prout3 " << key << '\n';
 /*	if (key != ""){
 		// std::cout << "coucou" << '\n';
