@@ -28,7 +28,7 @@ class Cmd
 			// int							_err;
 			User					*_user; // recuperer les infos d'un user (nick, pwd, ...) 
 			// pour checker les erreurs (ex nick already registered), ou envoyer des msgs, ...
-			irc::Server					_server;
+			Server					_server;
 		} Command;
 		Command command;
 		

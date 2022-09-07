@@ -68,7 +68,7 @@ int Cmd::exec_cmd(std::string key)
 {
 
 	_cmd[key](command);
-	// std::cout << "prout2 " << "_key = " << command._key << '\n';
+	// std::cout << "_key = " << command._key << '\n';
 	return (1);
 }
 

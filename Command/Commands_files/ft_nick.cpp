@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_nick.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 19:40:52 by tamigore         ###   ########.fr       */
+/*   Updated: 2022/09/07 11:20:57 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ void nick(Cmd::Command &command){
     //  a tester quand class user terminee
      
     else {
+            // std::cout << "prout2 " << '\n';
+            command._user->set_user(command._value[0]);
             std::cout << command._user->get_user() << '\n';
     // attention : tester avec ou sans la casse
         if (command._value[0] != command._user->get_user()){
             std::cout << "You're now known as " << command._value[0] << '\n';
         }
         else if (command._value[0] == command._user->get_user()){
-            std::cout << "prout2 " << '\n';
             command._server.get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
         }
     
@@ -60,6 +61,7 @@ void nick(Cmd::Command &command){
     //         + ERR_NICKCOLLISION pour que client(l'utilisateur?) deconnecte les 2 clients
     //          https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
     // // } 
+    }
 }
 
 // test :

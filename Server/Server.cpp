@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 16:47:47 by tamigore         ###   ########.fr       */
+/*   Updated: 2022/09/07 11:17:17 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ bool	Server::set_pp(std::string port, std::string pwd){
 
 void Server::get_msg(std::string msg)
 {
-	(void)msg;
+	// (void)msg;
+	_msg.append(msg);
+	std::cout << _msg;
 	// pour chaque msg : cela commence systematiquement par l'heure actuelle
 	// (fct strtime() a utiliser?)
 	
