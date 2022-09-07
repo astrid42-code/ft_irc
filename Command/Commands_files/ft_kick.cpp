@@ -53,8 +53,8 @@
 //                                    ; KICK message on channel #Finnish
 //                                    from WiZ to remove John from channel
 
-void kick(Cmd::Command & command){
+void kick(Cmd::Command & command)
+{
     (void)command;
-    std::cout << "kick test" << '\n';
-   
+    std::cout << "kick test" << '\n';   
 }

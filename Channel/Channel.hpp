@@ -4,27 +4,55 @@
 #include <iostream>
 #include <map>
 
-namespace irc{
+class User;
 
-	class User;
+class Channel
+{
 
-	class Channel{
+	public:
+		Channel();
+		~Channel();
+		Channel & operator=(const Channel & ch_cp);
+		// getters, setters
+		std::string		get_name() const;
+        std::string		get_ID() const;
+        std::string		get_mod() const;
+        std::map< int, User *>	get_user() const;
+		void			set_channel(std::string name);
+	
+	private:
+		std::string				_name; // must start with '&', '#', '+' or '!' with a max of (50) char and must not contain any ' ' (spaces), G (^G or ASCII 7) or a comma (',')
+		std::map< int, User *>	_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
+		std::string				_ID; // depends of time ?
+		std::string				_mod;
+		//	MODS
+		// O - give "channel creator" status;
+        // o - give/take channel operator privilege;
+        // v - give/take the voice privilege;
+        // a - toggle the anonymous channel flag;
+        // i - toggle the invite-only channel flag;
+        // m - toggle the moderated channel;
+        // n - toggle the no messages to channel from clients on the outside;
+        // q - toggle the quiet channel flag;
+        // p - toggle the private channel flag;
+        // s - toggle the secret channel flag;
+        // r - toggle the server reop channel flag;
+        // t - toggle the topic settable by channel operator only flag;
+        // k - set/remove the channel key (password);
+        // l - set/remove the user limit to channel;
+        // b - set/remove ban mask to keep users out;
+        // e - set/remove an exception mask to override a ban mask;
+        // I - set/remove an invitation mask to automatically override
 
-		public:
-			Channel();
-			~Channel();
+		//	PRIVILEGE
+		// prefix '+' for a chanel without mod and without operators
+		//  INVITE  - Invite a client to an invite-only channel (mode +i)
+       	//	KICK    - Eject a client from the channel
+        //	MODE    - Change the channel's mode, as well as members' privileges
+        //	PRIVMSG - Sending messages to the channel (mode +n, +m, +v)
+        //	TOPIC   - Change the channel topic in a mode +t channel
 
-			Channel & operator=(const Channel & ch_cp);
-
-			// getters, setters
-			std::string		get_channel() const;
-			void			set_channel(std::string name);
-
-		private:
-			std::map< int, User *>	_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
-
-	};
-}
+};
 
 
 #endif

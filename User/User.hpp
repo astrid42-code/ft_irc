@@ -5,29 +5,35 @@
 // #include "Server/Server.hpp"
 #include "../Command/Cmd.hpp"
 
-namespace irc{
+class User
+{
+	public:
+		User();
+		~User();
+		User & operator=(const User & user_cp);
+		// getters, setters
+		std::string 	get_user() const;
+		std::string		get_name() const;
+		std::string 	get_nick() const;
+		std::string 	get_pwd() const;
+		std::string		get_mod() const; // only fill with 'aiwroOs'
+		int				get_operator() const; // 0 for no access 1 for operator
+		void			set_user(std::string user);
+		void			set_name(std::string name);
+		void			set_nick(std::string nick);
+		void			set_pwd(std::string pwd);
+		void			set_mod(std::string mod);
+		void			set_operator(int op);
+		bool			check_nick(std::string new_nick);
+		bool			find_mod(std::string mod);
 
-	class User{
-
-		public:
-			User();
-			~User();
-
-			User & operator=(const User & user_cp);
-
-			// getters, setters
-			std::string 	get_user() const;
-			std::string 	get_pwd() const;
-			void			set_user(std::string name);
-			void			set_pwd(std::string pwd);
-
-			bool	check_user();
-
-
-		private:
-			std::string _name;
-			std::string _pwd;
-	};
-}
+	private:
+		std::string				_user;
+		std::string				_name;
+		std::string				_nick;
+		std::string				_pwd;
+		std::string				_mod;
+		int						_operator;
+};
 
 #endif
