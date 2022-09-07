@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 16:47:47 by tamigore         ###   ########.fr       */
+/*   Updated: 2022/09/07 11:17:17 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 	a decommenter quand on aura fait le User.cpp
 	*/
 // :nickname!username@IP CodeMessage Nickname :Message Que Tu Veux Mettre
-#define RPL_WELCOME (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") //001
+// #define RPL_WELCOME (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") //001
         	// + envoyer <nick>!<user>@<host>) en arguments 
 			// + ajouter dessin?
-#define RPL_YOURHOST ( ":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n") //002
-#define RPL_CREATED (":dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
-#define RPL_MYINFO (":dasanter!dasanter@127.0.0.1 004 dasanter :irc_dta 1.69 aio ovim\r\n") // 004
+// #define RPL_YOURHOST ( ":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n") //002
+// #define RPL_CREATED (":dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
+// #define RPL_MYINFO (":dasanter!dasanter@127.0.0.1 004 dasanter :irc_dta 1.69 aio ovim\r\n") // 004
 
 #define TRUE   1
 #define PORT 6667
@@ -119,7 +119,9 @@ bool	Server::set_pp(std::string port, std::string pwd){
 
 void Server::get_msg(std::string msg)
 {
-	(void)msg;
+	// (void)msg;
+	_msg.append(msg);
+	std::cout << _msg;
 	// pour chaque msg : cela commence systematiquement par l'heure actuelle
 	// (fct strtime() a utiliser?)
 	
@@ -172,11 +174,9 @@ int	Server::init()
 		std::cout << "fail listen" << std::endl;
 		return 0;
 	}
+	Cmd	cmd = Cmd();
 	while (1)
 	{
-		Cmd	cmd = Cmd();
-		cmd.parse_cmd("NICK toto");
-		std::string key = cmd.command._key;
 		cfd = accept(fd, (struct sockaddr *)NULL, NULL);
 
 		ret = recv(cfd, buf, 513, 0);
@@ -187,7 +187,7 @@ int	Server::init()
 			send(cfd ,RPL_WELCOME, strlen(RPL_WELCOME), MSG_CONFIRM); // 001
 			send(cfd ,RPL_YOURHOST, strlen(RPL_YOURHOST), MSG_CONFIRM); // 002
 			send(cfd ,RPL_CREATED, strlen(RPL_CREATED), MSG_CONFIRM); // 003
-			send(cfd ,RPL_MYINFO, strlen(RPL_MYINFO), MSG_CONFIRM); // 004
+			send(cfd ,RPL_MYINFO("aiwroOs", "O"), strlen(RPL_MYINFO("aiwroOs", "O")), MSG_CONFIRM); // 004
 			send(cfd ,"376 :End of MOTD command\r\n", strlen(":End of MOTD command\r\n"), MSG_CONFIRM); // 004
 		}
     }

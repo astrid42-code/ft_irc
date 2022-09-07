@@ -53,7 +53,7 @@
 //    WHOIS eff.org trillian          ; ask server eff.org for user
 //                                    information  about trillian
                                    
-void whois(Cmd::Command & command){
+void whois(Cmd command){
     (void)command;
     std::cout << "whois test" << '\n';
 }

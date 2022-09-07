@@ -36,7 +36,7 @@
 //            ERR_NOSUCHNICK
 //            RPL_AWAY
 
-void privmsg(Cmd::Command & command){
+void privmsg(Cmd command){
     (void)command;
     std::cout << "privmsg test" << '\n';
 }

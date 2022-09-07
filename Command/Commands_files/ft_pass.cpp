@@ -29,8 +29,8 @@
 //            PASS secretpasswordhere
 
 
-void pass(Cmd::Command & command){
-    std::cout << "pass test " << command._key << '\n';
+void pass(Cmd command){
+    std::cout << "pass test " << command.get_key() << '\n';
     // if (command._value.size() != 1){
     //     server.get_msg = (ERR_NEEDMOREPARAMS(command._key)); 
     //  dans server : faire une fct qui recupere le define / le msg complet et qui l'imprime

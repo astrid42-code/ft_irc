@@ -6,11 +6,13 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:11 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:58:15 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+#include "../RPL_answer.hpp"
+#include "../../Server/Server.hpp"
 
 // Paramètres : <nom du chan> [<clé>]
 // Réponses possibles : ERR_NEEDMOREPARAMS (461), ERR_BANNEDFROMCHAN (474), ERR_INVITEONLYCHAN (473), ERR_BADCHANNELKEY (475), ERR_CHANNELISFULL (471), ERR_NOSUCHCHANNEL (403), RPL_TOPIC (332)
@@ -75,7 +77,17 @@
 //    :WiZ!jto@tolsun.oulu.fi JOIN #Twilight_zone ; JOIN message from WiZ
 //                                    on channel #Twilight_zone
 
-void join(Cmd::Command & command){
-    (void)command;
-    std::cout << "join test" << '\n';
+void join(Cmd command){
+	// (void)command;
+	if (!command.get_value().size())
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()));
+	else{
+		// fct pour creer et/ou rejoindre le channel (dans le server)
+		// si plsrs channels dans arg1 ils doivent etre separes par des virgules
+		// et etre crees separement (le client gere ensuite)
+		
+	}
 }
+
+// si user deja dans un channel, /join ce meme channel ne fait rien
+// on passe d un channel a l'autre avec join (un channel deja cree garde les msgs deja envoyes)

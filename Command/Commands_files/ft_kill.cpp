@@ -67,7 +67,7 @@
 
 
 
-void kill(Cmd::Command & command){
+void kill(Cmd command){
     (void)command;
     std::cout << "kill test" << '\n';
 }

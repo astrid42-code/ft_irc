@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 16:51:01 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/07 10:10:32 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 //                                    invisible.
 
 
-void user(Cmd::Command & command){
+void user(Cmd command){
     (void)command;
     std::cout << "user test" << '\n';
     

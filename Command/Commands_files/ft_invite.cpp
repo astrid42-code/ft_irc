@@ -53,7 +53,7 @@
 //    INVITE Wiz #Twilight_Zone       ; Command to invite WiZ to
 //                                    #Twilight_zone
 
-void invite(Cmd::Command & command){
+void invite(Cmd command){
     (void)command;
     std::cout << "invite test" << '\n';
 }

@@ -30,7 +30,7 @@
 //                                    syrk has quit IRC to have lunch.
 
 
-void quit(Cmd::Command & command){
+void quit(Cmd command){
     (void)command;
     std::cout << "quit test" << '\n';
 }

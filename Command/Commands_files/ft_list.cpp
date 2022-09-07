@@ -42,7 +42,7 @@
 //    LIST #twilight_zone,#42         ; Command to list channels
 //                                    #twilight_zone and #42
 
-void list(Cmd::Command & command){
+void list(Cmd command){
     (void)command;
     std::cout << "list test" << '\n';
 }

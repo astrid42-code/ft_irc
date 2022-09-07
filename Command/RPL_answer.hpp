@@ -11,15 +11,15 @@
 #define DEFAULT_NAME "toto"
 
 
-//#define RPL_WELCOME ("Welcome to the Internet Relay Network\r\n") //001
+#define RPL_WELCOME ("Welcome to the Internet Relay Network\r\n") //001
         	// + envoyer <nick>!<user>@<host>) en arguments
 			// + ajouter dessin?
 
-//#define RPL_YOURHOST ( "Your host is " SERVER ", running version" VERSION "\r\n") //002
+#define RPL_YOURHOST ( "Your host is " SERVER ", running version" VERSION "\r\n") //002
 
-//#define RPL_CREATED ("This server was created " DATE "\r\n") // 003
+#define RPL_CREATED ("This server was created " DATE "\r\n") // 003
 
-//#define RPL_MYINFO(user_mode, chan_mode) (SERVERNAME VERSION "<available user modes> <available channel modes>\r\n") // 004
+#define RPL_MYINFO(user_mode, chan_mode) (SERVERNAME VERSION "<available user modes> <available channel modes>\r\n") // 004
 	// + envoyer nombre de users en fct de leur mode (nbr de users connectes, nbre d'invisible users connectes)
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg
@@ -104,7 +104,7 @@
 	// + envoyer nick du user en arg
 // Used to indicate the nickname parameter supplied to a command is currently unused.
 
-#define ERR_NOSUCHSERVER (SERVER " :No such server\r\n") // 402
+#define ERR_NOSUCHSERVER(server) (server + " :No such server\r\n") // 402
 // - Used to indicate the server name given currently does not exist.
 
 #define ERR_NOSUCHCHANNEL(channel) (channel + " :No such channel\r\n") // 403
@@ -135,6 +135,9 @@
 //  - Returned to a client which is attempting to JOIN a safe
 //    channel using the shortname when there are more than one
 //    such channel.
+
+#define ERR_NOORIGIN (":No origin specified") // 409
+// - PING or PONG message missing the originator parameter.
 
 #define ERR_NORECIPIENT (":No recipient given (<command>)\r\n") // 411 
 

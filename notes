@@ -129,3 +129,8 @@ exemple du server shibrc
 16:54 -!- - 
 16:54 -!- End of /MOTD command
 16:54 -!- Your user mode is [+wi]
+
+
+cmds prioritaires 
+ping 
+join (check salon existant sinon le creer et mettre le user)
