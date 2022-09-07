@@ -104,7 +104,7 @@
 	// + envoyer nick du user en arg
 // Used to indicate the nickname parameter supplied to a command is currently unused.
 
-#define ERR_NOSUCHSERVER (SERVER " :No such server\r\n") // 402
+#define ERR_NOSUCHSERVER(server) (server + " :No such server\r\n") // 402
 // - Used to indicate the server name given currently does not exist.
 
 #define ERR_NOSUCHCHANNEL(channel) (channel + " :No such channel\r\n") // 403
@@ -135,6 +135,9 @@
 //  - Returned to a client which is attempting to JOIN a safe
 //    channel using the shortname when there are more than one
 //    such channel.
+
+#define ERR_NOORIGIN (":No origin specified") // 409
+// - PING or PONG message missing the originator parameter.
 
 #define ERR_NORECIPIENT (":No recipient given (<command>)\r\n") // 411 
 

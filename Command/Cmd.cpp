@@ -27,7 +27,7 @@ Cmd::Cmd(){
 	_cmd["KILL"] = kill;
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
-	
+	_cmd["PING"] = ping;
 }
 
 Cmd::Cmd(const Cmd & cp){
@@ -56,14 +56,6 @@ const std::string&	Cmd::get_key(void) const{
 	return (command._key);
 }
 
-// void Cmd::set_value(std::string value) {
-// 	command._value = value;
-// }
-
-// const std::string&	Cmd::get_value(void) const{
-// 	return (command._value);
-// }
-
 int Cmd::exec_cmd(std::string key)
 {
 
@@ -77,7 +69,7 @@ int check_condition(std::string key)
 	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
 			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
 			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
-			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0)
+			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0 || key.compare("PING") == 0)
 		return (1);
 	return (0);
 }
@@ -108,7 +100,7 @@ void Cmd::parse_cmd(std::string str)
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos){
 			end = tmp_val.find(' ', start);
 			command._value.push_back(tmp_val.substr(start, end - start));
-			std::cout << "value = " << command._value[i] << '\n';
+			// std::cout << "value = " << command._value[i] << '\n';
 			i++;
 		}
 		exec_cmd(command._key);

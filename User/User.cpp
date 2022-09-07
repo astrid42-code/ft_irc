@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/07 11:24:00 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/07 12:54:55 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	User::get_operator() const
 void	User::set_user(std::string user)
 {
 	_user = user;
-	std::cout << "prout2 " << '\n';
 }
 
 void	User::set_name(std::string name)

@@ -39,8 +39,8 @@ class Cmd
 
 		void set_key(std::string key) ;
 		const std::string &	get_key(void) const;
-	//	void set_value(std::string value);
-	//	const std::string &	get_value(void) const;
+		// void set_value(std::string value);
+		// const std::string &	get_value(void) const;
 
 		int exec_cmd(std::string key);
 		void parse_cmd(std::string str);
@@ -60,6 +60,7 @@ void list(Cmd::Command & command);
 void privmsg(Cmd::Command & command);
 void who(Cmd::Command & command);
 
+void ping(Cmd::Command & command);
 void invite(Cmd::Command & command);
 void kick(Cmd::Command & command);
 void oper(Cmd::Command & command);

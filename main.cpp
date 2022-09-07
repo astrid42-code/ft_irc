@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/07 11:17:47 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:28:59 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char **av)
 	// server.init();
 	
 	Cmd	cmd = Cmd();
-	cmd.parse_cmd("NICK titi");
+	cmd.parse_cmd("JOIN toto");
 	std::string key = cmd.command._key;
 	// std::cout << "prout3 " << key << '\n';
 /*	if (key != ""){
