@@ -11,6 +11,19 @@
 /* ************************************************************************** */
 
 #include "Server.hpp"
+/* #include "../Command/RPL_answer.hpp"
+	a decommenter quand on aura fait le User.cpp
+	*/
+#define RPL_WELCOME ("dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network dasanter!dasanter@127.0.0.1") //001
+        	// + envoyer <nick>!<user>@<host>) en arguments
+			// + ajouter dessin?
+
+#define RPL_YOURHOST ( "dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n") //002
+
+#define RPL_CREATED ("dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
+
+#define RPL_MYINFO ("dasanter!dasanter@127.0.0.1 004 dasanter irc_dta 1.69 aio ovim\r\n") // 004
+
 #define TRUE   1
 #define PORT 6667
 #include <sys/socket.h>
@@ -29,7 +42,8 @@
 #include <algorithm>
 #include <sys/types.h>
 #include <netdb.h>
-	
+#include <string.h>
+
 Server::Server() : _port("6667"), _pwd("pwd"){
 	std::cout << "Hi there, nice to see you!" << std::endl;
 }
@@ -173,8 +187,13 @@ int	Server::init()
 			printf("%s\n", buf);
 		}
 		printf("%d\n", ret);
-		send(cfd ,RPL_WELCOME.c_str(), RPL_WELCOME.length(), MSG_NOSIGNAL);
-	}
+		send(cfd ,RPL_WELCOME, strlen(RPL_WELCOME), MSG_CONFIRM); // 001
+		send(cfd ,RPL_YOURHOST, strlen(RPL_YOURHOST), MSG_CONFIRM); // 002
+		send(cfd ,RPL_CREATED, strlen(RPL_CREATED), MSG_CONFIRM); // 003
+		send(cfd ,RPL_MYINFO, strlen(RPL_MYINFO), MSG_CONFIRM); // 004
+		send(cfd ,"376 :End of MOTD command\r\n", strlen(":End of MOTD command\r\n"), MSG_CONFIRM); // 004
+
+    }
 //     int master_sock , addrlen , new_sock , client_sock[30] ,
 //             maximum_clients = 30 , act, i , value_read , sock_descriptor;
 //     int maximum_socket_descriptor;

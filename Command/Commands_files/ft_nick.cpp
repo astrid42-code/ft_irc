@@ -55,6 +55,7 @@ void nick(Cmd::Command &command){
         else if (command._value[0] == command._user->get_user()){
             command._server.get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
         }
+    }
     
     //         else if (si chgmt de nick dans un autre serveur et nouveau nick deja enregistre)
     //          envoyer cmd kill 
