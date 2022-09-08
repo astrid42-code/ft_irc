@@ -35,6 +35,9 @@ class Server
 		User *get_user(int key);
 		std::locale loc;
 		void get_msg(std::string msg);
+		void set_ip(std::string ip);
+		std::string get_ip();
+		//std::string form_msg(int code, std::string string, User usr);
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
 
 	private:
@@ -44,6 +47,7 @@ class Server
 		std::string							_msg; // msg envoye par le serveur (ex : msgs d'erreurs)
 		std::map< std::string, Channel >	_channels;
 		std::map< int, User *>				_users;
+		std::string 						_ip;
 };
 
 
