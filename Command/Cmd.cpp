@@ -29,16 +29,19 @@ Cmd::Cmd()
 	_cmd["PING"] = ping;
 }
 
-Cmd::Cmd(const Cmd & cp){
+Cmd::Cmd(const Cmd & cp)
+{
 	*this = cp;
 }
 
-Cmd::~Cmd(){
+Cmd::~Cmd()
+{
 	// clear ?
-	// std::cout << "bye" << '\n';
+	std::cout << "Command destroyed..." << std::endl;
 }
 
-Cmd & Cmd::operator=(const Cmd & cmd_op){
+Cmd & Cmd::operator=(const Cmd & cmd_op)
+{
 	_cmd = cmd_op._cmd;
 	return (*this);
 }
@@ -103,7 +106,8 @@ void Cmd::parse_cmd(std::string str)
 		// cmd.command._user();
 		set_key(key);
 		_key = get_key();
-		if (size == 0){
+		if (size == 0)
+		{
 			exec_cmd(_key);
 			return;
 		}

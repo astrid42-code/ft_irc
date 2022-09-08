@@ -14,14 +14,25 @@
 #include "Command/Cmd.hpp"
 #include "User/User.hpp"
 
-int main(int ac, char **av)
+void	init_user(User &user)
+{
+	user.set_name("Tad amigo");
+	user.set_mod("o");
+	user.set_nick("tamigore");
+	user.set_operator(1);
+	user.set_pwd("1234567890");
+	user.set_user("Tadeo");
+}
+
+int		main(int ac, char **av)
 {
 	(void)av;
 	
-	if (ac != 3){
-		std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
-		return (1);
-	}
+	// if (ac != 3)
+	// {
+	// 	std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
+	// 	return (1);
+	// }
     
 	// 1 creer un objet de la class Server server > définir ce que l'objet server contient
 	// > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
@@ -30,14 +41,19 @@ int main(int ac, char **av)
 	// + de même avec les channels
 
 	Server server = Server();
-	server.init();
+	// server.init();
 	// std::cout << "prout3 " << key << '\n';
-/*	if (key != ""){
-		// std::cout << "coucou" << '\n';
-		cmd.exec_cmd(key); // recupere la string donnee au debut
+	if (ac == 2)
+	{
+		Cmd		cmd;
+		User	user;
 
+		init_user(user);
+		user.print();
+		std::cout << av[1] << '\n';
+		cmd.parse_cmd(av[1]);
+		cmd.exec_cmd(cmd.get_key()); // recupere la string donnee au debut
 	}
-*/
 	
 	// test();
 	// 2 signal?

@@ -26,12 +26,13 @@ class Channel
 		void			set_ID(std::string ID);
 		void			set_mod(std::string mod);
 		void			set_channel(std::string name);
+		void			print(void);
 	
 	private:
-		std::string				_name; // must start with '&', '#', '+' or '!' with a max of (50) char and must not contain any ' ' (spaces), G (^G or ASCII 7) or a comma (',')
+		std::string						_name; // must start with '&', '#', '+' or '!' with a max of (50) char and must not contain any ' ' (spaces), G (^G or ASCII 7) or a comma (',')
 		std::map< std::string, User>	_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
-		std::string				_ID; // depends of time ?
-		std::string				_mod;
+		std::string						_ID; // depends of time ?
+		std::string						_mod;
 		//	MODS
 		// O - give "channel creator" status;
 		// o - give/take channel operator privilege;

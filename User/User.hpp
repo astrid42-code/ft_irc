@@ -5,6 +5,12 @@
 // #include "Server/Server.hpp"
 #include "../Command/Cmd.hpp"
 
+#include <sstream>
+
+#define SSTR( x ) static_cast< std::ostringstream & >( \
+        ( std::ostringstream() << std::dec << x ) ).str()
+
+
 class User
 {
 	public:
@@ -26,6 +32,7 @@ class User
 		void			set_operator(int op);
 		bool			check_nick(std::string new_nick);
 		bool			find_mod(std::string mod);
+		void			print(void) const;
 
 	private:
 		std::string				_user;

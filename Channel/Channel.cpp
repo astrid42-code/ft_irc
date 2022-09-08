@@ -77,3 +77,15 @@ void			Channel::set_channel(std::string name)
 {
 	_name = name;
 }
+
+void			Channel::print(void)
+{
+	std::map< std::string, User>::iterator it = _users.begin();
+
+	std::cout << "name:" + _name << " | ID:" + _ID << " | mod:" + _mod << "\nUsers:" << std::endl;
+	while (it != _users.end())
+	{
+		it->second.print();
+		it++;
+	}
+}
