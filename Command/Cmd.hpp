@@ -20,6 +20,7 @@ class Cmd
 		Cmd();
 		Cmd(const Cmd & cp);
 		~Cmd();
+
 		Server					*_server;
 		User					*_user; // recuperer les infos d'un user (nick, pwd, ...) 
 
@@ -38,9 +39,9 @@ class Cmd
 
 		int		exec_cmd(std::string key);
 		void	parse_cmd(std::string str);
-    
+
 	private:
-    	std::map<std::string, ptr_ft>	_cmd;
+		std::map<std::string, ptr_ft>	_cmd;
 		std::string						_key; // la string du 1er element recu (la key de ma map)
 		std::vector<std::string>		_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
 };

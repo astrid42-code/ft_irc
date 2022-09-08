@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "User.hpp"
-
 	
 User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _mod(""), _operator(0)
 {
@@ -153,4 +152,9 @@ bool	User::find_mod(std::string mod)
 	if (_mod.find(mod) == 0)
 		return (1);
 	return (0);
+}
+
+void	User::print(void) const
+{
+	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod << std::endl;
 }
