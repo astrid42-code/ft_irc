@@ -133,6 +133,19 @@ a revoir : exception caught + abort
 */
 }
 
+void	Cmd::print(void) const
+{
+	std::cout << "key: " + _key << " | value: " + _value << std::endl;
+	if (_user)
+		std::cout << _user->print() << std::endl;
+	else
+	 	std::cout << "no user" << std::endl;
+	// if (_server)
+	// 	std::cout << _server->print() << std::endl;
+	// else
+	// 	std::cout << "no server" << std::endl;
+}
+
 
 //autres cmds possibles?
 // - PART

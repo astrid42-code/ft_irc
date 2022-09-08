@@ -34,11 +34,13 @@ class Cmd
 		const std::string				get_key(void) const;
 		void							set_value(std::vector<std::string> key);
 		const std::vector<std::string>	get_value(void) const;
+
 		// void set_value(std::string value);
 		// const std::string &	get_value(void) const;
 
 		int		exec_cmd(std::string key);
 		void	parse_cmd(std::string str);
+		void	print(void) const;
 
 	private:
 		std::map<std::string, ptr_ft>	_cmd;
