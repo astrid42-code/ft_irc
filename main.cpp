@@ -41,8 +41,9 @@ int		main(int ac, char **av)
 	// + de même avec les channels
 
 	Server server = Server();
-	// server.init();
-	// std::cout << "prout3 " << key << '\n';
+	server.init();
+	std::cout << "prout3 " << std::endl;
+	
 	if (ac == 2)
 	{
 		Cmd		cmd;
@@ -54,7 +55,7 @@ int		main(int ac, char **av)
 		cmd.parse_cmd(av[1]);
 		cmd.exec_cmd(cmd.get_key()); // recupere la string donnee au debut
 	}
-	
+
 	// test();
 	// 2 signal?
 	// 3 set le port et le pwd du server avec av1 et 2 (des possibilités d'erreurs ici)

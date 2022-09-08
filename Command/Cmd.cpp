@@ -27,6 +27,8 @@ Cmd::Cmd()
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
 	_cmd["PING"] = ping;
+	_user = NULL;
+	_server = NULL;
 }
 
 Cmd::Cmd(const Cmd & cp)
@@ -96,7 +98,6 @@ void Cmd::parse_cmd(std::string str)
 	size_t size;
 	std::string tmp_val;
 	int i = 0;
-
 	for (int i = 0; str[i] != ' '; i++)
 		result = i + 1;
 	key = str.substr(0, result);
@@ -105,12 +106,13 @@ void Cmd::parse_cmd(std::string str)
 	{
 		// cmd.command._user();
 		set_key(key);
-		_key = get_key();
+		//_key = get_key();
 		if (size == 0)
 		{
 			exec_cmd(_key);
 			return;
 		}
+		printf("oulalala\n");
 		tmp_val = str.substr(result, str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
@@ -119,6 +121,7 @@ void Cmd::parse_cmd(std::string str)
 			// std::cout << "value = " << command._value[i] << '\n';
 			i++;
 		}
+		printf("ololo\n");
 		exec_cmd(_key);
 	}
 	else

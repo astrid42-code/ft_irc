@@ -242,6 +242,17 @@ static int create_and_bind (std::string port)
   return sfd;
 }
 
+void pre_parse(char *buf, Cmd command)
+{
+	std::string pars = buf;
+	std::string part;
+
+	while (pars.find_first_of('\n') > 0)
+	{
+		command.parse_cmd(part);
+	}
+}
+
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int	Server::init()
 {
@@ -344,7 +355,7 @@ int	Server::init()
             done = 1;
             break;
           }
-		  command.parse_cmd(buf);
+		  pre_parse(buf, command);
           s = write(1, buf, count);
           if (s == -1) {
             perror("write");
