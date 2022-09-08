@@ -36,6 +36,8 @@ class Server
 		Channel		get_chan(std::string key);
 		bool		set_chan(Channel chan);
 		User		get_user(std::string key);
+		std::string	get_ip();
+		void 		set_ip(std::string ip);
 		bool		set_user(User user);
 		std::locale	loc;
 		void		get_msg(std::string msg);
@@ -45,6 +47,7 @@ class Server
 		std::string							_port; // doit etre une string car recupere av[1] -> a transformer en int pour plus de simplicite	
 		std::string							_pwd;
 		int									fd;
+		std::string 						_ip;
 		std::string							_msg; // msg envoye par le serveur (ex : msgs d'erreurs)
 		std::map< std::string, Channel>	_channels;
 		std::map< std::string, User>		_users;
