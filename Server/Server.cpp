@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/07 11:17:17 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:16:41 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,9 +246,16 @@ void pre_parse(char *buf, Cmd command)
 {
 	std::string pars = buf;
 	std::string part;
+  size_t start;
+  size_t end = 0;
 
-	while (pars.find_first_of('\n') > 0)
+	while ((start = pars.find_first_not_of('\n', end)) != std::string::npos)
 	{
+    std::cout << "start= " << start << '\n';
+    end = pars.find('\n', start);
+    std::cout << "end= " << end << '\n';
+    part = pars.substr(start, end - start);
+    std::cout << "part" << part << '\n';
 		command.parse_cmd(part);
 	}
 }
