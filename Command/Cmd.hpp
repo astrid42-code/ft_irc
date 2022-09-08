@@ -40,7 +40,7 @@ class Cmd
 
 		int		exec_cmd(std::string key);
 		void	parse_cmd(std::string str);
-		void	print(void) const;
+		void	print(void);
 
 	private:
 		std::map<std::string, ptr_ft>	_cmd;

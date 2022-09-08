@@ -40,7 +40,7 @@ Cmd::~Cmd()
 	std::cout << "Command destroyed..." << std::endl;
 }
 
-Cmd & Cmd::operator=(const Cmd & cmd_op)
+Cmd & Cmd::operator=(const Cmd &cmd_op)
 {
 	_cmd = cmd_op._cmd;
 	return (*this);
@@ -133,11 +133,18 @@ a revoir : exception caught + abort
 */
 }
 
-void	Cmd::print(void) const
+void	Cmd::print(void)
 {
-	std::cout << "key: " + _key << " | value: " + _value << std::endl;
+	std::vector<std::string>::iterator it = _value.begin();
+
+	std::cout << "key: " + _key << std::endl;
+	while (it != _value.end())
+	{
+		std::cout << it->data() << std::endl;
+		it++;
+	}
 	if (_user)
-		std::cout << _user->print() << std::endl;
+		_user->print();
 	else
 	 	std::cout << "no user" << std::endl;
 	// if (_server)
