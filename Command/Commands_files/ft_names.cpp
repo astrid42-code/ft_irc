@@ -47,7 +47,7 @@
 //    NAMES                           ; Command to list all visible
 //                                    channels and users
 
-void names(Cmd::Command & command){
+void names(Cmd command){
     (void)command;
     std::cout << "name test" << '\n';
 }

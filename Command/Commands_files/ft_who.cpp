@@ -44,7 +44,7 @@
 //                                    match against "jto*" if they are an
 //                                    operator.
 
-void who(Cmd::Command & command){
+void who(Cmd command){
     (void)command;
     std::cout << "who test" << '\n';
 }

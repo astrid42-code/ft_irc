@@ -2,10 +2,9 @@
 
 
 
-Cmd::Cmd(){
-	// build les fcts cmds en reliant une string a la fct 
-
-// ou plutot faire un make_pair()?
+Cmd::Cmd()
+{
+	// build les fcts cmds en reliant une string a la fct ou plutot faire un make_pair()?
 
 	// basic cmds
 	_cmd["NICK"] = nick;
@@ -27,7 +26,7 @@ Cmd::Cmd(){
 	_cmd["KILL"] = kill;
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
-	
+	_cmd["PING"] = ping;
 }
 
 Cmd::Cmd(const Cmd & cp){
@@ -48,36 +47,39 @@ Cmd & Cmd::operator=(const Cmd & cmd_op){
 //     &test, &ft_join
 // };
 
-void Cmd::set_key(std::string key) {
-	command._key = key;
-}
-
-const std::string&	Cmd::get_key(void) const{
-	return (command._key);
-}
-
-// void Cmd::set_value(std::string value) {
-// 	command._value = value;
-// }
-
-// const std::string&	Cmd::get_value(void) const{
-// 	return (command._value);
-// }
-
-int Cmd::exec_cmd(std::string key)
+void Cmd::set_key(std::string key)
 {
+	_key = key;
+}
 
-	_cmd[key](command);
-	// std::cout << "prout2 " << "_key = " << command._key << '\n';
+const std::string	Cmd::get_key(void) const
+{
+	return (_key);
+}
+
+void Cmd::set_value(std::vector<std::string> value)
+{
+	_value = value;
+}
+
+const std::vector<std::string>	Cmd::get_value(void) const
+{
+	return (_value);
+}
+
+int 				Cmd::exec_cmd(std::string key)
+{
+	_cmd[key](*this);
+	// std::cout << "_key = " << command._key << '\n';
 	return (1);
 }
 
-int check_condition(std::string key)
+int					check_condition(std::string key)
 {
 	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
 			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
 			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
-			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0)
+			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0 || key.compare("PING") == 0)
 		return (1);
 	return (0);
 }
@@ -98,23 +100,25 @@ void Cmd::parse_cmd(std::string str)
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
+		// cmd.command._user();
 		set_key(key);
-		command._key = get_key();
+		_key = get_key();
 		if (size == 0){
-			exec_cmd(command._key);
+			exec_cmd(_key);
 			return;
 		}
 		tmp_val = str.substr(result, str.size());
-		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos){
+		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
+		{
 			end = tmp_val.find(' ', start);
-			command._value.push_back(tmp_val.substr(start, end - start));
-			std::cout << "value = " << command._value[i] << '\n';
+			_value.push_back(tmp_val.substr(start, end - start));
+			// std::cout << "value = " << command._value[i] << '\n';
 			i++;
 		}
-		exec_cmd(command._key);
+		exec_cmd(_key);
 	}
-		else
-			return;
+	else
+		return;
 
 /*	
 a revoir : exception caught + abort

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_nick.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 19:40:52 by tamigore         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:36:20 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,34 @@
 //                            ; Server telling that WiZ changed his
 //                            nickname to Kilroy.
 
-void nick(Cmd::Command &command){
+void nick(Cmd command)
+{
     std::cout << "nick test" << '\n';
-    if (!command._value.size()){
+    if (!command.get_value().size())
+    {
         std::cout << "Your nickname is " << DEFAULT_NAME << '\n'; // en attendant de recuperer le ptr sur user
         // a tester quand class user terminee
         // command._user->set_user(DEFAULT_NAME);
         // std::cout << "Your nickname is" << command._user->get_user() << '\n';
         return;
-    }
-    //  a tester quand class user terminee
-     
-    else {
+    }//  a tester quand class user terminee
+    else
+    {
+            // std::cout << "prout2 " << command._value[0] << '\n';
+            
+            // command._user->set_nick(command._value[0]);
             std::cout << command._user->get_user() << '\n';
-    // attention : tester avec ou sans la casse
-        if (command._value[0] != command._user->get_user()){
-            std::cout << "You're now known as " << command._value[0] << '\n';
+            // attention : tester avec ou sans la casse
+        if (command.get_value()[0] != command._user->get_user()){
+            std::cout << "You're now known as " << command.get_value()[0] << '\n';
         }
-        else if (command._value[0] == command._user->get_user()){
-            std::cout << "prout2 " << '\n';
-            command._server.get_msg(ERR_NICKNAMEINUSE(command._value[0])); 
+        else if (command.get_value()[0] == command._user->get_user()){
+            command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0])); 
         }
     }
     
     //         else if (si chgmt de nick dans un autre serveur et nouveau nick deja enregistre)
-    //          envoyer cmd kill 
+    //          envoyer cmd kill > a ne pas faire (youpi)
     //         + ERR_NICKCOLLISION pour que client(l'utilisateur?) deconnecte les 2 clients
     //          https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
     // // } 

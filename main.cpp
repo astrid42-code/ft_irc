@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/06 19:40:47 by tamigore         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:28:59 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@ int main(int ac, char **av)
 
 	Server server = Server();
 	server.init();
-	
-	Cmd	cmd = Cmd();
-	cmd.parse_cmd("NICK toto");
-	std::string key = cmd.command._key;
 	// std::cout << "prout3 " << key << '\n';
 /*	if (key != ""){
 		// std::cout << "coucou" << '\n';

@@ -1,6 +1,6 @@
 #include "Channel.hpp"
 
-Channel::Channel()
+Channel::Channel() : _name("NoName"), _ID("toto"), _mod("")
 {}
 
 Channel::~Channel()
@@ -9,25 +9,71 @@ Channel::~Channel()
 Channel & Channel::operator=(const Channel & ch_cp)
 {
 	this->_name = ch_cp._name;
+	this->_users = ch_cp._users;
+	this->_ID = ch_cp._ID;
+	this->_mod = ch_cp._mod;
 	return (*this);
 }
 
-std::string				Channel::get_name() const
+std::string					Channel::get_name() const
 {
 	return (_name);
 }
 
-std::string				Channel::get_ID() const
+std::string					Channel::get_ID() const
 {
 	return (_ID);
 }
 
-std::string				Channel::get_mod() const
+std::string					Channel::get_mod() const
 {
 	return (_mod);
 }
 
-std::map< int, User *>	Channel::get_user() const
+std::map<std::string, User>	Channel::get_users() const
 {
 	return (_users);
+}
+
+User						Channel::get_user( std::string key)
+{
+	std::map<  std::string, User>::iterator it;
+	
+	it = _users.find(key);
+	if (it == _users.end())
+		return (User());
+	return (it->second);
+}
+
+void			Channel::set_name(std::string name)
+{
+	_name = name;
+}
+
+void			Channel::set_users(std::map<  std::string, User> users)
+{
+	_users = users;
+}
+
+bool			Channel::set_user(User user)
+{
+	std::pair<std::map<std::string, User>::iterator, bool> p;
+
+	p = _users.insert(make_pair(user.get_nick(), user));
+	return (p.second);
+}
+
+void			Channel::set_ID(std::string ID)
+{
+	_ID = ID;
+}
+
+void			Channel::set_mod(std::string mod)
+{
+	_mod = mod;
+}
+
+void			Channel::set_channel(std::string name)
+{
+	_name = name;
 }

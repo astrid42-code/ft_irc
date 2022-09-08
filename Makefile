@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tamigore <tamigore@student.42.fr>          +#+  +:+       +#+         #
+#    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/09/06 19:34:03 by tamigore         ###   ########.fr        #
+#    Updated: 2022/09/07 16:37:48 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,9 +36,10 @@ SRCS		=	main.cpp \
 				Command/Commands_files/ft_list.cpp \
 				Command/Commands_files/ft_names.cpp \
 				Command/Commands_files/ft_user.cpp \
+				Command/Commands_files/ft_ping.cpp \
 				Channel/Channel.cpp
 
-INC			=	Server User
+INC			=	Server User Command Channel
 
 ARGS		=	6667 pwd
 
