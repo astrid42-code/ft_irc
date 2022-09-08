@@ -28,23 +28,13 @@ int		main(int ac, char **av)
 {
 	(void)av;
 	
-	// if (ac != 3)
-	// {
-	// 	std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
-	// 	return (1);
-	// }
-    
-	// 1 creer un objet de la class Server server > définir ce que l'objet server contient
-	// > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
-	// + récupérer le user (prévoir qu'il peut y en avoir plsrs, les mettre dans un tableau / vector)
-	// + pvr delete les users
-	// + de même avec les channels
-
-	Server server = Server();
-	server.init();
-	std::cout << "prout3 " << std::endl;
-	
-	if (ac == 2)
+	if (ac == 3)
+	{
+		Server server = Server(av[1], av[2]);
+		server.init();
+		std::cout << "prout3 " << std::endl;
+	}
+	else if (ac == 2)
 	{
 		Cmd		cmd;
 		User	user;
@@ -55,6 +45,17 @@ int		main(int ac, char **av)
 		cmd.parse_cmd(av[1]);
 		cmd.exec_cmd(cmd.get_key()); // recupere la string donnee au debut
 	}
+	else
+	{
+		std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
+		return (1);
+	}
+    
+	// 1 creer un objet de la class Server server > définir ce que l'objet server contient
+	// > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
+	// + récupérer le user (prévoir qu'il peut y en avoir plsrs, les mettre dans un tableau / vector)
+	// + pvr delete les users
+	// + de même avec les channels
 
 	// test();
 	// 2 signal?

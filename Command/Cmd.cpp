@@ -27,6 +27,7 @@ Cmd::Cmd()
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
 	_cmd["PING"] = ping;
+
 	_user = NULL;
 	_server = NULL;
 }
@@ -47,10 +48,6 @@ Cmd & Cmd::operator=(const Cmd &cmd_op)
 	_cmd = cmd_op._cmd;
 	return (*this);
 }
-// void   create_map() {
-// 	void *ptr[] () = {
-//     &test, &ft_join
-// };
 
 void Cmd::set_key(std::string key)
 {
@@ -75,7 +72,7 @@ const std::vector<std::string>	Cmd::get_value(void) const
 int 				Cmd::exec_cmd(std::string key)
 {
 	_cmd[key](*this);
-	// std::cout << "_key = " << command._key << '\n';
+	// std::cout << "_key = " << command._key << std::endl;
 	return (1);
 }
 
@@ -98,30 +95,25 @@ void Cmd::parse_cmd(std::string str)
 	size_t size;
 	std::string tmp_val;
 	int i = 0;
-	for (int i = 0; str[i] != ' '; i++)
+	for (int i = 0; str[i] != ' ' && str[i]; i++)
 		result = i + 1;
 	key = str.substr(0, result);
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
-		// cmd.command._user();
 		set_key(key);
-		//_key = get_key();
 		if (size == 0)
 		{
 			exec_cmd(_key);
 			return;
 		}
-		printf("oulalala\n");
 		tmp_val = str.substr(result, str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
 			end = tmp_val.find(' ', start);
 			_value.push_back(tmp_val.substr(start, end - start));
-			// std::cout << "value = " << command._value[i] << '\n';
 			i++;
 		}
-		printf("ololo\n");
 		exec_cmd(_key);
 	}
 	else

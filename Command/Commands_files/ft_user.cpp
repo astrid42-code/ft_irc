@@ -45,7 +45,7 @@
 void user(Cmd command){
     (void)command;
 	printf("ft_user\n");
-    command.print();
+    // command.print();
     std::cout << "user test" << '\n';
     
 }
