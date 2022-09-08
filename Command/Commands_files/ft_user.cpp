@@ -44,7 +44,7 @@
 
 void user(Cmd command){
     (void)command;
-    
+    command.print();
     std::cout << "user test" << '\n';
     
 }
