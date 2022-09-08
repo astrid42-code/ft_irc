@@ -42,9 +42,9 @@
 //                                    "Ronnie Reagan", and asking to be set
 //                                    invisible.
 
-
 void user(Cmd command){
     (void)command;
+    
     std::cout << "user test" << '\n';
     
 }

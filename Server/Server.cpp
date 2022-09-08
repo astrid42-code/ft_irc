@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "Server.hpp"
+#include "../Command/Cmd.hpp"
+
 //#include "../User/User.hpp"
 /* #include "../Command/RPL_answer.hpp"
 	a decommenter quand on aura fait le User.cpp
@@ -240,18 +242,10 @@ static int create_and_bind (std::string port)
   return sfd;
 }
 
-void  connect(int fd)
-{
-  	send(fd ,RPL_WELCOME, strlen(RPL_WELCOME), MSG_CONFIRM);
-	send(fd ,RPL_YOURHOST, strlen(RPL_YOURHOST), MSG_CONFIRM); // 002
-	send(fd ,RPL_CREATED, strlen(RPL_CREATED), MSG_CONFIRM); // 003
-	send(fd ,RPL_MYINFO, strlen(RPL_MYINFO), MSG_CONFIRM); // 004
-	send(fd ,"376 :End of MOTD command\r\n", strlen(":End of MOTD command\r\n"), MSG_CONFIRM); // 004
-}
-
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int	Server::init()
 {
+  Cmd command;
   int sfd, s;
   int efd;
   struct epoll_event event;
@@ -319,13 +313,12 @@ int	Server::init()
           }
           s = getnameinfo( & in_addr, in_len, hbuf, sizeof hbuf, sbuf, sizeof sbuf, NI_NUMERICHOST | NI_NUMERICSERV);
           if (s == 0) {
-            connect(infd);
             printf("Accepted connection on descriptor %d (host=%s, port=%s)\n", infd, hbuf, sbuf);
+			printf("after connect\n");
           }
           s = make_socket_non_blocking(infd);
           if (s == -1)
             abort();
-
           event.data.fd = infd;
           event.events = EPOLLIN | EPOLLET;
           s = epoll_ctl(efd, EPOLL_CTL_ADD, infd, & event);
@@ -351,6 +344,7 @@ int	Server::init()
             done = 1;
             break;
           }
+		  command.parse_cmd(buf);
           s = write(1, buf, count);
           if (s == -1) {
             perror("write");
