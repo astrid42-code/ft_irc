@@ -88,6 +88,7 @@ int					check_condition(std::string key)
 
 void Cmd::parse_cmd(std::string str)
 { 
+	
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
 	size_t start;

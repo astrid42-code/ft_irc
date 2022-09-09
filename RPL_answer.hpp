@@ -2,14 +2,15 @@
 #define RPL_ANSWER_HPP
 
 #include <iostream>
-#include "Cmd.hpp"
+#include "Command/Cmd.hpp"
+#include "User/User.hpp"
+
 
 #define SERVERNAME "irc_dta"
 #define SERVER "127.0.0.1"  // adresse ip ex : Your host is 62.210.33.192, running version 1.69
 #define VERSION "1.69" // version actuelle a verifier
 #define DATE "Mon Aug 5 16:57:33 2022"
 #define DEFAULT_NAME "toto"
-
 
 //#define RPL_WELCOME ("Welcome to the Internet Relay Network\r\n") //001
         	// + envoyer <nick>!<user>@<host>) en arguments

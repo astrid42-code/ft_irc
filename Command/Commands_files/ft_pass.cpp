@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 11:30:59 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:25:05 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+#include "../../RPL_answer.hpp"
 
 // Command: PASS
 //    Parameters: <password>
@@ -32,12 +33,11 @@
 void pass(Cmd command){
     std::cout << "pass test " << command.get_key() << '\n';
     if (command.get_value().size() != 1){
-        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key())); 
-    //  dans server : faire une fct qui recupere le define / le msg complet et qui l'imprime
+        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user);
         return;
     }
     if (command.get_value()[0] == command._user->get_name()){// value[0] etant le login (get_name())
-			command._server->get_msg(ERR_ALREADYREGISTRED);
+		command._server->get_msg(ERR_ALREADYREGISTRED, NULL);
 	}
         return;
 }

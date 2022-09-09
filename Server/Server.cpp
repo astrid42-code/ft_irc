@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/08 14:16:41 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:30:34 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 	a decommenter quand on aura fait le User.cpp
 	*/
 // :nickname!username@IP CodeMessage Nickname :Message Que Tu Veux Mettre
-#define RPL_WELCOME (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") // 001
+#define RPL_WELCOME(username, nickname) (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") // 001
 // + envoyer <nick>!<user>@<host>) en arguments
 // + ajouter dessin?
 #define RPL_YOURHOST (":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n")	 // 002
@@ -45,6 +45,7 @@
 #include <netdb.h>
 #include <string.h>
 #include <cstring>
+
 Server::Server() : _port("6667"), _pwd("pwd")
 {
 	std::cout << "Hi there, nice to see you!" << std::endl;
@@ -186,9 +187,21 @@ bool Server::set_pp(std::string port, std::string pwd)
 	}
 */
 
-void Server::get_msg(std::string msg)
+void Server::get_msg(std::string msg, User *user)
 {
-	// (void)msg;
+	// (void)value;
+	std::string		_msg = ":";
+
+	std::cout << "crotte" << '\n';
+	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO")){
+		if (msg.compare("RPL_WELCOME")){
+			_msg.append(user->get_user()); // ex dasanter!dasanter@127.0.0.1
+			_msg.append("001");
+	// 		_msg.append(get_user(_users._nick)); // dasanter
+			_msg.append(" :Welcome to the Internet Relay Network\r\n");
+		}
+		
+	}
 	_msg.append(msg);
 	std::cout << _msg;
 	// pour chaque msg : cela commence systematiquement par l'heure actuelle
@@ -256,10 +269,12 @@ static int create_and_bind(std::string port)
 	return sfd;
 }
 
-void pre_parse(std::string buf, Cmd command)
+void pre_parse(std::string buf, Cmd command, int sfd)
 {
+	
 	int pos = 0;
 	std::string token;
+	(void)sfd; // CARE
 
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\n", pos))
@@ -269,11 +284,18 @@ void pre_parse(std::string buf, Cmd command)
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "new pos = " << pos << std::endl;
 		std::cout << "token = |" << token << "|" << std::endl;
+		// remplir sfd avec command.set_fd(sfd);
 		command.parse_cmd(token);
 		if (pos == 0)
 			break ;
 	}
-
+/*
+CLIENT send_message(ip, msg)
+	|
+	identifiant : fd
+	|
+SERVEUR -> ok pour communiquer creer un flux de com -> fd;
+*/
 }
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
@@ -397,7 +419,8 @@ int Server::init()
 						done = 1;
 						break;
 					}
-					pre_parse(buf, command);
+					pre_parse(buf, command, sfd);
+					//send(sfd, buf, sizeof(buf), FLAGS);
 				}
 				if (done)
 				{

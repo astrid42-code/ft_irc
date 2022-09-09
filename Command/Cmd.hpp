@@ -7,7 +7,7 @@
 #include <iterator>
 #include "../User/User.hpp"
 #include "../Server/Server.hpp"
-#include "RPL_answer.hpp"
+#include "../RPL_answer.hpp"
 
 class User;
 
@@ -46,6 +46,8 @@ class Cmd
 		std::map<std::string, ptr_ft>	_cmd;
 		std::string						_key; // la string du 1er element recu (la key de ma map)
 		std::vector<std::string>		_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
+		// int								_sfd; // recupere le socket fd
+
 };
 
 //parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (_value/args, )

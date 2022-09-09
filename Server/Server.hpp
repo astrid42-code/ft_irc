@@ -11,6 +11,7 @@
 #include <map>
 #include <netdb.h>
 #include "../Channel/Channel.hpp"
+#include "../Command/Cmd.hpp"
 
 
 class User;
@@ -40,7 +41,7 @@ class Server
 		void 		set_ip(std::string ip);
 		bool		set_user(User user);
 		std::locale	loc;
-		void		get_msg(std::string msg);
+		void		get_msg(std::string msg, User *user);
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
 
 	private:

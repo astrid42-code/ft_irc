@@ -20,12 +20,14 @@ class Channel
 		std::string		get_mod() const;
 		std::map< std::string, User>	get_users() const;
 		User 			get_user( std::string key);
+		std::string		get_topic() const;
 		void			set_name(std::string name);
 		void			set_users(std::map<  std::string, User> users);
 		bool			set_user(User user);
 		void			set_ID(std::string ID);
 		void			set_mod(std::string mod);
 		void			set_channel(std::string name);
+		void			set_topic(std::string topic);
 		void			print(void);
 	
 	private:
@@ -33,6 +35,8 @@ class Channel
 		std::map< std::string, User>	_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
 		std::string						_ID; // depends of time ?
 		std::string						_mod;
+		std::string						_topic;
+
 		//	MODS
 		// O - give "channel creator" status;
 		// o - give/take channel operator privilege;

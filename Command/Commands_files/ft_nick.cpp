@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 12:43:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:27:07 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 // Command: NICK
 //    Parameters: <nickname>
@@ -55,7 +56,7 @@ void nick(Cmd command)
             std::cout << "You're now known as " << command.get_value()[0] << '\n';
         }
         else if (command.get_value()[0] == command._user->get_user()){
-            command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0])); 
+            command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL); 
         }
     }
     

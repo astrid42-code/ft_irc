@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 12:45:49 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:32:15 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 // Command: USER
 //    Parameters: <user> <mode> <unused> <realname>
@@ -48,12 +49,13 @@ void user(Cmd command){
     // command.print();
     std::cout << "user test" << '\n';
     if (command.get_value().size() != 4){
-        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key())); 
+        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL); 
     //  dans server : faire une fct qui recupere le define / le msg complet et qui l'imprime
 		// return;
 	}
 	if (command.get_value()[0] == command._user->get_name()){// value[0] etant le login (get_name())
-		command._server->get_msg(ERR_ALREADYREGISTRED);
-	// return;
+		command._server->get_msg(ERR_ALREADYREGISTRED, NULL);
+	
+	return;
 	}
 }
