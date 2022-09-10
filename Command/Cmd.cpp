@@ -121,7 +121,8 @@ void Cmd::parse_cmd(std::string str)
 		if (size == 0)
 		{
 			set_size(0);
-			exec_cmd(*this);
+			// exec_cmd(*this);
+			_cmd[_key](*this);
 			return;
 		}
 		tmp_val = str.substr(result, str.size());
@@ -129,7 +130,7 @@ void Cmd::parse_cmd(std::string str)
 		{
 			end = tmp_val.find(' ', start);
 			_value.push_back(tmp_val.substr(start, end - start));
-			std::cout << "_value = " << _value[tmp] << "size" << get_value().size() << std::endl;
+			// std::cout << "_value = " << _value[tmp] << "size" << get_value().size() << std::endl;
 			tmp++;
 			// std::cout << i << '\n';
 		}
@@ -137,7 +138,8 @@ void Cmd::parse_cmd(std::string str)
 		// std::cout << "_key = " << _key << std::endl;
 		set_size(tmp);
 		// std::cout << "i " << tmp << "size" << get_size() << '\n';
-		exec_cmd(*this);
+		// exec_cmd(*this);
+		_cmd[_key](*this);
 	}
 	else
 		return;
