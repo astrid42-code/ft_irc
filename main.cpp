@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/07 17:28:59 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/10 16:46:45 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int		main(int ac, char **av)
 	
 	if (ac == 3)
 	{
+		User	user;
+
+		init_user(user);
 		Server server = Server(av[1], av[2]);
 		server.init();
-		std::cout << "prout3 " << std::endl;
 	}
 	else if (ac == 2)
 	{
@@ -43,7 +45,8 @@ int		main(int ac, char **av)
 		user.print();
 		std::cout << av[1] << '\n';
 		cmd.parse_cmd(av[1]);
-		cmd.exec_cmd(cmd.get_key()); // recupere la string donnee au debut
+		cmd.exec_cmd(cmd); // recupere la string donnee au debut
+		
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 17:27:07 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/10 16:49:02 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,19 @@
 
 void nick(Cmd command)
 {
-    std::cout << "nick test" << '\n';
-    if (!command.get_value().size())
+    std::cout << "nick test " << std::endl;
+    std::cout << command.get_size() << std::endl;
+    if (!command.get_size())
     {
         std::cout << "Your nickname is " << DEFAULT_NAME << '\n'; // en attendant de recuperer le ptr sur user
         // a tester quand class user terminee
-        // command._user->set_user(DEFAULT_NAME);
-        // std::cout << "Your nickname is" << command._user->get_user() << '\n';
+        command._user->set_user(DEFAULT_NAME);
+        std::cout << "Your nickname is" << command._user->get_user() << '\n';
         return;
     }//  a tester quand class user terminee
     else
     {
-            // std::cout << "prout2 " << command._value[0] << '\n';
+            std::cout << "prout2 " << command.get_value()[0] << '\n';
             
             // command._user->set_nick(command._value[0]);
             std::cout << command._user->get_user() << '\n';

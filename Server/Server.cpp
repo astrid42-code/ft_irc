@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 17:30:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/10 15:33:05 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,6 +420,7 @@ int Server::init()
 						break;
 					}
 					pre_parse(buf, command, sfd);
+					std::cout << "buf" << buf << '\n';
 					//send(sfd, buf, sizeof(buf), FLAGS);
 				}
 				if (done)
