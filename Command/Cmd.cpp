@@ -64,7 +64,7 @@ void Cmd::set_value(std::vector<std::string> value)
 	_value = value;
 }
 
-const std::vector<std::string>	Cmd::get_value(void) const
+std::vector<std::string>	Cmd::get_value(void) const
 {
 	return (_value);
 }
@@ -77,7 +77,7 @@ int		Cmd::get_size(void) const{
 	return (_size);
 }
 
-int 	Cmd::exec_cmd(Cmd cmd)
+int 	Cmd::exec_cmd(Cmd &cmd)
 {
 	(void)cmd;
 	std::cout << "_key = " << this->_key << " size = " << this->_size << std::endl;
@@ -130,7 +130,7 @@ void Cmd::parse_cmd(std::string str)
 		{
 			end = tmp_val.find(' ', start);
 			_value.push_back(tmp_val.substr(start, end - start));
-			// std::cout << "_value = " << _value[tmp] << "size" << get_value().size() << std::endl;
+			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
 			tmp++;
 			// std::cout << i << '\n';
 		}

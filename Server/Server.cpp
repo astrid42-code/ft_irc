@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/10 17:29:33 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 15:20:21 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 	a decommenter quand on aura fait le User.cpp
 	*/
 // :nickname!username@IP CodeMessage Nickname :Message Que Tu Veux Mettre
-#define RPL_WELCOME(username, nickname) (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") // 001
+// #define RPL_WELCOME (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") // 001
 // + envoyer <nick>!<user>@<host>) en arguments
 // + ajouter dessin?
 #define RPL_YOURHOST (":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n")	 // 002
@@ -187,23 +187,30 @@ bool Server::set_pp(std::string port, std::string pwd)
 	}
 */
 
-void Server::get_msg(std::string msg, User *user)
+void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
 	// (void)value;
-	std::string		_msg = ":";
+	(void)user;
+	std::string		res = ":";
 
-	std::cout << "crotte" << '\n';
 	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO")){
 		if (msg.compare("RPL_WELCOME")){
-			_msg.append(user->get_user()); // ex dasanter!dasanter@127.0.0.1
-			_msg.append("001");
-	// 		_msg.append(get_user(_users._nick)); // dasanter
-			_msg.append(" :Welcome to the Internet Relay Network\r\n");
+	// std::cout << "crotte" << '\n';
+			for (int i = 1; i < cmd.get_size(); i++){
+				res.append(cmd.get_value()[i]); // ex dasanter!dasanter@127.0.0.1
+				res.append(" ");
+			}
+			res.append("001");
+	// 		res.append(get_user(_users._nick)); // dasanter
+			res.append(" :Welcome to the Internet Relay Network\r\n");
 		}
 		
 	}
-	_msg.append(msg);
-	std::cout << _msg;
+	res.append(msg);
+	std::cout << res;
+	// effacer le contenu du vector _value
+	// for (int i = 1; i < cmd.get_size(); i++)
+	// 	cmd.get_value()[i].clear();
 	// pour chaque msg : cela commence systematiquement par l'heure actuelle
 	// (fct strtime() a utiliser?)
 
@@ -269,7 +276,7 @@ static int create_and_bind(std::string port)
 	return sfd;
 }
 
-void pre_parse(std::string buf, Cmd command, int sfd)
+void pre_parse(std::string buf, Cmd &command, int sfd)
 {
 	
 	int pos = 0;
@@ -280,9 +287,9 @@ void pre_parse(std::string buf, Cmd command, int sfd)
 	while (pos < (int)buf.length() && buf.find("\n", pos))
 	{
 		token = buf.substr(pos, buf.find("\n", pos) - 1);
-		std::cout << "pos = " << pos << std::endl;
+		// std::cout << "pos = " << pos << std::endl;
 		pos = buf.find("\n", pos) + 1;
-		std::cout << "new pos = " << pos << std::endl;
+		// std::cout << "new pos = " << pos << std::endl;
 		std::cout << "token = |" << token << "|" << std::endl;
 		// remplir sfd avec command.set_fd(sfd);
 		command.parse_cmd(token);

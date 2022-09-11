@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:42 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 16:53:59 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 //                                    match against "jto*" if they are an
 //                                    operator.
 
-void who(Cmd command){
+void who(Cmd &command){
     (void)command;
     std::cout << "who test" << '\n';
 }

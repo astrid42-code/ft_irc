@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/10 17:47:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 15:27:22 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+#include "../../Server/Server.hpp"
 
 
 // Command: NICK
@@ -34,10 +35,10 @@
 //                            ; Server telling that WiZ changed his
 //                            nickname to Kilroy.
 
-void nick(Cmd command)
+void nick(Cmd &command)
 {
     std::cout << "nick test " << std::endl;
-    std::cout << command.get_size() << std::endl;
+    // std::cout << command.get_size() << std::endl;
     if (!command.get_size())
     {
         std::cout << "Your nickname is " << DEFAULT_NAME << '\n'; // en attendant de recuperer le ptr sur user
@@ -48,17 +49,22 @@ void nick(Cmd command)
     }//  a tester quand class user terminee
     else
     {
-            std::cout << "prout2 " << command.get_value()[0] << '\n';
             
-            // command._user->set_nick(command._value[0]);
-            std::cout << command._user->get_user() << '\n';
+            // command._user->set_nick(command.get_value()[0]);
+            // std::cout << command._user->get_user() << '\n';
+            // std::cout << "prout2 " << command.get_value()[0] << '\n';
             // attention : tester avec ou sans la casse
-        if (command.get_value()[0] != command._user->get_user()){
-            std::cout << "You're now known as " << command.get_value()[0] << '\n';
-        }
-        else if (command.get_value()[0] == command._user->get_user()){
-            command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL); 
-        }
+        // if (command.get_value()[0] != command._user->get_user()){
+            std::cout << "You're now known as " << command.get_value()[0] << std::endl;
+          
+
+        //necessite de nettoyer le vector _value a la fin de chaque cmd (ou tout simplement ~Cmd mais comment faire?)
+
+          
+        // }
+        // else if (command.get_value()[0] == command._user->get_user()){
+        //     command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL); 
+        // }
     }
     
     //         else if (si chgmt de nick dans un autre serveur et nouveau nick deja enregistre)

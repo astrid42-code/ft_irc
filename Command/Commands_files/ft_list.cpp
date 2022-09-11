@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 11:38:02 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 16:53:54 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 //    LIST #twilight_zone,#42         ; Command to list channels
 //                                    #twilight_zone and #42
 
-void list(Cmd command){
+void list(Cmd &command){
     (void)command;
     std::cout << "list test" << '\n';
     // tant que la liste de channels (separes par une ,) n est pas finie

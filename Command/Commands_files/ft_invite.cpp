@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 17:25:53 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 14:13:06 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,25 @@
 //    INVITE Wiz #Twilight_Zone       ; Command to invite WiZ to
 //                                    #Twilight_zone
 
-void invite(Cmd command){
+void invite(Cmd &command){
     // (void)command;
     std::cout << "invite test" << '\n';
     if (command.get_value().size() != 2){
-        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL);
+        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command);
         // return;
     }
     if (command.get_value()[0] != command._user->get_name()){// value[0] etant le login (get_name())
-		command._server->get_msg(ERR_NOSUCHNICK(command.get_value()[0]), NULL);
+		command._server->get_msg(ERR_NOSUCHNICK(command.get_value()[0]), NULL, command);
         // return;
     }
     if (command._user->get_mod() == "a"){ // ou faire une recherche de la lettre a car plsrs lettres possibles?
-        command._server->get_msg(RPL_AWAY(command._user->get_nick()), NULL);
+        command._server->get_msg(RPL_AWAY(command._user->get_nick()), NULL, command);
     }
     // if (command._user->isonchan(chan_name) == 0)
         // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL);
     
     // si tout ok :
     // channel.invite(command._user->get_name()) > fct a faire dans la class channel pour connecter un user a un chan
-    command._server->get_msg(RPL_INVITING(command.get_value()[0], command.get_value()[1]), NULL);
+    command._server->get_msg(RPL_INVITING(command.get_value()[0], command.get_value()[1]), NULL, command);
     
 }
