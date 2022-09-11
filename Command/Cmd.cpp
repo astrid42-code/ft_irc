@@ -128,7 +128,9 @@ void Cmd::parse_cmd(std::string str)
 		tmp_val = str.substr(result, str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
+			
 			end = tmp_val.find(' ', start);
+			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
 			_value.push_back(tmp_val.substr(start, end - start));
 			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
 			tmp++;
