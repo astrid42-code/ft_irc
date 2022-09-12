@@ -40,7 +40,7 @@ int		main(int ac, char **av)
 	// + pvr delete les users
 	// + de même avec les channels
 
-	Server server = Server();
+	Server server = Server(av[1], av[2]);
 	server.init();
 	std::cout << "prout3 " << std::endl;
 	

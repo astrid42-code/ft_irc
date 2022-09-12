@@ -53,6 +53,8 @@ Server::Server() : _port("6667"), _pwd("pwd"){
 Server::Server(std::string port, std::string pwd) : _port(port), _pwd(pwd){
 	// parser port et pwd ici ou dans une fct set plutot?
 	// si tout ok, msg de bienvenue; sinon 
+	set_ip(_ip);
+
 }
 
 Server::Server(const Server &serv_cp){
@@ -242,21 +244,22 @@ static int create_and_bind (std::string port)
   return sfd;
 }
 
-void pre_parse(char *buf, Cmd command)
+void pre_parse(std::string buf, Cmd command)
 {
 	std::string pars = buf;
 	std::string part;
-  size_t start;
-  size_t end = 0;
-
-	while ((start = pars.find_first_not_of('\n', end)) != std::string::npos)
+	size_t start;
+	size_t end = 0;
+	start = pars.find_first_not_of('\n', end);
+	while (start >= 0)
 	{
-    std::cout << "start= " << start << '\n';
-    end = pars.find('\n', start);
-    std::cout << "end= " << end << '\n';
-    part = pars.substr(start, end - start);
-    std::cout << "part" << part << '\n';
+		std::cout << "start= " << start << std::endl;
+		end = pars.find('\n', start);	
+		std::cout << "end= " << end << std::endl;
+		part = pars.substr(start, end - start);
+		std::cout << "part : |" << part << "|" << std::endl;
 		command.parse_cmd(part);
+		start = pars.find_first_not_of('\n', end);
 	}
 }
 
@@ -268,7 +271,7 @@ int	Server::init()
   int efd;
   struct epoll_event event;
   struct epoll_event * events;
-  sfd = create_and_bind("6667");
+  sfd = create_and_bind(_port);
   if (sfd == -1)
     abort();
   s = make_socket_non_blocking(sfd);
