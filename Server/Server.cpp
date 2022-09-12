@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 15:20:21 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/12 11:58:00 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,12 +276,13 @@ static int create_and_bind(std::string port)
 	return sfd;
 }
 
-void pre_parse(std::string buf, Cmd &command, int sfd)
+void pre_parse(std::string buf, int sfd)
 {
 	
 	int pos = 0;
 	std::string token;
 	(void)sfd; // CARE
+	Cmd command;
 
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\n", pos))
@@ -426,8 +427,8 @@ int Server::init()
 						done = 1;
 						break;
 					}
-					pre_parse(buf, command, sfd);
-					std::cout << "buf" << buf << '\n';
+					pre_parse(buf, sfd);
+					// std::cout << "buf" << buf << '\n';
 					//send(sfd, buf, sizeof(buf), FLAGS);
 				}
 				if (done)
