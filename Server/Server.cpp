@@ -189,14 +189,18 @@ bool Server::set_pp(std::string port, std::string pwd)
 
 void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
-	// (void)value;
-	(void)user;
-	std::string		res = ":";
+	std::string	res = ":";
 
-	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO")){
-		if (msg.compare("RPL_WELCOME")){
-	 //std::cout << "crotte" << '\n';
-			for (int i = 1; i < cmd.get_size(); i++){
+	if (user)
+		user->print();
+	else
+		std::cout << "no user..." << std::endl;
+	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO"))
+	{
+		if (msg.compare("RPL_WELCOME"))
+		{
+			for (int i = 1; i < cmd.get_size(); i++)
+			{
 				res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
 			}
 			res.append("001");
@@ -215,7 +219,6 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 	// if (msg = les msgs 001 002 ou 003)
 	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
 
-	// else
 	std::cout << "get msg : |" <<  res << "|" << std::endl;
 }
 
@@ -277,39 +280,23 @@ static int create_and_bind(std::string port)
 
 void pre_parse(std::string buf, int sfd, Server *serv)
 {
-	
 	int pos = 0;
 	std::string token;
 	(void)sfd; // CARE
 
 	std::cout << "buf = " << buf << std::endl;
-	// for (int i = 0; i < (int)buf.length(); i++)
-	// {
-	// 	std::cout << i << ":" << (int)buf[i] << ' ';
-	// }
-	// std::cout << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
 		Cmd command;
 		command._server = serv;
-		// std::cout << "start :" << pos << " | end :" << buf.find("\r\n", pos) << std::endl;
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
-		// std::cout << "pos = " << pos << std::endl;
 		pos = buf.find("\n", pos) + 1;
-		// std::cout << "new pos = " << pos << std::endl;
 		std::cout << "token = |" << token << "|" << std::endl;
 		// remplir sfd avec command.set_fd(sfd);
 		command.parse_cmd(token);
 		if (pos >= (int)buf.length() || pos == 0)
 			break ;
 	}
-/*
-CLIENT send_message(ip, msg)
-	|
-	identifiant : fd
-	|
-SERVEUR -> ok pour communiquer creer un flux de com -> fd;
-*/
 }
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
