@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 17:26:37 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 14:13:22 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@
 //    :WiZ!jto@tolsun.oulu.fi JOIN #Twilight_zone ; JOIN message from WiZ
 //                                    on channel #Twilight_zone
 
-void join(Cmd command){
+void join(Cmd &command){
 	// (void)command;
 	if (!command.get_value().size())
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL);
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
 	 // if (command._user->isonchan(chan_name) == 0)
-        // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL);
+        // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
 	else{
 		// fct pour creer et/ou rejoindre le channel (dans le server)
 		// si plsrs channels dans arg1 ils doivent etre separes par des virgules

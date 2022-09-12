@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/09 17:25:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 14:21:22 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@
 //            PASS secretpasswordhere
 
 
-void pass(Cmd command){
+void pass(Cmd &command){
     std::cout << "pass test " << command.get_key() << '\n';
     if (command.get_value().size() != 1){
-        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user);
+        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
         return;
     }
     if (command.get_value()[0] == command._user->get_name()){// value[0] etant le login (get_name())
-		command._server->get_msg(ERR_ALREADYREGISTRED, NULL);
+		command._server->get_msg(ERR_ALREADYREGISTRED, NULL, command);
 	}
         return;
 }
