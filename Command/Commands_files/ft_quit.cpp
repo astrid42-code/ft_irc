@@ -34,4 +34,5 @@
 void quit(Cmd &command){
     (void)command;
     std::cout << "quit test" << '\n';
+    command._server->get_msg(command.get_value()[0], NULL, command);
 }
