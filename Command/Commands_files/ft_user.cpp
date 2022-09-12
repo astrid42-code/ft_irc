@@ -52,13 +52,11 @@ void	init_user(User *user)
 	user->set_user("Tadeo");
 }
 
-void user(Cmd &command){
-    // (void)command;
-	// printf("ft_user\n");
-    command.print();
-	User *test = new User();
-	init_user(test);
-	command._user = test;
+void user(Cmd &command)
+{
+	printf("ft_user\n");
+	command._user = new User();
+	init_user(command._user);
 	//std::cout << command.get_size() << std::endl;
 	// for (int i = 0; i < command.get_size(); i++){
 	// 	std::cout << "value" << i << " " << command.get_value()[i] << std::endl;
@@ -70,10 +68,10 @@ void user(Cmd &command){
 	// set les valeurs du _user avec les args contenus dans _value
 	//command._user->set_name(command.get_value()[0]); // segfault :( 
 		// comment set les infos du _user ?
-	std::cout << "name " << std::endl;
-	std::cout << command._user->get_name() << std::endl;
-	if (command.get_value()[0] == command._user->get_name()){// value[0] etant le login (get_name())
-		command._server->get_msg(ERR_ALREADYREGISTRED, NULL, command);
-	return;
-	}
+	// std::cout << command._user->get_name() << std::endl;
+	// if (command.get_value()[0] == command._user->get_name())
+	// {// value[0] etant le login (get_name())
+	// 	return;
+	// }
+	command._server->get_msg("RPL_WELCOME", command._user, command);
 }

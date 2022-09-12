@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/12 11:58:00 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:00:59 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,8 +218,7 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 	// if (msg = les msgs 001 002 ou 003)
 	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
 	std::cout << "get msg : |" << res << "|" << std::endl;
-	send(_sfd, res.c_str(), res.length(), MSG_CONFIRM);
-
+	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
 }
 
 static int make_socket_non_blocking(int sfd)
@@ -275,7 +274,7 @@ static int create_and_bind(std::string port)
 		return -1;
 	}
 	freeaddrinfo(result);
-	return sfd;
+	return (sfd);
 }
 
 void pre_parse(std::string buf, int sfd, Server *serv)
@@ -289,6 +288,7 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	{
 		Cmd command;
 		command._server = serv;
+		command._sfd = sfd;
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
@@ -434,7 +434,7 @@ int Server::init()
 	}
 	free(events);
 	close(sfd);
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
 // recuperer la data du User
