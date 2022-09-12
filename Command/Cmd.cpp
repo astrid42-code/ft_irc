@@ -140,25 +140,18 @@ void Cmd::parse_cmd(std::string str)
 		tmp_val = str.substr(str.find(' '), str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
-			if (!_value.empty()){
+			// std::cout << "key " << _key << std::endl;
+			end = tmp_val.find(' ', start);
+			_value.push_back(tmp_val.substr(start, end - start));
 
-				if (_key == "USER" && _value[tmp][0] == ':'){
-					std::cout << "bla" << std::endl;
-					_value.push_back(tmp_val.substr(start, str.size() - start));
-				}
-			}
-			else{
-				std::cout << "lol" << std::endl;
-				end = tmp_val.find(' ', start);
-				_value.push_back(tmp_val.substr(start, end - start));
-			}
+
+			// 	if (_value[tmp][0] == ':'){
+			// 		_value.push_back(tmp_val.substr(start, str.size() - start));
+			// 	}
+			
+			// }
 			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
-			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
-			// std::cout << "1er char " << _value[tmp][0] << std::endl;
-			// std::cout << " tmp " << tmp << std::endl;
-			// std::cout << "start " << start << "end 2 " << end << std::endl;
 			tmp++;
-			// std::cout << i << std::endl;
 		}
 
 		// std::cout << "_key = " << _key << std::endl;
