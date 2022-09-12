@@ -278,40 +278,24 @@ static int create_and_bind(std::string port)
 
 void pre_parse(std::string buf, int sfd, Server *serv)
 {
-	
 	int pos = 0;
 	std::string token;
 	(void)sfd; // CARE
 
 	std::cout << "buf = " << buf << std::endl;
-	// for (int i = 0; i < (int)buf.length(); i++)
-	// {
-	// 	std::cout << i << ":" << (int)buf[i] << ' ';
-	// }
-	// std::cout << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
 		Cmd command;
 		command._server = serv;
 
-		// std::cout << "start :" << pos << " | end :" << buf.find("\r\n", pos) << std::endl;
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
-		// std::cout << "pos = " << pos << std::endl;
 		pos = buf.find("\n", pos) + 1;
-		// std::cout << "new pos = " << pos << std::endl;
 		std::cout << "token = |" << token << "|" << std::endl;
 		// remplir sfd avec command.set_fd(sfd);
 		command.parse_cmd(token);
 		if (pos >= (int)buf.length() || pos == 0)
 			break ;
 	}
-/*
-CLIENT send_message(ip, msg)
-	|
-	identifiant : fd
-	|
-SERVEUR -> ok pour communiquer creer un flux de com -> fd;
-*/
 }
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
