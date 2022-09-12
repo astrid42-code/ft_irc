@@ -45,6 +45,10 @@ User						Channel::get_user( std::string key)
 	return (it->second);
 }
 
+std::string		Channel::get_topic() const{
+	return (_topic);
+}
+
 void			Channel::set_name(std::string name)
 {
 	_name = name;
@@ -76,6 +80,10 @@ void			Channel::set_mod(std::string mod)
 void			Channel::set_channel(std::string name)
 {
 	_name = name;
+}
+
+void			Channel::set_topic(std::string topic){
+	_topic = topic;
 }
 
 void			Channel::print(void)

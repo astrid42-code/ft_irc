@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:19 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:20 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 //                                    ; KICK message on channel #Finnish
 //                                    from WiZ to remove John from channel
 
-void kick(Cmd command)
+void kick(Cmd &command)
 {
     (void)command;
     std::cout << "kick test" << '\n';   

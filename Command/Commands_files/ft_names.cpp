@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:58:21 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:33 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 // Paramètres : <nom du chan>
 // Réponses possibles : RPL_NAMREPLY (353), RPL_ENDOFNAMES (366)
@@ -47,7 +48,7 @@
 //    NAMES                           ; Command to list all visible
 //                                    channels and users
 
-void names(Cmd command){
+void names(Cmd &command){
     (void)command;
     std::cout << "name test" << '\n';
 }

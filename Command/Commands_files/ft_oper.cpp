@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:00:36 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:42 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 //  Command: OPER
 //    Parameters: <name> <password>
@@ -32,7 +33,7 @@
 //                                    as the password.
 
 
-void oper(Cmd command){
+void oper(Cmd &command){
     (void)command;
     std::cout << "oper test" << '\n';
 }

@@ -27,6 +27,7 @@ Cmd::Cmd()
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
 	_cmd["PING"] = ping;
+
 	_user = NULL;
 	_server = NULL;
 }
@@ -47,10 +48,6 @@ Cmd & Cmd::operator=(const Cmd &cmd_op)
 	_cmd = cmd_op._cmd;
 	return (*this);
 }
-// void   create_map() {
-// 	void *ptr[] () = {
-//     &test, &ft_join
-// };
 
 void Cmd::set_key(std::string key)
 {
@@ -67,15 +64,26 @@ void Cmd::set_value(std::vector<std::string> value)
 	_value = value;
 }
 
-const std::vector<std::string>	Cmd::get_value(void) const
+std::vector<std::string>	Cmd::get_value(void) const
 {
 	return (_value);
 }
 
-int 				Cmd::exec_cmd(std::string key)
+void	Cmd::set_size(int i){
+	_size = i;
+}
+
+int		Cmd::get_size(void) const{
+	return (_size);
+}
+
+int 	Cmd::exec_cmd(Cmd &cmd)
 {
-	_cmd[key](*this);
-	// std::cout << "_key = " << command._key << '\n';
+	(void)cmd;
+	std::cout << "_key = " << this->_key << " size = " << this->_size << std::endl;
+	std::cout << "prout2 " << std::endl;
+	_cmd[_key](*this);
+	std::cout << "prout3 " << std::endl;
 	return (1);
 }
 
@@ -91,38 +99,49 @@ int					check_condition(std::string key)
 
 void Cmd::parse_cmd(std::string str)
 { 
+
+	std::cout << "str " << str << '\n';	
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
 	size_t start;
 	size_t end = 0;
 	size_t size;
 	std::string tmp_val;
-	int i = 0;
-	for (int i = 0; str[i] != ' '; i++)
+	int tmp = 0;
+
+	for (int i = 0; str[i] != ' ' && str[i]; i++)
 		result = i + 1;
 	key = str.substr(0, result);
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
-		// cmd.command._user();
+		// std::cout << "coucou" << '\n';
 		set_key(key);
-		//_key = get_key();
+
 		if (size == 0)
 		{
-			exec_cmd(_key);
+			set_size(0);
+			// exec_cmd(*this);
+			_cmd[_key](*this);
 			return;
 		}
-		printf("oulalala\n");
 		tmp_val = str.substr(result, str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
+			
 			end = tmp_val.find(' ', start);
+			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
 			_value.push_back(tmp_val.substr(start, end - start));
-			// std::cout << "value = " << command._value[i] << '\n';
-			i++;
+			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
+			tmp++;
+			// std::cout << i << '\n';
 		}
-		printf("ololo\n");
-		exec_cmd(_key);
+
+		// std::cout << "_key = " << _key << std::endl;
+		set_size(tmp);
+		// std::cout << "i " << tmp << "size" << get_size() << '\n';
+		// exec_cmd(*this);
+		_cmd[_key](*this);
 	}
 	else
 		return;

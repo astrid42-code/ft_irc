@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:50 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:24 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 // Command: KILL
 //    Parameters: <nickname> <comment>
@@ -67,7 +68,7 @@
 
 
 
-void kill(Cmd command){
+void kill(Cmd &command){
     (void)command;
     std::cout << "kill test" << '\n';
 }

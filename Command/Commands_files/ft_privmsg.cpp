@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:48 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 //       Command: PRIVMSG
 //    Parameters: <msgtarget> <text to be sent>
@@ -36,7 +37,13 @@
 //            ERR_NOSUCHNICK
 //            RPL_AWAY
 
-void privmsg(Cmd command){
+void privmsg(Cmd &command){
     (void)command;
     std::cout << "privmsg test" << '\n';
+    // necessite d'etre dans un channel (?)
+    // command.get_value()[0] la target = le user ou le channel qui recoit le msg
+    // command.get_value()[1] le msg a envoyer a la target
+    // command._server->get_msg(command.get_value()[1], NULL, command)
+    // necessaire de chercher avant get_msg quelle est la target? comment la preciser ensuite (puisque ca peut etre user ou channel)?
+    
 }

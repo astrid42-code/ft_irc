@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:04:08 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:08:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 // Message WHOIS
 // Paramètres : <nick>
@@ -53,7 +54,7 @@
 //    WHOIS eff.org trillian          ; ask server eff.org for user
 //                                    information  about trillian
                                    
-void whois(Cmd command){
+void whois(Cmd &command){
     (void)command;
     std::cout << "whois test" << '\n';
 }

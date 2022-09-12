@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/07 17:28:59 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:37:46 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,15 @@ int		main(int ac, char **av)
 {
 	(void)av;
 	
-	// if (ac != 3)
-	// {
-	// 	std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
-	// 	return (1);
-	// }
-    
-	// 1 creer un objet de la class Server server > définir ce que l'objet server contient
-	// > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
-	// + récupérer le user (prévoir qu'il peut y en avoir plsrs, les mettre dans un tableau / vector)
-	// + pvr delete les users
-	// + de même avec les channels
+	if (ac == 3)
+	{
+		User	user;
 
-	Server server = Server(av[1], av[2]);
-	server.init();
-	std::cout << "prout3 " << std::endl;
-	
-	if (ac == 2)
+		init_user(user);
+		Server server = Server(av[1], av[2]);
+		server.init();
+	}
+	else if (ac == 2)
 	{
 		Cmd		cmd;
 		User	user;
@@ -53,8 +45,20 @@ int		main(int ac, char **av)
 		user.print();
 		std::cout << av[1] << '\n';
 		cmd.parse_cmd(av[1]);
-		cmd.exec_cmd(cmd.get_key()); // recupere la string donnee au debut
+		// cmd.exec_cmd(cmd); // recupere la string donnee au debut
+		
 	}
+	else
+	{
+		std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
+		return (1);
+	}
+    
+	// 1 creer un objet de la class Server server > définir ce que l'objet server contient
+	// > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
+	// + récupérer le user (prévoir qu'il peut y en avoir plsrs, les mettre dans un tableau / vector)
+	// + pvr delete les users
+	// + de même avec les channels
 
 	// test();
 	// 2 signal?

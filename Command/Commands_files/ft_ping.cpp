@@ -1,6 +1,6 @@
 #include "../Cmd.hpp"
-#include "../RPL_answer.hpp"
 #include "../../Server/Server.hpp"
+
 
 // Command: PING
 //    Parameters: <server1> [ <server2> ]
@@ -33,14 +33,14 @@
 //    PING :irc.funet.fi              ; Ping message sent by server
 //                                    "irc.funet.fi"
 
-void ping(Cmd command){
+void ping(Cmd &command){
     if (!command.get_value().size())
-		command._server->get_msg(ERR_NOORIGIN);
+		command._server->get_msg(ERR_NOORIGIN, NULL, command);
 	else if (command.get_value().size() > 2)
         return ;
 	else if (command.get_value().size() == 1){
 		if (command.get_value()[0] != SERVER){
-			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]));
+			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]), NULL, command);
 		}
 		else{
 			// fct send ping msg to server
@@ -52,7 +52,7 @@ void ping(Cmd command){
 		std::map< std::string, User * >::iterator it;
 		
 		if (command.get_value()[1] != SERVER){
-			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[1]));
+			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[1]), NULL, command);
         // fct qui send ping msg to server (arg2) par le user (arg1)
 		// donc identifier arg1 (trouver le user dans la map du server?)
 		//  et verifier que arg2 == SERVER

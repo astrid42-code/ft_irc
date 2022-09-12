@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/08/30 17:07:52 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+
 
 // Command: QUIT
 //    Parameters: [ <Quit Message> ]
@@ -30,7 +31,8 @@
 //                                    syrk has quit IRC to have lunch.
 
 
-void quit(Cmd command){
+void quit(Cmd &command){
     (void)command;
     std::cout << "quit test" << '\n';
+    command._server->get_msg(command.get_value()[0], NULL, command);
 }

@@ -44,3 +44,5 @@ class User
 };
 
 #endif
+
+// associer le user a la map de channels auxquels il est connecte (ici ou dans le server?)
