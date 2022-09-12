@@ -102,20 +102,6 @@ int					check_condition(std::string key)
 	return (0);
 }
 
-// void parse_cmd(std::string str, Cmd cmd)
-// { 
-// 	std::string key;
-	
-// 	if (str.find(" ", 0))
-// 		key = str.substr(0, str.find(" ", 0))
-// 	else
-// 	{
-// 		std::cout << "error pars_cmd" << std::endl;
-// 		return ;
-// 	}
-	
-// }
-
 void Cmd::parse_cmd(std::string str)
 {
 	std::string key; // pour recuperer la key (1er mot de str)
