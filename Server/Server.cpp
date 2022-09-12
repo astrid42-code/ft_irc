@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/12 15:52:54 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:00:59 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,6 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 	 //std::cout << "crotte" << '\n';
 			for (int i = 1; i < cmd.get_size(); i++){
 				res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
-				res.append(" ");
 			}
 			res.append("001");
 	// 		res.append(get_user(_users._nick)); // dasanter
