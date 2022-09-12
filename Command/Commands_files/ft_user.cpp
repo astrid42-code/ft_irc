@@ -47,8 +47,8 @@ void user(Cmd &command){
     // (void)command;
 	// printf("ft_user\n");
     command.print();
-    std::cout << "user test" << '\n';
-	std::cout << command.get_size() << std::endl;
+
+	//std::cout << command.get_size() << std::endl;
 	// for (int i = 0; i < command.get_size(); i++){
 	// 	std::cout << "value" << i << " " << command.get_value()[i] << std::endl;
 	// }
@@ -57,13 +57,12 @@ void user(Cmd &command){
 	// }
 	
 	// set les valeurs du _user avec les args contenus dans _value
-	command._user->set_name(command.get_value()[0]); // segfault :( 
+	//command._user->set_name(command.get_value()[0]); // segfault :( 
 		// comment set les infos du _user ?
-	std::cout << "name " << '\n';
+	std::cout << "name " << std::endl;
 	std::cout << command._user->get_name() << std::endl;
 	if (command.get_value()[0] == command._user->get_name()){// value[0] etant le login (get_name())
 		command._server->get_msg(ERR_ALREADYREGISTRED, NULL, command);
-	
 	return;
 	}
 }

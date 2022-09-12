@@ -276,18 +276,25 @@ static int create_and_bind(std::string port)
 	return sfd;
 }
 
-void pre_parse(std::string buf, int sfd)
+void pre_parse(std::string buf, int sfd, Server *serv)
 {
 	
 	int pos = 0;
 	std::string token;
 	(void)sfd; // CARE
-	Cmd command;
 
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\n", pos))
 	{
-		token = buf.substr(pos, buf.find("\n", pos) - 1);
+		Cmd command;
+		command._server = serv;
+		/*if (buf.find("\r", pos) >= 0)
+		{
+			std::cout << "OUAI OUAI OUAI" << buf.find("\r", pos) << std::endl;
+			token = buf.substr(pos, buf.find("\r", pos) - 1);
+		}
+		else*/
+			token = buf.substr(pos, buf.find("\n", pos) - 1);
 		// std::cout << "pos = " << pos << std::endl;
 		pos = buf.find("\n", pos) + 1;
 		// std::cout << "new pos = " << pos << std::endl;
@@ -427,7 +434,7 @@ int Server::init()
 						done = 1;
 						break;
 					}
-					pre_parse(buf, sfd);
+					pre_parse(buf, sfd, this);
 					// std::cout << "buf" << buf << '\n';
 					//send(sfd, buf, sizeof(buf), FLAGS);
 				}

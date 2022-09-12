@@ -98,8 +98,7 @@ int					check_condition(std::string key)
 }
 
 void Cmd::parse_cmd(std::string str)
-{ 
-
+{
 	std::cout << "str " << str << '\n';	
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
@@ -128,7 +127,6 @@ void Cmd::parse_cmd(std::string str)
 		tmp_val = str.substr(result, str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
-			
 			end = tmp_val.find(' ', start);
 			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
 			_value.push_back(tmp_val.substr(start, end - start));
@@ -173,6 +171,7 @@ void	Cmd::print(void)
 	// 	std::cout << _server->print() << std::endl;
 	// else
 	// 	std::cout << "no server" << std::endl;
+	std::cout << "end of Cmd.print()" << std::endl;
 }
 
 
