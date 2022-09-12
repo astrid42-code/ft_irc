@@ -139,5 +139,6 @@ join (check salon existant sinon le creer et mettre le user)
 
 a faire / regler :
 set le user dans cmd (quand rentre dans fct user?)
-detruire la cmd a chaque fin de cmd (sinon garde en memoire les precedentes infos dans le vector _value)
+detruire la cmd a chaque fin de cmd (sinon garde en memoire les precedentes infos dans le vector _value) > a priori ok
+
 dans parse_cmd : ne pas split si " " apres : ex :Astrid GAULTIER (doit garder Astrid GAULTIER sans split)

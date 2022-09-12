@@ -162,7 +162,7 @@ void	Cmd::print(void)
 	std::cout << "key: " + _key << std::endl;
 	while (it != _value.end())
 	{
-		std::cout << it->data() << std::endl;
+		// std::cout << it->data() << std::endl;
 		it++;
 	}
 	if (_user)
