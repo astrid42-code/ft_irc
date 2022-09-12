@@ -69,6 +69,11 @@ std::vector<std::string>	Cmd::get_value(void) const
 	return (_value);
 }
 
+void	Cmd::set_str_value(std::string str, int i)
+{
+	_value[i] = str;
+}
+
 const std::string				Cmd::get_str_value(int i) const
 {
 	return (_value[i]);
@@ -111,6 +116,7 @@ void Cmd::parse_cmd(std::string str)
 	size_t end = 0;
 	size_t size;
 	std::string tmp_val;
+	std::string	trailing;
 	int tmp = 0;
 
 	key = str.substr(0, str.find(' '));
@@ -129,18 +135,19 @@ void Cmd::parse_cmd(std::string str)
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
 			end = tmp_val.find(' ', start);
+			if (tmp_val.find(':', start) != std::string::npos && tmp_val.find(':', start) < end)
+				break ;
 			_value.push_back(tmp_val.substr(start, end - start));
-			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
 			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
-			// std::cout << "1er char " << _value[tmp][0] << std::endl;
-			// std::cout << " tmp " << tmp << std::endl;
-			// std::cout << "start " << start << "end 2 " << end << std::endl;
 			tmp++;
-			// std::cout << i << std::endl;
 		}
-		// std::cout << "_key = " << _key << std::endl;
+		if (tmp_val.find(':'))
+		{
+			trailing = tmp_val.substr(tmp_val.find(':') + 1, tmp_val.find("\r\n") - tmp_val.find(':') + 1);
+			_value.push_back(trailing);
+			std::cout << "_value" << tmp << " = " << _value.back() << std::endl;
+		}
 		set_size(tmp);
-		// std::cout << "i " << tmp << "size" << get_size() << '\n';
 		_cmd[_key](*this);
 		std::cout << "cmd execute..." << std::endl;
 	}

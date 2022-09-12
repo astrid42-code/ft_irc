@@ -56,6 +56,11 @@ std::string User::get_nick() const
 	return (_nick);
 }
 
+std::string User::get_host() const
+{
+	return (_host);
+}
+
 std::string User::get_pwd() const
 {
 	return (_pwd);
@@ -84,6 +89,11 @@ void	User::set_name(std::string name)
 void	User::set_nick(std::string nick)
 {
 	_nick = nick;
+}
+
+void	User::set_host(std::string host)
+{
+	_host = host;
 }
 
 void	User::set_pwd(std::string pwd)
