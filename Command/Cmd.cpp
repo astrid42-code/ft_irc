@@ -74,11 +74,13 @@ const std::string				Cmd::get_str_value(int i) const
 	return (_value[i]);
 }
 
-void	Cmd::set_size(int i){
+void	Cmd::set_size(int i)
+{
 	_size = i;
 }
 
-int		Cmd::get_size(void) const{
+int		Cmd::get_size(void) const
+{
 	return (_size);
 }
 
@@ -102,20 +104,6 @@ int					check_condition(std::string key)
 	return (0);
 }
 
-// void parse_cmd(std::string str, Cmd cmd)
-// { 
-// 	std::string key;
-	
-// 	if (str.find(" ", 0))
-// 		key = str.substr(0, str.find(" ", 0))
-// 	else
-// 	{
-// 		std::cout << "error pars_cmd" << std::endl;
-// 		return ;
-// 	}
-	
-// }
-
 void Cmd::parse_cmd(std::string str)
 {
 	std::string key; // pour recuperer la key (1er mot de str)
@@ -125,11 +113,11 @@ void Cmd::parse_cmd(std::string str)
 	std::string tmp_val;
 	int tmp = 0;
 
-	key = str.substr(0, str.find(' '));//result);
+	key = str.substr(0, str.find(' '));
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
-		// std::cout << "coucou" << std::endl;
+		std::cout << "check key done" << std::endl;
 		set_key(key);
 		if (size == 0)
 		{
@@ -140,36 +128,17 @@ void Cmd::parse_cmd(std::string str)
 		tmp_val = str.substr(str.find(' '), str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
-			// std::cout << "key " << _key << std::endl;
 			end = tmp_val.find(' ', start);
 			_value.push_back(tmp_val.substr(start, end - start));
-
-
-			// 	if (_value[tmp][0] == ':'){
-			// 		_value.push_back(tmp_val.substr(start, str.size() - start));
-			// 	}
-			
-			// }
 			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
 			tmp++;
 		}
-
 		// std::cout << "_key = " << _key << std::endl;
 		set_size(tmp);
 		// std::cout << "i " << tmp << "size" << get_size() << '\n';
 		_cmd[_key](*this);
+		std::cout << "cmd execute..." << std::endl;
 	}
-	else
-		return;
-
-/*	
-a revoir : exception caught + abort
-// comment récuperer et lancer la fct? a t on besoin d'un it ici?
-	it = _cmd.find(command._key);
-	if (it != _cmd.end()) { // sauf pour exit et autres fcts speciales
-	}
-*/
-	this->_server->get_msg("RPL_WELCOME", NULL, *this);
 }
 
 void	Cmd::print(void)
@@ -179,7 +148,7 @@ void	Cmd::print(void)
 	std::cout << "key: " + _key << std::endl;
 	while (it != _value.end())
 	{
-		// std::cout << it->data() << std::endl;
+		std::cout << it->data() << std::endl;
 		it++;
 	}
 	if (_user)

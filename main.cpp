@@ -33,18 +33,6 @@ int		main(int ac, char **av)
 		Server server = Server(av[1], av[2]);
 		server.init();
 	}
-	else if (ac == 2)
-	{
-		Cmd		cmd;
-		User	user;
-
-		init_user(user);
-		user.print();
-		std::cout << av[1] << '\n';
-		cmd.parse_cmd(av[1]);
-		// cmd.exec_cmd(cmd); // recupere la string donnee au debut
-		
-	}
 	else
 	{
 		std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;

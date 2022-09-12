@@ -21,9 +21,9 @@
 // #define RPL_WELCOME (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") // 001
 // + envoyer <nick>!<user>@<host>) en arguments
 // + ajouter dessin?
-#define RPL_YOURHOST (":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n")	 // 002
-#define RPL_CREATED (":dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
-#define RPL_MYINFO (":dasanter!dasanter@127.0.0.1 004 dasanter :irc_dta 1.69 aio ovim\r\n")														 // 004
+// #define RPL_YOURHOST (":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n")	 // 002
+// #define RPL_CREATED (":dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
+// #define RPL_MYINFO (":dasanter!dasanter@127.0.0.1 004 dasanter :irc_dta 1.69 aio ovim\r\n")														 // 004
 #define TRUE 1
 #define PORT 6668
 #define MAXEVENTS 64
@@ -195,20 +195,29 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 		user->print();
 	else
 		std::cout << "no user..." << std::endl;
-	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO"))
+	if (msg.compare("RPL_WELCOME") == 0)
 	{
-		if (msg.compare("RPL_WELCOME"))
-		{
-			for (int i = 1; i < cmd.get_size(); i++)
-			{
-				res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
-			}
-			res.append("001");
-	// 		res.append(get_user(_users._nick)); // dasanter
-			res.append(" :Welcome to the Internet Relay Network\r\n");
-		}
-		//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
+		for (int i = 1; i < cmd.get_size(); i++)
+			res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
+		res.append("001 :Welcome to the Internet Relay Network\r\n");
 	}
+	if (msg.compare("RPL_YOURHOST") == 0)
+	{
+		res.append(RPL_YOURHOST);
+	}
+	// if (msg.compare("RPL_YOURHOST") == 0)
+	// {
+		
+	// }
+	if (msg.compare("RPL_CREATED") == 0)
+	{
+		res.append(RPL_CREATED);
+	}
+	if (msg.compare("RPL_MYINFO") == 0)
+	{
+		res.append(RPL_MYINFO(user->get_mod(), "0"));
+	}
+	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value
 	// for (int i = 1; i < cmd.get_size(); i++)
@@ -218,8 +227,8 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 
 	// if (msg = les msgs 001 002 ou 003)
 	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
-
-	std::cout << "get msg : |" <<  res << "|" << std::endl;
+	std::cout << "get msg : |" << res << "|" << std::endl;
+	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
 }
 
 static int make_socket_non_blocking(int sfd)
@@ -275,7 +284,7 @@ static int create_and_bind(std::string port)
 		return -1;
 	}
 	freeaddrinfo(result);
-	return sfd;
+	return (sfd);
 }
 
 void pre_parse(std::string buf, int sfd, Server *serv)
@@ -289,6 +298,7 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	{
 		Cmd command;
 		command._server = serv;
+		command._sfd = sfd;
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
@@ -420,7 +430,7 @@ int Server::init()
 						done = 1;
 						break;
 					}
-					pre_parse(buf, sfd, this);
+					pre_parse(buf, events[i].data.fd, this);
 					// std::cout << "buf" << buf << '\n';
 					//send(sfd, buf, sizeof(buf), FLAGS);
 				}
@@ -434,7 +444,7 @@ int Server::init()
 	}
 	free(events);
 	close(sfd);
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
 // recuperer la data du User

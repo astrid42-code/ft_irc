@@ -23,7 +23,7 @@ class Cmd
 
 		Server					*_server;
 		User					*_user; // recuperer les infos d'un user (nick, pwd, ...) 
-
+		int 					_sfd;
 		Cmd & operator=(const Cmd &cmd_op);
 
 		// ptr sur fonction des cmds qui prend une ref sur ma struct Command

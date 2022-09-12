@@ -14,7 +14,7 @@
 	
 User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _mod(""), _operator(0)
 {
-	std::cout << _user << _name << _nick << _pwd << std::endl;
+	std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
 	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
