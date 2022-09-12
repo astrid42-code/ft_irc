@@ -41,26 +41,25 @@ void nick(Cmd &command)
     // std::cout << command.get_size() << std::endl;
     if (!command.get_size())
     {
-        std::cout << "Your nickname is " << DEFAULT_NAME << '\n'; // en attendant de recuperer le ptr sur user
+        std::cout << "Your nickname is " << DEFAULT_NAME << std::endl; // en attendant de recuperer le ptr sur user
         // a tester quand class user terminee
         command._user->set_user(DEFAULT_NAME);
-        std::cout << "Your nickname is" << command._user->get_user() << '\n';
+        std::cout << "Your nickname is" << command._user->get_user() << std::endl;
         return;
     }//  a tester quand class user terminee
     else
     {
             
-            // command._user->set_nick(command.get_value()[0]);
-            // std::cout << command._user->get_user() << '\n';
-            // std::cout << "prout2 " << command.get_value()[0] << '\n';
-            // attention : tester avec ou sans la casse
+        // command._user->set_nick(command.get_value()[0]);
+        // std::cout << command._user->get_user() << '\n';
+        // std::cout << "prout2 " << command.get_value()[0] << '\n';
+        // attention : tester avec ou sans la casse
         // if (command.get_value()[0] != command._user->get_user()){
-            std::cout << "You're now known as " << command.get_value()[0] << std::endl;
-          
-
-        //necessite de nettoyer le vector _value a la fin de chaque cmd (ou tout simplement ~Cmd mais comment faire?)
-
-          
+        std::cout << "You're now known as " << command.get_value()[0] << std::endl;
+        // command._user->set_user(DEFAULT_NAME);
+        // std::cout << "Your nickname is" << command._user->get_user() << std::endl;
+        return;
+        //necessite de nettoyer le vector _value a la fin de chaque cmd (ou tout simplement ~Cmd mais comment faire?)   
         // }
         // else if (command.get_value()[0] == command._user->get_user()){
         //     command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL); 

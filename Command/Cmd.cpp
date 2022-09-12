@@ -69,6 +69,11 @@ std::vector<std::string>	Cmd::get_value(void) const
 	return (_value);
 }
 
+const std::string				Cmd::get_str_value(int i) const
+{
+	return (_value[i]);
+}
+
 void	Cmd::set_size(int i){
 	_size = i;
 }
@@ -97,9 +102,23 @@ int					check_condition(std::string key)
 	return (0);
 }
 
+// void parse_cmd(std::string str, Cmd cmd)
+// { 
+// 	std::string key;
+	
+// 	if (str.find(" ", 0))
+// 		key = str.substr(0, str.find(" ", 0))
+// 	else
+// 	{
+// 		std::cout << "error pars_cmd" << std::endl;
+// 		return ;
+// 	}
+	
+// }
+
 void Cmd::parse_cmd(std::string str)
 {
-	// std::cout << "str " << str << '\n';	
+	std::cout << "str " << str << std::endl;	
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
 	size_t start;
@@ -114,9 +133,8 @@ void Cmd::parse_cmd(std::string str)
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
-		// std::cout << "coucou" << '\n';
+		// std::cout << "coucou" << std::endl;
 		set_key(key);
-
 		if (size == 0)
 		{
 			set_size(0);
@@ -145,7 +163,7 @@ void Cmd::parse_cmd(std::string str)
 			// std::cout << " tmp " << tmp << std::endl;
 			// std::cout << "start " << start << "end 2 " << end << std::endl;
 			tmp++;
-			// std::cout << i << '\n';
+			// std::cout << i << std::endl;
 		}
 
 		// std::cout << "_key = " << _key << std::endl;

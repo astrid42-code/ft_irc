@@ -34,6 +34,7 @@ class Cmd
 		const std::string				get_key(void) const;
 		void							set_value(std::vector<std::string> key);
 		std::vector<std::string>		get_value(void) const;
+		const std::string				get_str_value(int i) const;
 		void							set_size(int i);
 		int								get_size(void) const;
 

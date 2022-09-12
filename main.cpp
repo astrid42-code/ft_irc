@@ -30,9 +30,6 @@ int		main(int ac, char **av)
 	
 	if (ac == 3)
 	{
-		User	user;
-
-		init_user(user);
 		Server server = Server(av[1], av[2]);
 		server.init();
 	}

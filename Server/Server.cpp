@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/12 14:51:04 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/12 15:52:54 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,25 +284,25 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	(void)sfd; // CARE
 
 	std::cout << "buf = " << buf << std::endl;
-	while (pos < (int)buf.length() && buf.find("\n", pos))
+	// for (int i = 0; i < (int)buf.length(); i++)
+	// {
+	// 	std::cout << i << ":" << (int)buf[i] << ' ';
+	// }
+	// std::cout << std::endl;
+	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
 		Cmd command;
 		command._server = serv;
-		/*if (buf.find("\r", pos) >= 0)
-		{
-			std::cout << "OUAI OUAI OUAI" << buf.find("\r", pos) << std::endl;
-			token = buf.substr(pos, buf.find("\r", pos) - 1);
-		}
-		else*/
-		// std::cout << "pos " << pos << std::endl;
-			token = buf.substr(pos, buf.find("\n", pos) - 1);
+
+		// std::cout << "start :" << pos << " | end :" << buf.find("\r\n", pos) << std::endl;
+		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		// std::cout << "pos = " << pos << std::endl;
 		pos = buf.find("\n", pos) + 1;
 		// std::cout << "new pos = " << pos << std::endl;
 		std::cout << "token = |" << token << "|" << std::endl;
 		// remplir sfd avec command.set_fd(sfd);
 		command.parse_cmd(token);
-		if (pos == 0)
+		if (pos >= (int)buf.length() || pos == 0)
 			break ;
 	}
 /*
