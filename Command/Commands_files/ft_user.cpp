@@ -42,12 +42,23 @@
 //                                    username of "guest" and real name
 //                                    "Ronnie Reagan", and asking to be set
 //                                    invisible.
+void	init_user(User *user)
+{
+	user->set_name("Tad amigo");
+	user->set_mod("o");
+	user->set_nick("tamigore");
+	user->set_operator(1);
+	user->set_pwd("1234567890");
+	user->set_user("Tadeo");
+}
 
 void user(Cmd &command){
     // (void)command;
 	// printf("ft_user\n");
     command.print();
-
+	User *test = new User();
+	init_user(test);
+	command._user = test;
 	//std::cout << command.get_size() << std::endl;
 	// for (int i = 0; i < command.get_size(); i++){
 	// 	std::cout << "value" << i << " " << command.get_value()[i] << std::endl;

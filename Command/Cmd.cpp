@@ -118,18 +118,14 @@ int					check_condition(std::string key)
 
 void Cmd::parse_cmd(std::string str)
 {
-	std::cout << "str " << str << std::endl;	
 	std::string key; // pour recuperer la key (1er mot de str)
-	int result;
 	size_t start;
 	size_t end = 0;
 	size_t size;
 	std::string tmp_val;
 	int tmp = 0;
 
-	for (int i = 0; str[i] != ' ' && str[i]; i++)
-		result = i + 1;
-	key = str.substr(0, result);
+	key = str.substr(0, str.find(' '));//result);
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
@@ -138,11 +134,10 @@ void Cmd::parse_cmd(std::string str)
 		if (size == 0)
 		{
 			set_size(0);
-			// exec_cmd(*this);
 			_cmd[_key](*this);
 			return;
 		}
-		tmp_val = str.substr(result, str.size());
+		tmp_val = str.substr(str.find(' '), str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
 			end = tmp_val.find(' ', start);
@@ -156,7 +151,6 @@ void Cmd::parse_cmd(std::string str)
 		// std::cout << "_key = " << _key << std::endl;
 		set_size(tmp);
 		// std::cout << "i " << tmp << "size" << get_size() << '\n';
-		// exec_cmd(*this);
 		_cmd[_key](*this);
 	}
 	else
@@ -169,6 +163,7 @@ a revoir : exception caught + abort
 	if (it != _cmd.end()) { // sauf pour exit et autres fcts speciales
 	}
 */
+	this->_server->get_msg("RPL_WELCOME", NULL, *this);
 }
 
 void	Cmd::print(void)

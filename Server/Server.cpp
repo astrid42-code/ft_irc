@@ -189,25 +189,28 @@ bool Server::set_pp(std::string port, std::string pwd)
 
 void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
-	// (void)value;
-	(void)user;
-	std::string		res = ":";
+	std::string	res = ":";
 
-	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO")){
-		if (msg.compare("RPL_WELCOME")){
-	// std::cout << "crotte" << '\n';
-			for (int i = 1; i < cmd.get_size(); i++){
-				res.append(cmd.get_value()[i]); // ex dasanter!dasanter@127.0.0.1
+	if (user)
+		user->print();
+	else
+		std::cout << "no user..." << std::endl;
+	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO"))
+	{
+		if (msg.compare("RPL_WELCOME"))
+		{
+			for (int i = 1; i < cmd.get_size(); i++)
+			{
+				res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
 				res.append(" ");
 			}
 			res.append("001");
 	// 		res.append(get_user(_users._nick)); // dasanter
 			res.append(" :Welcome to the Internet Relay Network\r\n");
 		}
-		
+		//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	}
-	res.append(msg);
-	std::cout << res;
+	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value
 	// for (int i = 1; i < cmd.get_size(); i++)
 	// 	cmd.get_value()[i].clear();
@@ -217,7 +220,7 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 	// if (msg = les msgs 001 002 ou 003)
 	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
 
-	// else
+	std::cout << "get msg : |" <<  res << "|" << std::endl;
 }
 
 static int make_socket_non_blocking(int sfd)
@@ -287,7 +290,6 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	{
 		Cmd command;
 		command._server = serv;
-
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
