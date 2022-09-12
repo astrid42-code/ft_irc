@@ -34,13 +34,13 @@ class Cmd
 		const std::string				get_key(void) const;
 		void							set_value(std::vector<std::string> key);
 		const std::vector<std::string>	get_value(void) const;
+		const std::string				get_str_value(int i) const;
 		void							set_size(int i);
 		int								get_size(void) const;
 
 		// void set_value(std::string value);
 		// const std::string &	get_value(void) const;
 
-		int		exec_cmd(Cmd cmd);
 		void	parse_cmd(std::string str);
 		void	print(void);
 

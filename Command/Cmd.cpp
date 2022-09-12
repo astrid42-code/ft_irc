@@ -69,22 +69,17 @@ const std::vector<std::string>	Cmd::get_value(void) const
 	return (_value);
 }
 
+const std::string				Cmd::get_str_value(int i) const
+{
+	return (_value[i]);
+}
+
 void	Cmd::set_size(int i){
 	_size = i;
 }
 
 int		Cmd::get_size(void) const{
 	return (_size);
-}
-
-int 	Cmd::exec_cmd(Cmd cmd)
-{
-	(void)cmd;
-	std::cout << "_key = " << this->_key << " size = " << this->_size << std::endl;
-	std::cout << "prout2 " << std::endl;
-	_cmd[_key](*this);
-	std::cout << "prout3 " << std::endl;
-	return (1);
 }
 
 int					check_condition(std::string key)
@@ -97,10 +92,24 @@ int					check_condition(std::string key)
 	return (0);
 }
 
+// void parse_cmd(std::string str, Cmd cmd)
+// { 
+// 	std::string key;
+	
+// 	if (str.find(" ", 0))
+// 		key = str.substr(0, str.find(" ", 0))
+// 	else
+// 	{
+// 		std::cout << "error pars_cmd" << std::endl;
+// 		return ;
+// 	}
+	
+// }
+
 void Cmd::parse_cmd(std::string str)
 { 
 
-	std::cout << "str " << str << '\n';	
+	std::cout << "str " << str << std::endl;	
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
 	size_t start;
@@ -115,13 +124,12 @@ void Cmd::parse_cmd(std::string str)
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
-		// std::cout << "coucou" << '\n';
+		// std::cout << "coucou" << std::endl;
 		set_key(key);
-
 		if (size == 0)
 		{
 			set_size(0);
-			exec_cmd(*this);
+			_cmd[_key](*this);
 			return;
 		}
 		tmp_val = str.substr(result, str.size());
@@ -131,13 +139,14 @@ void Cmd::parse_cmd(std::string str)
 			_value.push_back(tmp_val.substr(start, end - start));
 			std::cout << "_value = " << _value[tmp] << "size" << get_value().size() << std::endl;
 			tmp++;
-			// std::cout << i << '\n';
+			// std::cout << i << std::endl;
 		}
 
 		// std::cout << "_key = " << _key << std::endl;
-		set_size(tmp);
-		// std::cout << "i " << tmp << "size" << get_size() << '\n';
-		exec_cmd(*this);
+		set_size(_value.size());
+		std::cout << "size :" << get_size() << std::endl;
+		std::cout << "value :" << get_str_value(0) << std::endl;
+		_cmd[_key](*this);
 	}
 	else
 		return;

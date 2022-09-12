@@ -30,9 +30,6 @@ int		main(int ac, char **av)
 	
 	if (ac == 3)
 	{
-		User	user;
-
-		init_user(user);
 		Server server = Server(av[1], av[2]);
 		server.init();
 	}
@@ -45,7 +42,6 @@ int		main(int ac, char **av)
 		user.print();
 		std::cout << av[1] << '\n';
 		cmd.parse_cmd(av[1]);
-		cmd.exec_cmd(cmd); // recupere la string donnee au debut
 		
 	}
 	else

@@ -37,28 +37,29 @@
 void nick(Cmd command)
 {
     std::cout << "nick test " << std::endl;
-    std::cout << command.get_size() << std::endl;
+    std::cout << command.get_value().size() << std::endl;
+
+    std::vector<std::string>	value = command.get_value();
+
     if (!command.get_size())
     {
-        std::cout << "Your nickname is " << DEFAULT_NAME << '\n'; // en attendant de recuperer le ptr sur user
+        std::cout << "Your nickname is " << DEFAULT_NAME << std::endl; // en attendant de recuperer le ptr sur user
         // a tester quand class user terminee
         command._user->set_user(DEFAULT_NAME);
-        std::cout << "Your nickname is" << command._user->get_user() << '\n';
+        std::cout << "Your nickname is" << command._user->get_user() << std::endl;
         return;
     }//  a tester quand class user terminee
     else
     {
-            std::cout << "prout2 " << command.get_value()[0] << '\n';
-            
+            std::cout << "nick else test " << std::endl;
+            std::cout << command.get_str_value(0) << std::endl;
             // command._user->set_nick(command._value[0]);
-            std::cout << command._user->get_user() << '\n';
+            std::cout << command._user->get_user() << std::endl;
             // attention : tester avec ou sans la casse
-        if (command.get_value()[0] != command._user->get_user()){
-            std::cout << "You're now known as " << command.get_value()[0] << '\n';
-        }
-        else if (command.get_value()[0] == command._user->get_user()){
-            command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL); 
-        }
+        if (command._user == NULL || command.get_str_value(0) != command._user->get_user())
+            std::cout << "You're now known as " << command.get_str_value(0) << std::endl;
+        else
+            command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL);
     }
     
     //         else if (si chgmt de nick dans un autre serveur et nouveau nick deja enregistre)

@@ -277,11 +277,11 @@ void pre_parse(std::string buf, Cmd command, int sfd)
 	(void)sfd; // CARE
 
 	std::cout << "buf = " << buf << std::endl;
-	while (pos < (int)buf.length() && buf.find("\n", pos))
+	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
-		token = buf.substr(pos, buf.find("\n", pos) - 1);
+		token = buf.substr(pos, buf.find("\r\n", pos));
 		std::cout << "pos = " << pos << std::endl;
-		pos = buf.find("\n", pos) + 1;
+		pos = buf.find("\r\n", pos) + 2;
 		std::cout << "new pos = " << pos << std::endl;
 		std::cout << "token = |" << token << "|" << std::endl;
 		// remplir sfd avec command.set_fd(sfd);
