@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/12 11:58:00 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:51:04 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 			token = buf.substr(pos, buf.find("\r", pos) - 1);
 		}
 		else*/
+		// std::cout << "pos " << pos << std::endl;
 			token = buf.substr(pos, buf.find("\n", pos) - 1);
 		// std::cout << "pos = " << pos << std::endl;
 		pos = buf.find("\n", pos) + 1;

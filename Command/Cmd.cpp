@@ -81,9 +81,9 @@ int 	Cmd::exec_cmd(Cmd &cmd)
 {
 	(void)cmd;
 	std::cout << "_key = " << this->_key << " size = " << this->_size << std::endl;
-	std::cout << "prout2 " << std::endl;
+	// std::cout << "prout2 " << std::endl;
 	_cmd[_key](*this);
-	std::cout << "prout3 " << std::endl;
+	// std::cout << "prout3 " << std::endl;
 	return (1);
 }
 
@@ -99,7 +99,7 @@ int					check_condition(std::string key)
 
 void Cmd::parse_cmd(std::string str)
 {
-	std::cout << "str " << str << '\n';	
+	// std::cout << "str " << str << '\n';	
 	std::string key; // pour recuperer la key (1er mot de str)
 	int result;
 	size_t start;
@@ -127,10 +127,23 @@ void Cmd::parse_cmd(std::string str)
 		tmp_val = str.substr(result, str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
-			end = tmp_val.find(' ', start);
+			if (!_value.empty()){
+
+				if (_key == "USER" && _value[tmp][0] == ':'){
+					std::cout << "bla" << std::endl;
+					_value.push_back(tmp_val.substr(start, str.size() - start));
+				}
+			}
+			else{
+				std::cout << "lol" << std::endl;
+				end = tmp_val.find(' ', start);
+				_value.push_back(tmp_val.substr(start, end - start));
+			}
 			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
-			_value.push_back(tmp_val.substr(start, end - start));
 			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
+			// std::cout << "1er char " << _value[tmp][0] << std::endl;
+			// std::cout << " tmp " << tmp << std::endl;
+			// std::cout << "start " << start << "end 2 " << end << std::endl;
 			tmp++;
 			// std::cout << i << '\n';
 		}
