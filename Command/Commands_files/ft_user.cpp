@@ -57,14 +57,11 @@ void user(Cmd &command)
 	printf("ft_user\n");
 	command._user = new User();
 	init_user(command._user);
-	//std::cout << command.get_size() << std::endl;
-	// for (int i = 0; i < command.get_size(); i++){
-	// 	std::cout << "value" << i << " " << command.get_value()[i] << std::endl;
-	// }
-    // if (command.get_size() != 4){
-    //     command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command); 
-	// }
-	
+	std::cout << "command value size = " << command.get_size() << std::endl;
+    if (command.get_size() != 4)
+	{
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command); 
+	}
 	// set les valeurs du _user avec les args contenus dans _value
 	//command._user->set_name(command.get_value()[0]); // segfault :( 
 		// comment set les infos du _user ?
@@ -74,4 +71,7 @@ void user(Cmd &command)
 	// 	return;
 	// }
 	command._server->get_msg("RPL_WELCOME", command._user, command);
+	command._server->get_msg("RPL_YOURHOST", command._user, command);
+	command._server->get_msg("RPL_CREATED", command._user, command);
+	command._server->get_msg("RPL_MYINFO", command._user, command);
 }
