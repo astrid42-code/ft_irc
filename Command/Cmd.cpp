@@ -182,6 +182,7 @@ a revoir : exception caught + abort
 	if (it != _cmd.end()) { // sauf pour exit et autres fcts speciales
 	}
 */
+	this->_server->get_msg("RPL_WELCOME", NULL, *this);
 }
 
 void	Cmd::print(void)
