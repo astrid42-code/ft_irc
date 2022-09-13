@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/12 16:00:59 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/13 14:02:26 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ bool Server::set_pp(std::string port, std::string pwd)
 	}
 */
 
-void Server::get_msg(std::string msg, User *user, Cmd &cmd)
+std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
 	std::string	res = ":";
 
@@ -197,9 +197,10 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 		std::cout << "no user..." << std::endl;
 	if (msg.compare("RPL_WELCOME") == 0)
 	{
-		for (int i = 1; i < cmd.get_size(); i++)
-			res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
-		res.append("001 :Welcome to the Internet Relay Network\r\n");
+		// res.append(cmd.get_value()[0]);
+		// for (int i = 1; i < cmd.get_size() - 1; i++)
+			// res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
+		res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
 	}
 	if (msg.compare("RPL_YOURHOST") == 0)
 	{
@@ -229,6 +230,7 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
 	std::cout << "get msg : |" << res << "|" << std::endl;
 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
+	return (res);
 }
 
 static int make_socket_non_blocking(int sfd)

@@ -42,7 +42,7 @@ class Server
 		void 		set_ip(std::string ip);
 		bool		set_user(User user);
 		std::locale	loc;
-		void		get_msg(std::string msg, User *user, Cmd &cmd);
+		std::string	get_msg(std::string msg, User *user, Cmd &cmd);
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
 
 	private:
