@@ -43,16 +43,6 @@
 //                                    "Ronnie Reagan", and asking to be set
 //                                    invisible.
 
-// void	init_user(User *user)
-// {
-// 	user->set_name("Tad amigo");
-// 	user->set_mod("o");
-// 	user->set_nick("tamigore");
-// 	user->set_operator(1);
-// 	user->set_pwd("1234567890");
-// 	user->set_user("Tadeo");
-// }
-
 void user(Cmd &command)
 {
 	std::vector<std::string>::iterator it;
@@ -63,21 +53,7 @@ void user(Cmd &command)
 	std::cout << "command value size = " << command.get_value().size() << std::endl;
     if (command.get_value().size() != 4)
 	{
-		// if (command.get_value().size() > 4 && command.get_str_value(3).find(':') == 0)
-		// {
-		// 	std::cout << "in command value size > 4" << std::endl;
-		// 	while (command.get_value().size() > 4)
-		// 	{
-		// 		it = command.get_value().begin() + 4;
-		// 		std::cout << *it << std::endl;
-		// 		command.set_str_value(command.get_str_value(3).substr(1) + command.get_str_value(4), 3);
-		// 		command.get_value().erase(it);
-		// 	}
-		// }
-		// else
-		// {
-			command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command); 
-		// }
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command); 
 	}
 	std::cout << "setting the user" << std::endl;
 	command._user->set_nick(command.get_value()[0]);
