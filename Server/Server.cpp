@@ -293,7 +293,6 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 {
 	int pos = 0;
 	std::string token;
-	(void)sfd; // CARE
 
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
@@ -304,7 +303,6 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
-		// remplir sfd avec command.set_fd(sfd);
 		command.parse_cmd(token);
 		if (pos >= (int)buf.length() || pos == 0)
 			break ;
@@ -314,11 +312,11 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int Server::init()
 {
-	Cmd command;
 	int sfd, s;
 	int efd;
 	struct epoll_event event;
 	struct epoll_event *events;
+
 	sfd = create_and_bind(_port.c_str());
 	if (sfd == -1)
 		abort();
@@ -433,8 +431,6 @@ int Server::init()
 						break;
 					}
 					pre_parse(buf, events[i].data.fd, this);
-					// std::cout << "buf" << buf << '\n';
-					//send(sfd, buf, sizeof(buf), FLAGS);
 				}
 				if (done)
 				{

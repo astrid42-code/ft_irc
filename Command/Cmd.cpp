@@ -69,16 +69,6 @@ std::vector<std::string>	Cmd::get_value(void) const
 	return (_value);
 }
 
-void	Cmd::set_str_value(std::string str, int i)
-{
-	_value[i] = str;
-}
-
-const std::string				Cmd::get_str_value(int i) const
-{
-	return (_value[i]);
-}
-
 void	Cmd::set_size(int i)
 {
 	_size = i;
@@ -87,16 +77,6 @@ void	Cmd::set_size(int i)
 int		Cmd::get_size(void) const
 {
 	return (_size);
-}
-
-int 	Cmd::exec_cmd(Cmd &cmd)
-{
-	(void)cmd;
-	std::cout << "_key = " << this->_key << " size = " << this->_size << std::endl;
-	// std::cout << "prout2 " << std::endl;
-	_cmd[_key](*this);
-	// std::cout << "prout3 " << std::endl;
-	return (1);
 }
 
 int					check_condition(std::string key)
@@ -141,11 +121,11 @@ void Cmd::parse_cmd(std::string str)
 			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
 			tmp++;
 		}
-		if (tmp_val.find(':'))
+		if (tmp_val.find(':') != std::string::npos)
 		{
 			trailing = tmp_val.substr(tmp_val.find(':') + 1, tmp_val.find("\r\n") - tmp_val.find(':') + 1);
 			_value.push_back(trailing);
-			std::cout << "_value" << tmp << " = " << _value.back() << std::endl;
+			std::cout << "tvalue" << tmp << " = " << _value.back() << std::endl;
 		}
 		set_size(tmp);
 		_cmd[_key](*this);

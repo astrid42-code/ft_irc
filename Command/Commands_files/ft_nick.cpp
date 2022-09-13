@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/13 14:53:06 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/13 16:38:39 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,32 +37,37 @@
 
 void nick(Cmd &command)
 {
-    std::cout << "nick test " << std::endl;
-    // std::cout << command.get_size() << std::endl;
-    if (!command.get_size())
-    {
-        std::cout << "Your nickname is " << DEFAULT_NAME << std::endl; // en attendant de recuperer le ptr sur user
-        // a tester quand class user terminee
-        command._user->set_user(DEFAULT_NAME);
-        std::cout << "Your nickname is" << command._user->get_user() << std::endl;
-        return;
-    }//  a tester quand class user terminee
-    else
-    {
-
-        std::cout << "You're now known as " << command.get_value()[0] << std::endl;
-        // command._user->set_nick(command.get_str_value(0));
-        // std::cout << "Your nickname is" << command._user->get_user() << std::endl;
-        // else if (command.get_value()[0] == command._user->get_user()){
-        //     command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL, command); 
-        // }
-        }
-    
-    //         else if (si chgmt de nick dans un autre serveur et nouveau nick deja enregistre)
-    //          envoyer cmd kill > a ne pas faire (youpi)
-    //         + ERR_NICKCOLLISION pour que client(l'utilisateur?) deconnecte les 2 clients
-    //          https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
-    // // } 
+	std::cout << "ft_nick" << std::endl;
+	if (command.get_size() == 0)
+	{
+		std::cout << "no nickname given." << std::endl;
+		command._server->get_msg("ERR_NONICKNAMEGIVEN", command._user, command);
+	}
+	else
+	{
+		if (command._server->get_user(command.get_value()[0]) == User())
+		{
+			if (command._user == NULL)
+				command._user = new User();
+			command._user->set_nick(command.get_value()[0]);
+		}
+		else
+		{
+			std::cout << "nickname already in use." << std::endl;
+			command._server->get_msg("ERR_NICKNAMEINUSE", command._user, command);
+		}
+		
+		// attention : tester avec ou sans la casse
+		// if (command.get_value()[0] != command._user->get_user()){
+		// command._user->set_user(DEFAULT_NAME);
+		// std::cout << "Your nickname is" << command._user->get_user() << std::endl;
+		//necessite de nettoyer le vector _value a la fin de chaque cmd (ou tout simplement ~Cmd mais comment faire?)
+		// }
+		// else if (command.get_value()[0] == command._user->get_user()){
+		//     command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL);
+		// }
+	}
+	std::cout << "nickname :" << command._user->get_nick() << std::endl;
 }
 
 // test :

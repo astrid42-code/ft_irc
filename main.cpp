@@ -14,16 +14,6 @@
 #include "Command/Cmd.hpp"
 #include "User/User.hpp"
 
-void	init_user(User &user)
-{
-	user.set_name("Tad amigo");
-	user.set_mod("o");
-	user.set_nick("tamigore");
-	user.set_operator(1);
-	user.set_pwd("1234567890");
-	user.set_user("Tadeo");
-}
-
 int		main(int ac, char **av)
 {
 	(void)av;

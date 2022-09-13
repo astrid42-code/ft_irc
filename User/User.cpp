@@ -12,9 +12,9 @@
 
 #include "User.hpp"
 	
-User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _mod(""), _operator(0)
+User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _mod(""),  _host(""), _operator(0)
 {
-	std::cout << "User create by default." << std::endl;
+	// std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
 	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
@@ -39,6 +39,14 @@ User & User::operator=(const User & user_cp)
 	_mod = user_cp._mod;
 	_operator = user_cp._operator;
 	return (*this);
+}
+
+bool	User::operator==(const User & user_cp)
+{
+	if (_user == user_cp._user && _name == user_cp._name && _nick == user_cp._nick &&
+		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
+		return (1);
+	return (0);
 }
 
 std::string User::get_user() const
