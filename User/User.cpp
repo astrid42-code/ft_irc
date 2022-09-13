@@ -84,6 +84,11 @@ int	User::get_operator() const
 	return (_operator);
 }
 
+int	User::get_sfd() const
+{
+	return (_sfd);
+}
+
 void	User::set_user(std::string user)
 {
 	_user = user;
@@ -112,6 +117,11 @@ void	User::set_pwd(std::string pwd)
 void	User::set_operator(int op)
 {
 	_operator = op;
+}
+
+void	User::set_sfd(int sfd)
+{
+	_sfd = sfd;
 }
 
 void	User::set_mod(std::string mod)
@@ -174,5 +184,11 @@ bool	User::find_mod(std::string mod)
 
 void	User::print(void) const
 {
-	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod << std::endl;
+	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
+}
+
+std::ostream	&operator<<(std::ostream &os, const User &user_cp)
+{
+	os << "user :" + user_cp.get_user() + " | name:" + user_cp.get_name() + " | nick:" + user_cp.get_nick() + " | pwd:" + user_cp.get_pwd() + " | operator:" + SSTR(user_cp.get_operator()) + " | mod:" + user_cp.get_mod() + " | sfd:" + SSTR(user_cp.get_sfd());
+	return (os);
 }

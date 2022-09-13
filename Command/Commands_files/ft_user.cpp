@@ -48,12 +48,12 @@ void user(Cmd &command)
 	std::vector<std::string>::iterator it;
 
 	printf("ft_user\n");
-	command._user = new User();
-	// init_user(command._user);
-	std::cout << "command value size = " << command.get_value().size() << std::endl;
-    if (command.get_value().size() != 4)
+	if (command._user == NULL)
+		command._user = new User();
+    if (command.get_size() != 4)
 	{
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command); 
+		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command); 
 	}
 	std::cout << "setting the user" << std::endl;
 	command._user->set_nick(command.get_value()[0]);
@@ -63,6 +63,7 @@ void user(Cmd &command)
 	command._user->set_operator(0);
 	command._user->set_mod("");
 	command._user->set_pwd("");
+	command._user->set_sfd(command._sfd);
 	// std::cout << command._user->get_name() << std::endl;
 	// if (command.get_value()[0] == command._user->get_name()) // value[0] etant le login (get_name())
 	// {
@@ -72,4 +73,7 @@ void user(Cmd &command)
 	command._server->get_msg("RPL_YOURHOST", command._user, command);
 	command._server->get_msg("RPL_CREATED", command._user, command);
 	command._server->get_msg("RPL_MYINFO", command._user, command);
+	command._server->set_user(*command._user);
+	if (command._user)
+		delete command._user;
 }

@@ -57,7 +57,7 @@ class Channel
 		// I - set/remove an invitation mask to automatically override
 
 		//	PRIVILEGE
-		// prefix '+' for a chanel without mod and without operators
+		//	prefix '+' for a chanel without mod and without operators
 		//  INVITE  - Invite a client to an invite-only channel (mode +i)
 	   	//	KICK    - Eject a client from the channel
 		//	MODE    - Change the channel's mode, as well as members' privileges

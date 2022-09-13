@@ -191,10 +191,6 @@ std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
 	std::string	res = ":";
 
-	if (user)
-		user->print();
-	else
-		std::cout << "no user..." << std::endl;
 	if (msg.compare("RPL_WELCOME") == 0)
 	{
 		// res.append(cmd.get_value()[0]);
