@@ -6,7 +6,7 @@
 #    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/09/09 17:16:04 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/09/14 11:33:34 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS		=	main.cpp \
 				Command/Cmd.cpp \
 				Command/Commands_files/ft_pass.cpp \
 				Command/Commands_files/ft_invite.cpp \
-				Command/Commands_files/ft_join.cpp \
+				Command/Commands_files/ft_join_leave.cpp \
 				Command/Commands_files/ft_kick.cpp \
 				Command/Commands_files/ft_kill.cpp \
 				Command/Commands_files/ft_nick.cpp \

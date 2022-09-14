@@ -13,7 +13,7 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 
 	// channel cmds
 	_cmd["JOIN"] = join;
-	// _cmd["PART"] = part; // non obligatoire?
+	_cmd["PART"] = part;
 	_cmd["LIST"] = list;
 
 	// advanced cmds

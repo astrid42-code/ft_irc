@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/07 12:54:55 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:41:22 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,14 @@ void	User::set_mod(std::string mod)
 */
 }
 
+void	User::set_chan(Channel &chan){
+	_vchan.push_back(&chan);
+}
+
+// void	User::set_chan(Channel *chan){
+// 	_vchan.push_back(chan);
+// }
+
 // a faire avant de stocker le user dans une map/un vector
 bool	User::check_nick(std::string new_nick)
 {
@@ -186,6 +194,19 @@ void	User::print(void) const
 {
 	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
 }
+
+bool	User::isOnChan(std::string &chan_name){
+	std::vector<Channel *>::iterator	it;
+
+	if (_vchan.size() == 0)
+		return false;
+	for (it = _vchan.begin(); it < _vchan.end(); it++){
+		if ((*it)->get_name() == chan_name)
+			return true;
+	}
+	return false;
+}
+
 
 std::ostream	&operator<<(std::ostream &os, const User &user_cp)
 {

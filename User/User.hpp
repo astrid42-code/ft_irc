@@ -4,6 +4,7 @@
 #include <iostream>
 // #include "Server/Server.hpp"
 #include "../Command/Cmd.hpp"
+#include "../Channel/Channel.hpp"
 
 #include <sstream>
 
@@ -11,6 +12,7 @@
         ( std::ostringstream() << std::dec << x ) ).str()
 
 
+class Channel;
 class User
 {
 	public:
@@ -37,10 +39,14 @@ class User
 		void			set_mod(std::string mod);
 		void			set_operator(int op);
 		void			set_sfd(int sfd);
+		void			set_chan(Channel &chan);
+		// void			set_chan(Channel *chan);
 
 		bool			check_nick(std::string new_nick);
 		bool			find_mod(std::string mod);
 		void			print(void) const;
+
+		bool			isOnChan(std::string &chan_name);
 
 		friend std::ostream	&operator<<(std::ostream &os, const User &user_cp);
 
@@ -53,6 +59,7 @@ class User
 		std::string				_host;
 		int						_sfd;
 		int						_operator;
+		std::vector<Channel *>	_vchan; // liste des channels dans lesquels le user est connecte (quand il join)
 };
 
 // std::ostream		&operator<<(std::ostream os, const User &user_cp);

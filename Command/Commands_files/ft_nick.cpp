@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/13 16:38:39 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:25:15 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void nick(Cmd &command)
 	}
 	else
 	{
+			// std::cout << " coucou" << std::endl;
 		if (command._server->get_user(command.get_value()[0]) == User())
 		{
 			if (command._user == NULL)
