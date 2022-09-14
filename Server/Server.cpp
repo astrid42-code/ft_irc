@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/12 16:00:59 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/13 14:02:26 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 // #define RPL_WELCOME (":dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network\r\n") // 001
 // + envoyer <nick>!<user>@<host>) en arguments
 // + ajouter dessin?
-#define RPL_YOURHOST (":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n")	 // 002
-#define RPL_CREATED (":dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
-#define RPL_MYINFO (":dasanter!dasanter@127.0.0.1 004 dasanter :irc_dta 1.69 aio ovim\r\n")														 // 004
+// #define RPL_YOURHOST (":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n")	 // 002
+// #define RPL_CREATED (":dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
+// #define RPL_MYINFO (":dasanter!dasanter@127.0.0.1 004 dasanter :irc_dta 1.69 aio ovim\r\n")														 // 004
 #define TRUE 1
 #define PORT 6668
 #define MAXEVENTS 64
@@ -187,7 +187,7 @@ bool Server::set_pp(std::string port, std::string pwd)
 	}
 */
 
-void Server::get_msg(std::string msg, User *user, Cmd &cmd)
+std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
 	std::string	res = ":";
 
@@ -195,20 +195,30 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 		user->print();
 	else
 		std::cout << "no user..." << std::endl;
-	if (msg.compare("RPL_WELCOME") || msg.compare("RPL_YOURHOST") || msg.compare("RPL_CREATED") || msg.compare("RPL_MYINFO"))
+	if (msg.compare("RPL_WELCOME") == 0)
 	{
-		if (msg.compare("RPL_WELCOME"))
-		{
-			for (int i = 1; i < cmd.get_size(); i++)
-			{
-				res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
-			}
-			res.append("001");
-	// 		res.append(get_user(_users._nick)); // dasanter
-			res.append(" :Welcome to the Internet Relay Network\r\n");
-		}
-		//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
+		// res.append(cmd.get_value()[0]);
+		// for (int i = 1; i < cmd.get_size() - 1; i++)
+			// res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
+		res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
 	}
+	if (msg.compare("RPL_YOURHOST") == 0)
+	{
+		res.append(RPL_YOURHOST);
+	}
+	// if (msg.compare("RPL_YOURHOST") == 0)
+	// {
+		
+	// }
+	if (msg.compare("RPL_CREATED") == 0)
+	{
+		res.append(RPL_CREATED);
+	}
+	if (msg.compare("RPL_MYINFO") == 0)
+	{
+		res.append(RPL_MYINFO(user->get_mod(), "0"));
+	}
+	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value
 	// for (int i = 1; i < cmd.get_size(); i++)
@@ -218,8 +228,9 @@ void Server::get_msg(std::string msg, User *user, Cmd &cmd)
 
 	// if (msg = les msgs 001 002 ou 003)
 	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
-
-	std::cout << "get msg : |" <<  res << "|" << std::endl;
+	std::cout << "get msg : |" << res << "|" << std::endl;
+	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
+	return (res);
 }
 
 static int make_socket_non_blocking(int sfd)
@@ -275,14 +286,13 @@ static int create_and_bind(std::string port)
 		return -1;
 	}
 	freeaddrinfo(result);
-	return sfd;
+	return (sfd);
 }
 
 void pre_parse(std::string buf, int sfd, Server *serv)
 {
 	int pos = 0;
 	std::string token;
-	(void)sfd; // CARE
 
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
@@ -293,7 +303,6 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
-		// remplir sfd avec command.set_fd(sfd);
 		command.parse_cmd(token);
 		if (pos >= (int)buf.length() || pos == 0)
 			break ;
@@ -303,11 +312,11 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int Server::init()
 {
-	Cmd command;
 	int sfd, s;
 	int efd;
 	struct epoll_event event;
 	struct epoll_event *events;
+
 	sfd = create_and_bind(_port.c_str());
 	if (sfd == -1)
 		abort();
@@ -421,9 +430,7 @@ int Server::init()
 						done = 1;
 						break;
 					}
-					pre_parse(buf, sfd, this);
-					// std::cout << "buf" << buf << '\n';
-					//send(sfd, buf, sizeof(buf), FLAGS);
+					pre_parse(buf, events[i].data.fd, this);
 				}
 				if (done)
 				{
@@ -435,7 +442,7 @@ int Server::init()
 	}
 	free(events);
 	close(sfd);
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
 // recuperer la data du User
@@ -455,6 +462,11 @@ bool Server::set_chan(Channel chan)
 
 	p = _channels.insert(make_pair(chan.get_name(), chan));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
+}
+
+std::map< std::string, User> Server::get_users(void)
+{
+	return (_users);
 }
 
 // recuperer la data du User

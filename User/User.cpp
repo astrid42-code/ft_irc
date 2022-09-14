@@ -12,9 +12,9 @@
 
 #include "User.hpp"
 	
-User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _mod(""), _operator(0)
+User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _mod(""),  _host(""), _operator(0)
 {
-	std::cout << _user << _name << _nick << _pwd << std::endl;
+	// std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
 	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
@@ -41,6 +41,14 @@ User & User::operator=(const User & user_cp)
 	return (*this);
 }
 
+bool	User::operator==(const User & user_cp)
+{
+	if (_user == user_cp._user && _name == user_cp._name && _nick == user_cp._nick &&
+		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
+		return (1);
+	return (0);
+}
+
 std::string User::get_user() const
 {
 	return (_user);
@@ -56,6 +64,11 @@ std::string User::get_nick() const
 	return (_nick);
 }
 
+std::string User::get_host() const
+{
+	return (_host);
+}
+
 std::string User::get_pwd() const
 {
 	return (_pwd);
@@ -64,6 +77,11 @@ std::string User::get_pwd() const
 std::string User::get_mod() const
 {
 	return (_mod);
+}
+
+int User::get_sfd() const
+{
+	return (_sfd);
 }
 
 int	User::get_operator() const
@@ -84,6 +102,11 @@ void	User::set_name(std::string name)
 void	User::set_nick(std::string nick)
 {
 	_nick = nick;
+}
+
+void	User::set_host(std::string host)
+{
+	_host = host;
 }
 
 void	User::set_pwd(std::string pwd)

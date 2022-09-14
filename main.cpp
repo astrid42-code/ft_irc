@@ -14,16 +14,6 @@
 #include "Command/Cmd.hpp"
 #include "User/User.hpp"
 
-void	init_user(User &user)
-{
-	user.set_name("Tad amigo");
-	user.set_mod("o");
-	user.set_nick("tamigore");
-	user.set_operator(1);
-	user.set_pwd("1234567890");
-	user.set_user("Tadeo");
-}
-
 int		main(int ac, char **av)
 {
 	(void)av;
@@ -32,18 +22,6 @@ int		main(int ac, char **av)
 	{
 		Server server = Server(av[1], av[2]);
 		server.init();
-	}
-	else if (ac == 2)
-	{
-		Cmd		cmd;
-		User	user;
-
-		init_user(user);
-		user.print();
-		std::cout << av[1] << '\n';
-		cmd.parse_cmd(av[1]);
-		// cmd.exec_cmd(cmd); // recupere la string donnee au debut
-		
 	}
 	else
 	{

@@ -38,11 +38,12 @@ class Server
 		Channel		get_chan(std::string key);
 		bool		set_chan(Channel chan);
 		User		get_user(std::string key);
+		std::map< std::string, User>	get_users(void);
 		std::string	get_ip();
 		void 		set_ip(std::string ip);
 		bool		set_user(User user);
 		std::locale	loc;
-		void		get_msg(std::string msg, User *user, Cmd &cmd);
+		std::string	get_msg(std::string msg, User *user, Cmd &cmd);
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
 
 	private:

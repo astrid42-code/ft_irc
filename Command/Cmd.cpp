@@ -69,27 +69,14 @@ std::vector<std::string>	Cmd::get_value(void) const
 	return (_value);
 }
 
-const std::string				Cmd::get_str_value(int i) const
+void	Cmd::set_size(int i)
 {
-	return (_value[i]);
-}
-
-void	Cmd::set_size(int i){
 	_size = i;
 }
 
-int		Cmd::get_size(void) const{
-	return (_size);
-}
-
-int 	Cmd::exec_cmd(Cmd &cmd)
+int		Cmd::get_size(void) const
 {
-	(void)cmd;
-	std::cout << "_key = " << this->_key << " size = " << this->_size << std::endl;
-	// std::cout << "prout2 " << std::endl;
-	_cmd[_key](*this);
-	// std::cout << "prout3 " << std::endl;
-	return (1);
+	return (_size);
 }
 
 int					check_condition(std::string key)
@@ -102,19 +89,18 @@ int					check_condition(std::string key)
 	return (0);
 }
 
-// void parse_cmd(std::string str, Cmd cmd)
-// { 
-// 	std::string key;
-	
-// 	if (str.find(" ", 0))
-// 		key = str.substr(0, str.find(" ", 0))
-// 	else
-// 	{
-// 		std::cout << "error pars_cmd" << std::endl;
-// 		return ;
-// 	}
-	
-// }
+User Cmd::get_user_fd()
+{
+	std::map< std::string, User>::iterator it;
+	it = _server->get_users().begin();
+	while (it != _server->get_users().end())
+	{
+		if (_sfd == it->second.get_sfd())
+			return (it->second);
+		it++;
+	}
+	return (_server->get_users().end()->second);
+}
 
 void Cmd::parse_cmd(std::string str)
 {
@@ -123,13 +109,14 @@ void Cmd::parse_cmd(std::string str)
 	size_t end = 0;
 	size_t size;
 	std::string tmp_val;
+	std::string	trailing;
 	int tmp = 0;
 
-	key = str.substr(0, str.find(' '));//result);
+	key = str.substr(0, str.find(' '));
 	size = str.size() - key.size();
 	if (check_condition(key))
 	{
-		// std::cout << "coucou" << std::endl;
+		std::cout << "check key done" << std::endl;
 		set_key(key);
 		if (size == 0)
 		{
@@ -140,42 +127,23 @@ void Cmd::parse_cmd(std::string str)
 		tmp_val = str.substr(str.find(' '), str.size());
 		while ((start = tmp_val.find_first_not_of(' ', end)) != std::string::npos)
 		{
-			if (!_value.empty()){
-
-				if (_key == "USER" && _value[tmp][0] == ':'){
-					std::cout << "bla" << std::endl;
-					_value.push_back(tmp_val.substr(start, str.size() - start));
-				}
-			}
-			else{
-				std::cout << "lol" << std::endl;
-				end = tmp_val.find(' ', start);
-				_value.push_back(tmp_val.substr(start, end - start));
-			}
-			// attention si cest apres ":" ne pas split ex :Astrid GAULTIER
+			end = tmp_val.find(' ', start);
+			if (tmp_val.find(':', start) != std::string::npos && tmp_val.find(':', start) < end)
+				break ;
+			_value.push_back(tmp_val.substr(start, end - start));
 			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
-			// std::cout << "1er char " << _value[tmp][0] << std::endl;
-			// std::cout << " tmp " << tmp << std::endl;
-			// std::cout << "start " << start << "end 2 " << end << std::endl;
 			tmp++;
-			// std::cout << i << std::endl;
 		}
-
-		// std::cout << "_key = " << _key << std::endl;
+		if (tmp_val.find(':') != std::string::npos)
+		{
+			trailing = tmp_val.substr(tmp_val.find(':') + 1, tmp_val.find("\r\n") - tmp_val.find(':') + 1);
+			_value.push_back(trailing);
+			std::cout << "tvalue" << tmp << " = " << _value.back() << std::endl;
+		}
 		set_size(tmp);
-		// std::cout << "i " << tmp << "size" << get_size() << '\n';
 		_cmd[_key](*this);
+		std::cout << "cmd execute..." << std::endl;
 	}
-	else
-		return;
-
-/*	
-a revoir : exception caught + abort
-// comment récuperer et lancer la fct? a t on besoin d'un it ici?
-	it = _cmd.find(command._key);
-	if (it != _cmd.end()) { // sauf pour exit et autres fcts speciales
-	}
-*/
 }
 
 void	Cmd::print(void)
@@ -185,7 +153,7 @@ void	Cmd::print(void)
 	std::cout << "key: " + _key << std::endl;
 	while (it != _value.end())
 	{
-		// std::cout << it->data() << std::endl;
+		std::cout << it->data() << std::endl;
 		it++;
 	}
 	if (_user)

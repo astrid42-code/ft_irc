@@ -12,15 +12,15 @@
 #define DATE "Mon Aug 5 16:57:33 2022"
 #define DEFAULT_NAME "toto"
 
-#define RPL_WELCOME ("Welcome to the Internet Relay Network\r\n") //001
+#define RPL_WELCOME(nick, user, host) (nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay Network\r\n") //001
         	// + envoyer <nick>!<user>@<host>) en arguments
 			// + ajouter dessin?
 
-//#define RPL_YOURHOST ( "Your host is " SERVER ", running version" VERSION "\r\n") //002
+#define RPL_YOURHOST ( "Your host is " SERVER ", running version" VERSION "\r\n") //002
 
-//#define RPL_CREATED ("This server was created " DATE "\r\n") // 003
+#define RPL_CREATED ("This server was created " DATE "\r\n") // 003
 
-//#define RPL_MYINFO(user_mode, chan_mode) (SERVERNAME VERSION "<available user modes> <available channel modes>\r\n") // 004
+#define RPL_MYINFO(user_mode, chan_mode) (SERVERNAME VERSION + user_mode + chan_mode "\r\n") // 004
 	// + envoyer nombre de users en fct de leur mode (nbr de users connectes, nbre d'invisible users connectes)
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg

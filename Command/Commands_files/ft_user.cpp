@@ -42,38 +42,34 @@
 //                                    username of "guest" and real name
 //                                    "Ronnie Reagan", and asking to be set
 //                                    invisible.
-void	init_user(User *user)
-{
-	user->set_name("Tad amigo");
-	user->set_mod("o");
-	user->set_nick("tamigore");
-	user->set_operator(1);
-	user->set_pwd("1234567890");
-	user->set_user("Tadeo");
-}
 
-void user(Cmd &command){
-    // (void)command;
-	// printf("ft_user\n");
-    command.print();
-	User *test = new User();
-	init_user(test);
-	command._user = test;
-	//std::cout << command.get_size() << std::endl;
-	// for (int i = 0; i < command.get_size(); i++){
-	// 	std::cout << "value" << i << " " << command.get_value()[i] << std::endl;
-	// }
-    // if (command.get_size() != 4){
-    //     command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command); 
-	// }
-	
-	// set les valeurs du _user avec les args contenus dans _value
-	//command._user->set_name(command.get_value()[0]); // segfault :( 
-		// comment set les infos du _user ?
-	std::cout << "name " << std::endl;
-	std::cout << command._user->get_name() << std::endl;
-	if (command.get_value()[0] == command._user->get_name()){// value[0] etant le login (get_name())
-		command._server->get_msg(ERR_ALREADYREGISTRED, NULL, command);
-	return;
+void user(Cmd &command)
+{
+	std::vector<std::string>::iterator it;
+
+	printf("ft_user\n");
+	command._user = new User();
+	// init_user(command._user);
+	std::cout << "command value size = " << command.get_value().size() << std::endl;
+    if (command.get_value().size() != 4)
+	{
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command); 
 	}
+	std::cout << "setting the user" << std::endl;
+	command._user->set_nick(command.get_value()[0]);
+	command._user->set_user(command.get_value()[1]);
+	command._user->set_host(command.get_value()[2]);
+	command._user->set_name(command.get_value()[3]);
+	command._user->set_operator(0);
+	command._user->set_mod("");
+	command._user->set_pwd("");
+	// std::cout << command._user->get_name() << std::endl;
+	// if (command.get_value()[0] == command._user->get_name()) // value[0] etant le login (get_name())
+	// {
+	// 	return;
+	// }
+	command._server->get_msg("RPL_WELCOME", command._user, command);
+	command._server->get_msg("RPL_YOURHOST", command._user, command);
+	command._server->get_msg("RPL_CREATED", command._user, command);
+	command._server->get_msg("RPL_MYINFO", command._user, command);
 }
