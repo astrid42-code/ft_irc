@@ -50,6 +50,13 @@ void nick(Cmd &command)
 			if (command._user == NULL)
 				command._user = new User();
 			command._user->set_nick(command.get_value()[0]);
+			command._user->set_sfd(command._sfd);
+			command._server->set_user(*command._user);
+			std::cout << command._server->get_user(command.get_value()[0]) << std::endl;
+			std::string tmp = command.get_value()[0];
+			if (command._user)
+				delete command._user;
+			std::cout << command._server->get_user(tmp) << std::endl;
 		}
 		else
 		{
@@ -67,7 +74,7 @@ void nick(Cmd &command)
 		//     command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL);
 		// }
 	}
-	std::cout << "nickname :" << command._user->get_nick() << std::endl;
+	// std::cout << "nickname :" << command._user->get_nick() << std::endl;
 }
 
 // test :

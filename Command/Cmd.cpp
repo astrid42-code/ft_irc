@@ -2,7 +2,7 @@
 
 
 
-Cmd::Cmd()
+Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 {
 	// build les fcts cmds en reliant une string a la fct ou plutot faire un make_pair()?
 
@@ -31,6 +31,7 @@ Cmd::Cmd()
 
 	_user = NULL;
 	_server = NULL;
+
 }
 
 Cmd::Cmd(const Cmd & cp)
@@ -80,7 +81,7 @@ int		Cmd::get_size(void) const
 	return (_size);
 }
 
-int					check_condition(std::string key)
+int		check_condition(std::string key)
 {
 	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
 			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
@@ -90,7 +91,7 @@ int					check_condition(std::string key)
 	return (0);
 }
 
-void Cmd::parse_cmd(std::string str)
+void	Cmd::parse_cmd(std::string str)
 {
 	std::string key; // pour recuperer la key (1er mot de str)
 	size_t start;
@@ -126,11 +127,11 @@ void Cmd::parse_cmd(std::string str)
 		{
 			trailing = tmp_val.substr(tmp_val.find(':') + 1, tmp_val.find("\r\n") - tmp_val.find(':') + 1);
 			_value.push_back(trailing);
+			tmp++;
 			std::cout << "tvalue" << tmp << " = " << _value.back() << std::endl;
 		}
 		set_size(tmp);
 		_cmd[_key](*this);
-		std::cout << "cmd execute..." << std::endl;
 	}
 }
 

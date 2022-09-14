@@ -51,7 +51,7 @@ class Server
 		int									fd;
 		std::string 						_ip;
 		std::string							_msg; // msg envoye par le serveur (ex : msgs d'erreurs)
-		std::map< std::string, Channel>	_channels;
+		std::map< std::string, Channel>		_channels;
 		std::map< std::string, User>		_users;
 };
 
