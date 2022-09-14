@@ -52,7 +52,7 @@ class Cmd
 };
 
 //parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (_value/args, )
-		void nick(Cmd &command);
+void nick(Cmd &command);
 void user(Cmd &command);
 void quit(Cmd &command);
 void join(Cmd &command);
@@ -62,6 +62,7 @@ void privmsg(Cmd &command);
 void who(Cmd &command);
 
 void ping(Cmd &command);
+void pong(Cmd &command);
 void invite(Cmd &command);
 void kick(Cmd &command);
 void oper(Cmd &command);

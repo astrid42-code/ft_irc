@@ -17,8 +17,8 @@ class User
 		User();
 		~User();
 
-		User	&operator=(const User & user_cp);
-		bool	operator==(const User & user_cp);
+		User		&operator=(const User & user_cp);
+		bool		operator==(const User & user_cp);
 
 		std::string 	get_user() const;
 		std::string		get_name() const;
@@ -36,10 +36,13 @@ class User
 		void			set_pwd(std::string pwd);
 		void			set_mod(std::string mod);
 		void			set_operator(int op);
+		void			set_sfd(int sfd);
 
 		bool			check_nick(std::string new_nick);
 		bool			find_mod(std::string mod);
 		void			print(void) const;
+
+		friend std::ostream	&operator<<(std::ostream &os, const User &user_cp);
 
 	private:
 		std::string				_user;
@@ -48,9 +51,11 @@ class User
 		std::string				_pwd;
 		std::string				_mod;
 		std::string				_host;
+		int						_sfd;
 		int						_operator;
-		int					_sfd;
 };
+
+// std::ostream		&operator<<(std::ostream os, const User &user_cp);
 
 #endif
 

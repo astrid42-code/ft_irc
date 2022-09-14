@@ -191,10 +191,6 @@ std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
 	std::string	res = ":";
 
-	if (user)
-		user->print();
-	else
-		std::cout << "no user..." << std::endl;
 	if (msg.compare("RPL_WELCOME") == 0)
 	{
 		// res.append(cmd.get_value()[0]);
@@ -446,15 +442,18 @@ int Server::init()
 }
 
 // recuperer la data du User
-Channel Server::get_chan(std::string key)
+Channel *Server::get_chan(std::string key)
 {
 	std::map<std::string, Channel>::iterator it;
-
+	std::cout << "start" << std::endl;
 	it = _channels.find(key);
+	std::cout << "mid" << std::endl;
 	if (it == _channels.end())
-		return (Channel());
-	return (it->second);
+		return (NULL);
+	std::cout << "end" << std::endl;
+	return (&(it->second));
 }
+
 // insert user in map
 bool Server::set_chan(Channel chan)
 {

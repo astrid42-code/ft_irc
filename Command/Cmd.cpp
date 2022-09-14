@@ -2,7 +2,7 @@
 
 
 
-Cmd::Cmd()
+Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 {
 	// build les fcts cmds en reliant une string a la fct ou plutot faire un make_pair()?
 
@@ -27,9 +27,11 @@ Cmd::Cmd()
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
 	_cmd["PING"] = ping;
+	_cmd["PONG"] = pong;
 
 	_user = NULL;
 	_server = NULL;
+
 }
 
 Cmd::Cmd(const Cmd & cp)
@@ -79,7 +81,7 @@ int		Cmd::get_size(void) const
 	return (_size);
 }
 
-int					check_condition(std::string key)
+int		check_condition(std::string key)
 {
 	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
 			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
@@ -93,12 +95,15 @@ User Cmd::get_user_fd()
 {
 	std::map< std::string, User>::iterator it;
 	it = _server->get_users().begin();
+	std::cout << "get_user_fd" << std::endl;
 	while (it != _server->get_users().end())
 	{
 		if (_sfd == it->second.get_sfd())
 			return (it->second);
 		it++;
 	}
+	std::cout << "user_not_found" << std::endl;
+	//probablement pas le bon return
 	return (_server->get_users().end()->second);
 }
 
@@ -138,11 +143,11 @@ void Cmd::parse_cmd(std::string str)
 		{
 			trailing = tmp_val.substr(tmp_val.find(':') + 1, tmp_val.find("\r\n") - tmp_val.find(':') + 1);
 			_value.push_back(trailing);
+			tmp++;
 			std::cout << "tvalue" << tmp << " = " << _value.back() << std::endl;
 		}
 		set_size(tmp);
 		_cmd[_key](*this);
-		std::cout << "cmd execute..." << std::endl;
 	}
 }
 
