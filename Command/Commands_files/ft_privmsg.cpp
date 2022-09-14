@@ -37,13 +37,56 @@
 //            ERR_NOSUCHNICK
 //            RPL_AWAY
 
+void send_msg_to_user(User usr, std::vector<std::string> str)
+{
+    std::string msg;
+    int i = 0;
+    while (!str[i].empty())
+    {
+        msg.append(str[i]);
+        i++;
+    
+    }
+    std::cout << "Sending :|" << msg << "| to :" << usr.get_nick() << std::endl;
+}
+
+void send_msg_to_chan(Cmd &command, std::string destinataire)
+{
+    Channel chan;
+    Server *serv;
+    std::map< std::string, User>::iterator it;
+    std::map< std::string, User> Users;
+
+    std::cout << "msg_to_chan" << std::endl;
+    serv = command._server;
+    destinataire.erase(0,1);
+    chan = *serv->get_chan(destinataire.c_str());
+    if (serv->get_chan(destinataire.c_str()))
+    {
+        std::cout << "le chan n existe pas" << std::endl;
+        return;
+    }
+    Users = chan.get_users();
+    it = Users.begin();
+    while (it != Users.end())
+    {
+        std::cout << "User :" << command._user->get_nick() << std::endl;
+        if (command._user != &(it->second))
+            send_msg_to_user(it->second, command.get_value());
+    }
+}
+
 void privmsg(Cmd &command){
-    (void)command;
-    std::cout << "privmsg test" << '\n';
+    std::cout << "privmsg test" << std::endl;
+    std::string destinataire;
+    destinataire = command.get_value().begin()[0];
+    if (destinataire.c_str()[0] == '#')
+        send_msg_to_chan(command, destinataire);
+    std::cout << "destinataire : " << destinataire << std::endl;
+    command.print();
     // necessite d'etre dans un channel (?)
     // command.get_value()[0] la target = le user ou le channel qui recoit le msg
     // command.get_value()[1] le msg a envoyer a la target
     // command._server->get_msg(command.get_value()[1], NULL, command)
     // necessaire de chercher avant get_msg quelle est la target? comment la preciser ensuite (puisque ca peut etre user ou channel)?
-    
 }

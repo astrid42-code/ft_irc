@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 15:25:15 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/14 17:08:19 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void nick(Cmd &command)
 			// std::cout << " coucou" << std::endl;
 		if (command._server->get_user(command.get_value()[0]) == User())
 		{
-			if (command._user == NULL)
+			/*if (command._user == NULL)
 				command._user = new User();
 			command._user->set_nick(command.get_value()[0]);
 			command._user->set_sfd(command._sfd);
@@ -57,7 +57,7 @@ void nick(Cmd &command)
 			std::string tmp = command.get_value()[0];
 			if (command._user)
 				delete command._user;
-			std::cout << command._server->get_user(tmp) << std::endl;
+			std::cout << command._server->get_user(tmp) << std::endl;*/
 		}
 		else
 		{

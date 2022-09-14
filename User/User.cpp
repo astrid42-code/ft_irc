@@ -79,14 +79,14 @@ std::string User::get_mod() const
 	return (_mod);
 }
 
+int User::get_sfd() const
+{
+	return (_sfd);
+}
+
 int	User::get_operator() const
 {
 	return (_operator);
-}
-
-int	User::get_sfd() const
-{
-	return (_sfd);
 }
 
 void	User::set_user(std::string user)

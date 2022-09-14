@@ -36,7 +36,7 @@ class Cmd
 		std::vector<std::string>		get_value(void) const;
 		void							set_size(int i);
 		int								get_size(void) const;
-
+		User							get_user_fd();
 		// void set_value(std::string value);
 		// const std::string &	get_value(void) const;
 
@@ -49,8 +49,6 @@ class Cmd
 		std::string						_key; // la string du 1er element recu (la key de ma map)
 		std::vector<std::string>		_value; // les args apres la commande (en vector pour en recevoir plsrs si necessaire)
 		int								_size; // taille du vector value (il ne faut pas utiliser ca... mais _cmd.size())
-		// int								_sfd; // recupere le socket fd
-
 };
 
 //parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (_value/args, )

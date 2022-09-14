@@ -91,7 +91,23 @@ int		check_condition(std::string key)
 	return (0);
 }
 
-void	Cmd::parse_cmd(std::string str)
+User Cmd::get_user_fd()
+{
+	std::map< std::string, User>::iterator it;
+	it = _server->get_users().begin();
+	std::cout << "get_user_fd" << std::endl;
+	while (it != _server->get_users().end())
+	{
+		if (_sfd == it->second.get_sfd())
+			return (it->second);
+		it++;
+	}
+	std::cout << "user_not_found" << std::endl;
+	//probablement pas le bon return
+	return (_server->get_users().end()->second);
+}
+
+void Cmd::parse_cmd(std::string str)
 {
 	std::string key; // pour recuperer la key (1er mot de str)
 	size_t start;

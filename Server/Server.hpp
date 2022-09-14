@@ -35,9 +35,10 @@ class Server
 		void		onMessageReceived(Channel chan, User usr);
 		void		onDeconnection(Channel chan);
 		int			init();
-		Channel		get_chan(std::string key);
+		Channel		*get_chan(std::string key);
 		bool		set_chan(Channel chan);
 		User		get_user(std::string key);
+		std::map< std::string, User>	get_users(void);
 		std::string	get_ip();
 		void 		set_ip(std::string ip);
 		bool		set_user(User user);

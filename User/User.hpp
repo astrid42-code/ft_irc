@@ -26,10 +26,10 @@ class User
 		std::string		get_name() const;
 		std::string 	get_nick() const;
 		std::string		get_host() const;
+		int				get_sfd() const;
 		std::string 	get_pwd() const;
 		std::string		get_mod() const; // only fill with 'aiwroOs'
 		int				get_operator() const; // 0 for no access 1 for operator
-		int				get_sfd() const;
 
 		void			set_user(std::string user);
 		void			set_name(std::string name);

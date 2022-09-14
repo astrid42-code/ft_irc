@@ -442,15 +442,18 @@ int Server::init()
 }
 
 // recuperer la data du User
-Channel Server::get_chan(std::string key)
+Channel *Server::get_chan(std::string key)
 {
 	std::map<std::string, Channel>::iterator it;
-
+	std::cout << "start" << std::endl;
 	it = _channels.find(key);
+	std::cout << "mid" << std::endl;
 	if (it == _channels.end())
-		return (Channel());
-	return (it->second);
+		return (NULL);
+	std::cout << "end" << std::endl;
+	return (&(it->second));
 }
+
 // insert user in map
 bool Server::set_chan(Channel chan)
 {
@@ -458,6 +461,11 @@ bool Server::set_chan(Channel chan)
 
 	p = _channels.insert(make_pair(chan.get_name(), chan));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
+}
+
+std::map< std::string, User> Server::get_users(void)
+{
+	return (_users);
 }
 
 // recuperer la data du User
