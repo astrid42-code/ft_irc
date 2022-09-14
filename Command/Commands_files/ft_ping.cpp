@@ -103,4 +103,5 @@ void pong(Cmd & command){
 		//  et verifier que arg2 == SERVER
 		// puis send pong msg to server
     	}
+	}
 }
