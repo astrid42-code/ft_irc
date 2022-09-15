@@ -21,16 +21,16 @@ void	test()
 	{
 		Channel *chan_test = new Channel("#test");
 		Channel *chan_blabla = new Channel("#blabla");
-		test.set_chan(*chan_test);
-		test.set_chan(*chan_blabla);
+		test.set_chan(chan_test);
+		test.set_chan(chan_blabla);
 	}
 
 	{
 		User *dasanter = new User("Damien", "Santerre", "dasanter");
 		User *tamigore = new User("Tadeo", "Amigorena", "tamigore");
-		(*test.get_chan("#test")).set_user(*dasanter);
-		(*test.get_chan("#test")).set_user(*dasanter);
-		(*test.get_chan("#blabla")).set_user(*tamigore);
+		(*test.get_chan("#test")).set_user(dasanter);
+		(*test.get_chan("#test")).set_user(dasanter);
+		(*test.get_chan("#blabla")).set_user(tamigore);
 	}
 	(*test.get_chan("#test")).print();
 	(*test.get_chan("#blabla")).print();

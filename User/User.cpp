@@ -57,8 +57,8 @@ bool	User::operator==(const User & user_cp)
 {
 	if (_user == user_cp._user && _name == user_cp._name && _nick == user_cp._nick &&
 		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 std::string User::get_user() const

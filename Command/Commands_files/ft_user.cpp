@@ -53,27 +53,32 @@ void user(Cmd &command)
     if (command.get_size() != 4)
 	{
 		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command); 
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
+		return ;
 	}
 	std::cout << "setting the user" << std::endl;
-	command._user->set_nick(command.get_value()[0]);
-	command._user->set_user(command.get_value()[1]);
-	command._user->set_host(command.get_value()[2]);
-	command._user->set_name(command.get_value()[3]);
-	command._user->set_operator(0);
-	command._user->set_mod("");
-	command._user->set_pwd("");
-	command._user->set_sfd(command._sfd);
-	// std::cout << command._user->get_name() << std::endl;
-	// if (command.get_value()[0] == command._user->get_name()) // value[0] etant le login (get_name())
-	// {
-	// 	return;
-	// }
+	if (command._server->get_user(command.get_value()[0]) == NULL)
+	{
+		command._user->set_nick(command.get_value()[0]);
+		command._user->set_user(command.get_value()[1]);
+		command._user->set_host(command.get_value()[2]);
+		command._user->set_name(command.get_value()[3]);
+		command._user->set_operator(0);
+		command._user->set_mod("");
+		command._user->set_pwd("");
+		command._user->set_sfd(command._sfd);
+	}
+	else
+	{
+		std::cout << "nickname already in use." << std::endl;
+		command._server->get_msg("ERR_NICKNAMEINUSE", command._user, command);
+		return ;
+	}
 	command._server->get_msg("RPL_WELCOME", command._user, command);
 	command._server->get_msg("RPL_YOURHOST", command._user, command);
 	command._server->get_msg("RPL_CREATED", command._user, command);
 	command._server->get_msg("RPL_MYINFO", command._user, command);
-	command._server->set_user(*command._user);
-	if (command._user)
-		delete command._user;
+	command._server->set_user(command._user);
+	// if (command._user)
+	// 	delete command._user;
 }

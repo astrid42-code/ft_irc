@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 17:03:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:34:44 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void join(Cmd &command){
 	{
 		//std::cout << "NULL" << std::endl;
 		newOne = new Channel(command.get_value()[0]);
-		command._server->set_chan(*newOne);
+		command._server->set_chan(newOne);
 	}
 	//command._user->set_chan(*newOne);
 	std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
