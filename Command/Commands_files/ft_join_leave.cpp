@@ -78,8 +78,8 @@
 //    :WiZ!jto@tolsun.oulu.fi JOIN #Twilight_zone ; JOIN message from WiZ
 //                                    on channel #Twilight_zone
 
-void join(Cmd &command){
-	// (void)command;
+void join(Cmd &command)
+{
 	if (!command.get_value().size())
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
 	 // if (command._user->isonchan(chan_name) == 0)
@@ -134,7 +134,8 @@ void join(Cmd &command){
 //                                    "#playzone" with the message "I
 //                                    lost".
 
-void part(Cmd &command){
+void part(Cmd &command)
+{
 	if (!command.get_value().size())
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
 

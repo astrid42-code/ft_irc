@@ -19,8 +19,8 @@ class User
 		User();
 		~User();
 
-		User		&operator=(const User & user_cp);
-		bool		operator==(const User & user_cp);
+		User			&operator=(const User & user_cp);
+		bool			operator==(const User & user_cp);
 
 		std::string 	get_user() const;
 		std::string		get_name() const;

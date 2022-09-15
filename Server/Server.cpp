@@ -486,6 +486,7 @@ User *Server::get_user(std::string key)
 {
 	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
 	{
+		std::cout << "get_user boucle" << std::endl;
 		if (it->second->get_nick() == key)
 			return (it->second);
 	}
