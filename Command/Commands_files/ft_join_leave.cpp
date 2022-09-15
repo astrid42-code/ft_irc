@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 17:03:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/14 17:11:35 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void join(Cmd &command){
 	else{
 		// verifie si le channel existe deja, 
 		// si non (si channel.getchannel(command.get_value()[0]) == NULL), creer un channel (Channel = new Channel(value[x]);)
-		
 		// puis quoi qu'il arrive rajouter le user dans le channel et le channel dans le user
 		 
 		// command._user->set_chan();
