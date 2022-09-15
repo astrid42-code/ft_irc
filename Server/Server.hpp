@@ -37,7 +37,7 @@ class Server
 		int			init();
 		Channel		*get_chan(std::string key);
 		bool		set_chan(Channel chan);
-		User		get_user(std::string key);
+		User		*get_user(std::string key);
 		std::map< std::string, User>	get_users(void);
 		std::string	get_ip();
 		void 		set_ip(std::string ip);

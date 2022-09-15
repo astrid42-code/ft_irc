@@ -469,14 +469,14 @@ std::map< std::string, User> Server::get_users(void)
 }
 
 // recuperer la data du User
-User Server::get_user(std::string key)
+User *Server::get_user(std::string key)
 {
 	std::map<std::string, User>::iterator it;
 
 	it = _users.find(key);
 	if (it == _users.end())
-		return (User());
-	return (it->second);
+		return (NULL);
+	return (&(it->second));
 }
 // insert user in map
 bool Server::set_user(User user)
