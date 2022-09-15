@@ -9,10 +9,10 @@
 #define SERVERNAME "irc_dta"
 #define SERVER "127.0.0.1"  // adresse ip ex : Your host is 62.210.33.192, running version 1.69
 #define VERSION "1.69" // version actuelle a verifier
-#define DATE "Mon Aug 5 16:57:33 2022"
+#define DATE "Mon Aug 25 16:57:33 2022"
 #define DEFAULT_NAME "toto"
 
-#define RPL_WELCOME(nick, user, host) (nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay Network\r\n") //001
+#define RPL_WELCOME(arg) (" :Welcome to the Internet Relay Network " + arg) //001
         	// + envoyer <nick>!<user>@<host>) en arguments
 			// + ajouter dessin?
 
@@ -97,6 +97,12 @@
 //            of RPL_NAMREPLY and RPL_ENDOFNAMES is sent by the
 //            server back to the client.  If there is no channel
 //            found as in the query, then only RPL_ENDOFNAMES is
+
+#define RPL_MOTDSTART (SERVER " :Message of the day - \r\n") // 375
+
+#define RPL_MOTD(text) (":-\n" + text)
+
+#define RPL_ENDOFMOTD (" :End of MOTD command\r\n") // 376
 
 #define RPL_YOUREOPER (":You are now an IRC operator\r\n") // 381
 // RPL_YOUREOPER is sent back to a client which has just successfully issued an OPER message and gained operator status.

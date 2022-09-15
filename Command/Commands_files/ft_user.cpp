@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 16:10:37 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:04:43 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void user(Cmd &command)
 	command._server->get_msg("RPL_CREATED", command._user, command);
 	command._server->get_msg("RPL_MYINFO", command._user, command);
 	command._server->set_user(*command._user);
+	command._server->get_msg("RPL_MOTD", command._user, command);
 	if (command._user)
 		delete command._user;
 }

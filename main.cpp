@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:37:46 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:37:16 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 void	test()
 {
-	Server test("127.0.0.1", "6667");
+	/*Server test("127.0.0.1", "6667");
 	Channel test("#test");
-	test.set_chan(test);
+	test.set_chan(test);*/
 }
 
 int		main(int ac, char **av)

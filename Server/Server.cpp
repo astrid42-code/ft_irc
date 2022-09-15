@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/13 14:02:26 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:10:57 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,22 +190,28 @@ bool Server::set_pp(std::string port, std::string pwd)
 std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
 	std::string	res = ":";
+	std::string arg;
 
 	if (msg.compare("RPL_WELCOME") == 0)
 	{
 		// res.append(cmd.get_value()[0]);
 		// for (int i = 1; i < cmd.get_size() - 1; i++)
 			// res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
-		res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
+		arg.append(cmd._user->get_nick());
+		arg.append("!");
+		arg.append(cmd._user->get_user());
+		arg.append("@");
+		arg.append(" 001 ");
+		arg.append(cmd._user->get_host());
+		arg.append("\r\n");
+		
+		
+		res.append(RPL_WELCOME(arg));
 	}
 	if (msg.compare("RPL_YOURHOST") == 0)
 	{
 		res.append(RPL_YOURHOST);
 	}
-	// if (msg.compare("RPL_YOURHOST") == 0)
-	// {
-		
-	// }
 	if (msg.compare("RPL_CREATED") == 0)
 	{
 		res.append(RPL_CREATED);
@@ -214,13 +220,41 @@ std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 	{
 		res.append(RPL_MYINFO(user->get_mod(), "0"));
 	}
+	if (msg.compare("RPL_MOTD") == 0){
+		res.append(RPL_MOTDSTART);
+		arg = "\n\
+dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
+HHP%%#%%%%%%%%%%%%%%%%#%%%%%%%#%%VHH \n\
+HH%%%%%%%%%%#%v~~~~~~\\%%%#%%%%%%%%HH \n\
+HH%%%%%#%%%%v'        ~~~~\\%%%%%#%HH \n\
+HH%%#%%%%%%v'dHHb      a%%%#%%%%%%HH \n\
+HH%%%%%#%%v'dHHHA     :%%%%%%#%%%%HH \n\
+HH%%%#%%%v' VHHHHaadHHb:%#%%%%%%%%HH \n\
+HH%%%%%#v'   `VHHHHHHHHb:%%%%%#%%%HH \n\
+HH%#%%%v'      `VHHHHHHH:%%%#%%#%%HH \n\
+HH%%%%%'        dHHHHHHH:%%#%%%%%%HH \n\
+HH%%#%%        dHHHHHHHH:%%%%%%#%%HH \n\
+HH%%%%%       dHHHHHHHHH:%%#%%%%%%HH \n\
+HH#%%%%       VHHHHHHHHH:%%%%%#%%%HH \n\
+HH%%%%#   b    HHHHHHHHV:%%%#%%%%#HH \n\
+HH%%%%%   Hb   HHHHHHHV'%%%%%%%%%%HH \n\
+HH%%#%%   HH  dHHHHHHV'%%%#%%%%%%%HH \n\
+HH%#%%%   VHbdHHHHHHV'#%%%%%%%%#%%HH \n\
+HHb%%#%    VHHHHHHHV'%%%%%#%%#%%%%HH \n\
+HHHHHHHb    VHHHHHHH:%odHHHHHHbo%dHH \n\
+HHHHHHHHboodboooooodHHHHHHHHHHHHHHHH \n\
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
+VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n"; 
+		res.append(RPL_MOTD(arg));
+		res.append(RPL_ENDOFMOTD);
+	}
+		
 	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value
 	// for (int i = 1; i < cmd.get_size(); i++)
 	// 	cmd.get_value()[i].clear();
-	// pour chaque msg : cela commence systematiquement par l'heure actuelle
-	// (fct strtime() a utiliser?)
 
 	// if (msg = les msgs 001 002 ou 003)
 	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)

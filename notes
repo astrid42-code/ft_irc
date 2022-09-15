@@ -132,7 +132,8 @@ exemple du server shibrc
 
 
 cmds prioritaires 
-ping (client envoie ping on repond PONG)
+ping (client envoie ping on repond PONG) et pong
+motd
 join (check salon existant sinon le creer et mettre le user)
 quit (inverse de connect) et leave (inverse de join)
 
