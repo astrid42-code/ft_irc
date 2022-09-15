@@ -136,7 +136,8 @@ void join(Cmd &command){
 //                                    "#playzone" with the message "I
 //                                    lost".
 
-void part(Cmd &command){
+void part(Cmd &command)
+{
 	if (!command.get_value().size())
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
 

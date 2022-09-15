@@ -488,8 +488,7 @@ User *Server::get_user(std::string key)
 	std::cout << "OUAI" << std::endl;
 	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
 	{
-		std::cout << "bla" << std::endl;
-
+		std::cout << "get_user boucle" << std::endl;
 		if (it->second->get_nick() == key)
 			return (it->second);
 	}

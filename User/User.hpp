@@ -20,8 +20,8 @@ class User
 		User(std::string prenom, std::string nom, std::string nickname);
 		~User();
 
-		User		&operator=(const User & user_cp);
-		bool		operator==(const User & user_cp);
+		User			&operator=(const User & user_cp);
+		bool			operator==(const User & user_cp);
 
 		std::string 	get_user() const;
 		std::string		get_name() const;
