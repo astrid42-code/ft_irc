@@ -14,10 +14,16 @@
 #include "Command/Cmd.hpp"
 #include "User/User.hpp"
 
+void	test()
+{
+	Server test("127.0.0.1", "6667");
+	Channel test("#test");
+	test.set_chan(test);
+}
+
 int		main(int ac, char **av)
 {
 	(void)av;
-	
 	if (ac == 3)
 	{
 		Server server = Server(av[1], av[2]);
@@ -26,6 +32,8 @@ int		main(int ac, char **av)
 	else
 	{
 		std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
+		std::cout << "starting tests" << std::endl;
+		
 		return (1);
 	}
     
