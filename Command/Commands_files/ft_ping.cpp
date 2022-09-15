@@ -33,9 +33,10 @@
 //    PING :irc.funet.fi              ; Ping message sent by server
 //                                    "irc.funet.fi"
 
-void ping(Cmd &command){
+void ping(Cmd &command)
+{
 	std::cout << "start of my test" << std::endl;
-	command.get_user_fd().print();
+	command.get_user_fd()->print();
 	std::cout << "end of my test" << std::endl;
     if (!command.get_value().size())
 		command._server->get_msg(ERR_NOORIGIN, NULL, command);

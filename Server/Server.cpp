@@ -444,48 +444,59 @@ int Server::init()
 // recuperer la data du User
 Channel *Server::get_chan(std::string key)
 {
-	std::map<std::string, Channel>::iterator it;
+	std::map<std::string, Channel *>::iterator it;
 	std::cout << "start" << std::endl;
 	it = _channels.find(key);
 	std::cout << "mid" << std::endl;
-	if (it->second.get_name() == _channels.end()->second.get_name())
+	if (it->second->get_name() == _channels.end()->second->get_name())
 	{
 		std::cout << "NULL" << std::endl;
 		return (NULL);
 	}
 	std::cout << "end" << std::endl;
-	return ((&it->second));
+	return (it->second);
 }
 
 // insert user in map
-bool Server::set_chan(Channel chan)
+bool Server::set_chan(Channel *chan)
 {
-	std::pair<std::map<std::string, Channel>::iterator, bool> p;
+	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
 
-	p = _channels.insert(make_pair(chan.get_name(), chan));
+	p = _channels.insert(make_pair(chan->get_name(), chan));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 
-std::map< std::string, User> Server::get_users(void)
+std::map<int, User *> Server::get_users(void)
 {
 	return (_users);
 }
 
 // recuperer la data du User
-User *Server::get_user(std::string key)
+User *Server::get_user(int key)
 {
-	std::map<std::string, User>::iterator it;
+	std::map<int, User *>::iterator it;
 
 	it = _users.find(key);
 	if (it == _users.end())
 		return (NULL);
-	return (&(it->second));
+	return (it->second);
 }
-// insert user in map
-bool Server::set_user(User user)
-{
-	std::pair<std::map<std::string, User>::iterator, bool> p;
 
-	p = _users.insert(make_pair(user.get_nick(), user));
+User *Server::get_user(std::string key)
+{
+	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
+	{
+		if (it->second->get_nick() == key)
+			return (it->second);
+	}
+	return (NULL);
+}
+
+// insert user in map
+bool Server::set_user(User *user)
+{
+	std::pair<std::map<int, User *>::iterator, bool> p;
+
+	p = _users.insert(std::make_pair(user->get_sfd(), user));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }

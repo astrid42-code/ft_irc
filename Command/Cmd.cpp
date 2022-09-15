@@ -91,20 +91,16 @@ int		check_condition(std::string key)
 	return (0);
 }
 
-User Cmd::get_user_fd()
+User *Cmd::get_user_fd()
 {
-	std::map< std::string, User>::iterator it;
-	it = _server->get_users().begin();
-	std::cout << "get_user_fd" << std::endl;
-	while (it != _server->get_users().end())
-	{
-		if (_sfd == it->second.get_sfd())
-			return (it->second);
-		it++;
-	}
-	std::cout << "user_not_found" << std::endl;
-	//probablement pas le bon return
-	return (_server->get_users().end()->second);
+	std::map<int, User *>::iterator it;
+
+	// std::cout << "get_user_fd" << std::endl;
+	it = _server->get_users().find(_sfd); 
+	if (it == _server->get_users().end())
+		return (NULL);
+	else
+		return (it->second);
 }
 
 void Cmd::parse_cmd(std::string str)

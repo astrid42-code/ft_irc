@@ -78,7 +78,7 @@ void user(Cmd &command)
 	command._server->get_msg("RPL_YOURHOST", command._user, command);
 	command._server->get_msg("RPL_CREATED", command._user, command);
 	command._server->get_msg("RPL_MYINFO", command._user, command);
-	command._server->set_user(*command._user);
-	if (command._user)
-		delete command._user;
+	command._server->set_user(command._user);
+	// if (command._user)
+	// 	delete command._user;
 }

@@ -14,12 +14,12 @@
 #include "Command/Cmd.hpp"
 #include "User/User.hpp"
 
-void	test()
-{
-	Server test("127.0.0.1", "6667");
-	Channel test("#test");
-	test.set_chan(test);
-}
+// void	test()
+// {
+// 	Server test("127.0.0.1", "6667");
+// 	Channel test("#test");
+// 	test.set_chan(test);
+// }
 
 int		main(int ac, char **av)
 {
