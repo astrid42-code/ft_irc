@@ -448,10 +448,13 @@ Channel *Server::get_chan(std::string key)
 	std::cout << "start" << std::endl;
 	it = _channels.find(key);
 	std::cout << "mid" << std::endl;
-	if (it == _channels.end())
+	if (it->second.get_name() == _channels.end()->second.get_name())
+	{
+		std::cout << "NULL" << std::endl;
 		return (NULL);
+	}
 	std::cout << "end" << std::endl;
-	return (&(it->second));
+	return ((&it->second));
 }
 
 // insert user in map

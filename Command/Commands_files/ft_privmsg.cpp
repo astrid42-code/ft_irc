@@ -61,7 +61,8 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
     serv = command._server;
     destinataire.erase(0,1);
     chan = *serv->get_chan(destinataire.c_str());
-    if (serv->get_chan(destinataire.c_str()))
+    std::cout << "RETOUR" << std::endl;
+    if (!serv->get_chan(destinataire.c_str()))
     {
         std::cout << "le chan n existe pas" << std::endl;
         return;
