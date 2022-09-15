@@ -20,6 +20,18 @@ User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _m
 	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
 }
 
+User::User(std::string prenom, std::string name, std::string nickname)
+{
+	_user = prenom;
+	_name = name;
+	_nick = nickname;
+	// std::cout << "User create by default." << std::endl;
+	// parser avec regles user (voir notes)
+	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
+	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
+}
+
+
 User::~User()
 {
 	// delete les differents users	
@@ -45,8 +57,8 @@ bool	User::operator==(const User & user_cp)
 {
 	if (_user == user_cp._user && _name == user_cp._name && _nick == user_cp._nick &&
 		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 std::string User::get_user() const

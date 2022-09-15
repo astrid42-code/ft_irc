@@ -80,23 +80,26 @@
 
 void join(Cmd &command){
 	// (void)command;
+	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
 	 // if (command._user->isonchan(chan_name) == 0)
         // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
-	else{
-		Channel *newOne;
-		if (!(newOne = command._server->get_chan(command.get_value()[0])))
-		{
-			newOne = new Channel(command.get_value()[0]);
-			command._server->set_chan(*newOne);
-		}
-		command._user->set_chan(*newOne);
-		std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
-		// fct pour creer et/ou rejoindre le channel (dans le server)
-		// si plsrs channels dans arg1 ils doivent etre separes par des virgules
-		// et etre crees separement (le client gere ensuite)
+	Channel *newOne = NULL;
+	std::cout << "command.get_value" << command.get_value()[0] << std::endl;
+	newOne = command._server->get_chan(command.get_value()[0]);
+	std::cout << "Else" << std::endl;
+	if(newOne == NULL)
+	{
+		//std::cout << "NULL" << std::endl;
+		newOne = new Channel(command.get_value()[0]);
+		command._server->set_chan(newOne);
 	}
+	//command._user->set_chan(*newOne);
+	std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
+	// fct pour creer et/ou rejoindre le channel (dans le server)
+	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
+	// et etre crees separement (le client gere ensuite)
 }
 
 // si user deja dans un channel, /join ce meme channel ne fait rien
@@ -133,7 +136,8 @@ void join(Cmd &command){
 //                                    "#playzone" with the message "I
 //                                    lost".
 
-void part(Cmd &command){
+void part(Cmd &command)
+{
 	if (!command.get_value().size())
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
 

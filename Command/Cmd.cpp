@@ -28,10 +28,6 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 	_cmd["PASS"] = pass;
 	_cmd["PING"] = ping;
 	_cmd["PONG"] = pong;
-
-	_user = NULL;
-	_server = NULL;
-
 }
 
 Cmd::Cmd(const Cmd & cp)
@@ -91,20 +87,26 @@ int		check_condition(std::string key)
 	return (0);
 }
 
-User Cmd::get_user_fd()
+User *Cmd::get_user_fd()
 {
-	std::map< std::string, User>::iterator it;
-	it = _server->get_users().begin();
-	std::cout << "get_user_fd" << std::endl;
-	while (it != _server->get_users().end())
+	std::map<int, User *>::iterator it;
+
+	// std::cout << "get_user_fd" << std::endl;
+	if (!_server->get_users().empty())
 	{
-		if (_sfd == it->second.get_sfd())
+		it = _server->get_users().find(_sfd);
+		if (it == _server->get_users().end())
+		{
+			// std::cout << "user not found" << std::endl;
+			return (NULL);
+		}
+		else
+		{
+			// std::cout << "user found" << std::endl;
 			return (it->second);
-		it++;
+		}
 	}
-	std::cout << "user_not_found" << std::endl;
-	//probablement pas le bon return
-	return (_server->get_users().end()->second);
+	return (NULL);
 }
 
 void Cmd::parse_cmd(std::string str)

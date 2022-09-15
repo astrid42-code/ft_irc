@@ -46,36 +46,19 @@ void nick(Cmd &command)
 	else
 	{
 			// std::cout << " coucou" << std::endl;
-		if (command._server->get_user(command.get_value()[0]) == User())
+		if (command._server->get_user(command.get_value()[0]) == NULL)
 		{
-			/*if (command._user == NULL)
-				command._user = new User();
-			command._user->set_nick(command.get_value()[0]);
-			command._user->set_sfd(command._sfd);
-			command._server->set_user(*command._user);
-			std::cout << command._server->get_user(command.get_value()[0]) << std::endl;
-			std::string tmp = command.get_value()[0];
-			if (command._user)
-				delete command._user;
-			std::cout << command._server->get_user(tmp) << std::endl;*/
+			std::cout << "nickname available." << std::endl;
+			if (command._user != NULL)
+				command._user->set_nick(command.get_value()[0]);
 		}
 		else
 		{
 			std::cout << "nickname already in use." << std::endl;
 			command._server->get_msg("ERR_NICKNAMEINUSE", command._user, command);
 		}
-		
-		// attention : tester avec ou sans la casse
-		// if (command.get_value()[0] != command._user->get_user()){
-		// command._user->set_user(DEFAULT_NAME);
-		// std::cout << "Your nickname is" << command._user->get_user() << std::endl;
-		//necessite de nettoyer le vector _value a la fin de chaque cmd (ou tout simplement ~Cmd mais comment faire?)
-		// }
-		// else if (command.get_value()[0] == command._user->get_user()){
-		//     command._server->get_msg(ERR_NICKNAMEINUSE(command.get_value()[0]), NULL);
-		// }
+		// attention : tester avec ou sans la casse		
 	}
-	// std::cout << "nickname :" << command._user->get_nick() << std::endl;
 }
 
 // test :

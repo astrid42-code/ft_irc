@@ -17,24 +17,24 @@ class Channel
 		Channel & operator=(const Channel & ch_cp);
 		bool		operator==(const Channel & ch_cp);
 		// getters, setters
-		std::string		get_name() const;
-		std::string		get_ID() const;
-		std::string		get_mod() const;
-		std::map< std::string, User>	get_users() const;
-		User 			get_user( std::string key);
-		std::string		get_topic() const;
-		void			set_name(std::string name);
-		void			set_users(std::map<  std::string, User> users);
-		bool			set_user(User user);
-		void			set_ID(std::string ID);
-		void			set_mod(std::string mod);
-		void			set_channel(std::string name);
-		void			set_topic(std::string topic);
-		void			print(void);
+		std::string						get_name() const;
+		std::string						get_ID() const;
+		std::string						get_mod() const;
+		std::map<int, User *>			get_users() const;
+		User 							*get_user(int key);
+		std::string						get_topic() const;
+		void							set_name(std::string name);
+		void							set_users(std::map<int, User *> users);
+		bool							set_user(User *user);
+		void							set_ID(std::string ID);
+		void							set_mod(std::string mod);
+		void							set_channel(std::string name);
+		void							set_topic(std::string topic);
+		void							print(void);
 	
 	private:
 		std::string						_name; // must start with '&', '#', '+' or '!' with a max of (50) char and must not contain any ' ' (spaces), G (^G or ASCII 7) or a comma (',')
-		std::map< std::string, User>	_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
+		std::map< int, User *>			_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
 		std::string						_ID; // depends of time ?
 		std::string						_mod;
 		std::string						_topic;

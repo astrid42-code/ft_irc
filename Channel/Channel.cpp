@@ -48,18 +48,18 @@ std::string					Channel::get_mod() const
 	return (_mod);
 }
 
-std::map<std::string, User>	Channel::get_users() const
+std::map<int, User *>	Channel::get_users() const
 {
 	return (_users);
 }
 
-User						Channel::get_user( std::string key)
+User						*Channel::get_user(int key)
 {
-	std::map<  std::string, User>::iterator it;
+	std::map<int, User *>::iterator it;
 	
 	it = _users.find(key);
 	if (it == _users.end())
-		return (User());
+		return (NULL);
 	return (it->second);
 }
 
@@ -72,16 +72,16 @@ void			Channel::set_name(std::string name)
 	_name = name;
 }
 
-void			Channel::set_users(std::map<  std::string, User> users)
+void			Channel::set_users(std::map<int, User *> users)
 {
 	_users = users;
 }
 
-bool			Channel::set_user(User user)
+bool			Channel::set_user(User *user)
 {
-	std::pair<std::map<std::string, User>::iterator, bool> p;
+	std::pair<std::map<int, User *>::iterator, bool> p;
 
-	p = _users.insert(make_pair(user.get_nick(), user));
+	p = _users.insert(std::make_pair(user->get_sfd(), user));
 	return (p.second);
 }
 
@@ -106,12 +106,12 @@ void			Channel::set_topic(std::string topic){
 
 void			Channel::print(void)
 {
-	std::map< std::string, User>::iterator it = _users.begin();
+	std::map<int, User *>::iterator it = _users.begin();
 
-	std::cout << "name:" + _name << " | ID:" + _ID << " | mod:" + _mod << "\nUsers:" << std::endl;
+	std::cout << "name:" + _name << std::endl;
 	while (it != _users.end())
 	{
-		it->second.print();
+		it->second->print();
 		it++;
 	}
 }
