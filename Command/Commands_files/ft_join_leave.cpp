@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 17:11:35 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:34:44 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +81,26 @@
 void join(Cmd &command){
 	// (void)command;
 	if (!command.get_value().size())
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
 	 // if (command._user->isonchan(chan_name) == 0)
         // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
 	else{
-		// verifie si le channel existe deja, 
-		// si non (si channel.getchannel(command.get_value()[0]) == NULL), creer un channel (Channel = new Channel(value[x]);)
-		// puis quoi qu'il arrive rajouter le user dans le channel et le channel dans le user
-		 
-		// command._user->set_chan();
+		Channel *newOne;
+		if (!(newOne = command._server->get_chan(command.get_value()[0])))
+		{
+			newOne = new Channel(command.get_value()[0]);
+			command._server->set_chan(*newOne);
+		}
+		command._user->set_chan(*newOne);
+		std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
 		// fct pour creer et/ou rejoindre le channel (dans le server)
 		// si plsrs channels dans arg1 ils doivent etre separes par des virgules
 		// et etre crees separement (le client gere ensuite)
-		
 	}
 }
 
 // si user deja dans un channel, /join ce meme channel ne fait rien
 // on passe d un channel a l'autre avec join (un channel deja cree garde les msgs deja envoyes)
-
 
 // Command: PART
 //    Parameters: <channel> *( "," <channel> ) [ <Part Message> ]

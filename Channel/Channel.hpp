@@ -12,8 +12,10 @@ class Channel
 
 	public:
 		Channel();
+		Channel(std::string);
 		~Channel();
 		Channel & operator=(const Channel & ch_cp);
+		bool		operator==(const Channel & ch_cp);
 		// getters, setters
 		std::string		get_name() const;
 		std::string		get_ID() const;

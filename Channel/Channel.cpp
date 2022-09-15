@@ -3,6 +3,12 @@
 Channel::Channel() : _name("NoName"), _ID("toto"), _mod("")
 {}
 
+Channel::Channel(std::string name)
+{
+	_name = name;
+}
+
+
 Channel::~Channel()
 {}
 
@@ -14,6 +20,18 @@ Channel & Channel::operator=(const Channel & ch_cp)
 	this->_mod = ch_cp._mod;
 	return (*this);
 }
+
+bool Channel::operator==(const Channel & ch_cp)
+{
+	if (_name != ch_cp._name)
+		return (false);
+	if (_ID != ch_cp._ID)
+		return (false);
+	if (_mod != ch_cp._mod)
+		return (false);
+	return (true);
+}
+
 
 std::string					Channel::get_name() const
 {
