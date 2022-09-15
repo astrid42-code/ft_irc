@@ -84,7 +84,8 @@ void join(Cmd &command){
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
 	 // if (command._user->isonchan(chan_name) == 0)
         // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
-	else{
+	else
+	{
 		Channel *newOne;
 		if (!(newOne = command._server->get_chan(command.get_value()[0])))
 		{
