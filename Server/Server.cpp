@@ -293,14 +293,14 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
-		Cmd *command = new Cmd();
-		command->_server = serv;
-		command->_sfd = sfd;
-		command->_user = command->get_user_fd();
+		Cmd command;
+		command._server = serv;
+		command._sfd = sfd;
+		command._user = command.get_user_fd();
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
-		command->parse_cmd(token);
+		command.parse_cmd(token);
 		if (pos >= (int)buf.length() || pos == 0)
 			break ;
 	}

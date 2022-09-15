@@ -92,11 +92,21 @@ User *Cmd::get_user_fd()
 	std::map<int, User *>::iterator it;
 
 	// std::cout << "get_user_fd" << std::endl;
-	it = _server->get_users().find(_sfd); 
-	if (it == _server->get_users().end())
-		return (NULL);
-	else
-		return (it->second);
+	if (!_server->get_users().empty())
+	{
+		it = _server->get_users().find(_sfd);
+		if (it == _server->get_users().end())
+		{
+			// std::cout << "user not found" << std::endl;
+			return (NULL);
+		}
+		else
+		{
+			// std::cout << "user found" << std::endl;
+			return (it->second);
+		}
+	}
+	return (NULL);
 }
 
 void Cmd::parse_cmd(std::string str)
