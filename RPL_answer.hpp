@@ -12,7 +12,7 @@
 #define DATE "Mon Aug 25 16:57:33 2022"
 #define DEFAULT_NAME "toto"
 
-#define RPL_WELCOME(arg) (" :Welcome to the Internet Relay Network " + arg) //001
+#define RPL_WELCOME(nick, user, host) (nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay Network\r\n") //001
         	// + envoyer <nick>!<user>@<host>) en arguments
 			// + ajouter dessin?
 

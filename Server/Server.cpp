@@ -194,19 +194,7 @@ std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 
 	if (msg.compare("RPL_WELCOME") == 0)
 	{
-		// res.append(cmd.get_value()[0]);
-		// for (int i = 1; i < cmd.get_size() - 1; i++)
-			// res.append(cmd.get_value()[i] + " "); // ex dasanter!dasanter@127.0.0.1
-		arg.append(cmd._user->get_nick());
-		arg.append("!");
-		arg.append(cmd._user->get_user());
-		arg.append("@");
-		arg.append(" 001 ");
-		arg.append(cmd._user->get_host());
-		arg.append("\r\n");
-		
-		
-		res.append(RPL_WELCOME(arg));
+		res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
 	}
 	if (msg.compare("RPL_YOURHOST") == 0)
 	{
