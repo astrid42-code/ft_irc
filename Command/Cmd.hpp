@@ -36,7 +36,7 @@ class Cmd
 		std::vector<std::string>		get_value(void) const;
 		void							set_size(int i);
 		int								get_size(void) const;
-		User							get_user_fd();
+		User							*get_user_fd();
 		// void set_value(std::string value);
 		// const std::string &	get_value(void) const;
 

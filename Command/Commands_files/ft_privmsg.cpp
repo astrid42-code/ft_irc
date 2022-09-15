@@ -52,28 +52,28 @@ void send_msg_to_user(User usr, std::vector<std::string> str)
 
 void send_msg_to_chan(Cmd &command, std::string destinataire)
 {
-    Channel chan;
+    Channel *chan;
     Server *serv;
     std::map< std::string, User>::iterator it;
     std::map< std::string, User> Users;
 
     std::cout << "msg_to_chan" << std::endl;
     serv = command._server;
-    destinataire.erase(0,1);
-    chan = *serv->get_chan(destinataire.c_str());
+    chan = serv->get_chan(destinataire.c_str());
     std::cout << "RETOUR" << std::endl;
     if (!serv->get_chan(destinataire.c_str()))
     {
         std::cout << "le chan n existe pas" << std::endl;
         return;
     }
-    Users = chan.get_users();
+    Users = chan->get_users();
     it = Users.begin();
     while (it != Users.end())
     {
         std::cout << "User :" << command._user->get_nick() << std::endl;
         if (command._user != &(it->second))
             send_msg_to_user(it->second, command.get_value());
+        it++;
     }
 }
 

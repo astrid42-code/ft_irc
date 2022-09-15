@@ -293,13 +293,14 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
-		Cmd command;
-		command._server = serv;
-		command._sfd = sfd;
+		Cmd *command = new Cmd();
+		command->_server = serv;
+		command->_sfd = sfd;
+		command->_user = command->get_user_fd();
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
-		command.parse_cmd(token);
+		command->parse_cmd(token);
 		if (pos >= (int)buf.length() || pos == 0)
 			break ;
 	}
@@ -448,13 +449,13 @@ Channel *Server::get_chan(std::string key)
 	std::cout << "start" << std::endl;
 	it = _channels.find(key);
 	std::cout << "mid" << std::endl;
-	if (it->second.get_name() == _channels.end()->second.get_name())
+	if (it == _channels.end())
 	{
 		std::cout << "NULL" << std::endl;
 		return (NULL);
 	}
 	std::cout << "end" << std::endl;
-	return ((&it->second));
+	return (&(it->second));
 }
 
 // insert user in map

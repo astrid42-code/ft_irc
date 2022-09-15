@@ -108,7 +108,7 @@ void			Channel::print(void)
 {
 	std::map< std::string, User>::iterator it = _users.begin();
 
-	std::cout << "name:" + _name << " | ID:" + _ID << " | mod:" + _mod << "\nUsers:" << std::endl;
+	std::cout << "name:" + _name << std::endl;
 	while (it != _users.end())
 	{
 		it->second.print();

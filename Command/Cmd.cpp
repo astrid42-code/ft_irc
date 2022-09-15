@@ -91,7 +91,7 @@ int		check_condition(std::string key)
 	return (0);
 }
 
-User Cmd::get_user_fd()
+User *Cmd::get_user_fd(void)
 {
 	std::map< std::string, User>::iterator it;
 	it = _server->get_users().begin();
@@ -99,12 +99,12 @@ User Cmd::get_user_fd()
 	while (it != _server->get_users().end())
 	{
 		if (_sfd == it->second.get_sfd())
-			return (it->second);
+			return (&(it->second));
 		it++;
 	}
 	std::cout << "user_not_found" << std::endl;
 	//probablement pas le bon return
-	return (_server->get_users().end()->second);
+	return (NULL);
 }
 
 void Cmd::parse_cmd(std::string str)
