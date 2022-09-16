@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 16:41:22 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:45:41 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	User::set_operator(int op)
 void	User::set_sfd(int sfd)
 {
 	_sfd = sfd;
+	std::cout << "get sfd " << get_sfd() << std::endl;
 }
 
 void	User::set_mod(std::string mod)
@@ -230,6 +231,15 @@ bool	User::isOnChan(std::string &chan_name){
 	return false;
 }
 
+void	User::remove_chan(Channel * channel){
+	std::vector<Channel *>::iterator it;
+
+	for (it = _vchan.begin(); it != _vchan.end(); it++){
+		if (*it == channel)
+			_vchan.erase(it);
+	}
+	
+}
 
 std::ostream	&operator<<(std::ostream &os, const User &user_cp)
 {

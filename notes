@@ -133,10 +133,7 @@ exemple du server shibrc
 
 cmds prioritaires 
 ping (client envoie ping on repond PONG) et pong
-motd
-join (check salon existant sinon le creer et mettre le user)
+leave (faire une fct Channel.remove(User) && User.remove(Channel))
+remove de getuser et de getchannel devrait suffire
+
 quit (inverse de connect) et leave (inverse de join)
-
-
-a faire / regler :
-les commandes

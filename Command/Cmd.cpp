@@ -10,6 +10,7 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 	_cmd["NICK"] = nick;
 	_cmd["USER"] = user;
 	_cmd["QUIT"] = quit;
+	_cmd["MODE"] = NULL;
 
 	// channel cmds
 	_cmd["JOIN"] = join;
@@ -83,25 +84,23 @@ int		check_condition(std::string key)
 	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
 			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
 			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
-			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0 || key.compare("PING") == 0)
+			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0 || key.compare("PING") == 0
+			|| key.compare("PART") == 0 /*|| key.compare("MODE") == 0*/)
 		return (1);
 	return (0);
 }
 
 User *Cmd::get_user_fd()
 {
-	std::map<int, User *>::iterator it;
+	std::map<int, User *> tmp = _server->get_users();
+	std::map<int, User *>::iterator it = tmp.find(_sfd);
 
-	 std::cout << "ft_get_user_fd" << std::endl;
-	if (!(_server->get_users().empty()))
-	{
-		 std::cout << "ft_get_user_fd" << std::endl;
-		it = _server->get_users().find(_sfd);
-		std::cout << _sfd << std::endl; 
-		 std::cout << "print" << std::endl;
-		//it->second->print();
-		 std::cout << "if" << std::endl;
-		if (it == _server->get_users().end())
+	// std::cout << "get_user_fd" << std::endl;
+	// if (!_server->get_users().empty())
+	// {
+		// it = _server->get_users().find(_sfd);
+
+		if (it == tmp.end())
 		{
 			// std::cout << "user not found" << std::endl;
 			return (NULL);
@@ -111,7 +110,7 @@ User *Cmd::get_user_fd()
 			// std::cout << "user found" << std::endl;
 			return (it->second);
 		}
-	}
+	// }
 	return (NULL);
 }
 

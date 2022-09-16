@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/15 17:34:44 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:28:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,11 @@ void join(Cmd &command){
 		//std::cout << "NULL" << std::endl;
 		newOne = new Channel(command.get_value()[0]);
 		command._server->set_chan(newOne);
+		std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
+
 	}
 	//command._user->set_chan(*newOne);
-	std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
-	// fct pour creer et/ou rejoindre le channel (dans le server)
+	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
 	// et etre crees separement (le client gere ensuite)
 }
@@ -138,8 +139,16 @@ void join(Cmd &command){
 
 void part(Cmd &command)
 {
-	if (!command.get_value().size())
+	std::cout << "part test" << std::endl;
+	// std::cout << "size " << command.get_value().size() << std::endl;
+	// std::cout << "key " << command.get_key() << std::endl;
+	if (command.get_value().size() < 2){
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
-
-
+		return;
+	}
+	// comment recuperer l'objet channel?
+	Channel * chan = command._server->get_chan(command.get_value()[0]);
+	std::cout << "chan " << chan->get_name() << std::endl;
+	chan->remove_user(command._user);
+	command._user->remove_chan(chan); 
 }

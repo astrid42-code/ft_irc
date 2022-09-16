@@ -50,6 +50,8 @@ class User
 
 		bool			isOnChan(std::string &chan_name);
 
+		void			remove_chan(Channel * channel);
+
 		friend std::ostream	&operator<<(std::ostream &os, const User &user_cp);
 
 	private:

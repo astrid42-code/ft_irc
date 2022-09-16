@@ -115,3 +115,21 @@ void			Channel::print(void)
 		it++;
 	}
 }
+
+void	Channel::remove_user(User *user){
+	// (void)user;
+	std::map<int, User *>::iterator it;
+
+	std::cout << "remove_user sfd = " << user->get_sfd() << std::endl;
+	
+	it = _users.find(user->get_sfd()); // lui envoyer la cle de la map de user (mai ou est-elle definie et recuperable?)
+	std::cout << "remove_user it = " << it->first << std::endl;
+	if (it != _users.end()){
+		delete it->second;
+		_users.erase(user->get_sfd()); // erase la key
+	}
+}
+
+
+
+// pb : le get_sfd n'est pas bon = ne recupere pas le numero au set??
