@@ -50,9 +50,17 @@ void nick(Cmd &command)
 		{
 			std::cout << "nickname available." << std::endl;
 			if (command._user != NULL)
+			{
+				std::cout << "set_nick." << std::endl;
 				command._user->set_nick(command.get_value()[0]);
+				std::cout << "set_nick2." << std::endl;
+			}
 			else
+			{	
+				std::cout << "set_user." << std::endl;
 				command._server->set_user(new User(command.get_value()[0], command._sfd));
+			}
+
 		}
 		else
 		{
@@ -61,6 +69,7 @@ void nick(Cmd &command)
 		}
 		// attention : tester avec ou sans la casse		
 	}
+	std::cout << "endofnickname" << std::endl;
 }
 
 // test :

@@ -64,6 +64,7 @@ void Cmd::set_value(std::vector<std::string> value)
 
 std::vector<std::string>	Cmd::get_value(void) const
 {
+	std::cout << "get value" << std::endl;
 	return (_value);
 }
 
@@ -91,10 +92,15 @@ User *Cmd::get_user_fd()
 {
 	std::map<int, User *>::iterator it;
 
-	// std::cout << "get_user_fd" << std::endl;
-	if (!_server->get_users().empty())
+	 std::cout << "ft_get_user_fd" << std::endl;
+	if (!(_server->get_users().empty()))
 	{
+		 std::cout << "ft_get_user_fd" << std::endl;
 		it = _server->get_users().find(_sfd);
+		std::cout << _sfd << std::endl; 
+		 std::cout << "print" << std::endl;
+		//it->second->print();
+		 std::cout << "if" << std::endl;
 		if (it == _server->get_users().end())
 		{
 			// std::cout << "user not found" << std::endl;
@@ -118,7 +124,7 @@ void Cmd::parse_cmd(std::string str)
 	std::string tmp_val;
 	std::string	trailing;
 	int tmp = 0;
-
+	std::cout << "parse_cmd" << std::endl;
 	key = str.substr(0, str.find(' '));
 	size = str.size() - key.size();
 	if (check_condition(key))
