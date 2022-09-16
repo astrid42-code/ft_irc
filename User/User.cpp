@@ -31,6 +31,16 @@ User::User(std::string prenom, std::string name, std::string nickname)
 	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
 }
 
+User::User(std::string nickname, int sdf)
+{
+	_nick = nickname;
+	_sfd = sdf;
+	// std::cout << "User create by default." << std::endl;
+	// parser avec regles user (voir notes)
+	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
+	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
+}
+
 
 User::~User()
 {
