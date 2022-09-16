@@ -48,8 +48,8 @@ void user(Cmd &command)
 	std::vector<std::string>::iterator it;
 
 	printf("ft_user\n");
-	if (command._user == NULL)
-		command._user = new User();
+	// if (command._user == NULL)
+	// 	command._user = new User();
     if (command.get_size() != 4)
 	{
 		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
@@ -57,29 +57,29 @@ void user(Cmd &command)
 		return ;
 	}
 	std::cout << "setting the user" << std::endl;
-	if (command._server->get_user(command.get_value()[0]) == NULL)
-	{
-		command._user->set_nick(command.get_value()[0]);
-		command._user->set_user(command.get_value()[1]);
-		command._user->set_host(command.get_value()[2]);
-		command._user->set_name(command.get_value()[3]);
-		command._user->set_operator(0);
-		command._user->set_mod("");
-		command._user->set_pwd("");
-		command._user->set_sfd(command._sfd);
-	}
-	else
-	{
-		std::cout << "nickname already in use." << std::endl;
-		command._server->get_msg("ERR_NICKNAMEINUSE", command._user, command);
-		return ;
-	}
+	// std::string::const_iterator it = command.get_value()[1].begin();
+	// while ()
+	// command._user->set_nick(command.get_value()[0]);
+	command._user->set_user(command.get_value()[1]);
+	command._user->set_host(command.get_value()[2]);
+	command._user->set_name(command.get_value()[3]);
+	command._user->set_operator(0);
+	command._user->set_mod("");
+	command._user->set_pwd("");
+	command._user->set_sfd(command._sfd);
+		// command._user->set_user(command.get_value()[0]);
+		// command._user->set_host(command.get_value()[2]);
+		// command._user->set_name(command.get_value()[3]);
+		// command._user->set_operator(0);
+		// command._user->set_mod("");
+		// command._user->set_pwd("");
+		// command._user->set_sfd(command._sfd);
 	command._server->get_msg("RPL_WELCOME", command._user, command);
 	command._server->get_msg("RPL_YOURHOST", command._user, command);
 	command._server->get_msg("RPL_CREATED", command._user, command);
 	command._server->get_msg("RPL_MYINFO", command._user, command);
 	command._server->set_user(command._user);
 	command._server->get_msg("RPL_MOTD", command._user, command);
-	if (command._user)
-		delete command._user;
+	// if (command._user)
+	// 	delete command._user;
 }

@@ -51,6 +51,8 @@ void nick(Cmd &command)
 			std::cout << "nickname available." << std::endl;
 			if (command._user != NULL)
 				command._user->set_nick(command.get_value()[0]);
+			else
+				command._server->set_user(new User(command.get_value()[0], command._sfd));
 		}
 		else
 		{

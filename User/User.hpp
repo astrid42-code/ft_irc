@@ -18,6 +18,7 @@ class User
 	public:
 		User();
 		User(std::string prenom, std::string nom, std::string nickname);
+		User(std::string nickname, int sdf);
 		~User();
 
 		User			&operator=(const User & user_cp);
