@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/15 20:10:57 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:23:43 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,9 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 		res.append(RPL_MOTD(arg));
 		res.append(RPL_ENDOFMOTD);
 	}
-		
+	if (msg.compare("ERR_NEEDMOREPARAMS") == 0){
+		res.append(ERR_NEEDMOREPARAMS(msg));
+	}
 	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value
@@ -522,6 +524,7 @@ bool Server::set_user(User *user)
 {
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
+	std::cout << "set_user server " << user->get_sfd() << std::endl;
 	p = _users.insert(std::make_pair(user->get_sfd(), user));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }

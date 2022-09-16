@@ -57,6 +57,7 @@ void user(Cmd &command);
 void quit(Cmd &command);
 void join(Cmd &command);
 void part(Cmd &command);
+void part(Cmd &command);
 void list(Cmd &command);
 
 void privmsg(Cmd &command);

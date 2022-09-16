@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/15 20:04:43 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:33:19 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void user(Cmd &command)
 		command._user->set_mod("");
 		command._user->set_pwd("");
 		command._user->set_sfd(command._sfd);
+		std::cout << "get sfd cmd user " << command._user->get_sfd() << std::endl;
 	}
 	else
 	{
@@ -80,6 +81,6 @@ void user(Cmd &command)
 	command._server->get_msg("RPL_MYINFO", command._user, command);
 	command._server->set_user(command._user);
 	command._server->get_msg("RPL_MOTD", command._user, command);
-	if (command._user)
-		delete command._user;
+	// if (command._user)
+	// 	delete command._user;
 }
