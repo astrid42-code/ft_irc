@@ -57,7 +57,7 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
     std::map<int, User *>::iterator it;
     std::map<int, User *> Users;
 
-    std::cout << "msg_to_chan" << std::endl;
+    std::cout << "________msg_to_chan________" << std::endl;
     serv = command._server;
     chan = serv->get_chan(destinataire.c_str());
     std::cout << "RETOUR" << std::endl;
@@ -83,9 +83,12 @@ void privmsg(Cmd &command)
     std::string destinataire;
     destinataire = command.get_value().begin()[0];
     if (destinataire.c_str()[0] == '#')
+    {
+        std::cout << "msg_to_chann" << std::endl;
         send_msg_to_chan(command, destinataire);
-    std::cout << "destinataire : " << destinataire << std::endl;
-    command.print();
+    }
+    std::cout << "destinataire : |" << destinataire.c_str()[0] << "|" << std::endl;
+   // command.print();
     // necessite d'etre dans un channel (?)
     // command.get_value()[0] la target = le user ou le channel qui recoit le msg
     // command.get_value()[1] le msg a envoyer a la target
