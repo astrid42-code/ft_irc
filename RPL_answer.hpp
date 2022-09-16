@@ -28,6 +28,9 @@
 #define RPL_AWAY(nick) (nick + " :You have been marked as being away\r\n") // 301
 	// + envoyer nick du user en arg
 
+#define RPL_UMODEIS ("<user mode string>") //221 
+	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
+
 #define RPL_WHOISUSER(nick, user, host, name) (nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
 	// + envoyer nick du user, user (?), host et real name en arg
 
@@ -246,6 +249,12 @@
 // If a client sends an OPER message and the server has not been configured to allow connections from the
 // client's host as an operator, this error MUST be returned.
 
+#define ERR_UMODEUNKNOWNFLAG (":Unknown MODE flag\r\n") //501
+// Returned by the server to indicate that a MODE message was sent with a nickname parameter and that
+// the a mode flag sent was not recognized. 
+
+#define ERR_USERSDONTMATCH (":Cant change mode for other users\r\n") //502
+//Error sent to any user trying to view or change the user mode for a user other than themselves. 
 
 #endif
 
