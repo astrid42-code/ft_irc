@@ -321,6 +321,8 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 		command._server = serv;
 		command._sfd = sfd;
 		command._user = command.get_user_fd();
+		if (command._user != NULL)
+			command._user->print();
 		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
