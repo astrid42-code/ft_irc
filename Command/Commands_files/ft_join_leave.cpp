@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/16 15:28:52 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:59:32 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,14 +140,31 @@ void part(Cmd &command)
 {
 	std::cout << "part test" << std::endl;
 	// std::cout << "size " << command.get_value().size() << std::endl;
-	// std::cout << "key " << command.get_key() << std::endl;
 	if (command.get_value().size() < 2){
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
 		return;
 	}
-	// comment recuperer l'objet channel?
-	Channel * chan = command._server->get_chan(command.get_value()[0]);
-	std::cout << "chan " << chan->get_name() << std::endl;
+
+	// aller recuperer le user (server->get_user_fd())
+	// puis avec un iterator it : parcourir le vector de channels dans lesquels est ce user
+	// si l'it != end() c'est ok, et remove le channel
+	
+	// (puis remove le user du channel)
+	
+	// comment recuperer l'objet channel? ( une ref serait mieux mais comment la faire ici?)
+	std::cout << "chan " << command.get_value()[1] << std::endl;
+	Channel * chan = command._server->get_chan(command.get_value()[1]);
+	if (chan == NULL)
+		command._server->get_msg(ERR_NOSUCHCHANNEL(command.get_value()[1]), command._user, command);
 	chan->remove_user(command._user);
-	command._user->remove_chan(chan); 
+
+	// > checker si le user est dans le channel avant de le sortir
+	if (command._user->isOnChan(command.get_value()[1])) 
+	command._user->remove_chan(chan);
+	else{
+		command._server->get_msg(ERR_NOTONCHANNEL(command.get_value()[1]), command._user, command);
+	}
+// a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
+// + passer les get channel et user en & plutot que ptr?
+
 }

@@ -81,6 +81,7 @@ bool			Channel::set_user(User *user)
 {
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
+std::cout << "COUCOU SET USER DANS CHAN" << std::endl;
 	p = _users.insert(std::make_pair(user->get_sfd(), user));
 	return (p.second);
 }
@@ -122,8 +123,12 @@ void	Channel::remove_user(User *user){
 
 	std::cout << "remove_user sfd = " << user->get_sfd() << std::endl;
 	
+	// for (it = _users.begin(); it != _users.end(); it++){
+	// 	std::cout << it->second << std::endl;
+	// }
+
 	it = _users.find(user->get_sfd()); // lui envoyer la cle de la map de user (mai ou est-elle definie et recuperable?)
-	std::cout << "remove_user it = " << it->first << std::endl;
+	std::cout << "remove_user it = " << it->second << std::endl;
 	if (it != _users.end()){
 		delete it->second;
 		_users.erase(user->get_sfd()); // erase la key
