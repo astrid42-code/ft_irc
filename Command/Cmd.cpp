@@ -65,7 +65,7 @@ void Cmd::set_value(std::vector<std::string> value)
 
 std::vector<std::string>	Cmd::get_value(void) const
 {
-	std::cout << "get value" << std::endl;
+	// std::cout << "get value"  << std::endl;
 	return (_value);
 }
 

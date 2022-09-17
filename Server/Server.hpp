@@ -50,6 +50,8 @@ class Server
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
 		std::string				get_msg(std::string msg, User *user, Cmd &cmd);
 
+		void					set_user_in_chan(User *user, Channel *chan);
+
 	private:
 		std::string							_port; // doit etre une string car recupere av[1] -> a transformer en int pour plus de simplicite	
 		std::string							_pwd;

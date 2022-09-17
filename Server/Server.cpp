@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/16 15:23:43 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/17 17:18:46 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -479,8 +479,14 @@ int Server::init()
 Channel *Server::get_chan(std::string key)
 {
 	std::map<std::string, Channel *>::iterator it;
+	// for (it = _channels.begin(); it != _channels.end(); it++){
+	// 	std::cout << "it name " << it->second->get_name() << std::endl;
+	// }
 	std::cout << "start" << std::endl;
-	it = _channels.find(key);
+	std::string tmp_key = "#";
+	tmp_key.append(key);
+	// std::cout << "tmp_key = " << tmp_key << std::endl;
+	it = _channels.find(tmp_key);
 	std::cout << "mid" << std::endl;
 	if (it == _channels.end())
 	{
@@ -497,6 +503,7 @@ bool Server::set_chan(Channel *chan)
 	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
 
 	p = _channels.insert(make_pair(chan->get_name(), chan));
+	std::cout << "channel name " << chan->get_name() << std::endl;	
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 
@@ -536,4 +543,9 @@ bool Server::set_user(User *user)
 	std::cout << "set_user server " << user->get_sfd() << std::endl;
 	p = _users.insert(std::make_pair(user->get_sfd(), user));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
+}
+
+void	Server::set_user_in_chan(User *user, Channel *chan){
+	chan->set_user(user);
+	std::cout << "coucou2 user = " << chan->get_user(user->get_sfd()) << std::endl;
 }
