@@ -94,9 +94,10 @@ void join(Cmd &command){
 		//std::cout << "NULL" << std::endl;
 		newOne = new Channel(command.get_value()[0]);
 		command._server->set_chan(newOne);
+		std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
+
 	}
 	//command._user->set_chan(*newOne);
-	std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
 	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
 	// et etre crees separement (le client gere ensuite)

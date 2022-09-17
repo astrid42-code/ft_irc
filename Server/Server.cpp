@@ -317,16 +317,24 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
-		Cmd command;
-		command._server = serv;
-		command._sfd = sfd;
-		command._user = command.get_user_fd();
-		if (command._user != NULL)
+		std::cout << "Command " << std::endl;
+		Cmd *command = new Cmd();
+		std::cout << "serv " << std::endl;
+		command->_server = serv;
+		std::cout << "sfd " << std::endl;
+		command->_sfd = sfd;
+		std::cout << "get_user_fd " << std::endl;
+		command->_user = command->get_user_fd();
+		if (command->_user == NULL)
+			command->_user = new User();
+		std::cout << "after get_user_fd " << std::endl;
+		/*if (command._user != NULL)
 			command._user->print();
-		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
+		*/token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
-		command.parse_cmd(token);
+		command->parse_cmd(token);
+		delete command;
 		if (pos >= (int)buf.length() || pos == 0)
 			break ;
 	}
@@ -436,7 +444,6 @@ int Server::init()
 				{
 					ssize_t count;
 					char buf[512];
-
 					bzero(buf, 512);
 					count = read(events[i].data.fd, buf, sizeof buf);
 					if (count == -1)

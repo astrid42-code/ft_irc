@@ -123,6 +123,7 @@ void	User::set_name(std::string name)
 
 void	User::set_nick(std::string nick)
 {
+	std::cout << "set nick" << std::endl;
 	_nick = nick;
 }
 
