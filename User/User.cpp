@@ -234,7 +234,7 @@ bool	User::isOnChan(std::string &chan_name){
 void	User::remove_chan(Channel * channel){
 	std::vector<Channel *>::iterator it;
 
-	std::cout << "coucou rempve chan" << std::endl;
+	std::cout << "coucou remove chan" << std::endl;
 	
 	for (it = _vchan.begin(); it != _vchan.end(); it++){
 		if (*it == channel)

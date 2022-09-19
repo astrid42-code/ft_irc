@@ -37,17 +37,9 @@
 //            ERR_NOSUCHNICK
 //            RPL_AWAY
 
-void send_msg_to_user(User *usr, std::vector<std::string> str)
+void send_msg_to_user(User *usr, std::string str)
 {
-    std::string msg;
-    int i = 0;
-    while (!str[i].empty())
-    {
-        msg.append(str[i]);
-        i++;
-    
-    }
-    std::cout << "Sending :|" << msg << "| to :" << usr->get_nick() << std::endl;
+    std::cout << "Sending :|" << str << "| to :" << usr->get_nick() << std::endl;
 }
 
 void send_msg_to_chan(Cmd &command, std::string destinataire)
@@ -78,9 +70,10 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
     {
         std::cout << "User :" << command._user->get_nick() << std::endl;
         if (command._user != it->second)
-            send_msg_to_user(it->second, command.get_value());
+            send_msg_to_user(it->second, command.get_value()[1]);
         it++;
     }
+    std::cout << "__________test__________" << std::endl;
 }
 
 void privmsg(Cmd &command)
@@ -93,7 +86,7 @@ void privmsg(Cmd &command)
         std::cout << "msg_to_chann" << std::endl;
         send_msg_to_chan(command, destinataire);
     }
-    std::cout << "destinataire : |" << destinataire.c_str()[0] << "|" << std::endl;
+    std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
    // command.print();
     // necessite d'etre dans un channel (?)
     // command.get_value()[0] la target = le user ou le channel qui recoit le msg
