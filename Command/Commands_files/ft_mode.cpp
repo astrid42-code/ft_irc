@@ -23,14 +23,16 @@ void	mode(Cmd &command)
 					}
 					it++;
 				}
-				if (command.get_value()[1].find("+") && command.get_value()[1].find("-") == -1)
+				if (command.get_value()[1].find("+") != std::string::npos && command.get_value()[1].find("-") == std::string::npos)
 				{
 					std::cout << "+ opt" << std::endl;
             		// command._user->find_mod(command.get_value()[1].find())
+					command._server->get_msg(RPL_UMODEIS, NULL, command);
 				}
-				else if (command.get_value()[1].find("+") == -1 && command.get_value()[1].find("-"))
+				else if (command.get_value()[1].find("+") == std::string::npos && command.get_value()[1].find("-") != std::string::npos)
 				{
 					std::cout << "- opt" << std::endl;
+					command._server->get_msg(RPL_UMODEIS, NULL, command);
 				}
 				else
 				{
