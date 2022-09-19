@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/17 17:18:46 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:26:10 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,14 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 		res.append(RPL_ENDOFMOTD);
 	}
 	if (msg.compare("ERR_NEEDMOREPARAMS") == 0){
-		res.append(ERR_NEEDMOREPARAMS(msg));
+		res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
+	}
+	if (msg.compare("ERR_NOSUCHCHANNEL") == 0){
+		std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
+		res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
+	}
+	if (msg.compare("ERR_NOTONCHANNEL") == 0){
+		res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
 	}
 	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
@@ -317,13 +324,13 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	std::cout << "buf = " << buf << std::endl;
 	while (pos < (int)buf.length() && buf.find("\r\n", pos))
 	{
-		std::cout << "Command " << std::endl;
+		// std::cout << "Command " << std::endl;
 		Cmd *command = new Cmd();
-		std::cout << "serv " << std::endl;
+		// std::cout << "serv " << std::endl;
 		command->_server = serv;
-		std::cout << "sfd " << std::endl;
+		// std::cout << "sfd " << std::endl;
 		command->_sfd = sfd;
-		std::cout << "get_user_fd " << std::endl;
+		// std::cout << "get_user_fd " << std::endl;
 		command->_user = command->get_user_fd();
 		if (command->_user == NULL)
 		{
@@ -508,6 +515,8 @@ bool Server::set_chan(Channel *chan)
 	std::cout << "channel name " << chan->get_name() << std::endl;	
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
+// set le channel dans le serveur (la fct set_channel de Channel est inutilisee donc)
+
 
 std::map<int, User *> Server::get_users(void)
 {
@@ -537,6 +546,7 @@ User *Server::get_user(std::string key)
 	return (NULL);
 }
 
+
 // insert user in map
 bool Server::set_user(User *user)
 {
@@ -548,6 +558,15 @@ bool Server::set_user(User *user)
 }
 
 void	Server::set_user_in_chan(User *user, Channel *chan){
+	std::vector<Channel *>::iterator it;
+	
 	chan->set_user(user);
+	user->set_chan(*chan);
 	std::cout << "coucou2 user = " << chan->get_user(user->get_sfd()) << std::endl;
+	// for (it = user->_vchan.begin(); it != user->_vchan.end(); it++)
+	// for (int i = 0; i < user->get_chan.size(); i++)
+	// {
+	// 	std::cout << "chan user : " << user->get_chan(i) << std::endl;
+	// }
 }
+

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/17 17:20:58 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/19 12:18:54 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void part(Cmd &command)
 	std::cout << "part test" << std::endl;
 	// std::cout << "size " << command.get_value().size() << std::endl;
 	if (command.get_value().size() < 2){
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
+		command._server->get_msg("ERR_NEEDMOREPARAMS", command._user,command);
 		return;
 	}
 
@@ -161,7 +161,9 @@ void part(Cmd &command)
 		// std::cout << chan->get_name() << std::endl;
 		// std::cout << "chan name part " << std::endl;
 	if (chan == NULL){
-		command._server->get_msg(ERR_NOSUCHCHANNEL(command.get_value()[1]), command._user, command);
+		std::cout << "chan null" << std::endl;
+		command._server->get_msg("ERR_NOSUCHCHANNEL", command._user, command);
+		// return;
 	}
 	else{
 		chan->remove_user(command._user);
@@ -170,10 +172,12 @@ void part(Cmd &command)
 	// remove le user dans le chan apparemment (mais ne trouve pas pour la suite)
 
 	// > checker si le user est dans le channel avant de le sortir
-	if (command._user->isOnChan(command.get_value()[1])) 
+	std::string tmp = "#";
+	tmp.append(command.get_value()[1]);
+	if (command._user->isOnChan(tmp))
 		command._user->remove_chan(chan);
 	else{
-		command._server->get_msg(ERR_NOTONCHANNEL(command.get_value()[1]), command._user, command);
+		command._server->get_msg("ERR_NOTONCHANNEL", command._user, command);
 	}
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?
