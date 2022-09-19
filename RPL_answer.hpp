@@ -39,7 +39,7 @@
 
 #define RPL_WHOISOPERATOR(nick) (nick + " :is an IRC operator\r\n") // 313
 
-#define RPL_ENDOFWHO(name) (name + " :End of WHO list\r\n") // 315
+#define RPL_ENDOFWHO(name) (name + " :End of WHO list\r\n") // mode_params315
 	// + envoyer nick (?) du user en arg
 // - The RPL_WHOREPLY and RPL_ENDOFWHO pair are used to answer a WHO message.  The RPL_WHOREPLY is only
 // sent if there is an appropriate match to the WHO query.  If there is a list of parameters supplied
@@ -75,6 +75,8 @@
 //    with data and end of the server's response to a LIST
 //    command.  If there are no channels available to return,
 //    only the end reply MUST be sent.
+
+#define RPL_CHANNELMODEIS(channel, mode, mode_params) (channel + mode + mode_params + "\r\n")
 
 #define RPL_TOPIC(channel, topic) (channel + " :" + topic + "\r\n") // 332
 	// + envoyer channel et topic (sujet du chan) en arg

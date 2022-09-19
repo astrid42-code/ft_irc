@@ -13,6 +13,7 @@
 
 
 class Channel;
+
 class User
 {
 	public:
@@ -51,6 +52,7 @@ class User
 		void			print(void) const;
 
 		bool			isOnChan(std::string chan_name);
+		Channel			*get_channel(std::string name);
 
 		void			remove_chan(Channel * channel);
 

@@ -112,23 +112,25 @@ void			Channel::set_channel(std::string name)
 	_name = name.substr(2, name.size());
 }
 
-void			Channel::set_topic(std::string topic){
+void			Channel::set_topic(std::string topic)
+{
 	_topic = topic;
 }
 
 void			Channel::print(void)
 {
-	std::map<int, User *>::iterator it = _users.begin();
-
-	std::cout << "name:" + _name << std::endl;
-	while (it != _users.end())
+	std::cout << "name :" + _name + "\nmode :" + _mod + "\nusers :" << std::endl;
+	if (!_users.empty())
 	{
-		it->second->print();
-		it++;
+		for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
+			it->second->print();
 	}
+	else
+		std::cout << "users empty..." << std::endl; 
 }
 
-void	Channel::remove_user(User *user){
+void	Channel::remove_user(User *user)
+{
 	// (void)user;
 	std::map<int, User *>::iterator it;
 

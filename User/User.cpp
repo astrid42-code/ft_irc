@@ -111,7 +111,20 @@ int	User::get_operator() const
 	return (_operator);
 }
 
-// std::string		User::get_chan(int i) const{
+Channel	*User::get_channel(std::string name)
+{
+	std::vector<Channel *>::iterator it;
+
+	for (it = _vchan.begin(); it != _vchan.end(); it++)
+	{
+		if ((*it)->get_name().compare(name) == 0)
+			return (*it);
+	}
+	return (NULL);
+}
+
+// std::string		User::get_chan(int i) const
+// {
 // 	return (_vchan[i].get_name());
 // }
 
