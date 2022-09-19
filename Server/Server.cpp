@@ -336,10 +336,13 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 		{
 			std::cout << "_____NoUserFromFd_____" << std::endl;
 		}
-		std::cout << "after get_user_fd " << std::endl;
-		/*if (command._user != NULL)
-			command._user->print();
-		*/token = buf.substr(pos, buf.find("\r\n", pos) - pos);
+		else
+		{
+			std::cout << "_____UserFromFd_____" << std::endl;
+			command->_user->print();
+		}
+		// std::cout << "after get_user_fd " << std::endl;
+		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
 		pos = buf.find("\n", pos) + 1;
 		std::cout << "token = |" << token << "|" << std::endl;
 		command->parse_cmd(token);
