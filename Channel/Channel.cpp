@@ -107,8 +107,7 @@ void			Channel::set_channel(std::string name)
 	std::cout << "chan name = " << name << std::endl;
 	std::cout << "chan name substr = " << name.substr(1, name.size()) << std::endl;
 
-	// PB : ne rentre pas dans cette fct quand un channel est cree!!!
-
+//fct inutilisee (le set_chan de server ne l'utilise pas), doit on l'utiliser egalement??
 
 	_name = name.substr(2, name.size());
 }

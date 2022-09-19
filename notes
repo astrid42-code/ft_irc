@@ -137,3 +137,12 @@ leave (faire une fct Channel.remove(User) && User.remove(Channel))
 remove de getuser et de getchannel devrait suffire
 
 quit (inverse de connect) et leave (inverse de join)
+
+
+a faire : leave :
+verifier que le user est bien retirer du channel (dans channel et dans server ??)
+retirer le channel de server (?) et de user
+
+
+pb a regler pour leave :
+dans user::isonchan > comment recuperer le nom du channel dans vchan pour voir s'il est correctement set?
