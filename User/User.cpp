@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/16 12:45:41 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:01:06 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,11 +234,12 @@ bool	User::isOnChan(std::string &chan_name){
 void	User::remove_chan(Channel * channel){
 	std::vector<Channel *>::iterator it;
 
+	std::cout << "coucou rempve chan" << std::endl;
+	
 	for (it = _vchan.begin(); it != _vchan.end(); it++){
 		if (*it == channel)
 			_vchan.erase(it);
 	}
-	
 }
 
 std::ostream	&operator<<(std::ostream &os, const User &user_cp)

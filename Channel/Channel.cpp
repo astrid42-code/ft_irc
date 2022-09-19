@@ -81,7 +81,14 @@ bool			Channel::set_user(User *user)
 {
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
+std::cout << "COUCOU SET USER DANS CHAN" << std::endl;
+
+// imprimer pour voir ce qui est ou
 	p = _users.insert(std::make_pair(user->get_sfd(), user));
+	std::cout << "fd " << user->get_sfd() << " p second " << p.second  << std::endl;
+	for (std::map< int, User *>::iterator it = _users.begin(); it != _users.end(); it++){
+		std::cout << " _users " << it->second << std::endl;
+	}
 	return (p.second);
 }
 
@@ -97,7 +104,13 @@ void			Channel::set_mod(std::string mod)
 
 void			Channel::set_channel(std::string name)
 {
-	_name = name;
+	std::cout << "chan name = " << name << std::endl;
+	std::cout << "chan name substr = " << name.substr(1, name.size()) << std::endl;
+
+	// PB : ne rentre pas dans cette fct quand un channel est cree!!!
+
+
+	_name = name.substr(2, name.size());
 }
 
 void			Channel::set_topic(std::string topic){
@@ -122,8 +135,17 @@ void	Channel::remove_user(User *user){
 
 	std::cout << "remove_user sfd = " << user->get_sfd() << std::endl;
 	
+	// for (it = _users.begin(); it != _users.end(); it++){
+	// 	std::cout << it->second << std::endl;
+	// }
+
+		std::cout << "second null" << std::endl;
 	it = _users.find(user->get_sfd()); // lui envoyer la cle de la map de user (mai ou est-elle definie et recuperable?)
-	std::cout << "remove_user it = " << it->first << std::endl;
+	if (it->second == NULL){
+		return;
+	}
+	else
+		std::cout << "remove_user it = " << it->second << std::endl;
 	if (it != _users.end()){
 		delete it->second;
 		_users.erase(user->get_sfd()); // erase la key

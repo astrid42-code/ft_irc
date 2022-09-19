@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/16 15:28:52 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/17 17:20:58 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ void join(Cmd &command){
 		command._server->set_chan(newOne);
 		std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
 	}
+	command._server->set_user_in_chan(command._user, newOne);
+	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
+	 // newone ou string correspondant au nom du chan : command.get_value()[0]
 	//command._user->set_chan(*newOne);
 	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
@@ -140,14 +143,41 @@ void part(Cmd &command)
 {
 	std::cout << "part test" << std::endl;
 	// std::cout << "size " << command.get_value().size() << std::endl;
-	// std::cout << "key " << command.get_key() << std::endl;
 	if (command.get_value().size() < 2){
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
 		return;
 	}
-	// comment recuperer l'objet channel?
-	Channel * chan = command._server->get_chan(command.get_value()[0]);
-	std::cout << "chan " << chan->get_name() << std::endl;
-	chan->remove_user(command._user);
-	command._user->remove_chan(chan); 
+
+	// aller recuperer le user (server->get_user_fd())
+	// puis avec un iterator it : parcourir le vector de channels dans lesquels est ce user
+	// si l'it != end() c'est ok, et remove le channel
+	
+	// (puis remove le user du channel)
+	
+	// comment recuperer l'objet channel? ( une ref serait mieux mais comment la faire ici?)
+	std::cout << "chan " << command.get_value()[1] << std::endl;
+	Channel * chan = command._server->get_chan(command.get_value()[1]);
+		// std::cout << "coucou4 user = " << chan->get_user(command._user->get_sfd()) << std::endl;
+		// std::cout << chan->get_name() << std::endl;
+		// std::cout << "chan name part " << std::endl;
+	if (chan == NULL){
+		command._server->get_msg(ERR_NOSUCHCHANNEL(command.get_value()[1]), command._user, command);
+	}
+	else{
+		chan->remove_user(command._user);
+	}
+
+	// remove le user dans le chan apparemment (mais ne trouve pas pour la suite)
+
+	// > checker si le user est dans le channel avant de le sortir
+	if (command._user->isOnChan(command.get_value()[1])) 
+		command._user->remove_chan(chan);
+	else{
+		command._server->get_msg(ERR_NOTONCHANNEL(command.get_value()[1]), command._user, command);
+	}
+// a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
+// + passer les get channel et user en & plutot que ptr?
+
 }
+
+// pb actuel : ne recupere pas le channel ( pb de ptr a priori)
