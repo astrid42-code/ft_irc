@@ -95,7 +95,6 @@ void join(Cmd &command){
 		newOne = new Channel(command.get_value()[0]);
 		command._server->set_chan(newOne);
 		std::cout << "NEW CHAN : " << newOne->get_name() << std::endl;
-
 	}
 	//command._user->set_chan(*newOne);
 	
