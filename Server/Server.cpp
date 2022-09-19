@@ -333,8 +333,10 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 		// std::cout << "get_user_fd " << std::endl;
 		command->_user = command->get_user_fd();
 		if (command->_user == NULL)
-			command->_user = new User();
-		// std::cout << "after get_user_fd " << std::endl;
+		{
+			std::cout << "_____NoUserFromFd_____" << std::endl;
+		}
+		std::cout << "after get_user_fd " << std::endl;
 		/*if (command._user != NULL)
 			command._user->print();
 		*/token = buf.substr(pos, buf.find("\r\n", pos) - pos);
@@ -493,7 +495,7 @@ Channel *Server::get_chan(std::string key)
 	std::string tmp_key = "#";
 	tmp_key.append(key);
 	// std::cout << "tmp_key = " << tmp_key << std::endl;
-	it = _channels.find(tmp_key);
+	it = _channels.find(key);
 	std::cout << "mid" << std::endl;
 	if (it == _channels.end())
 	{
