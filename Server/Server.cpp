@@ -208,7 +208,8 @@ std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 	{
 		res.append(RPL_MYINFO(user->get_mod(), "0"));
 	}
-	if (msg.compare("RPL_MOTD") == 0){
+	if (msg.compare("RPL_MOTD") == 0)
+	{
 		res.append(RPL_MOTDSTART);
 		arg = "\n\
 dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
@@ -237,16 +238,26 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 		res.append(RPL_MOTD(arg));
 		res.append(RPL_ENDOFMOTD);
 	}
-	if (msg.compare("ERR_NEEDMOREPARAMS") == 0){
+	if (msg.compare("ERR_NEEDMOREPARAMS") == 0)
+	{
 		res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
 	}
-	if (msg.compare("ERR_NOSUCHCHANNEL") == 0){
-		std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
+	if (msg.compare("ERR_NOSUCHCHANNEL") == 0)
+	{
+		// std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
 		res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
 	}
-	if (msg.compare("ERR_NOTONCHANNEL") == 0){
+	if (msg.compare("ERR_NOTONCHANNEL") == 0)
+	{
 		res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
 	}
+	if (msg.find("PONG :") != std::string::npos)
+	{
+		res.append(msg + "\n\r");
+		std::cout << res << std::endl;
+	}
+	// :tamigore!tamigore@62.210.32.226 PONG :tamigore
+	// :tamigore!tamigore@localhost PONG :tamigore
 	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value
