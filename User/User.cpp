@@ -235,8 +235,9 @@ void	User::print(void) const
 	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
 }
 
-bool	User::isOnChan(std::string chan_name){
+bool User::isOnChan(std::string chan_name){
 	std::vector<Channel *>::iterator	it;
+	it = _vchan.begin();
 	// std::string 	vchan_tmp = "#";
 
 	std::cout << "vchan.size " << _vchan.size() << std::endl;
@@ -247,11 +248,15 @@ bool	User::isOnChan(std::string chan_name){
 		std::cout << "isonchan _vchan NULL" << std::endl;
 		return false;
 	}
-	for (it = _vchan.begin(); it < _vchan.end(); it++){
-		std::cout << "it getname = " << std::endl;
-		std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
-		if ((*it)->get_name().compare(chan_name) == 0)
-			return true;
+	std::cout << "before iteration" << std::endl;
+	for (size_t i = 0; i < _vchan.size(); i++)
+	{
+		std::cout << "before iteration" << std::endl;
+		std::cout << "iteration : |"  << "|" << std::endl;
+		//if (it[i]->get_name() == chan_name)
+		//	return (true);
+		std::cout << "blablalbalblablablablblalblablab" << std::endl;
+		it++;
 	}
 	return false;
 }

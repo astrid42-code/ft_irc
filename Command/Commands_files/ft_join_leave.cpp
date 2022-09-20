@@ -143,7 +143,7 @@ void part(Cmd &command)
 {
 	std::cout << "part test" << std::endl;
 	// std::cout << "size " << command.get_value().size() << std::endl;
-	if (command.get_value().size() < 2){
+	if (command.get_value().size() < 1){
 		command._server->get_msg("ERR_NEEDMOREPARAMS", command._user,command);
 		return;
 	}
@@ -155,8 +155,8 @@ void part(Cmd &command)
 	// (puis remove le user du channel)
 	
 	// comment recuperer l'objet channel? ( une ref serait mieux mais comment la faire ici?)
-	std::cout << "chan " << command.get_value()[1] << std::endl;
-	Channel * chan = command._server->get_chan(command.get_value()[1]);
+	std::cout << "chan " << command.get_value()[0] << std::endl;
+	Channel * chan = command._server->get_chan(command.get_value()[0]);
 		// std::cout << "coucou4 user = " << chan->get_user(command._user->get_sfd()) << std::endl;
 		// std::cout << chan->get_name() << std::endl;
 		// std::cout << "chan name part " << std::endl;
@@ -172,12 +172,14 @@ void part(Cmd &command)
 	// remove le user dans le chan apparemment (mais ne trouve pas pour la suite)
 
 	// > checker si le user est dans le channel avant de le sortir
-	std::string tmp = "#";
-	tmp.append(command.get_value()[1]);
-	if (command._user->isOnChan(tmp))
-		command._user->remove_chan(chan);
+	std::cout << "command.get_value()[0] :" << command.get_value()[0] << std::endl;
+	if (command._user->isOnChan(command.get_value()[0]))
+	{
+		std::cout << "IL EST SUR LE CHAN " << std::endl;
+		//command._user->remove_chan(chan);
+	}
 	else{
-		command._server->get_msg("ERR_NOTONCHANNEL", command._user, command);
+	//	command._server->get_msg("ERR_NOTONCHANNEL", NULL, command);
 	}
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?

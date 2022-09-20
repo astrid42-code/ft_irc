@@ -50,7 +50,7 @@ class User
 		bool			find_mod(std::string mod);
 		void			print(void) const;
 
-		bool			isOnChan(std::string chan_name);
+		bool 			isOnChan(std::string chan_name);
 
 		void			remove_chan(Channel * channel);
 
