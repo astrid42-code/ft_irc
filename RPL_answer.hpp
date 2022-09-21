@@ -216,6 +216,8 @@
 // Returned to indicate a failed attempt at registering a connection for which a password was required and
 // was either not given or incorrect.
 
+#define ERR_KEYSET ("<channel> :<reason>") // 467
+
 #define ERR_CHANNELISFULL(channel) (channel + " :Cannot join channel (+l)\r\n") // 471
 	// + envoyer channel en arg
 

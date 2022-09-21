@@ -5,6 +5,8 @@
 #include <map>
 #include "../User/User.hpp"
 
+#define ANONYMOUS "anonymous"
+
 class User;
 
 class Channel
@@ -23,6 +25,8 @@ class Channel
 		std::map<int, User *>			get_users() const;
 		User 							*get_user(int key);
 		std::string						get_topic() const;
+		std::string						get_key() const;
+		unsigned int					get_limit() const;
 		void							set_name(std::string name);
 		void							set_users(std::map<int, User *> users);
 		bool							set_user(User *user);
@@ -30,6 +34,8 @@ class Channel
 		void							set_mod(std::string mod);
 		void							set_channel(std::string name);
 		void							set_topic(std::string topic);
+		void							set_key(std::string key);
+		void							set_limit(unsigned int limit);
 		void							print(void);
 	
 		void							remove_user(User *user, Channel * chan);
@@ -40,6 +46,8 @@ class Channel
 		std::string						_ID; // depends of time ?
 		std::string						_mod;
 		std::string						_topic;
+		std::string						_key;
+		unsigned int					_limit;
 
 		//	MODS
 		// O - give "channel creator" status;

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 14:11:07 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:20:42 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,44 +320,26 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 		// res.append("376 ");
 		res.append(RPL_ENDOFMOTD);
 	}
-	if (msg.compare("ERR_NEEDMOREPARAMS") == 0){
-		// res.append("461 ");
+	if (msg.compare("ERR_NEEDMOREPARAMS") == 0)
+	{
 		res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
 	}
-	if (msg.compare("ERR_NOSUCHCHANNEL") == 0){
+	if (msg.compare("ERR_NOSUCHCHANNEL") == 0)
+	{
 		// std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
 		res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
 	}
-	if (msg.compare("ERR_NOTONCHANNEL") == 0){
-		// res.append("442");
+	if (msg.compare("ERR_NOTONCHANNEL") == 0)
+	{
 		res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
 	}
-	if (msg.compare("RPL_NAMREPLY") == 0){
-		// std::cout << "res chan : " << cmd.get_value()[0] << std::endl;
-		// res.append("353 " + cmd._user->get_nick() + " = ");
-		res.append(cmd.get_value()[0] + " :");
-		std::string tmp_mod = cmd._user->get_mod();
-		
-		// size_t found = tmp_mod.find('o', 0);
-		// if (found != std::string::npos)
-		//     res.append(" :+");
-		// else
-		//     res.append(" :@");
-		// res.append(cmd._user->get_nick() + "\r\n");
-		// attention si plsrs user, uite du msg a recuperer
-		// *( " " [ "@" / "+" ] <nick> ) > au cas ou il y aurait plrs users
-		
-		// res.append(RPL_ENDOFNAMES(cmd.get_value()[0]));
-		
-		// res.append(":" + cmd._user->get_nick() + "!" + cmd._user->get_user() + "@" + cmd._user->get_host() + " JOIN " + cmd.get_value()[0]);
+	if (msg.find("PONG :") != std::string::npos)
+	{
+		res.append(msg + "\n\r");
+		std::cout << res << std::endl;
 	}
-	if (msg.compare("RPL_ENDOFNAMES")){
-		// res.append("366 " + cmd._user->get_nick() + " ");
-		res.append(RPL_ENDOFNAMES(cmd.get_value()[0]));
-	}
-
-
-	
+	// :tamigore!tamigore@62.210.32.226 PONG :tamigore
+	// :tamigore!tamigore@localhost PONG :tamigore
 	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value

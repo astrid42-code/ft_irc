@@ -28,7 +28,6 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
 	_cmd["PING"] = ping;
-	_cmd["PONG"] = pong;
 	_cmd["MODE"] = mode;
 }
 

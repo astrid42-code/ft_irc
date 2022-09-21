@@ -123,6 +123,11 @@ Channel	*User::get_channel(std::string name)
 	return (NULL);
 }
 
+std::string	User::get_hostname() const
+{
+	return (_user + "!" + _nick + "@" + _host);
+}
+
 // std::string		User::get_chan(int i) const
 // {
 // 	return (_vchan[i].get_name());
@@ -221,7 +226,7 @@ bool	User::check_nick(std::string new_nick)
 		std::cout << "Login is too long : 9 characters max" << std::endl; 
 		return (false);
 	}
-	else if (_nick.compare(new_nick) == 0)
+	else if (_nick.compare(new_nick) == 0 || _nick.compare("anonymous") == 0)
 	{
 		std::cout << "Nickname is already used." << std::endl; 
 		return (false);
