@@ -55,20 +55,20 @@ void ping(Cmd &command)
 			std::cout << "blob" << '\n';
 		}
 	}
-    else if (command.get_value().size() == 2)
-	{
-        // std::cout << "bla" << '\n';
-		std::map< std::string, User * >::iterator it;
+    // else if (command.get_value().size() == 2)
+	// {
+    //     // std::cout << "bla" << '\n';
+	// 	std::map< std::string, User * >::iterator it;
 		
-		if (command.get_value()[1] != SERVER)
-		{
-			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[1]), NULL, command);
-        // fct qui send ping msg to server (arg2) par le user (arg1)
-		// donc identifier arg1 (trouver le user dans la map du server?)
-		//  et verifier que arg2 == SERVER
-		// puis send ping msg to server
-    	}
-	}
+	// 	if (command.get_value()[1] != SERVER)
+	// 	{
+	// 		command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[1]), NULL, command);
+    //     // fct qui send ping msg to server (arg2) par le user (arg1)
+	// 	// donc identifier arg1 (trouver le user dans la map du server?)
+	// 	//  et verifier que arg2 == SERVER
+	// 	// puis send ping msg to server
+    // 	}
+	// }
 }
 
 // Command: PONG

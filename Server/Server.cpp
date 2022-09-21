@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/18 17:26:10 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:11:07 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,29 +187,111 @@ bool Server::set_pp(std::string port, std::string pwd)
 	}
 */
 
+std::string    Server::send_msg(int rpl, std::string msg, User * user, Cmd &cmd){
+	(void)msg;
+	std::string	res = ":";
+	std::string num_rpl = SSTR(rpl);
+	std::string arg = "\n\
+dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
+HHP%%#%%%%%%%%%%%%%%%%#%%%%%%%#%%VHH \n\
+HH%%%%%%%%%%#%v~~~~~~\\%%%#%%%%%%%%HH \n\
+HH%%%%%#%%%%v'        ~~~~\\%%%%%#%HH \n\
+HH%%#%%%%%%v'dHHb      a%%%#%%%%%%HH \n\
+HH%%%%%#%%v'dHHHA     :%%%%%%#%%%%HH \n\
+HH%%%#%%%v' VHHHHaadHHb:%#%%%%%%%%HH \n\
+HH%%%%%#v'   `VHHHHHHHHb:%%%%%#%%%HH \n\
+HH%#%%%v'      `VHHHHHHH:%%%#%%#%%HH \n\
+HH%%%%%'        dHHHHHHH:%%#%%%%%%HH \n\
+HH%%#%%        dHHHHHHHH:%%%%%%#%%HH \n\
+HH%%%%%       dHHHHHHHHH:%%#%%%%%%HH \n\
+HH#%%%%       VHHHHHHHHH:%%%%%#%%%HH \n\
+HH%%%%#   b    HHHHHHHHV:%%%#%%%%#HH \n\
+HH%%%%%   Hb   HHHHHHHV'%%%%%%%%%%HH \n\
+HH%%#%%   HH  dHHHHHHV'%%%#%%%%%%%HH \n\
+HH%#%%%   VHbdHHHHHHV'#%%%%%%%%#%%HH \n\
+HHb%%#%    VHHHHHHHV'%%%%%#%%#%%%%HH \n\
+HHHHHHHb    VHHHHHHH:%odHHHHHHbo%dHH \n\
+HHHHHHHHboodboooooodHHHHHHHHHHHHHHHH \n\
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
+VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
+
+	// res.append(SERVER);
+	res.append(user->get_nick() + "!" + user->get_user() + "@" + user->get_host());
+	res.append(" ");
+	if (rpl < 10){
+		res.append("00" + num_rpl);
+	}
+	else
+		res.append(num_rpl);
+	res.append(" ");
+	// std::cout << "nick = " << user->get_nick() << std::endl;
+	if (user->get_nick() == "")
+		res.append("*");
+	else
+		res.append(user->get_nick());
+	switch(rpl){
+		case 1:
+				res.append(RPL_WELCOME);
+				// get msg : |:kakou!asgaulti@localhost 001 kakou :Welcome to the Internet Relay Network
+				break;
+		case 2:
+				res.append(RPL_YOURHOST);
+				break;
+		case 3:
+				res.append(RPL_CREATED);
+				break;
+		case 4:
+				res.append(RPL_MYINFO(user->get_mod(), "0"));
+				break;
+		case 375:
+				res.append(RPL_MOTDSTART(arg));
+				break;
+		case 376:
+				res.append(RPL_ENDOFMOTD);
+				break;
+		default:
+				break;
+	}
+
+	std::cout << "send msg : |" << res << "|" << std::endl;
+	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
+	return (res);
+}
+
+
+// std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
 	std::string	res = ":";
 	std::string arg;
 
+	// res.append("1024 "); // nom du hostname?
+
 	if (msg.compare("RPL_WELCOME") == 0)
 	{
-		res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
+		// res.append(" 001 ");
+		// res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
 	}
 	if (msg.compare("RPL_YOURHOST") == 0)
 	{
+		// res.append("002 ");
 		res.append(RPL_YOURHOST);
 	}
 	if (msg.compare("RPL_CREATED") == 0)
 	{
+		// res.append("003 ");
 		res.append(RPL_CREATED);
 	}
 	if (msg.compare("RPL_MYINFO") == 0)
 	{
+		// res.append("004 ");
 		res.append(RPL_MYINFO(user->get_mod(), "0"));
 	}
 	if (msg.compare("RPL_MOTD") == 0){
-		res.append(RPL_MOTDSTART);
+		// res.append("375 ");
+		res.append(RPL_MOTDSTART(arg));
+		
 		arg = "\n\
 dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
 HHP%%#%%%%%%%%%%%%%%%%#%%%%%%%#%%VHH \n\
@@ -234,19 +316,48 @@ HHHHHHHHboodboooooodHHHHHHHHHHHHHHHH \n\
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
 VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n"; 
-		res.append(RPL_MOTD(arg));
+		// res.append(RPL_MOTD(arg));
+		// res.append("376 ");
 		res.append(RPL_ENDOFMOTD);
 	}
 	if (msg.compare("ERR_NEEDMOREPARAMS") == 0){
+		// res.append("461 ");
 		res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
 	}
 	if (msg.compare("ERR_NOSUCHCHANNEL") == 0){
-		std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
+		// std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
 		res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
 	}
 	if (msg.compare("ERR_NOTONCHANNEL") == 0){
+		// res.append("442");
 		res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
 	}
+	if (msg.compare("RPL_NAMREPLY") == 0){
+		// std::cout << "res chan : " << cmd.get_value()[0] << std::endl;
+		// res.append("353 " + cmd._user->get_nick() + " = ");
+		res.append(cmd.get_value()[0] + " :");
+		std::string tmp_mod = cmd._user->get_mod();
+		
+		// size_t found = tmp_mod.find('o', 0);
+		// if (found != std::string::npos)
+		//     res.append(" :+");
+		// else
+		//     res.append(" :@");
+		// res.append(cmd._user->get_nick() + "\r\n");
+		// attention si plsrs user, uite du msg a recuperer
+		// *( " " [ "@" / "+" ] <nick> ) > au cas ou il y aurait plrs users
+		
+		// res.append(RPL_ENDOFNAMES(cmd.get_value()[0]));
+		
+		// res.append(":" + cmd._user->get_nick() + "!" + cmd._user->get_user() + "@" + cmd._user->get_host() + " JOIN " + cmd.get_value()[0]);
+	}
+	if (msg.compare("RPL_ENDOFNAMES")){
+		// res.append("366 " + cmd._user->get_nick() + " ");
+		res.append(RPL_ENDOFNAMES(cmd.get_value()[0]));
+	}
+
+
+	
 	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
 	//std::cout << "OUAI : " << res << std::endl;
 	// effacer le contenu du vector _value
@@ -495,8 +606,8 @@ Channel *Server::get_chan(std::string key)
 	// 	std::cout << "it name " << it->second->get_name() << std::endl;
 	// }
 	std::cout << "start" << std::endl;
-	std::string tmp_key = "#";
-	tmp_key.append(key);
+	// std::string tmp_key = "#";
+	// tmp_key.append(key);
 	// std::cout << "tmp_key = " << tmp_key << std::endl;
 	it = _channels.find(key);
 	std::cout << "mid" << std::endl;
@@ -505,9 +616,12 @@ Channel *Server::get_chan(std::string key)
 		std::cout << "NULL" << std::endl;
 		return (NULL);
 	}
+	// std::cout <<  << it->second->size() << std::endl;
 	std::cout << "end" << std::endl;
 	return (it->second);
 }
+
+// size_t	Server::get_chan_size()
 
 // insert user in map
 bool Server::set_chan(Channel *chan)
@@ -516,6 +630,7 @@ bool Server::set_chan(Channel *chan)
 
 	p = _channels.insert(make_pair(chan->get_name(), chan));
 	std::cout << "channel name " << chan->get_name() << std::endl;	
+	// chan->set_name(chan->get_name());
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 // set le channel dans le serveur (la fct set_channel de Channel est inutilisee donc)

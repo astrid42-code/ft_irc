@@ -32,7 +32,7 @@ class Channel
 		void							set_topic(std::string topic);
 		void							print(void);
 	
-		void							remove_user(User *user);
+		void							remove_user(User *user, Channel * chan);
 
 	private:
 		std::string						_name; // must start with '&', '#', '+' or '!' with a max of (50) char and must not contain any ' ' (spaces), G (^G or ASCII 7) or a comma (',')

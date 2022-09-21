@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/19 12:15:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:03:53 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,25 +257,38 @@ bool	User::isOnChan(std::string chan_name){
 	std::cout << "chan name isonchan : " << chan_name << std::endl;
 	// vchan_tmp.append(chan_name);
 	// std::cout << "tmp chan name isonchan : " << vchan_tmp << std::endl;
+	
 	if (_vchan.size() == 0){
 		std::cout << "isonchan _vchan NULL" << std::endl;
 		return false;
 	}
-	for (it = _vchan.begin(); it < _vchan.end(); it++){
-		std::cout << "it getname = " << std::endl;
-		std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
-		if ((*it)->get_name().compare(chan_name) == 0)
-			return true;
-	}
+	// for (it = _vchan.begin(); it < _vchan.end(); it++){
+	// 	// std::cout << "it getname = " << std::endl;
+	// 	// std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
+	// 	if ((*it)->get_name().compare(chan_name) == 0)
+	// 		return true;
+	// }
+	
+	// for (unsigned i = 0; i < _vchan.size(); i++){
+	// 	std::cout << "value isonchan " << _vchan.at(i) << std::endl;
+	// 	if (_vchan.at(i) == chan_name)
+	// 		return (true);
+	// }
 	return false;
 }
 
 void	User::remove_chan(Channel * channel){
+	(void)channel;
 	std::vector<Channel *>::iterator it;
 	
 	for (it = _vchan.begin(); it != _vchan.end(); it++){
-		if (*it == channel)
+		// if (*it == channel)
+		std::cout << "remove_chan channel  = " << (*it)->get_name() << std::endl;
+		if (it != _vchan.end()){
 			_vchan.erase(it);
+		std::cout << "COUCOU REMOVE CHAN" << std::endl;
+			return;
+		}
 	}
 }
 

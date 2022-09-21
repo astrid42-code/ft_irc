@@ -35,6 +35,7 @@ bool Channel::operator==(const Channel & ch_cp)
 
 std::string					Channel::get_name() const
 {
+	// std::cout << "_name chan = " << _name << std::endl;
 	return (_name);
 }
 
@@ -69,6 +70,7 @@ std::string		Channel::get_topic() const{
 
 void			Channel::set_name(std::string name)
 {
+	// std::cout << "set name chan : " << _name << std::endl;
 	_name = name;
 }
 
@@ -81,14 +83,14 @@ bool			Channel::set_user(User *user)
 {
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
-std::cout << "COUCOU SET USER DANS CHAN" << std::endl;
+// std::cout << "COUCOU SET USER DANS CHAN" << std::endl;
 
 // imprimer pour voir ce qui est ou
 	p = _users.insert(std::make_pair(user->get_sfd(), user));
-	std::cout << "fd " << user->get_sfd() << " p second " << p.second  << std::endl;
-	for (std::map< int, User *>::iterator it = _users.begin(); it != _users.end(); it++){
-		std::cout << " _users " << it->second << std::endl;
-	}
+	// std::cout << "fd " << user->get_sfd() << " p second " << p.second  << std::endl;
+	// for (std::map< int, User *>::iterator it = _users.begin(); it != _users.end(); it++){
+	// 	std::cout << " _users " << it->second << std::endl;
+	// }
 	return (p.second);
 }
 
@@ -129,7 +131,7 @@ void			Channel::print(void)
 		std::cout << "users empty..." << std::endl; 
 }
 
-void	Channel::remove_user(User *user)
+void	Channel::remove_user(User *user, Channel *chan)
 {
 	// (void)user;
 	std::map<int, User *>::iterator it;
@@ -147,8 +149,15 @@ void	Channel::remove_user(User *user)
 	}
 	else
 		std::cout << "remove_user it = " << it->second << std::endl;
+	
 	if (it != _users.end()){
-		delete it->second;
+		user->remove_chan(chan);
+		// std::cout << "OUI CA MARCHE" << std::endl;
+
+		//checker si je retire tout le user ou seulement le user de la map _user du channel 
+		//  cest le deuxiemen que je dois faire
+		// faire un print du user pour voir si delete le it->second ou pas
+		// delete it->second;
 		_users.erase(user->get_sfd()); // erase la key
 	}
 }
