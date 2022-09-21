@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/19 12:15:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:03:53 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,11 @@ Channel	*User::get_channel(std::string name)
 	return (NULL);
 }
 
-std::string    User::get_hostname() const
+std::string	User::get_hostname() const
 {
-    return (_user + "!" + _nick + "@" + _host);
+	return (_user + "!" + _nick + "@" + _host);
 }
+
 // std::string		User::get_chan(int i) const
 // {
 // 	return (_vchan[i].get_name());
@@ -236,7 +237,7 @@ bool	User::check_nick(std::string new_nick)
 		std::cout << "Login is too long : 9 characters max" << std::endl; 
 		return (false);
 	}
-	else if (_nick.compare(new_nick) == 0)
+	else if (_nick.compare(new_nick) == 0 || _nick.compare("anonymous") == 0)
 	{
 		std::cout << "Nickname is already used." << std::endl; 
 		return (false);
@@ -273,29 +274,38 @@ bool User::isOnChan(std::string chan_name){
 	std::cout << "chan name isonchan : " << chan_name << std::endl;
 	// vchan_tmp.append(chan_name);
 	// std::cout << "tmp chan name isonchan : " << vchan_tmp << std::endl;
+	
 	if (_vchan.size() == 0){
 		std::cout << "isonchan _vchan NULL" << std::endl;
 		return false;
 	}
-	std::cout << "before iteration" << std::endl;
-	for (size_t i = 0; i < _vchan.size(); i++)
-	{
-		std::cout << "before iteration" << std::endl;
-		std::cout << "iteration : |"  << "|" << std::endl;
-		//if (it[i]->get_name() == chan_name)
-		//	return (true);
-		std::cout << "blablalbalblablablablblalblablab" << std::endl;
-		it++;
-	}
+	// for (it = _vchan.begin(); it < _vchan.end(); it++){
+	// 	// std::cout << "it getname = " << std::endl;
+	// 	// std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
+	// 	if ((*it)->get_name().compare(chan_name) == 0)
+	// 		return true;
+	// }
+	
+	// for (unsigned i = 0; i < _vchan.size(); i++){
+	// 	std::cout << "value isonchan " << _vchan.at(i) << std::endl;
+	// 	if (_vchan.at(i) == chan_name)
+	// 		return (true);
+	// }
 	return false;
 }
 
 void	User::remove_chan(Channel * channel){
+	(void)channel;
 	std::vector<Channel *>::iterator it;
 	
 	for (it = _vchan.begin(); it != _vchan.end(); it++){
-		if (*it == channel)
+		// if (*it == channel)
+		std::cout << "remove_chan channel  = " << (*it)->get_name() << std::endl;
+		if (it != _vchan.end()){
 			_vchan.erase(it);
+		std::cout << "COUCOU REMOVE CHAN" << std::endl;
+			return;
+		}
 	}
 }
 

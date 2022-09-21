@@ -35,19 +35,20 @@
 
 void ping(Cmd &command)
 {
-    std::cout << "ft_ping" << std::endl;
-    if (!command.get_value().size())
-        command._server->get_msg(ERR_NOORIGIN, NULL, command);
-    else if (command.get_value().size() == 1)
-    {
-        if (command.get_value()[0].compare(command._user->get_nick()) != 0)
-            command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]), NULL, command);
-        else
-        {
-            command._server->get_msg(command._user->get_hostname() + " PONG :" + command._user->get_nick(), NULL, command);
-            std::cout << "pong" << '\n';
-        }
-    }
+	std::cout << "ft_ping" << std::endl;
+	if (!command.get_value().size())
+		command._server->get_msg(ERR_NOORIGIN, NULL, command);
+	else if (command.get_value().size() == 1)
+	{
+		if (command.get_value()[0].compare(command._user->get_nick()) != 0)
+			// command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]), NULL, command);
+			command._server->send_msg(402, "", command._user, command);
+		else
+		{
+			command._server->get_msg(command._user->get_hostname() + " PONG :" + command._user->get_nick(), NULL, command);
+			std::cout << "pong" << std::endl;
+		}
+	}
 }
 
 // Command: PONG
@@ -61,40 +62,8 @@ void ping(Cmd &command)
 //    Numeric Replies:
 
 //            ERR_NOORIGIN                  ERR_NOSUCHSERVER
-
+// 	  username!nickname@host PONG :nickname
 //    Example:
 
 //    PONG csd.bu.edu tolsun.oulu.fi  ; PONG message from csd.bu.edu to
 //                                    tolsun.oulu.fi
-
-void pong(Cmd & command)
-{
-	if (!command.get_value().size())
-		command._server->get_msg(ERR_NOORIGIN, NULL, command);
-	else if (command.get_value().size() > 2)
-        return ;
-		else if (command.get_value().size() == 1)
-		{
-		if (command.get_value()[0] != SERVER)
-		{
-			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]), NULL, command);
-		}
-		else
-		{
-			
-			std::cout << "fish" << '\n';
-		}
-	}else if (command.get_value().size() == 2)
-	{
-        // std::cout << "bla" << '\n';
-		std::map< std::string, User * >::iterator it;
-		
-		if (command.get_value()[1] != SERVER){
-			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[1]), NULL, command);
-        // fct qui send pong msg to server (arg2) par le user (arg1)
-		// donc identifier arg1 (trouver le user dans la map du server?)
-		//  et verifier que arg2 == SERVER
-		// puis send pong msg to server
-    	}
-	}
-}

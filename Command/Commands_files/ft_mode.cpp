@@ -1,14 +1,14 @@
 #include "../Cmd.hpp"
 
-std::string	get_mode_string(Channel *chan, User *user, std::string arg, bool opt)
-{
-	std::string res;
+// IF MOD IS NEEDED FOR A COMMAND AND THE USER DON'T HAVE IT USE "ERR_CHANOPRIVSNEEDED"
 
-	if (chan)
-		res = chan->get_mod();
+std::string	get_user_mode_string(User *user, std::string arg)
+{
+	std::string res = "";
+
 	if (user)
 		res = user->get_mod();
-	if (opt == 1)
+	if (arg.find("+") != std::string::npos)
 	{
 		if (arg.find('i') != std::string::npos && res.find('i') == std::string::npos)
 			res = res.append("i");
@@ -19,8 +19,78 @@ std::string	get_mode_string(Channel *chan, User *user, std::string arg, bool opt
 		if (arg.find('s') != std::string::npos && res.find('s') == std::string::npos)
 			res = res.append("s");
 	}
-	else
+	else if (arg.find("-") != std::string::npos)
 	{
+		if (arg.find('i') != std::string::npos && res.find('i') != std::string::npos)
+			res = res.erase(res.find('i'), 1);
+		if (arg.find('w') != std::string::npos && res.find('w') != std::string::npos)
+			res = res.erase(res.find('w'), 1);
+		if (arg.find('o') != std::string::npos && res.find('o') != std::string::npos)
+			res = res.erase(res.find('o'), 1);
+		if (arg.find('O') != std::string::npos && res.find('O') != std::string::npos)
+			res = res.erase(res.find('O'), 1);
+		if (arg.find('s') != std::string::npos && res.find('s') != std::string::npos)
+			res = res.erase(res.find('s'), 1);
+	}
+	return (res);
+}
+
+std::string	get_chan_mode_string(Channel *chan, std::string arg, Cmd &command)
+{
+	std::string res = "";
+
+	if (chan)
+		res = chan->get_mod();
+	if (arg.find("+") != std::string::npos)
+	{
+		if (arg.find('k') != std::string::npos)
+		{
+			if (res.find('k') == std::string::npos)
+			{
+				if (command.get_size() == 3 && !command.get_value()[2].empty())
+				{
+					chan->set_key(command.get_value()[2]);
+					res += "k";
+				}
+			}
+			else
+				command._server->get_msg(ERR_KEYSET, NULL, command);
+		}
+		if (arg.find('l') != std::string::npos && res.find('l') == std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
+		{
+			if (command.get_size() == 3 && !command.get_value()[2].empty() && chan->get_key().compare(command.get_value()[2]) == 0)
+			{
+				chan->set_limit(4294967295);
+				res += "l";
+			}
+		}
+		if (arg.find('i') != std::string::npos && res.find('i') == std::string::npos)
+			res = res.append("i");
+		if (arg.find('w') != std::string::npos && res.find('w') == std::string::npos)
+			res = res.append("w");
+		if (arg.find('r') != std::string::npos && res.find('r') == std::string::npos)
+			res = res.append("r");
+		if (arg.find('s') != std::string::npos && res.find('s') == std::string::npos)
+			res = res.append("s");
+	}
+	else if (arg.find("-") != std::string::npos)
+	{
+		if (arg.find('k') != std::string::npos && res.find('k') != std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
+		{
+			if (command.get_size() == 3 && !command.get_value()[2].empty() && chan->get_key().compare(command.get_value()[2]) == 0)
+			{	
+				chan->set_key("");
+				res = res.erase(res.find('k'), 1);
+			}
+		}
+		if (arg.find('l') != std::string::npos && res.find('l') != std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
+		{
+			if (command.get_size() == 3 && !command.get_value()[2].empty() && chan->get_key().compare(command.get_value()[2]) == 0)
+			{
+				chan->set_limit(4294967295);
+				res = res.erase(res.find('l'), 1);
+			}
+		}
 		if (arg.find('i') != std::string::npos && res.find('i') != std::string::npos)
 			res = res.erase(res.find('i'), 1);
 		if (arg.find('w') != std::string::npos && res.find('w') != std::string::npos)
@@ -76,16 +146,7 @@ void		mode_user(Cmd &command)
 		{
 			if (!check_mode_string(command, "-+aiwroOs"))
 				return ;
-			if (command.get_value()[1].find("+") != std::string::npos)
-			{
-				std::cout << "+ opt" << std::endl;
-        		command._user->set_mod(get_mode_string(NULL, command._user, command.get_value()[1], 1));
-			}
-			else if (command.get_value()[1].find("-") != std::string::npos)
-			{
-				std::cout << "- opt" << std::endl;
-				command._user->set_mod(get_mode_string(NULL, command._user, command.get_value()[1], 0));
-			}
+        	command._user->set_mod(get_user_mode_string(command._user, command.get_value()[1]));
 		}
 	}
 	else
@@ -97,7 +158,7 @@ void		mode_user(Cmd &command)
 
 void		mode_chan(Cmd &command)
 {
-	Channel *chan = command._user->get_channel(command.get_value()[0]);
+	Channel		*chan = command._user->get_channel(command.get_value()[0]);
 
 	if (chan)
 	{
@@ -112,16 +173,7 @@ void		mode_chan(Cmd &command)
 		{
 			if (!check_mode_string(command, "-+OovaimnqpsrtklbeI"))
 				return ;
-			if (command.get_value()[1].find("+") != std::string::npos)
-			{
-				std::cout << "+ opt" << std::endl;
-        		chan->set_mod(get_mode_string(chan, NULL, command.get_value()[1], 1));
-			}
-			else if (command.get_value()[1].find("-") != std::string::npos)
-			{
-				std::cout << "- opt" << std::endl;
-				chan->set_mod(get_mode_string(chan, NULL, command.get_value()[1], 0));
-			}
+			chan->set_mod(get_chan_mode_string(chan, command.get_value()[1], command));
 		}
 	}
 	else
@@ -134,7 +186,7 @@ void		mode_chan(Cmd &command)
 void		mode(Cmd &command)
 {
 	std::cout << "ft_mode start" << std::endl;
-	if (command.get_size() == 1 || command.get_size() == 2)
+	if (command.get_size() >= 1)
 	{
 		if (command.get_value()[0][0] == '#')
 		{
@@ -149,7 +201,7 @@ void		mode(Cmd &command)
 	}
 	else
 	{
-		std::cout << "wrong number of arguments" << std::endl;
+		std::cout << "err need more params" << std::endl;
 		command._server->get_msg(ERR_NEEDMOREPARAMS(), NULL, command);
 	}
 }

@@ -35,6 +35,7 @@ bool Channel::operator==(const Channel & ch_cp)
 
 std::string					Channel::get_name() const
 {
+	// std::cout << "_name chan = " << _name << std::endl;
 	return (_name);
 }
 
@@ -63,12 +64,25 @@ User						*Channel::get_user(int key)
 	return (it->second);
 }
 
-std::string		Channel::get_topic() const{
+std::string		Channel::get_topic() const
+{
 	return (_topic);
 }
 
+std::string		Channel::get_key() const
+{
+	return (_key);
+}
+
+unsigned int	Channel::get_limit() const
+{
+	return (_limit);
+}
+
+
 void			Channel::set_name(std::string name)
 {
+	// std::cout << "set name chan : " << _name << std::endl;
 	_name = name;
 }
 
@@ -81,14 +95,14 @@ bool			Channel::set_user(User *user)
 {
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
-std::cout << "COUCOU SET USER DANS CHAN" << std::endl;
+// std::cout << "COUCOU SET USER DANS CHAN" << std::endl;
 
 // imprimer pour voir ce qui est ou
 	p = _users.insert(std::make_pair(user->get_sfd(), user));
-	std::cout << "fd " << user->get_sfd() << " p second " << p.second  << std::endl;
-	for (std::map< int, User *>::iterator it = _users.begin(); it != _users.end(); it++){
-		std::cout << " _users " << it->second << std::endl;
-	}
+	// std::cout << "fd " << user->get_sfd() << " p second " << p.second  << std::endl;
+	// for (std::map< int, User *>::iterator it = _users.begin(); it != _users.end(); it++){
+	// 	std::cout << " _users " << it->second << std::endl;
+	// }
 	return (p.second);
 }
 
@@ -115,6 +129,16 @@ void			Channel::set_channel(std::string name)
 void			Channel::set_topic(std::string topic)
 {
 	_topic = topic;
+}
+
+void			Channel::set_key(std::string key)
+{
+	_key = key;
+}
+
+void			Channel::set_limit(unsigned int limit)
+{
+	_limit = limit;
 }
 
 void			Channel::print(void)

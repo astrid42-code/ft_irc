@@ -6,7 +6,7 @@
 #    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/09/14 11:33:34 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/09/21 11:58:00 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRCS		=	main.cpp									\
 				Command/Commands_files/ft_user.cpp			\
 				Command/Commands_files/ft_ping.cpp			\
 				Command/Commands_files/ft_mode.cpp			\
-				Channel/Channel.cpp
+				Channel/Channel.cpp							
+#send_msg.cpp
+	
 
 INC			=	Server User Command Channel
 
