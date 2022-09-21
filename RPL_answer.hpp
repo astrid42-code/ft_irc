@@ -40,7 +40,7 @@
 
 #define RPL_WHOISOPERATOR(nick) (nick + " :is an IRC operator\r\n") // 313
 
-#define RPL_ENDOFWHO(name) (name + " :End of WHO list\r\n") // mode_params315
+#define RPL_ENDOFWHO(name) (name + " :End of WHO list\r\n") // mode_params 315
 	// + envoyer nick (?) du user en arg
 // - The RPL_WHOREPLY and RPL_ENDOFWHO pair are used to answer a WHO message.  The RPL_WHOREPLY is only
 // sent if there is an appropriate match to the WHO query.  If there is a list of parameters supplied
@@ -92,19 +92,19 @@
 // #define RPL_WHOREPLY(channel, user, host, nick, hopcount, name) (channel + " " + user + " " + host + " " + SERVER + " " + nick + "( "H" / "G" > ["*"] [ ( "@" / "+" ) ]) : " + hopcount + " " + name + "\r\n") // 352
 	// envoyer les args
 
-// #define RPL_NAMREPLY(channel, nick) ("( "=" / "*" / "@" )" + channel + " :[ "@" / "+" ] " + nick + " *( " " [ "@" / "+" ] " + nick + "\r\n") // 353
+#define RPL_NAMREPLY(channel) (" = " + channel + " :") // 353
 	// + envoyer channel et nick du user en arg
 //  - "@" is used for secret channels, "*" for private
 //    channels, and "=" for others (public channels).
 
-#define RPL_ENDOFNAMES(channel) (channel + " 366 :End of NAMES list\r\n") // 366
+#define RPL_ENDOFNAMES(channel) (" " + channel + " :End of NAMES list\r\n") // 366
 	// + envoyer channel en arg
 // To reply to a NAMES message, a reply pair consisting
 //            of RPL_NAMREPLY and RPL_ENDOFNAMES is sent by the
 //            server back to the client.  If there is no channel
 //            found as in the query, then only RPL_ENDOFNAMES is
 
-#define RPL_MOTDSTART(text) (SERVER " :Message of the day - " + text + "\r\n") // 375
+#define RPL_MOTDSTART(text) (" :DTA server Message of the day - " + text + "\r\n") // 375
 
 #define RPL_MOTD (":-\n" + text)
 

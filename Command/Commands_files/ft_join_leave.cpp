@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/20 19:08:23 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:41:57 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void join(Cmd &command){
 	// (void)command;
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
+		// command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
+		command._server->send_msg(461, "", command._user, command);
 	 // if (command._user->isonchan(chan_name) == 0)
         // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
 	Channel *newOne = NULL;
@@ -101,9 +102,10 @@ void join(Cmd &command){
 	command._server->set_user_in_chan(command._user, newOne);
 	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
 	
-	command._server->get_msg("RPL_NAMREPLY", command._user, command);
-	command._server->get_msg("RPL_ENDOFNAMES", command._user, command);
-
+	// command._server->get_msg("RPL_NAMREPLY", command._user, command);
+	// command._server->get_msg("RPL_ENDOFNAMES", command._user, command);
+	command._server->send_msg(353, "", command._user, command);
+	command._server->send_msg(366, "", command._user, command);
 
 	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules

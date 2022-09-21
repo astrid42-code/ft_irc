@@ -41,7 +41,8 @@ void ping(Cmd &command)
 	else if (command.get_value().size() == 1)
 	{
 		if (command.get_value()[0].compare(command._user->get_nick()) != 0)
-			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]), NULL, command);
+			// command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]), NULL, command);
+			command._server->send_msg(402, "", command._user, command);
 		else
 		{
 			command._server->get_msg(command._user->get_hostname() + " PONG :" + command._user->get_nick(), NULL, command);

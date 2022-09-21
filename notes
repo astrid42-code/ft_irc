@@ -142,3 +142,16 @@ fct appelee par res.append(ft_rpl(int))
 ou
 
 map avec int en key et msg d'erreur avec ou sans arguments
+
+
+msgs a l'ouverture d'un channel
+15:31 [Users #dodo]
+15:31 [@kakou] 
+15:31 -!- Irssi: #dodo: Total of 1 nicks [1 ops, 0 halfops, 0 voices, 0 normal]
+15:31 -!- kakou [asgaulti@62.210.32.226] has joined #dodo
+
++
+ [15:32] [@kakou] [2:shibrc/#dodo(+n)] [Act: 1]
+
+a la fermeture :
+End of /WHO list

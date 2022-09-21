@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 14:20:42 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 16:13:40 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,11 +244,30 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 		case 4:
 				res.append(RPL_MYINFO(user->get_mod(), "0"));
 				break;
+		case 353:
+				// std::cout << "RPL_NOREPLY " << cmd.get_value()[0] << std::endl;
+				res.append(RPL_NAMREPLY(cmd.get_value()[0]));
+				break;
+		case 366:
+				res.append(RPL_ENDOFNAMES(cmd.get_value()[0]));
+				break;
 		case 375:
 				res.append(RPL_MOTDSTART(arg));
 				break;
 		case 376:
 				res.append(RPL_ENDOFMOTD);
+				break;
+		case 402:
+				res.append(ERR_NOSUCHSERVER(cmd.get_value()[0]));
+				break;
+		case 403:
+				res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
+				break;
+		case 442:
+				res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
+				break;
+		case 461:
+				res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
 				break;
 		default:
 				break;
@@ -263,91 +282,30 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 // std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
 {
+	(void)user;
 	std::string	res = ":";
 	std::string arg;
 
-	// res.append("1024 "); // nom du hostname?
 
-	if (msg.compare("RPL_WELCOME") == 0)
-	{
-		// res.append(" 001 ");
-		// res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
-	}
-	if (msg.compare("RPL_YOURHOST") == 0)
-	{
-		// res.append("002 ");
-		res.append(RPL_YOURHOST);
-	}
-	if (msg.compare("RPL_CREATED") == 0)
-	{
-		// res.append("003 ");
-		res.append(RPL_CREATED);
-	}
-	if (msg.compare("RPL_MYINFO") == 0)
-	{
-		// res.append("004 ");
-		res.append(RPL_MYINFO(user->get_mod(), "0"));
-	}
-	if (msg.compare("RPL_MOTD") == 0){
-		// res.append("375 ");
-		res.append(RPL_MOTDSTART(arg));
-		
-		arg = "\n\
-dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
-HHP%%#%%%%%%%%%%%%%%%%#%%%%%%%#%%VHH \n\
-HH%%%%%%%%%%#%v~~~~~~\\%%%#%%%%%%%%HH \n\
-HH%%%%%#%%%%v'        ~~~~\\%%%%%#%HH \n\
-HH%%#%%%%%%v'dHHb      a%%%#%%%%%%HH \n\
-HH%%%%%#%%v'dHHHA     :%%%%%%#%%%%HH \n\
-HH%%%#%%%v' VHHHHaadHHb:%#%%%%%%%%HH \n\
-HH%%%%%#v'   `VHHHHHHHHb:%%%%%#%%%HH \n\
-HH%#%%%v'      `VHHHHHHH:%%%#%%#%%HH \n\
-HH%%%%%'        dHHHHHHH:%%#%%%%%%HH \n\
-HH%%#%%        dHHHHHHHH:%%%%%%#%%HH \n\
-HH%%%%%       dHHHHHHHHH:%%#%%%%%%HH \n\
-HH#%%%%       VHHHHHHHHH:%%%%%#%%%HH \n\
-HH%%%%#   b    HHHHHHHHV:%%%#%%%%#HH \n\
-HH%%%%%   Hb   HHHHHHHV'%%%%%%%%%%HH \n\
-HH%%#%%   HH  dHHHHHHV'%%%#%%%%%%%HH \n\
-HH%#%%%   VHbdHHHHHHV'#%%%%%%%%#%%HH \n\
-HHb%%#%    VHHHHHHHV'%%%%%#%%#%%%%HH \n\
-HHHHHHHb    VHHHHHHH:%odHHHHHHbo%dHH \n\
-HHHHHHHHboodboooooodHHHHHHHHHHHHHHHH \n\
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
-VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n"; 
-		// res.append(RPL_MOTD(arg));
-		// res.append("376 ");
-		res.append(RPL_ENDOFMOTD);
-	}
-	if (msg.compare("ERR_NEEDMOREPARAMS") == 0)
-	{
-		res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
-	}
-	if (msg.compare("ERR_NOSUCHCHANNEL") == 0)
-	{
-		// std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
-		res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
-	}
-	if (msg.compare("ERR_NOTONCHANNEL") == 0)
-	{
-		res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
-	}
+	// if (msg.compare("ERR_NEEDMOREPARAMS") == 0)
+	// {
+	// 	res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
+	// }
+	// if (msg.compare("ERR_NOSUCHCHANNEL") == 0)
+	// {
+	// 	// std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
+	// 	res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
+	// }
+	// if (msg.compare("ERR_NOTONCHANNEL") == 0)
+	// {
+	// 	res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
+	// }
 	if (msg.find("PONG :") != std::string::npos)
 	{
 		res.append(msg + "\n\r");
 		std::cout << res << std::endl;
 	}
-	// :tamigore!tamigore@62.210.32.226 PONG :tamigore
-	// :tamigore!tamigore@localhost PONG :tamigore
-	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
-	//std::cout << "OUAI : " << res << std::endl;
-	// effacer le contenu du vector _value
-	// for (int i = 1; i < cmd.get_size(); i++)
-	// 	cmd.get_value()[i].clear();
 
-	// if (msg = les msgs 001 002 ou 003)
-	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
 	std::cout << "get msg : |" << res << "|" << std::endl;
 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
 	return (res);
