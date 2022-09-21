@@ -43,11 +43,46 @@
 //    LIST #twilight_zone,#42         ; Command to list channels
 //                                    #twilight_zone and #42
 
-void list(Cmd &command){
-    (void)command;
-    std::cout << "list test" << '\n';
-    // tant que la liste de channels (separes par une ,) n est pas finie
-    // verifier si le channel existe dans la map de channels (et si arg[1] rajouter le topic associe)
-    
-    
+void list(Cmd &command)
+{
+	std::cout << "list test" << std::endl;
+	if (command.get_size() == 0)
+	{
+		std::map<std::string, Channel *> chan = command._server->get_chans();
+
+		for (std::map<std::string, Channel *>::iterator it = chan.begin(); it != chan.end(); it++)
+		{
+			if (it->second->get_mod().find('s') == std::string::npos && it->second->get_mod().find('p') == std::string::npos)
+				command._server->get_msg(RPL_LIST(it->first, it->second->get_mod(), it->second->get_topic()), NULL, command);
+		}
+		command._server->get_msg(RPL_LISTEND, NULL, command);
+	}
+	else
+	{
+		Channel 		*chan;
+		unsigned long	i = 0;
+		unsigned long	j;
+		std::string	tmp;
+
+		while (i < command.get_value()[0].size())
+		{
+			j = i;
+			i = command.get_value()[0].find(',', j);
+			if (i == std::string::npos)
+				i = command.get_value()[0].size();
+			tmp = command.get_value()[0].substr(j, i - j);
+			std::cout << "|" << tmp << "|" << std::endl;
+			if ((chan = command._server->get_chan(tmp)) != NULL)
+			{
+				if (chan->get_mod().find('s') == std::string::npos && chan->get_mod().find('p') == std::string::npos)
+					command._server->get_msg(RPL_LIST(chan->get_key(), chan->get_mod(), chan->get_topic()), NULL, command);
+			}
+			else
+				command._server->get_msg(ERR_NOSUCHSERVER(tmp), NULL, command);
+			
+		}
+		command._server->get_msg(RPL_LISTEND, NULL, command);
+	}
+	// tant que la liste de channels (separes par une ,) n est pas finie
+	// verifier si le channel existe dans la map de channels (et si arg[1] rajouter le topic associe)
 }

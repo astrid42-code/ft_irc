@@ -31,11 +31,9 @@
 //                                    syrk has quit IRC to have lunch.
 
 
-void quit(Cmd &command){
-    (void)command;
-    std::cout << "quit test" << '\n';
-    // std::cout << "quit msg " << command.get_value()[0] << std::endl;
-
-    
+void quit(Cmd &command)
+{
+    std::cout << "quit test" << std::endl;
+    std::cout << "quit msg " << command.get_value()[0] << std::endl;
     // command._server->get_msg(command.get_value()[0], command._user, command);
 }

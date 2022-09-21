@@ -123,6 +123,11 @@ Channel	*User::get_channel(std::string name)
 	return (NULL);
 }
 
+std::vector<Channel *> User::get_chans() const
+{
+	return (_vchan);
+}
+
 std::string	User::get_hostname() const
 {
 	return (_user + "!" + _nick + "@" + _host);
@@ -275,10 +280,12 @@ bool	User::isOnChan(std::string chan_name){
 	return false;
 }
 
-void	User::remove_chan(Channel * channel){
+void	User::remove_chan(Channel * channel)
+{
 	std::vector<Channel *>::iterator it;
 	
-	for (it = _vchan.begin(); it != _vchan.end(); it++){
+	for (it = _vchan.begin(); it != _vchan.end(); it++)
+	{
 		if (*it == channel)
 			_vchan.erase(it);
 	}

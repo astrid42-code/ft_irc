@@ -63,6 +63,18 @@ User						*Channel::get_user(int key)
 	return (it->second);
 }
 
+User						*Channel::get_user(std::string nick)
+{
+	std::map<int, User *>::iterator it;
+	
+	for (it = _users.begin(); it != _users.end(); it++)
+	{
+		if (it->second->get_nick().compare(nick) == 0)
+			return (it->second);
+	}
+	return (NULL);
+}
+
 std::string		Channel::get_topic() const
 {
 	return (_topic);

@@ -364,7 +364,7 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 }
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
-int Server::init()
+int	Server::init()
 {
 	int sfd, s;
 	int efd;
@@ -499,29 +499,31 @@ int Server::init()
 }
 
 // recuperer la data du User
-Channel *Server::get_chan(std::string key)
+Channel	*Server::get_chan(std::string key)
 {
 	std::map<std::string, Channel *>::iterator it;
 	// for (it = _channels.begin(); it != _channels.end(); it++){
 	// 	std::cout << "it name " << it->second->get_name() << std::endl;
 	// }
-	std::cout << "start" << std::endl;
+	// std::cout << "start" << std::endl;
 	std::string tmp_key = "#";
 	tmp_key.append(key);
 	// std::cout << "tmp_key = " << tmp_key << std::endl;
-	it = _channels.find(key);
-	std::cout << "mid" << std::endl;
+	it = _channels.find(tmp_key);
+	// std::cout << "mid" << std::endl;
 	if (it == _channels.end())
 	{
 		std::cout << "NULL" << std::endl;
 		return (NULL);
 	}
-	std::cout << "end" << std::endl;
+	else
+		std::cout << key << std::endl;
+	// std::cout << "end" << std::endl;
 	return (it->second);
 }
 
 // insert user in map
-bool Server::set_chan(Channel *chan)
+bool	Server::set_chan(Channel *chan)
 {
 	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
 
@@ -532,13 +534,18 @@ bool Server::set_chan(Channel *chan)
 // set le channel dans le serveur (la fct set_channel de Channel est inutilisee donc)
 
 
-std::map<int, User *> Server::get_users(void)
+std::map<int, User *>	Server::get_users(void) const
 {
 	return (_users);
 }
 
+std::map<std::string, Channel *>	Server::get_chans(void) const
+{
+	return (_channels);
+}
+
 // recuperer la data du User
-User *Server::get_user(int key)
+User	*Server::get_user(int key)
 {
 	std::map<int, User *>::iterator it;
 
@@ -548,13 +555,13 @@ User *Server::get_user(int key)
 	return (it->second);
 }
 
-User *Server::get_user(std::string key)
+User	*Server::get_user(std::string nick)
 {
 	std::cout << "OUAI" << std::endl;
 	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
 	{
 		std::cout << "get_user boucle" << std::endl;
-		if (it->second->get_nick() == key)
+		if (it->second->get_nick() == nick)
 			return (it->second);
 	}
 	return (NULL);
@@ -562,7 +569,7 @@ User *Server::get_user(std::string key)
 
 
 // insert user in map
-bool Server::set_user(User *user)
+bool	Server::set_user(User *user)
 {
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
@@ -571,12 +578,13 @@ bool Server::set_user(User *user)
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 
-void	Server::set_user_in_chan(User *user, Channel *chan){
+void	Server::set_user_in_chan(User *user, Channel *chan)
+{
 	std::vector<Channel *>::iterator it;
 	
 	chan->set_user(user);
 	user->set_chan(*chan);
-	std::cout << "coucou2 user = " << chan->get_user(user->get_sfd()) << std::endl;
+	// std::cout << "coucou2 user = " << chan->get_user(user->get_sfd()) << std::endl;
 	// for (it = user->_vchan.begin(); it != user->_vchan.end(); it++)
 	// for (int i = 0; i < user->get_chan.size(); i++)
 	// {

@@ -55,9 +55,26 @@
 
 void kick(Cmd &command)
 {
-    // (void)command;
-    std::cout << "kick test" << '\n';  
-    if (command.get_value().size() < 2)
+	std::cout << "kick test" << '\n';  
+	if (command.get_value().size() < 2)
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
-    
+	if (command._user->get_mod().find("o") != std::string::npos)
+	{
+		Channel *chan;
+		if ((chan = command._server->get_chan(command.get_value()[0])) != NULL)
+		{
+			User *user;
+			if ((user = chan->get_user(command.get_value()[1])) != NULL)
+			{
+				std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
+				user->remove_chan(chan); // need to include comment into the kick message...
+			}
+			else
+				command._server->get_msg(ERR_USERNOTINCHANNEL(command.get_value()[1], command.get_value()[0]), NULL, command);
+		}
+		else
+			command._server->get_msg(ERR_NOSUCHCHANNEL(command.get_value()[0]), NULL, command);
+	}
+	else
+		command._server->get_msg(ERR_CHANOPRIVSNEEDED(command.get_value()[0]), NULL, command);
 }

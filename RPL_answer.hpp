@@ -91,7 +91,7 @@
 // #define RPL_WHOREPLY(channel, user, host, nick, hopcount, name) (channel + " " + user + " " + host + " " + SERVER + " " + nick + "( "H" / "G" > ["*"] [ ( "@" / "+" ) ]) : " + hopcount + " " + name + "\r\n") // 352
 	// envoyer les args
 
-#define RPL_NAMREPLY(channel, nick) ("( "=" / "*" / "@" )" + channel + " :[ "@" / "+" ] " + nick + " *( " " [ "@" / "+" ] " + nick + "\r\n") // 353
+#define RPL_NAMREPLY(channel, nick) ("=" + channel + " : " + nick + "\r\n") // 353
 	// + envoyer channel et nick du user en arg
 //  - "@" is used for secret channels, "*" for private
 //    channels, and "=" for others (public channels).

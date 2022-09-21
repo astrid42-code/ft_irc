@@ -24,6 +24,7 @@ class Channel
 		std::string						get_mod() const;
 		std::map<int, User *>			get_users() const;
 		User 							*get_user(int key);
+		User 							*get_user(std::string nick);
 		std::string						get_topic() const;
 		std::string						get_key() const;
 		unsigned int					get_limit() const;

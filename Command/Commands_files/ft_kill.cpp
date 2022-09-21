@@ -12,7 +12,6 @@
 
 #include "../Cmd.hpp"
 
-
 // Command: KILL
 //    Parameters: <nickname> <comment>
 
@@ -56,7 +55,6 @@
 //            ERR_NOPRIVILEGES              ERR_NEEDMOREPARAMS
 //            ERR_NOSUCHNICK                ERR_CANTKILLSERVER
 
-
 // NOTE:
 //    It is RECOMMENDED that only Operators be allowed to kill other users
 //    with KILL command.  This command has been the subject of many
@@ -64,11 +62,23 @@
 //    recommendation, it is also widely recognized that not even operators
 //    should be allowed to kill users on remote servers.
 
-
-
-
-
-void kill(Cmd &command){
-    (void)command;
-    std::cout << "kill test" << '\n';
+void kill(Cmd &command)
+{
+    std::cout << "ft_kill" << std::endl;
+    if (command.get_size() == 2)
+    {
+        if (command._user->get_mod().find("o") != std::string::npos)
+        {
+            if (command._server->get_user(command.get_value()[0]) != NULL)
+            {
+                std::cout << "kill the user " << command.get_value()[0] << " with comment :" << command.get_value()[1] << std::endl;
+            }
+            else
+                command._server->get_msg(ERR_NOSUCHNICK(command.get_value()[0]), NULL, command);
+        }
+        else
+            command._server->get_msg(ERR_NOPRIVILEGES, NULL, command);
+    }
+    else
+        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL, command);
 }

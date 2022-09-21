@@ -18,7 +18,7 @@
 
 //    The PASS command is used to set a 'connection password'.  The
 //    optional password can and MUST be set before any attempt to register
-//    the connection is made.  Currently this requires that user send a
+//    the connection is made. Currently this requires that user send a
 //    PASS command before sending the NICK/USER combination.
 
 //    Numeric Replies:
@@ -30,14 +30,17 @@
 //            PASS secretpasswordhere
 
 
-void pass(Cmd &command){
-    std::cout << "pass test " << command.get_key() << '\n';
-    if (command.get_value().size() != 1){
-        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
-        return;
-    }
-    if (command.get_value()[0] == command._user->get_name()){// value[0] etant le login (get_name())
+void pass(Cmd &command)
+{
+	std::cout << "pass test " << command.get_key() << std::endl;
+	if (command.get_value().size() != 1)
+	{
+		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
+		return;
+	}
+	if (command.get_value()[0] == command._user->get_name())
+	{// value[0] etant le login (get_name())
 		command._server->get_msg(ERR_ALREADYREGISTRED, NULL, command);
 	}
-        return;
+		return;
 }

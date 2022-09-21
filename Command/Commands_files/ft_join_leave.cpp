@@ -78,11 +78,19 @@
 //    :WiZ!jto@tolsun.oulu.fi JOIN #Twilight_zone ; JOIN message from WiZ
 //                                    on channel #Twilight_zone
 
-void join(Cmd &command){
-	// (void)command;
-	std::cout << "_______________________entree dans Join ______________" << std::endl;
+void join(Cmd &command)
+{
+	std::cout << "______________ In Join ______________" << std::endl;
 	if (!command.get_value().size())
 		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
+	// if (command.get_value()[0][0] == '0') // leave all chans (not worth the truble cause irssi dont let you join a chan 0)
+	// {
+	// 	std::vector<Channel *> tmp = command._user->get_chans();
+
+	// 	for (std::vector<Channel *>::iterator it = tmp.begin(); it != tmp.end(); it++)
+	// 		tmp.erase(it);
+	// 	return ;
+	// }
 	 // if (command._user->isonchan(chan_name) == 0)
         // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
 	Channel *newOne = NULL;
@@ -95,8 +103,15 @@ void join(Cmd &command){
 		newOne = new Channel(command.get_value()[0]);
 		command._server->set_chan(newOne);
 		std::cout << "NEW CHAN : |" << newOne->get_name() << "|" << std::endl;
+		command._server->set_user_in_chan(command._user, newOne);
+		command._user->set_mod(command._user->get_mod() + "o");
 	}
-	command._server->set_user_in_chan(command._user, newOne);
+	else //for mode 'i' in chan you need a correct hostname to get into the chan or get invited by an op
+	{
+		// if (newOne->get_mod().find("i") != std::string::npos && command._user->get_hostname().find(""))
+		// 	command._server->set_user_in_chan(command._user, newOne);
+		command._server->set_user_in_chan(command._user, newOne);
+	}
 	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
 	 // newone ou string correspondant au nom du chan : command.get_value()[0]
 	//command._user->set_chan(*newOne);
@@ -143,7 +158,8 @@ void part(Cmd &command)
 {
 	std::cout << "part test" << std::endl;
 	// std::cout << "size " << command.get_value().size() << std::endl;
-	if (command.get_value().size() < 2){
+	if (command.get_value().size() < 2)
+	{
 		command._server->get_msg("ERR_NEEDMOREPARAMS", command._user,command);
 		return;
 	}
@@ -160,7 +176,8 @@ void part(Cmd &command)
 		// std::cout << "coucou4 user = " << chan->get_user(command._user->get_sfd()) << std::endl;
 		// std::cout << chan->get_name() << std::endl;
 		// std::cout << "chan name part " << std::endl;
-	if (chan == NULL){
+	if (chan == NULL)
+	{
 		std::cout << "chan null" << std::endl;
 		command._server->get_msg("ERR_NOSUCHCHANNEL", command._user, command);
 		// return;
@@ -176,9 +193,8 @@ void part(Cmd &command)
 	tmp.append(command.get_value()[1]);
 	if (command._user->isOnChan(tmp))
 		command._user->remove_chan(chan);
-	else{
+	else
 		command._server->get_msg("ERR_NOTONCHANNEL", command._user, command);
-	}
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?
 

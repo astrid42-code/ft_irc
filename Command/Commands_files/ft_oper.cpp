@@ -33,7 +33,11 @@
 //                                    as the password.
 
 
-void oper(Cmd &command){
-    (void)command;
-    std::cout << "oper test" << '\n';
+void oper(Cmd &command)
+{
+    std::cout << "oper test" << std::endl;
+    if (command.get_size() == 2)
+    {
+        std::cout << "|" << command.get_value()[0] << "| |" << command.get_value()[0] << "|" << std::endl;
+    }
 }

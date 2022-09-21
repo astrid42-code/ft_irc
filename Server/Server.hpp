@@ -28,22 +28,23 @@ class Server
 
 		Server					&operator=(const Server &serv_cp);
 
-		std::string				get_port() const;
-		std::string				get_pwd() const;
-		bool					set_pp(std::string port, std::string pwd); // parse et set le port et le pwd
-		void					onCmdReceived(std::string cmd);
-		void					onConnection(Channel chan);
-		void					onMessageReceived(Channel chan, User usr);
-		void					onDeconnection(Channel chan);
-		int						init();
-		Channel					*get_chan(std::string key);
-		bool					set_chan(Channel *chan);
-		User					*get_user(int key);
-		User					*get_user(std::string key);
-		std::map<int, User *>	get_users(void);
-		std::string				get_ip();
-		void 					set_ip(std::string ip);
-		bool					set_user(User *user);
+		std::string							get_port() const;
+		std::string							get_pwd() const;
+		bool								set_pp(std::string port, std::string pwd); // parse et set le port et le pwd
+		void								onCmdReceived(std::string cmd);
+		void								onConnection(Channel chan);
+		void								onMessageReceived(Channel chan, User usr);
+		void								onDeconnection(Channel chan);
+		int									init();
+		Channel								*get_chan(std::string key);
+		std::map<std::string, Channel *>	get_chans() const;
+		bool								set_chan(Channel *chan);
+		User								*get_user(int key);
+		User								*get_user(std::string nick);
+		std::map<int, User *>				get_users(void) const;
+		std::string							get_ip();
+		void 								set_ip(std::string ip);
+		bool								set_user(User *user);
 
 		std::locale				loc;
 

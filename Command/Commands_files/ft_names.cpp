@@ -48,7 +48,26 @@
 //    NAMES                           ; Command to list all visible
 //                                    channels and users
 
-void names(Cmd &command){
-    (void)command;
-    std::cout << "name test" << '\n';
+void names(Cmd &command)
+{
+	std::cout << "name test" << std::endl;
+	if (command.get_size() == 1)
+	{
+		Channel *chan;
+
+		if ((chan = command._server->get_chan(command.get_value()[0])) != NULL)
+		{
+			std::map<int, User *> users;
+
+			users = chan->get_users();
+			for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
+			{
+				if (it->second->get_mod().find("i") == std::string::npos)
+					command._server->get_msg(RPL_NAMREPLY(chan->get_key(), it->second->get_nick()), NULL, command);
+			}
+			command._server->get_msg(RPL_ENDOFNAMES(chan->get_key()), NULL, command);
+		}
+		else
+			command._server->get_msg(ERR_NOSUCHSERVER(), NULL, command);
+	}
 }

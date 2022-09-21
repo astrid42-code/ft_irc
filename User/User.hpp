@@ -24,15 +24,17 @@ class User
 		User			&operator=(const User & user_cp);
 		bool			operator==(const User & user_cp);
 
-		std::string 	get_user() const;
-		std::string		get_name() const;
-		std::string 	get_nick() const;
-		std::string		get_host() const;
-		int				get_sfd() const;
-		std::string 	get_pwd() const;
-		std::string		get_mod() const; // only fill with 'aiwroOs'
-		int				get_operator() const; // 0 for no access 1 for operator
-		std::string		get_hostname() const;
+		std::string 			get_user() const;
+		std::string				get_name() const;
+		std::string 			get_nick() const;
+		std::string				get_host() const;
+		int						get_sfd() const;
+		std::string 			get_pwd() const;
+		std::string				get_mod() const; // only fill with 'aiwroOs'
+		int						get_operator() const; // 0 for no access 1 for operator
+		std::string				get_hostname() const;
+		Channel					*get_channel(std::string name);
+		std::vector<Channel *>	get_chans() const;
 		// std::string		get_chan(int i) const;
 		// int				get_vchan_size() const;
 
@@ -52,7 +54,6 @@ class User
 		void			print(void) const;
 
 		bool			isOnChan(std::string chan_name);
-		Channel			*get_channel(std::string name);
 
 		void			remove_chan(Channel * channel);
 

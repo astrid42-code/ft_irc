@@ -18,6 +18,8 @@ std::string	get_user_mode_string(User *user, std::string arg)
 			res = res.append("r");
 		if (arg.find('s') != std::string::npos && res.find('s') == std::string::npos)
 			res = res.append("s");
+		// if (arg.find('v') != std::string::npos && res.find('v') == std::string::npos)
+		// 	res = res.append("v");
 	}
 	else if (arg.find("-") != std::string::npos)
 	{
@@ -31,6 +33,8 @@ std::string	get_user_mode_string(User *user, std::string arg)
 			res = res.erase(res.find('O'), 1);
 		if (arg.find('s') != std::string::npos && res.find('s') != std::string::npos)
 			res = res.erase(res.find('s'), 1);
+		// if (arg.find('v') != std::string::npos && res.find('v') == std::string::npos)
+		// 	res = res.append("v");
 	}
 	return (res);
 }
@@ -58,20 +62,28 @@ std::string	get_chan_mode_string(Channel *chan, std::string arg, Cmd &command)
 		}
 		if (arg.find('l') != std::string::npos && res.find('l') == std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
 		{
-			if (command.get_size() == 3 && !command.get_value()[2].empty() && chan->get_key().compare(command.get_value()[2]) == 0)
+			if (command.get_size() == 3 && !command.get_value()[2].empty())
 			{
-				chan->set_limit(4294967295);
+				chan->set_limit(atol(command.get_value()[2].c_str()));
 				res += "l";
 			}
 		}
+		if (arg.find('a') != std::string::npos && res.find('a') == std::string::npos)
+			res = res.append("a");
 		if (arg.find('i') != std::string::npos && res.find('i') == std::string::npos)
 			res = res.append("i");
-		if (arg.find('w') != std::string::npos && res.find('w') == std::string::npos)
-			res = res.append("w");
-		if (arg.find('r') != std::string::npos && res.find('r') == std::string::npos)
-			res = res.append("r");
+		if (arg.find('m') != std::string::npos && res.find('m') == std::string::npos)
+			res = res.append("m");
+		if (arg.find('n') != std::string::npos && res.find('n') == std::string::npos)
+			res = res.append("n");
+		if (arg.find('q') != std::string::npos && res.find('q') == std::string::npos)
+			res = res.append("q");
 		if (arg.find('s') != std::string::npos && res.find('s') == std::string::npos)
 			res = res.append("s");
+		if (arg.find('r') != std::string::npos && res.find('r') == std::string::npos)
+			res = res.append("r");
+		if (arg.find('t') != std::string::npos && res.find('t') == std::string::npos)
+			res = res.append("t");
 	}
 	else if (arg.find("-") != std::string::npos)
 	{
@@ -91,16 +103,22 @@ std::string	get_chan_mode_string(Channel *chan, std::string arg, Cmd &command)
 				res = res.erase(res.find('l'), 1);
 			}
 		}
+		if (arg.find('a') != std::string::npos && res.find('a') != std::string::npos)
+			res = res.append("a");
 		if (arg.find('i') != std::string::npos && res.find('i') != std::string::npos)
-			res = res.erase(res.find('i'), 1);
-		if (arg.find('w') != std::string::npos && res.find('w') != std::string::npos)
-			res = res.erase(res.find('w'), 1);
-		if (arg.find('o') != std::string::npos && res.find('o') != std::string::npos)
-			res = res.erase(res.find('o'), 1);
-		if (arg.find('O') != std::string::npos && res.find('O') != std::string::npos)
-			res = res.erase(res.find('O'), 1);
+			res = res.append("i");
+		if (arg.find('m') != std::string::npos && res.find('m') != std::string::npos)
+			res = res.append("m");
+		if (arg.find('n') != std::string::npos && res.find('n') != std::string::npos)
+			res = res.append("n");
+		if (arg.find('q') != std::string::npos && res.find('q') != std::string::npos)
+			res = res.append("q");
 		if (arg.find('s') != std::string::npos && res.find('s') != std::string::npos)
-			res = res.erase(res.find('s'), 1);
+			res = res.append("s");
+		if (arg.find('r') != std::string::npos && res.find('r') != std::string::npos)
+			res = res.append("r");
+		if (arg.find('t') != std::string::npos && res.find('t') != std::string::npos)
+			res = res.append("t");
 	}
 	return (res);
 }
