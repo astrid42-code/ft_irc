@@ -42,6 +42,12 @@ User::User(std::string nickname, int sdf)
 }
 
 
+
+User::User(int sdf)
+{
+	_sfd = sdf;
+}
+
 User::~User()
 {
 	// delete les differents users	
@@ -69,6 +75,11 @@ bool	User::operator==(const User & user_cp)
 		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
 		return (true);
 	return (false);
+}
+
+std::vector<Channel *> User::get_chans() const
+{
+    return (_vchan);
 }
 
 std::string User::get_user() const
@@ -111,7 +122,24 @@ int	User::get_operator() const
 	return (_operator);
 }
 
-// std::string		User::get_chan(int i) const{
+Channel	*User::get_channel(std::string name)
+{
+	std::vector<Channel *>::iterator it;
+
+	for (it = _vchan.begin(); it != _vchan.end(); it++)
+	{
+		if ((*it)->get_name().compare(name) == 0)
+			return (*it);
+	}
+	return (NULL);
+}
+
+std::string    User::get_hostname() const
+{
+    return (_user + "!" + _nick + "@" + _host);
+}
+// std::string		User::get_chan(int i) const
+// {
 // 	return (_vchan[i].get_name());
 // }
 
@@ -158,19 +186,19 @@ void	User::set_sfd(int sfd)
 
 void	User::set_mod(std::string mod)
 {
-	if (!_mod.find("a") && mod.find("a"))
+	if (_mod.find("a") == std::string::npos && mod.find("a") != std::string::npos)
 		_mod += "a";
-	else if (!_mod.find("i") && mod.find("i"))
+	else if (_mod.find("i") == std::string::npos && mod.find("i") != std::string::npos)
 		_mod += "i";
-	else if (!_mod.find("w") && mod.find("w"))
+	else if (_mod.find("w") == std::string::npos && mod.find("w") != std::string::npos)
 		_mod += "w";
-	else if (!_mod.find("r") && mod.find("r"))
+	else if (_mod.find("r") == std::string::npos && mod.find("r") != std::string::npos)
 		_mod += "r";
-	else if (!_mod.find("o") && mod.find("o"))
+	else if (_mod.find("o") == std::string::npos && mod.find("o") != std::string::npos)
 		_mod += "o";
-	else if (!_mod.find("O") && mod.find("O"))
+	else if (_mod.find("O") == std::string::npos && mod.find("O") != std::string::npos)
 		_mod += "O";
-	else if (!_mod.find("s") && mod.find("s"))
+	else if (_mod.find("s") == std::string::npos && mod.find("s") != std::string::npos)
 		_mod += "s";
 /*
 		a - user is flagged as away;
@@ -183,7 +211,8 @@ void	User::set_mod(std::string mod)
 */
 }
 
-void	User::set_chan(Channel &chan){
+void	User::set_chan(Channel &chan)
+{
 	std::vector<Channel *>::iterator it;
 	// std::cout << "coucou 1 set_chan user" << std::endl;
 	

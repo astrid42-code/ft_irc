@@ -112,43 +112,28 @@ void			Channel::set_channel(std::string name)
 	_name = name.substr(2, name.size());
 }
 
-void			Channel::set_topic(std::string topic){
+void			Channel::set_topic(std::string topic)
+{
 	_topic = topic;
 }
 
 void			Channel::print(void)
 {
-	std::map<int, User *>::iterator it = _users.begin();
-
-	std::cout << "name:" + _name << std::endl;
-	while (it != _users.end())
+	std::cout << "name :" + _name + "\nmode :" + _mod + "\nusers :" << std::endl;
+	if (!_users.empty())
 	{
-		it->second->print();
-		it++;
-	}
-}
-
-void	Channel::remove_user(User *user){
-	// (void)user;
-	std::map<int, User *>::iterator it;
-
-	std::cout << "remove_user sfd = " << user->get_sfd() << std::endl;
-	
-	// for (it = _users.begin(); it != _users.end(); it++){
-	// 	std::cout << it->second << std::endl;
-	// }
-
-		std::cout << "second null" << std::endl;
-	it = _users.find(user->get_sfd()); // lui envoyer la cle de la map de user (mai ou est-elle definie et recuperable?)
-	if (it->second == NULL){
-		return;
+		for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
+			it->second->print();
 	}
 	else
-		std::cout << "remove_user it = " << it->second << std::endl;
-	if (it != _users.end()){
-		delete it->second;
-		_users.erase(user->get_sfd()); // erase la key
-	}
+		std::cout << "users empty..." << std::endl; 
+}
+
+void	Channel::remove_user(User *user)
+{
+	// (void)user;
+	std::cout << "remove_user sfd = " << user->get_sfd() << std::endl;
+	_users.erase(user->get_sfd());
 }
 
 
