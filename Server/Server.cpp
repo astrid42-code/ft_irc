@@ -24,6 +24,14 @@
 // #define RPL_YOURHOST (":dasanter!dasanter@127.0.0.1 002 dasanter :Your host is 127.0.0.1, running version 1.69\r\n")	 // 002
 // #define RPL_CREATED (":dasanter!dasanter@127.0.0.1 003 dasanter :This server was created Mon Aug 5 16:57:33 2022\r\n") // 003
 // #define RPL_MYINFO (":dasanter!dasanter@127.0.0.1 004 dasanter :irc_dta 1.69 aio ovim\r\n")														 // 004
+
+
+/* TODO
+**
+// FAIRE recv() au lieu de read()
+**
+*/
+
 #define TRUE 1
 #define PORT 6668
 #define MAXEVENTS 64
@@ -317,14 +325,14 @@ static int make_socket_non_blocking(int sfd)
 	flags = fcntl(sfd, F_GETFL, 0);
 	if (flags == -1)
 	{
-		perror("fcntl");
+		std::cerr << "fcntl" << std::endl;
 		return -1;
 	}
 	flags |= O_NONBLOCK;
 	s = fcntl(sfd, F_SETFL, flags);
 	if (s == -1)
 	{
-		perror("fcntl");
+		std::cerr << "fcntl" << std::endl;
 		return -1;
 	}
 	return 0;
@@ -342,7 +350,7 @@ static int create_and_bind(std::string port)
 	s = getaddrinfo(NULL, port.c_str(), &hints, &result);
 	if (s != 0)
 	{
-		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+		std::cerr << "Error getaddrinfo" << std::endl;
 		return -1;
 	}
 	for (rp = result; rp != NULL; rp = rp->ai_next)
@@ -360,7 +368,7 @@ static int create_and_bind(std::string port)
 	}
 	if (rp == NULL)
 	{
-		fprintf(stderr, "Could not bind\n");
+		std::cerr << "Could not bind" << std::endl;
 		return -1;
 	}
 	freeaddrinfo(result);
@@ -421,29 +429,30 @@ int Server::init()
 
 	sfd = create_and_bind(_port.c_str());
 	if (sfd == -1)
-		abort();
+		exit(1);
 	s = make_socket_non_blocking(sfd);
 	if (s == -1)
-		abort();
+		return (-1);
 	s = listen(sfd, SOMAXCONN);
 	if (s == -1)
 	{
-		perror("listen");
-		abort();
+		std::cerr << "listen" << std::endl;
+		return (-1);
+
 	}
 	efd = epoll_create1(0);
 	if (efd == -1)
 	{
-		perror("epoll_create");
-		abort();
+		std::cerr << "epoll_create" << std::endl;
+		return (-1);
 	}
 	event.data.fd = sfd;
 	event.events = EPOLLIN | EPOLLET;
 	s = epoll_ctl(efd, EPOLL_CTL_ADD, sfd, &event);
 	if (s == -1)
 	{
-		perror("epoll_ctl");
-		abort();
+		std::cerr << "epoll_ctl" << std::endl;
+		return (-1);
 	}
 	/* Buffer where events are returned */
 	events = (epoll_event *)calloc(MAXEVENTS, sizeof(event));
@@ -458,7 +467,7 @@ int Server::init()
 			{
 				/* An error has occured on this fd, or the socket is not
 					 ready for reading (why were we notified then?) */
-				fprintf(stderr, "epoll error\n");
+				std::cerr << "epoll error" << std::endl;
 				close(events[i].data.fd);
 				continue;
 			}
@@ -484,7 +493,7 @@ int Server::init()
 						}
 						else
 						{
-							perror("accept");
+							std::cerr << "accept" << std::endl;
 							break;
 						}
 					}
@@ -492,19 +501,18 @@ int Server::init()
 					if (s == 0)
 					{
 						this->set_user(new User(infd));
-						printf("Accepted connection on descriptor %d (host=%s, port=%s)\n", infd, hbuf, sbuf);
-						printf("after connect\n");
+						std::cout << "Accepted connection on descriptor " << infd << "(host=" << hbuf << ", port=" << sbuf << ")" << std::endl;
 					}
 					s = make_socket_non_blocking(infd);
 					if (s == -1)
-						abort();
+						return (-1);
 					event.data.fd = infd;
 					event.events = EPOLLIN | EPOLLET;
 					s = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
 					if (s == -1)
 					{
-						perror("epoll_ctl");
-						abort();
+						std::cerr << "epoll_ctl" << std::endl;
+						return (-1);
 					}
 				}
 				continue;
@@ -517,12 +525,12 @@ int Server::init()
 					ssize_t count;
 					char buf[512];
 					bzero(buf, 512);
-					count = read(events[i].data.fd, buf, sizeof buf);
+					count = recv(events[i].data.fd, buf, sizeof(buf), MSG_DONTWAIT);
 					if (count == -1)
 					{
 						if (errno != EAGAIN)
 						{
-							perror("read");
+							std::cerr << "read" << std::endl;
 							done = 1;
 						}
 						break;
@@ -536,7 +544,7 @@ int Server::init()
 				}
 				if (done)
 				{
-					printf("Closed connection on descriptor %d\n", events[i].data.fd);
+					std::cout << "Closed connection on descriptor " << events[i].data.fd << std::endl;
 					close(events[i].data.fd);
 				}
 			}
