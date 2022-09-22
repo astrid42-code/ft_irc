@@ -38,7 +38,7 @@ class Channel
 		void							set_limit(unsigned int limit);
 		void							print(void);
 	
-		void							remove_user(User *user, Channel * chan);
+		void							remove_user(User *user);
 
 		void							send_to_users(std::string const &msg);
 

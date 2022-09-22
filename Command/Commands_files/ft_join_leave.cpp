@@ -154,7 +154,7 @@ void part(Cmd &command)
 {
 	std::cout << "part test" << std::endl;
 	// std::cout << "size " << command.get_value().size() << std::endl;
-	if (command.get_value().size() < 2){
+	if (command.get_value().size() < 1){
 		command._server->get_msg("ERR_NEEDMOREPARAMS", command._user,command);
 		return;
 	}
@@ -178,7 +178,7 @@ void part(Cmd &command)
 		return;
 	}
 	else{
-		chan->remove_user(command._user, chan);
+		chan->remove_user(command._user);
 	}
 
 	// if (command._server->get_chan(command.get_value()[0])->size() == 0)
@@ -187,14 +187,15 @@ void part(Cmd &command)
 	// std::string tmp = "#";
 	// tmp.append(command.get_value()[1]);
 	// > checker si le user est dans le channel avant de le sortir
-	// if (command._user->get_channel(command.get_value()[0])){
-	// 	// std::cout << "OUI CA MARCHE" << std::endl;
-	// 	command._user->remove_chan(chan);
-	// }
-	
-	// else{
-	// 	command._server->get_msg("ERR_NOTONCHANNEL", command._user, command);
-	// }
+	std::cout << "command.get_value()[0] :" << command.get_value()[0] << std::endl;
+	if (command._user->isOnChan(command.get_value()[0]))
+	{
+		std::cout << "IL EST SUR LE CHAN " << std::endl;
+		//command._user->remove_chan(chan);
+	}
+	else{
+	//	command._server->get_msg("ERR_NOTONCHANNEL", NULL, command);
+	}
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?
 

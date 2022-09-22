@@ -153,35 +153,11 @@ void			Channel::print(void)
 		std::cout << "users empty..." << std::endl; 
 }
 
-void	Channel::remove_user(User *user, Channel *chan)
+void	Channel::remove_user(User *user)
 {
 	// (void)user;
-	std::map<int, User *>::iterator it;
-
 	std::cout << "remove_user sfd = " << user->get_sfd() << std::endl;
-	
-	// for (it = _users.begin(); it != _users.end(); it++){
-	// 	std::cout << it->second << std::endl;
-	// }
-
-		std::cout << "second null" << std::endl;
-	it = _users.find(user->get_sfd()); // lui envoyer la cle de la map de user (mai ou est-elle definie et recuperable?)
-	if (it->second == NULL){
-		return;
-	}
-	else
-		std::cout << "remove_user it = " << it->second << std::endl;
-	
-	if (it != _users.end()){
-		user->remove_chan(chan);
-		// std::cout << "OUI CA MARCHE" << std::endl;
-
-		//checker si je retire tout le user ou seulement le user de la map _user du channel 
-		//  cest le deuxiemen que je dois faire
-		// faire un print du user pour voir si delete le it->second ou pas
-		// delete it->second;
-		_users.erase(user->get_sfd()); // erase la key
-	}
+	_users.erase(user->get_sfd());
 }
 
 void	Channel::send_to_users(std::string const &msg){

@@ -19,11 +19,12 @@ class User
 		User();
 		User(std::string prenom, std::string nom, std::string nickname);
 		User(std::string nickname, int sdf);
+		User(int sdf);
 		~User();
 
 		User			&operator=(const User & user_cp);
 		bool			operator==(const User & user_cp);
-
+		std::string		buf;
 		std::string 	get_user() const;
 		std::string		get_name() const;
 		std::string 	get_nick() const;
@@ -33,6 +34,7 @@ class User
 		std::string		get_mod() const; // only fill with 'aiwroOs'
 		int				get_operator() const; // 0 for no access 1 for operator
 		std::string		get_hostname() const;
+		std::vector<Channel *> get_chans() const;
 		// std::string		get_chan(int i) const;
 		// int				get_vchan_size() const;
 

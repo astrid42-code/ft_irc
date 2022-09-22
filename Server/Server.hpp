@@ -45,6 +45,7 @@ class Server
 		std::string				get_ip();
 		void 					set_ip(std::string ip);
 		bool					set_user(User *user);
+		void					remove_user(User *user);
 
 		std::locale				loc;
 

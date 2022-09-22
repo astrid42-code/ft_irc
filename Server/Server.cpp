@@ -372,7 +372,10 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	std::string token;
 
 	std::cout << "buf = " << buf << std::endl;
-	while (pos < (int)buf.length() && buf.find("\r\n", pos))
+	User *usr = serv->get_user(sfd);
+	usr->buf.append(buf);
+	std::cout << "usr->buf.find(\"/r/n\", pos) :|" << usr->buf.find("\r\n", pos) << std::endl;
+	while (pos <= (int)usr->buf.length() && usr->buf.find("\r\n", 0) < usr->buf.npos)
 	{
 		// std::cout << "Command " << std::endl;
 		Cmd *command = new Cmd();
@@ -392,15 +395,20 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 			command->_user->print();
 		}
 		// std::cout << "after get_user_fd " << std::endl;
-		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
-		pos = buf.find("\n", pos) + 1;
-		std::cout << "token = |" << token << "|" << std::endl;
+		if (usr->buf.find("\r\n", pos) < usr->buf.npos)
+		{
+			token = usr->buf.substr(pos, usr->buf.find("\r\n", pos) - pos);
+			usr->buf.replace(0, usr->buf.find("\r\n", pos)+2, "");
+		}
+		pos = usr->buf.find("\n", pos) + 1;
 		command->parse_cmd(token);
 		delete command;
-		if (pos >= (int)buf.length() || pos == 0)
+		if (pos > (int)usr->buf.length())
+		{
 			break ;
+		}
 	}
-}
+}	
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int Server::init()
@@ -482,6 +490,7 @@ int Server::init()
 					s = getnameinfo(&in_addr, in_len, hbuf, sizeof hbuf, sbuf, sizeof sbuf, NI_NUMERICHOST | NI_NUMERICSERV);
 					if (s == 0)
 					{
+						this->set_user(new User(infd));
 						printf("Accepted connection on descriptor %d (host=%s, port=%s)\n", infd, hbuf, sbuf);
 						printf("after connect\n");
 					}
@@ -532,10 +541,28 @@ int Server::init()
 			}
 		}
 	}
+	
 	free(events);
 	close(sfd);
 	return (EXIT_SUCCESS);
 }
+
+void	Server::remove_user(User *user)
+{
+	std::vector<Channel *> v_chan;
+	std::vector<Channel *>::iterator it;
+
+
+	v_chan = user->get_chans();
+	it = v_chan.begin();
+	while (it != v_chan.end())
+	{
+		(*it)->remove_user(user);
+		it++;
+	}
+	_users.erase(_users.find(user->get_sfd()));
+}
+
 
 // recuperer la data du User
 Channel *Server::get_chan(std::string key)

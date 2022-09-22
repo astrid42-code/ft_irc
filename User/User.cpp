@@ -42,6 +42,12 @@ User::User(std::string nickname, int sdf)
 }
 
 
+
+User::User(int sdf)
+{
+	_sfd = sdf;
+}
+
 User::~User()
 {
 	// delete les differents users	
@@ -69,6 +75,11 @@ bool	User::operator==(const User & user_cp)
 		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
 		return (true);
 	return (false);
+}
+
+std::vector<Channel *> User::get_chans() const
+{
+    return (_vchan);
 }
 
 std::string User::get_user() const
@@ -254,8 +265,9 @@ void	User::print(void) const
 	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
 }
 
-bool	User::isOnChan(std::string chan_name){
+bool User::isOnChan(std::string chan_name){
 	std::vector<Channel *>::iterator	it;
+	it = _vchan.begin();
 	// std::string 	vchan_tmp = "#";
 
 	std::cout << "vchan.size " << _vchan.size() << std::endl;

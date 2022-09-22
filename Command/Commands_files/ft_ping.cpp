@@ -46,7 +46,7 @@ void ping(Cmd &command)
 		else
 		{
 			command._server->get_msg(command._user->get_hostname() + " PONG :" + command._user->get_nick(), NULL, command);
-			std::cout << "pong" << '\n';
+			std::cout << "pong" << std::endl;
 		}
 	}
 }
