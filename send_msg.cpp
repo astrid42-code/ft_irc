@@ -46,7 +46,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 		res.append(user->get_nick());
 	switch(rpl){
 		case 1:
-				res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
+				res.append(RPL_WELCOME);
 				break;
 		case 2:
 				res.append(RPL_YOURHOST);
@@ -55,7 +55,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 				res.append(RPL_CREATED);
 				break;
 		case 4:
-				res.append(RPL_MYINFO(user->get_mod(), "0"));
+				res.append(RPL_MYINFO);
 				break;
 		case 375:
 				res.append(RPL_MOTDSTART(arg));

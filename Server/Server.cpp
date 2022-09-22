@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 18:12:28 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:46:32 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 				res.append(RPL_CREATED);
 				break;
 		case 4:
-				res.append(RPL_MYINFO(user->get_mod(), "0"));
+				res.append(RPL_MYINFO);
 				break;
 		case 353:
 				// std::cout << "RPL_NOREPLY " << cmd.get_value()[0] << std::endl;
