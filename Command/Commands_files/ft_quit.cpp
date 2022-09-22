@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 14:52:56 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:50:29 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 void quit(Cmd &command){
     (void)command;
     std::cout << "quit test" << '\n';
-    // std::cout << "quit msg " << command.get_value()[0] << std::endl;
+    std::cout << "quit msg " << command.get_value()[0] << std::endl;
 
-    
-    // command._server->get_msg(command.get_value()[0], command._user, command);
+    // quel msg a envoyer? et comment (autre fct?)
+    // command._server->send_msg(command.get_value()[0], command._user, command);
 }

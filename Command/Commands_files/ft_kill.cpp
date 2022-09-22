@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:50 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:37:11 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@
 
 
 void kill(Cmd &command){
-    (void)command;
+    // (void)command;
     std::cout << "kill test" << '\n';
 }

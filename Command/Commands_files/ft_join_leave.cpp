@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 15:41:57 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:35:15 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@
 //                                    on channel #Twilight_zone
 
 void join(Cmd &command){
-	// (void)command;
+	(void)command;
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
-		// command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
-		command._server->send_msg(461, "", command._user, command);
+		// command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
+		command._server->send_msg(461, "ERR_NEEDMOREPARAMS", command);
 	 // if (command._user->isonchan(chan_name) == 0)
-        // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
+        // command._server->send_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
 	Channel *newOne = NULL;
 	std::cout << "command.get_value" << command.get_value()[0] << std::endl;
 	newOne = command._server->get_chan(command.get_value()[0]);
@@ -100,13 +100,16 @@ void join(Cmd &command){
 		// std::cout << " USER MOD : " << command._user->get_mod() << std::endl;
 	}
 	command._server->set_user_in_chan(command._user, newOne);
-	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
+	// std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
 	
-	// command._server->get_msg("RPL_NAMREPLY", command._user, command);
-	// command._server->get_msg("RPL_ENDOFNAMES", command._user, command);
-	command._server->send_msg(353, "", command._user, command);
-	command._server->send_msg(366, "", command._user, command);
-
+	// command._server->send_msg("RPL_NAMREPLY", command);
+	// command._server->send_msg("RPL_ENDOFNAMES", command);
+	command._server->send_msg(353, "RPL_NAMREPLY", command);
+	command._server->send_msg(366, "RPL_ENDOFNAMES", command);
+	
+	// std::cout << "coucou 1 senttousers" << std::endl;
+	newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());
+	// std::cout << "coucou 2 senttousers" << std::endl;
 	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
 	// et etre crees separement (le client gere ensuite)
@@ -149,10 +152,11 @@ void join(Cmd &command){
 
 void part(Cmd &command)
 {
+	// (void)command;
 	std::cout << "part test" << std::endl;
-	// std::cout << "size " << command.get_value().size() << std::endl;
+	std::cout << "size " << command.get_value().size() << std::endl;
 	if (command.get_value().size() < 1){
-		command._server->get_msg("ERR_NEEDMOREPARAMS", command._user,command);
+		command._server->send_msg(461, "ERR_NEEDMOREPARAMS", command);
 		return;
 	}
 
@@ -171,7 +175,7 @@ void part(Cmd &command)
 
 	if (chan == NULL){
 		std::cout << "chan null" << std::endl;
-		command._server->get_msg("ERR_NOSUCHCHANNEL", command._user, command);
+		command._server->send_msg(403, "ERR_NOSUCHCHANNEL", command);
 		return;
 	}
 	else{
@@ -191,7 +195,7 @@ void part(Cmd &command)
 		//command._user->remove_chan(chan);
 	}
 	else{
-	//	command._server->get_msg("ERR_NOTONCHANNEL", NULL, command);
+	//	command._server->send_msg("ERR_NOTONCHANNEL", NULL, command);
 	}
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?

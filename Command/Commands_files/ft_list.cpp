@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 11:38:02 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:37:01 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 //                                    #twilight_zone and #42
 
 void list(Cmd &command){
-    (void)command;
+    // (void)command;
     std::cout << "list test" << '\n';
     // tant que la liste de channels (separes par une ,) n est pas finie
     // verifier si le channel existe dans la map de channels (et si arg[1] rajouter le topic associe)

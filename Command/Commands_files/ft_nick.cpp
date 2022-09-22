@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 17:08:19 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:45:38 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@
 
 void nick(Cmd &command)
 {
+	// (void)command;
 	std::cout << "ft_nick" << std::endl;
 	if (command.get_size() == 0)
 	{
 		std::cout << "no nickname given." << std::endl;
-		command._server->get_msg("ERR_NONICKNAMEGIVEN", command._user, command);
+		command._server->send_msg(431, "ERR_NONICKNAMEGIVEN", command);
 	}
 	else
 	{
@@ -65,7 +66,7 @@ void nick(Cmd &command)
 		else
 		{
 			std::cout << "nickname already in use." << std::endl;
-			command._server->get_msg("ERR_NICKNAMEINUSE", command._user, command);
+			command._server->send_msg(433, "ERR_NICKNAMEINUSE", command);
 		}
 		// attention : tester avec ou sans la casse		
 	}
@@ -76,4 +77,4 @@ void nick(Cmd &command)
 // - /nick renvoie Your nickname is [nick]
 // - /nick [nouveau nickname] renvoie "You're now known as [nouveau nick]"
 // // penser a recuperer le nouveau nom de user et a le changer dans les infos du user actuel
-// - /nick [meme nickname] renvoie "Nick [nick] is already in use" (err 433)
+// - /nick [meme nickname] renvoie "Nick [nick] is already in use" (err 433), 

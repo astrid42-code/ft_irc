@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 15:21:48 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:50:59 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@
 void user(Cmd &command)
 {
 	std::vector<std::string>::iterator it;
-
+// (void)command;
 	printf("ft_user\n");
 	// if (command._user == NULL)
 	// 	command._user = new User();
     if (command.get_size() != 4)
 	{
 		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
+		command._server->send_msg(461, "ERR_NEEDMOREPARAMS", command);
 		return ;
 	}
 	std::cout << "setting the user" << std::endl;
@@ -88,11 +88,11 @@ void user(Cmd &command)
 	// send_msg(375, command._user, command);
 	// send_msg(376, command._user, command);
 	
-	// command._server->get_msg("RPL_WELCOME", command._user, command);
-	// command._server->get_msg("RPL_YOURHOST", command._user, command);
-	// command._server->get_msg("RPL_CREATED", command._user, command);
-	// command._server->get_msg("RPL_MYINFO", command._user, command);
-	// command._server->get_msg("RPL_MOTD", command._user, command);
+	// command._server->send_msg("RPL_WELCOME", command._user, command);
+	// command._server->send_msg("RPL_YOURHOST", command._user, command);
+	// command._server->send_msg("RPL_CREATED", command._user, command);
+	// command._server->send_msg("RPL_MYINFO", command._user, command);
+	// command._server->send_msg("RPL_MOTD", command._user, command);
 	
 	// if (command._user)
 	// 	delete command._user;

@@ -1,0 +1,157 @@
+// Notes diverses 
+
+/ indique l'envoi d'une commande et non d'un msg
+
+/join #NomDuChannel > cree ou join le channel demande
+
+# suivi dun nom de channel
+
+pas de - devant un login
+
+
+
+dans un channel, 
+- 2 boutons : 
+Status > msgs adminsys
+#NomDuChannel > acces au channel
+- fenetre de gauche : chat 
+- fenetre de droite > liste des users : avec @login (channel operators), 
+                                        avec +login (users allowed to chat when the channel is moderated)
+                                        avec login seul (normal channel users)
+- fenetre en bas pour taper son msg
+- boutons en haut a droite : ?
+                             outil
+                             X pour fermer le channel
+
+/msg envoie un msg a tout le monde (pas seulement dans le channel?)
+a la diff des msgs prives : selectionner login, Query et ecrire msg (ca ouvrira une nouvelle fenetre avec la personne)
+
+Whois (pour en savoir plus sur un user) soit avec /Whois login soit cliquer sur le user
+infos apparaissent soit dans la fenetre de chat prive avec la personne soit dans dans le current chat window (si pas de discussion pv)
+pour le 2eme cas : fenetre passe en mode status
+
+
+
+http://www.ircnet.org/
+
+clients possibles : irssi (gere certaines options directement) nc (on voit toutes les infos)
+
+USERS :
+login user : 9 caracteres max, regles ici : https://www.rfc-editor.org/rfc/rfc2812#section-2.3.1
+user / operator : @ pour differencier
+
+CHANNEL : regles a respecter (a parser) : 1.3 et 2.3.1
+les spaces sont interdits dans le nom d'un channel (avec les virgules, ce sont des separateurs)
+
+Message details / msgs lies aux cmds (cmds a implementer OBLIGATOIREMENT)  : section 3
+
+Cmds (msgs de cmds) : 5.1
+Errors (types d'erreurs et msgs) : 5.2
+
+
+
+https://www.rfc-editor.org/rfc/rfc2812#section-3.2.1
+
+
+
+
+Idees pour le bonus (le bot) : faire un bot qui reconnait certaines insultes et les masquent; + si nom de certains animaux, lancent un dessin (ex pingu lance le tux42)
+
+
+
+1eres idees parsing des cmds :
+- separer le 1er mot des autres et switch en fct du mot (maj/min indifferent??) [faire le switch apres analyses des mots-cles, voir ci-dessous, ou faire le switch des le debut et analyser en fct de la cmd?]
+> une fois qu'on a la cmd, rechercher dans un tableau de ptrs sur fcts / map : key = string et value = un ptr sur la fct qui correspond a la cmd 
+- split 1 : avec les espaces pour separer les differents mots cles et les stocker dans des blocs
+- split 2 (si necessaire) : avec les virgules, a l'interieur de chaque bloc stocke dans le 1er split
+- stocker dans des vectors ou utiliser des maps?
+- en fct de chaque cmd (ex avec JOIN), verifier si : bon nbr d'arg, pas de caracteres interdits / caracteres obligatoires s'il y en a
+- si erreur dans les params/args, mettre le bon msg d'erreur et sortir (ou demander de refaire?) > voir partie 3 du rfc 2812
+ATTENTION : certains args peuvent etre optionnels
+
+> questions : 
+ou lance-t-on la fct qui va checker? dans server?
+comment structurer ce ptr sur fct? avec un switch (comme dans karen)?
+
+
+
+
+
+sockets :
+http://sdz.tdct.org/sdz/les-sockets.html
+https://oramind.com/tutorial-how-to-make-an-irc-server-connection/
+fct recv() : https://docs.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-recv
+
+
+
+gestion de la connexion (cmds a faire specifiquement pour la co)
+https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
+
+
+
+msgs de depart (lances au moment de la co :)
+exemple du server shibrc
+
+ Irssi v1.2.2-1ubuntu1.1 - https://irssi.org                                                                                                                                                                                                       
+16:54 -!- Irssi: Looking up shibrc.ml
+16:54 -!- Irssi: Connecting to shibrc.ml [51.210.4.233] port 6667
+16:54 -!- Irssi: Connection to shibrc.ml established
+16:54 -!- You're now known as kakou
+16:54 -!- Welcome to the Internet Relay Network kakou!asgaulti@62.210.33.192
+16:54 -!- Your host is 62.210.33.192, running version 1.69
+16:54 -!- This server was created Thu Aug 11 12:49:46 2022
+16:54 -!- ShibRC 1.69 aiwro Oovimnptkl
+16:54 -!- There are 1 users and 0 invisible on 1 servers
+16:54 -!- 0 operator(s) online
+16:54 -!- 0 unknown connection(s)
+16:54 -!- 0 channels formed
+16:54 -!- I have 1 clients and 0 servers
+16:54 -!- - ShibRC Message of the day - 
+
+(puis dessin )
+
+16:54 -!- Welcome to ShibRC, enjoy your stay !
+16:54 -!- - 
+16:54 -!- End of /MOTD command
+16:54 -!- Your user mode is [+wi]
+
+
+cmds prioritaires 
+ping (client envoie ping on repond PONG) et pong
+leave (faire une fct Channel.remove(User) && User.remove(Channel))
+remove de getuser et de getchannel devrait suffire
+
+quit (inverse de connect) et leave (inverse de join)
+
+
+a faire : leave :
+verifier que le user est bien retirer du channel (dans channel et dans server ??)
+retirer le channel de server (?) et de user
+
+a faire : whois (liste des gens, ...)
+
+
+pb a regler pour leave :
+dans user::isonchan > comment recuperer le nom du channel dans vchan pour voir s'il est correctement set?
+
+
+fct rpl qui recoit l'int du cas d'erreur et renvoie une string
+dedans : le switch en fct du numero de la reponse
+fct appelee par res.append(ft_rpl(int))
+
+ou
+
+map avec int en key et msg d'erreur avec ou sans arguments
+
+
+msgs a l'ouverture d'un channel
+15:31 [Users #dodo]
+15:31 [@kakou] 
+15:31 -!- Irssi: #dodo: Total of 1 nicks [1 ops, 0 halfops, 0 voices, 0 normal]
+15:31 -!- kakou [asgaulti@62.210.32.226] has joined #dodo
+
++
+ [15:32] [@kakou] [2:shibrc/#dodo(+n)] [Act: 1] > ok
+
+a la fermeture :
+End of /WHO list

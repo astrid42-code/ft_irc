@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:19 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 16:35:15 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:37:05 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void kick(Cmd &command)
     // (void)command;
     std::cout << "kick test" << '\n';  
     if (command.get_value().size() < 2)
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user,command);
+		  command._server->send_msg(461, "ERR_NEEDMOREPARAMS", command);
     
 }

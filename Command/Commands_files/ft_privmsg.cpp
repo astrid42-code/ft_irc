@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:49:25 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 
 void privmsg(Cmd &command)
 {
+    // (void)command;
     std::cout << "privmsg test" << std::endl;
     std::string destinataire;
     destinataire = command.get_value().begin()[0];
@@ -91,6 +92,6 @@ void privmsg(Cmd &command)
     // necessite d'etre dans un channel (?)
     // command.get_value()[0] la target = le user ou le channel qui recoit le msg
     // command.get_value()[1] le msg a envoyer a la target
-    // command._server->get_msg(command.get_value()[1], NULL, command)
-    // necessaire de chercher avant get_msg quelle est la target? comment la preciser ensuite (puisque ca peut etre user ou channel)?
+    // command._server->send_msg(command.get_value()[1], NULL, command)
+    // necessaire de chercher avant send_msg quelle est la target? comment la preciser ensuite (puisque ca peut etre user ou channel)?
 }

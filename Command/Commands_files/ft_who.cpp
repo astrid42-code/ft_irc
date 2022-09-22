@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:42 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:51:22 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@
 //                                    operator.
 
 void who(Cmd &command){
-    (void)command;
+    // (void)command;
     std::cout << "who test" << '\n';
 /*    if (command.get_size() == 1){
-        command._server->get_msg(ENDOFWHO, commqnd.get_user(), command);
+        command._server->send_msg(ENDOFWHO, commqnd.get_user(), command);
         // a faire dans une boucle for pour mettre tous les users presents dans le channel?
     }
     else if (command.get_size() == 2){
         if (command.get_value()[1] == 'o'){
-            command._server->get_msg(ENDOFWHO, commqnd.get_user(), command);
+            command._server->send_msg(ENDOFWHO, commqnd.get_user(), command);
             // a faire  dans une boucle for pour mettre tous les users presents dans le channel?
             // et uniquement avec la liste des operateurs : comment le specifier?
         }
