@@ -40,12 +40,13 @@
 
 //    Numeric Replies:
 
-//            ERR_NOSUCHSERVER              ERR_NONICKNAMEGIVEN
-//            RPL_WHOISUSER                 RPL_WHOISCHANNELS
-//            RPL_WHOISCHANNELS             RPL_WHOISSERVER
-//            RPL_AWAY                      RPL_WHOISOPERATOR
-//            RPL_WHOISIDLE                 ERR_NOSUCHNICK
-//            RPL_ENDOFWHOIS
+//				ERR_NOSUCHSERVER				ERR_NONICKNAMEGIVEN
+//				ERR_NOSUCHNICK
+//				RPL_WHOISUSER
+//				RPL_WHOISCHANNELS				RPL_WHOISSERVER
+//				RPL_AWAY						RPL_WHOISOPERATOR
+//				RPL_WHOISIDLE					RPL_ENDOFWHOIS
+
 //    Examples:
 
 //    WHOIS wiz                       ; return available user information
@@ -53,9 +54,46 @@
 
 //    WHOIS eff.org trillian          ; ask server eff.org for user
 //                                    information  about trillian
-                                   
-void whois(Cmd &command)
+								   
+void	whois(Cmd &command)
 {
-    (void)command;
-    std::cout << "whois test" << '\n';
+	bool					user_found = false;
+	User					*user = NULL;
+	std::map<int, User *>	users = command._server->get_users();
+
+	std::cout << "whois test" << std::endl;
+	if (command.get_size() == 1)
+	{
+		if (command.get_value()[0].find("*") != std::string::npos)
+		{
+			// for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
+			// {
+			// 	if (it->second->find_mod("i") == std::string::npos && mask_off(command.get_value()[0], it->second->get_hostname()))
+			// 	{
+					
+			// 	}
+			// }
+		}
+		else
+		{
+			if ((user = command._server->get_user(command.get_value()[0])) != NULL)
+			{
+				if (!user->find_mod("i"))
+				{
+					command._server->send_msg(RPL_WHOISUSER(user->get_nick(), user->get_user(), user->get_host(), user->get_name()), command);
+					if (user->find_mod("o"))
+						command._server->send_msg(RPL_WHOISOPERATOR(user->get_nick()), command);
+					if (user->find_mod("a"))
+						command._server->send_msg(RPL_AWAY(user->get_nick()), command);
+					command._server->send_msg(RPL_ENDOFWHOIS(command._user->get_nick()), command);
+				}
+			}
+			else
+				command._server->send_msg(ERR_NOSUCHNICK(command.get_value()[0]), command);
+		}
+	}
+	else if (command.get_size() == 2)
+		command._server->send_msg(ERR_NOSUCHSERVER(command.get_value()[0]), command);
+	else
+		command._server->send_msg(ERR_NONICKNAMEGIVEN, command);
 }

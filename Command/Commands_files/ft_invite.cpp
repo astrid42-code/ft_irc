@@ -59,22 +59,22 @@ void invite(Cmd &command){
     std::cout << "invite test" << '\n';
     if (command.get_value().size() != 2){
         std::cout << "hello1" << std::endl;
-        command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
+        command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), command);
     }
     else if (command.get_value()[0] != command._user->get_name()){
 		std::cout << "hello2" << std::endl;
-        command._server->get_msg(ERR_NOSUCHNICK(command.get_value()[0]), NULL, command);
+        command._server->send_msg(ERR_NOSUCHNICK(command.get_value()[0]), command);
     }
     else if (command._user->get_mod() == "a"){ // ou faire une recherche de la lettre a car plsrs lettres possibles?
         std::cout << "hello3" << std::endl;
-        command._server->get_msg(RPL_AWAY(command._user->get_nick()), NULL, command);
+        command._server->send_msg(RPL_AWAY(command._user->get_nick()), command);
     }
     // if (command._user->isonchan(chan_name) == 0)
-    //     command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL);
+    //     command._server->send_msg(ERR_NOTONCHANNEL(chan_name), NULL);
     
     // si tout ok :
     // channel.invite(command._user->get_name()) > fct a faire dans la class channel pour connecter un user a un chan
-    command._server->get_msg(RPL_INVITING(command.get_value()[0], command.get_value()[1]), NULL, command);
+    command._server->send_msg(RPL_INVITING(command.get_value()[0], command.get_value()[1]), command);
     // arg RPL_inviting : channel puis user
     
 }

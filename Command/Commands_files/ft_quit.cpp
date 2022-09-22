@@ -33,7 +33,6 @@
 
 void quit(Cmd &command)
 {
-    std::cout << "quit test" << std::endl;
     std::cout << "quit msg " << command.get_value()[0] << std::endl;
-    // command._server->get_msg(command.get_value()[0], command._user, command);
+    // command._server->send_msg(command.get_value()[0], command._user, command);
 }

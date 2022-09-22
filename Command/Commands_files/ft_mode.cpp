@@ -58,7 +58,7 @@ std::string	get_chan_mode_string(Channel *chan, std::string arg, Cmd &command)
 				}
 			}
 			else
-				command._server->get_msg(ERR_KEYSET, NULL, command);
+				command._server->send_msg(ERR_KEYSET, command);
 		}
 		if (arg.find('l') != std::string::npos && res.find('l') == std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
 		{
@@ -134,7 +134,7 @@ bool		check_mode_string(Cmd &command, std::string mods)
 		if (mods.find(*it) == std::string::npos)
 		{
 			std::cout << "the modes given in parameter are invalid" << std::endl;
-			command._server->get_msg(ERR_UMODEUNKNOWNFLAG, NULL, command);
+			command._server->send_msg(ERR_UMODEUNKNOWNFLAG, command);
 			return (0);
 		}
 		if (i == 1 && *it == '+')
@@ -158,7 +158,7 @@ void		mode_user(Cmd &command)
 		if (command.get_size() == 1)
 		{
 			std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
-			command._server->get_msg(RPL_UMODEIS, NULL, command);
+			command._server->send_msg(RPL_UMODEIS, command);
 		}
 		else
 		{
@@ -170,7 +170,7 @@ void		mode_user(Cmd &command)
 	else
 	{
 		std::cout << "the user given in parameter invalid" << std::endl;
-		command._server->get_msg(ERR_USERSDONTMATCH, NULL, command);
+		command._server->send_msg(ERR_USERSDONTMATCH, command);
 	}
 }
 
@@ -185,7 +185,7 @@ void		mode_chan(Cmd &command)
 		if (command.get_size() == 1)
 		{
 			std::cout << chan->get_mod() << std::endl;// put this in a message to the client
-			command._server->get_msg(RPL_CHANNELMODEIS(chan->get_name(), chan->get_mod(), "-+OovaimnqpsrtklbeI"), NULL, command);
+			command._server->send_msg(RPL_CHANNELMODEIS(chan->get_name(), chan->get_mod(), "-+OovaimnqpsrtklbeI"), command);
 		}
 		else
 		{
@@ -197,7 +197,7 @@ void		mode_chan(Cmd &command)
 	else
 	{
 		std::cout << "the channel given in parameter invalid" << std::endl;
-		command._server->get_msg(ERR_USERNOTINCHANNEL(command._user->get_nick(), command.get_value()[0]), NULL, command);
+		command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_nick(), command.get_value()[0]), command);
 	}
 }
 
@@ -220,6 +220,6 @@ void		mode(Cmd &command)
 	else
 	{
 		std::cout << "err need more params" << std::endl;
-		command._server->get_msg(ERR_NEEDMOREPARAMS(), NULL, command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(), command);
 	}
 }

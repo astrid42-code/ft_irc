@@ -6,7 +6,7 @@
 #    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/09/14 11:33:34 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/09/21 11:58:00 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ CXXFLAGS	=	-Wall -Wextra -Werror --std=c++98 -g3
 RM			=	rm -f
 
 SRCS		=	main.cpp									\
+				mask_off.cpp								\
 				Server/Server.cpp							\
 				User/User.cpp								\
 				Command/Cmd.cpp								\
@@ -38,7 +39,9 @@ SRCS		=	main.cpp									\
 				Command/Commands_files/ft_user.cpp			\
 				Command/Commands_files/ft_ping.cpp			\
 				Command/Commands_files/ft_mode.cpp			\
-				Channel/Channel.cpp
+				Channel/Channel.cpp							
+#send_msg.cpp
+	
 
 INC			=	Server User Command Channel
 

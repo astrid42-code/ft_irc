@@ -12,15 +12,41 @@
 #define DATE "Mon Aug 25 16:57:33 2022"
 #define DEFAULT_NAME "toto"
 
-#define RPL_WELCOME(nick, user, host) (nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay Network\r\n") //001
+#define PINGU ("\n\
+dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
+HHP%%#%%%%%%%%%%%%%%%%#%%%%%%%#%%VHH \n\
+HH%%%%%%%%%%#%v~~~~~~\\%%%#%%%%%%%%HH \n\
+HH%%%%%#%%%%v'        ~~~~\\%%%%%#%HH \n\
+HH%%#%%%%%%v'dHHb      a%%%#%%%%%%HH \n\
+HH%%%%%#%%v'dHHHA     :%%%%%%#%%%%HH \n\
+HH%%%#%%%v' VHHHHaadHHb:%#%%%%%%%%HH \n\
+HH%%%%%#v'   `VHHHHHHHHb:%%%%%#%%%HH \n\
+HH%#%%%v'      `VHHHHHHH:%%%#%%#%%HH \n\
+HH%%%%%'        dHHHHHHH:%%#%%%%%%HH \n\
+HH%%#%%        dHHHHHHHH:%%%%%%#%%HH \n\
+HH%%%%%       dHHHHHHHHH:%%#%%%%%%HH \n\
+HH#%%%%       VHHHHHHHHH:%%%%%#%%%HH \n\
+HH%%%%#   b    HHHHHHHHV:%%%#%%%%#HH \n\
+HH%%%%%   Hb   HHHHHHHV'%%%%%%%%%%HH \n\
+HH%%#%%   HH  dHHHHHHV'%%%#%%%%%%%HH \n\
+HH%#%%%   VHbdHHHHHHV'#%%%%%%%%#%%HH \n\
+HHb%%#%    VHHHHHHHV'%%%%%#%%#%%%%HH \n\
+HHHHHHHb    VHHHHHHH:%odHHHHHHbo%dHH \n\
+HHHHHHHHboodboooooodHHHHHHHHHHHHHHHH \n\
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
+VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
+
+#define RPL_WELCOME (" :Welcome to the Internet Relay Network\r\n") //001
+// #define RPL_WELCOME(nick, user, host) (nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay Network\r\n") //001
         	// + envoyer <nick>!<user>@<host>) en arguments
 			// + ajouter dessin?
 
-#define RPL_YOURHOST ( "Your host is " SERVER ", running version" VERSION "\r\n") //002
+#define RPL_YOURHOST (" :Your host is " SERVER ", running version" VERSION "\r\n") //002
 
-#define RPL_CREATED ("This server was created " DATE "\r\n") // 003
+#define RPL_CREATED (" :This server was created " DATE "\r\n") // 003
 
-#define RPL_MYINFO(user_mode, chan_mode) (SERVERNAME VERSION + user_mode + chan_mode "\r\n") // 004
+#define RPL_MYINFO(user_mode, chan_mode) (" :" SERVERNAME " " VERSION + user_mode + chan_mode "\r\n") // 004
 	// + envoyer nombre de users en fct de leur mode (nbr de users connectes, nbre d'invisible users connectes)
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg
@@ -39,13 +65,13 @@
 
 #define RPL_WHOISOPERATOR(nick) (nick + " :is an IRC operator\r\n") // 313
 
-#define RPL_ENDOFWHO(name) (name + " :End of WHO list\r\n") // mode_params315
+#define RPL_ENDOFWHO(name) (name + " :End of WHO list\r\n") // mode_params 315
 	// + envoyer nick (?) du user en arg
 // - The RPL_WHOREPLY and RPL_ENDOFWHO pair are used to answer a WHO message.  The RPL_WHOREPLY is only
 // sent if there is an appropriate match to the WHO query.  If there is a list of parameters supplied
 // with a WHO message, a RPL_ENDOFWHO MUST be sent after processing each list item with <name> being the item.
 
-#define RPL_WHOISIDLE(nick) (nick + " <integer> :seconds idle\r\n") // 317
+#define RPL_WHOISIDLE(nick, integer) (nick + " " + integer " :seconds idle\r\n") // 317
 	// + envoyer nick et integer(??)
 
 #define RPL_ENDOFWHOIS(nick) (nick + " :End of WHOIS list\r\n") // 318
@@ -88,7 +114,7 @@
 // Returned by the server to indicate that the attempted INVITE message was successful and is
 // being passed onto the end client.
 
-// #define RPL_WHOREPLY(channel, user, host, nick, hopcount, name) (channel + " " + user + " " + host + " " + SERVER + " " + nick + "( "H" / "G" > ["*"] [ ( "@" / "+" ) ]) : " + hopcount + " " + name + "\r\n") // 352
+#define RPL_WHOREPLY(channel, user, host, nick, name) (channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
 	// envoyer les args
 
 #define RPL_NAMREPLY(channel, nick) ("=" + channel + " : " + nick + "\r\n") // 353
@@ -96,20 +122,20 @@
 //  - "@" is used for secret channels, "*" for private
 //    channels, and "=" for others (public channels).
 
-#define RPL_ENDOFNAMES(channel) (channel + " :End of NAMES list\r\n") // 366
+#define RPL_ENDOFNAMES(channel) (" " + channel + " :End of NAMES list\r\n") // 366
 	// + envoyer channel en arg
 // To reply to a NAMES message, a reply pair consisting
 //            of RPL_NAMREPLY and RPL_ENDOFNAMES is sent by the
 //            server back to the client.  If there is no channel
 //            found as in the query, then only RPL_ENDOFNAMES is
 
-#define RPL_MOTDSTART (SERVER " :Message of the day - \r\n") // 375
+#define RPL_MOTDSTART(text) (std::string(" :DTA server Message of the day - ") + std::string(text) + std::string("\r\n")) // 375
 
-#define RPL_MOTD(text) (":-\n" + text)
+#define RPL_MOTD(text) (std::string(":-\n") + std::string(text))
 
 #define RPL_ENDOFMOTD (" :End of MOTD command\r\n") // 376
 
-#define RPL_YOUREOPER (":You are now an IRC operator\r\n") // 381
+#define RPL_YOUREOPER (" :You are now an IRC operator\r\n") // 381
 // RPL_YOUREOPER is sent back to a client which has just successfully issued an OPER message and gained operator status.
 
 #define ERR_NOSUCHNICK(nick) (nick + " :No such nick/channel\r\n") // 401

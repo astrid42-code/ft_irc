@@ -84,21 +84,6 @@ fct recv() : https://docs.microsoft.com/en-us/windows/win32/api/winsock/nf-winso
 
 
 
-dans commande :
-je recupere la ligne de cmd envoyee (par le main pour l'instant0)
--> void parser(std::string str) ; qui envoie la ligne envoyee par l'utilisateur ex JOIN tata
-1 je splite le 1er mot 
-2 je verifie que str_cmd == \ > nope
-3 si oui je prends le mot et je le stocke dans str_cmd
-
-4 je checke si le mot fait bien partie de ma liste de cmds autorisees
-5 si non : return ; (car on ne fait rien, pas de msg d'erreur) > ou pas necessaire puisque ce sera fait avec la fct find dans 7 et suivant
-6 si oui je splite la suite de la string et je stocke chaque "morceau" dans mon vector value
-7 avec mon iterator je parcours ma map en envoyant la key (_key)
-8 si it != end() > je vais dans la value (la fct qui correspond a ma key)
-9 sinon return ;
-10 attention, certaines cmds demanderont un comportement specifique (ex quit ou kill?)
-
 gestion de la connexion (cmds a faire specifiquement pour la co)
 https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
 
@@ -143,6 +128,30 @@ a faire : leave :
 verifier que le user est bien retirer du channel (dans channel et dans server ??)
 retirer le channel de server (?) et de user
 
+a faire : whois (liste des gens, ...)
+
 
 pb a regler pour leave :
 dans user::isonchan > comment recuperer le nom du channel dans vchan pour voir s'il est correctement set?
+
+
+fct rpl qui recoit l'int du cas d'erreur et renvoie une string
+dedans : le switch en fct du numero de la reponse
+fct appelee par res.append(ft_rpl(int))
+
+ou
+
+map avec int en key et msg d'erreur avec ou sans arguments
+
+
+msgs a l'ouverture d'un channel
+15:31 [Users #dodo]
+15:31 [@kakou] 
+15:31 -!- Irssi: #dodo: Total of 1 nicks [1 ops, 0 halfops, 0 voices, 0 normal]
+15:31 -!- kakou [asgaulti@62.210.32.226] has joined #dodo
+
++
+ [15:32] [@kakou] [2:shibrc/#dodo(+n)] [Act: 1]
+
+a la fermeture :
+End of /WHO list

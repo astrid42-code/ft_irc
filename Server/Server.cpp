@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/18 17:26:10 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 16:13:40 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,86 +187,12 @@ bool Server::set_pp(std::string port, std::string pwd)
 	}
 */
 
-std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
+std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 {
 	std::string	res = ":";
-	std::string arg;
-
-	if (msg.compare("RPL_WELCOME") == 0)
-	{
-		res.append(RPL_WELCOME(cmd._user->get_nick(), cmd._user->get_user(), cmd._user->get_host()));
-	}
-	if (msg.compare("RPL_YOURHOST") == 0)
-	{
-		res.append(RPL_YOURHOST);
-	}
-	if (msg.compare("RPL_CREATED") == 0)
-	{
-		res.append(RPL_CREATED);
-	}
-	if (msg.compare("RPL_MYINFO") == 0)
-	{
-		res.append(RPL_MYINFO(user->get_mod(), "0"));
-	}
-	if (msg.compare("RPL_MOTD") == 0)
-	{
-		res.append(RPL_MOTDSTART);
-		arg = "\n\
-dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
-HHP%%#%%%%%%%%%%%%%%%%#%%%%%%%#%%VHH \n\
-HH%%%%%%%%%%#%v~~~~~~\\%%%#%%%%%%%%HH \n\
-HH%%%%%#%%%%v'        ~~~~\\%%%%%#%HH \n\
-HH%%#%%%%%%v'dHHb      a%%%#%%%%%%HH \n\
-HH%%%%%#%%v'dHHHA     :%%%%%%#%%%%HH \n\
-HH%%%#%%%v' VHHHHaadHHb:%#%%%%%%%%HH \n\
-HH%%%%%#v'   `VHHHHHHHHb:%%%%%#%%%HH \n\
-HH%#%%%v'      `VHHHHHHH:%%%#%%#%%HH \n\
-HH%%%%%'        dHHHHHHH:%%#%%%%%%HH \n\
-HH%%#%%        dHHHHHHHH:%%%%%%#%%HH \n\
-HH%%%%%       dHHHHHHHHH:%%#%%%%%%HH \n\
-HH#%%%%       VHHHHHHHHH:%%%%%#%%%HH \n\
-HH%%%%#   b    HHHHHHHHV:%%%#%%%%#HH \n\
-HH%%%%%   Hb   HHHHHHHV'%%%%%%%%%%HH \n\
-HH%%#%%   HH  dHHHHHHV'%%%#%%%%%%%HH \n\
-HH%#%%%   VHbdHHHHHHV'#%%%%%%%%#%%HH \n\
-HHb%%#%    VHHHHHHHV'%%%%%#%%#%%%%HH \n\
-HHHHHHHb    VHHHHHHH:%odHHHHHHbo%dHH \n\
-HHHHHHHHboodboooooodHHHHHHHHHHHHHHHH \n\
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
-VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n"; 
-		res.append(RPL_MOTD(arg));
-		res.append(RPL_ENDOFMOTD);
-	}
-	if (msg.compare("ERR_NEEDMOREPARAMS") == 0)
-	{
-		res.append(ERR_NEEDMOREPARAMS(cmd.get_key()));
-	}
-	if (msg.compare("ERR_NOSUCHCHANNEL") == 0)
-	{
-		// std::cout << "ERR_NOSUCHCHANNEL fct" << std::endl;
-		res.append(ERR_NOSUCHCHANNEL(cmd.get_value()[1]));
-	}
-	if (msg.compare("ERR_NOTONCHANNEL") == 0)
-	{
-		res.append(ERR_NOTONCHANNEL(cmd.get_value()[1]));
-	}
-	if (msg.find("PONG :") != std::string::npos)
-	{
-		res.append(msg + "\n\r");
-		std::cout << res << std::endl;
-	}
-	// :tamigore!tamigore@62.210.32.226 PONG :tamigore
-	// :tamigore!tamigore@localhost PONG :tamigore
-	//:dasanter!dasanter@127.0.0.1 001 dasanter :Welcome to the Internet Relay Network
-	//std::cout << "OUAI : " << res << std::endl;
-	// effacer le contenu du vector _value
-	// for (int i = 1; i < cmd.get_size(); i++)
-	// 	cmd.get_value()[i].clear();
-
-	// if (msg = les msgs 001 002 ou 003)
-	// mettre les infos de demarrage du serveur en + du define du RPL_answer.hpp)
-	std::cout << "get msg : |" << res << "|" << std::endl;
+	
+	res.append(msg);
+	std::cout << "send msg : |" << res << "|" << std::endl;
 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
 	return (res);
 }
@@ -333,7 +259,10 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	std::string token;
 
 	std::cout << "buf = " << buf << std::endl;
-	while (pos < (int)buf.length() && buf.find("\r\n", pos))
+	User *usr = serv->get_user(sfd);
+	usr->buf.append(buf);
+	std::cout << "usr->buf.find(\"/r/n\", pos) :|" << usr->buf.find("\r\n", pos) << std::endl;
+	while (pos <= (int)usr->buf.length() && usr->buf.find("\r\n", 0) < usr->buf.npos)
 	{
 		// std::cout << "Command " << std::endl;
 		Cmd *command = new Cmd();
@@ -353,15 +282,20 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 			command->_user->print();
 		}
 		// std::cout << "after get_user_fd " << std::endl;
-		token = buf.substr(pos, buf.find("\r\n", pos) - pos);
-		pos = buf.find("\n", pos) + 1;
-		std::cout << "token = |" << token << "|" << std::endl;
+		if (usr->buf.find("\r\n", pos) < usr->buf.npos)
+		{
+			token = usr->buf.substr(pos, usr->buf.find("\r\n", pos) - pos);
+			usr->buf.replace(0, usr->buf.find("\r\n", pos)+2, "");
+		}
+		pos = usr->buf.find("\n", pos) + 1;
 		command->parse_cmd(token);
 		delete command;
-		if (pos >= (int)buf.length() || pos == 0)
+		if (pos > (int)usr->buf.length())
+		{
 			break ;
+		}
 	}
-}
+}	
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
 int	Server::init()
@@ -443,6 +377,7 @@ int	Server::init()
 					s = getnameinfo(&in_addr, in_len, hbuf, sizeof hbuf, sbuf, sizeof sbuf, NI_NUMERICHOST | NI_NUMERICSERV);
 					if (s == 0)
 					{
+						this->set_user(new User(infd));
 						printf("Accepted connection on descriptor %d (host=%s, port=%s)\n", infd, hbuf, sbuf);
 						printf("after connect\n");
 					}
@@ -493,10 +428,28 @@ int	Server::init()
 			}
 		}
 	}
+	
 	free(events);
 	close(sfd);
 	return (EXIT_SUCCESS);
 }
+
+void	Server::remove_user(User *user)
+{
+	std::vector<Channel *> v_chan;
+	std::vector<Channel *>::iterator it;
+
+
+	v_chan = user->get_chans();
+	it = v_chan.begin();
+	while (it != v_chan.end())
+	{
+		(*it)->remove_user(user);
+		it++;
+	}
+	_users.erase(_users.find(user->get_sfd()));
+}
+
 
 // recuperer la data du User
 Channel	*Server::get_chan(std::string key)
@@ -505,7 +458,7 @@ Channel	*Server::get_chan(std::string key)
 	// for (it = _channels.begin(); it != _channels.end(); it++){
 	// 	std::cout << "it name " << it->second->get_name() << std::endl;
 	// }
-	// std::cout << "start" << std::endl;
+	std::cout << "start" << std::endl;
 	std::string tmp_key = "#";
 	tmp_key.append(key);
 	// std::cout << "tmp_key = " << tmp_key << std::endl;
@@ -516,11 +469,12 @@ Channel	*Server::get_chan(std::string key)
 		std::cout << "NULL" << std::endl;
 		return (NULL);
 	}
-	else
-		std::cout << key << std::endl;
-	// std::cout << "end" << std::endl;
+	// std::cout <<  << it->second->size() << std::endl;
+	std::cout << "end" << std::endl;
 	return (it->second);
 }
+
+// size_t	Server::get_chan_size()
 
 // insert user in map
 bool	Server::set_chan(Channel *chan)
@@ -529,6 +483,7 @@ bool	Server::set_chan(Channel *chan)
 
 	p = _channels.insert(make_pair(chan->get_name(), chan));
 	std::cout << "channel name " << chan->get_name() << std::endl;	
+	// chan->set_name(chan->get_name());
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 // set le channel dans le serveur (la fct set_channel de Channel est inutilisee donc)

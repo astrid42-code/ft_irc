@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/19 12:15:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:03:53 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ User::User(std::string nickname, int sdf)
 	// stocker les differentes infos users dans une map ? (login, pwd, autre?)
 }
 
+User::User(int sdf)
+{
+	_sfd = sdf;
+}
 
 User::~User()
 {
 	// delete les differents users	
 }
 
-User & User::operator=(const User & user_cp)
+User					&User::operator=(const User & user_cp)
 {
 	if (!check_nick(user_cp._nick))
 	{
@@ -63,7 +67,7 @@ User & User::operator=(const User & user_cp)
 	return (*this);
 }
 
-bool	User::operator==(const User & user_cp)
+bool					User::operator==(const User & user_cp)
 {
 	if (_user == user_cp._user && _name == user_cp._name && _nick == user_cp._nick &&
 		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
@@ -71,49 +75,49 @@ bool	User::operator==(const User & user_cp)
 	return (false);
 }
 
-std::string User::get_user() const
+std::string				User::get_user() const
 {
 	return (_user);
 }
 
-std::string User::get_name() const
+std::string				User::get_name() const
 {
 	return (_name);
 }
 
-std::string User::get_nick() const
+std::string				User::get_nick() const
 {
 	return (_nick);
 }
 
-std::string User::get_host() const
+std::string				User::get_host() const
 {
 	return (_host);
 }
 
-std::string User::get_pwd() const
+std::string				User::get_pwd() const
 {
 	return (_pwd);
 }
 
-std::string User::get_mod() const
+std::string				User::get_mod() const
 {
 	return (_mod);
 }
 
-int User::get_sfd() const
+int						User::get_sfd() const
 {
 	return (_sfd);
 }
 
-int	User::get_operator() const
+int						User::get_operator() const
 {
 	return (_operator);
 }
 
-Channel	*User::get_channel(std::string name)
+Channel					*User::get_channel(std::string name)
 {
-	std::vector<Channel *>::iterator it;
+	std::vector<Channel *>::iterator	it;
 
 	for (it = _vchan.begin(); it != _vchan.end(); it++)
 	{
@@ -123,24 +127,27 @@ Channel	*User::get_channel(std::string name)
 	return (NULL);
 }
 
-std::vector<Channel *> User::get_chans() const
+std::string				User::get_channel_name()
+{
+	std::vector<Channel *>::iterator	it;
+	std::string							names = "";
+
+	for (it = _vchan.begin(); it != _vchan.end(); it++)
+	{
+		names.append((*it)->get_key());
+	}
+	return (names);
+}
+
+std::vector<Channel *>	User::get_chans() const
 {
 	return (_vchan);
 }
 
-std::string	User::get_hostname() const
+std::string				User::get_hostname() const
 {
 	return (_user + "!" + _nick + "@" + _host);
 }
-
-// std::string		User::get_chan(int i) const
-// {
-// 	return (_vchan[i].get_name());
-// }
-
-// int				get_vchan_size() const{
-	
-// }
 
 void	User::set_user(std::string user)
 {
@@ -259,35 +266,47 @@ void	User::print(void) const
 	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
 }
 
-bool	User::isOnChan(std::string chan_name){
+bool User::isOnChan(std::string chan_name){
 	std::vector<Channel *>::iterator	it;
+	it = _vchan.begin();
 	// std::string 	vchan_tmp = "#";
 
 	std::cout << "vchan.size " << _vchan.size() << std::endl;
 	std::cout << "chan name isonchan : " << chan_name << std::endl;
 	// vchan_tmp.append(chan_name);
 	// std::cout << "tmp chan name isonchan : " << vchan_tmp << std::endl;
+	
 	if (_vchan.size() == 0){
 		std::cout << "isonchan _vchan NULL" << std::endl;
 		return false;
 	}
-	for (it = _vchan.begin(); it < _vchan.end(); it++){
-		std::cout << "it getname = " << std::endl;
-		std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
-		if ((*it)->get_name().compare(chan_name) == 0)
-			return true;
-	}
+	// for (it = _vchan.begin(); it < _vchan.end(); it++){
+	// 	// std::cout << "it getname = " << std::endl;
+	// 	// std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
+	// 	if ((*it)->get_name().compare(chan_name) == 0)
+	// 		return true;
+	// }
+	
+	// for (unsigned i = 0; i < _vchan.size(); i++){
+	// 	std::cout << "value isonchan " << _vchan.at(i) << std::endl;
+	// 	if (_vchan.at(i) == chan_name)
+	// 		return (true);
+	// }
 	return false;
 }
 
-void	User::remove_chan(Channel * channel)
-{
+void	User::remove_chan(Channel * channel){
+	(void)channel;
 	std::vector<Channel *>::iterator it;
 	
-	for (it = _vchan.begin(); it != _vchan.end(); it++)
-	{
-		if (*it == channel)
+	for (it = _vchan.begin(); it != _vchan.end(); it++){
+		// if (*it == channel)
+		std::cout << "remove_chan channel  = " << (*it)->get_name() << std::endl;
+		if (it != _vchan.end()){
 			_vchan.erase(it);
+		std::cout << "COUCOU REMOVE CHAN" << std::endl;
+			return;
+		}
 	}
 }
 

@@ -63,11 +63,11 @@ void names(Cmd &command)
 			for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
 			{
 				if (it->second->get_mod().find("i") == std::string::npos)
-					command._server->get_msg(RPL_NAMREPLY(chan->get_key(), it->second->get_nick()), NULL, command);
+					command._server->send_msg(RPL_NAMREPLY(chan->get_key(), it->second->get_nick()), command);
 			}
-			command._server->get_msg(RPL_ENDOFNAMES(chan->get_key()), NULL, command);
+			command._server->send_msg(RPL_ENDOFNAMES(chan->get_key()), command);
 		}
 		else
-			command._server->get_msg(ERR_NOSUCHSERVER(), NULL, command);
+			command._server->send_msg(ERR_NOSUCHSERVER(), command);
 	}
 }

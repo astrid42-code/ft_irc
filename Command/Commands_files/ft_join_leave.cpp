@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/19 12:18:54 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:41:57 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void join(Cmd &command)
 {
 	std::cout << "______________ In Join ______________" << std::endl;
 	if (!command.get_value().size())
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), NULL,command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), command);
 	// if (command.get_value()[0][0] == '0') // leave all chans (not worth the truble cause irssi dont let you join a chan 0)
 	// {
 	// 	std::vector<Channel *> tmp = command._user->get_chans();
@@ -92,7 +92,7 @@ void join(Cmd &command)
 	// 	return ;
 	// }
 	 // if (command._user->isonchan(chan_name) == 0)
-        // command._server->get_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
+        // command._server->send_msg(ERR_NOTONCHANNEL(chan_name), NULL, command);
 	Channel *newOne = NULL;
 	std::cout << "command.get_value" << command.get_value()[0] << std::endl;
 	newOne = command._server->get_chan(command.get_value()[0]);
@@ -113,11 +113,16 @@ void join(Cmd &command)
 		command._server->set_user_in_chan(command._user, newOne);
 	}
 	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
-	 // newone ou string correspondant au nom du chan : command.get_value()[0]
-	//command._user->set_chan(*newOne);
+	
+	// command._server->send_msg("RPL_NAMREPLY", command._user, command);
+	// command._server->send_msg("RPL_ENDOFNAMES", command._user, command);
+	command._server->send_msg(RPL_NAMREPLY(newOne->get_key(), command._user->get_nick()), command);
+	command._server->send_msg(RPL_ENDOFNAMES(newOne->get_key()), command);
+
 	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
 	// et etre crees separement (le client gere ensuite)
+	// a faire a la fin avec une boucle while ou for
 }
 
 // si user deja dans un channel, /join ce meme channel ne fait rien
@@ -160,7 +165,7 @@ void part(Cmd &command)
 	// std::cout << "size " << command.get_value().size() << std::endl;
 	if (command.get_value().size() < 2)
 	{
-		command._server->get_msg("ERR_NEEDMOREPARAMS", command._user,command);
+		command._server->send_msg("ERR_NEEDMOREPARAMS", command);
 		return;
 	}
 
@@ -171,33 +176,37 @@ void part(Cmd &command)
 	// (puis remove le user du channel)
 	
 	// comment recuperer l'objet channel? ( une ref serait mieux mais comment la faire ici?)
-	std::cout << "chan " << command.get_value()[1] << std::endl;
-	Channel * chan = command._server->get_chan(command.get_value()[1]);
+	std::cout << "chan " << command.get_value()[0] << std::endl;
+	Channel * chan = command._server->get_chan(command.get_value()[0]);
 		// std::cout << "coucou4 user = " << chan->get_user(command._user->get_sfd()) << std::endl;
 		// std::cout << chan->get_name() << std::endl;
 		// std::cout << "chan name part " << std::endl;
 	if (chan == NULL)
 	{
 		std::cout << "chan null" << std::endl;
-		command._server->get_msg("ERR_NOSUCHCHANNEL", command._user, command);
-		// return;
+		command._server->send_msg("ERR_NOSUCHCHANNEL", command);
+		return;
 	}
 	else{
 		chan->remove_user(command._user);
 	}
 
-	// remove le user dans le chan apparemment (mais ne trouve pas pour la suite)
+	// if (command._server->get_chan(command.get_value()[0])->size() == 0)
+		
 
+	// std::string tmp = "#";
+	// tmp.append(command.get_value()[1]);
 	// > checker si le user est dans le channel avant de le sortir
 	std::string tmp = "#";
 	tmp.append(command.get_value()[1]);
 	if (command._user->isOnChan(tmp))
 		command._user->remove_chan(chan);
 	else
-		command._server->get_msg("ERR_NOTONCHANNEL", command._user, command);
+		command._server->send_msg("ERR_NOTONCHANNEL", command);
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?
 
 }
 
-// pb actuel : ne recupere pas le channel ( pb de ptr a priori)
+// a faire : boucle while si plss channels
+// + quitter le channel

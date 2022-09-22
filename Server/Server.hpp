@@ -2,6 +2,7 @@
 #define SERVER_HPP
 
 #include <iostream>
+#include <string>
 #include <locale>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -45,11 +46,13 @@ class Server
 		std::string							get_ip();
 		void 								set_ip(std::string ip);
 		bool								set_user(User *user);
-
-		std::locale				loc;
+		void								remove_user(User *user);
+		
+		std::locale							loc;
 
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
-		std::string				get_msg(std::string msg, User *user, Cmd &cmd);
+		// std::string				get_msg(std::string msg, User *user, Cmd &cmd);
+		std::string   			send_msg(std::string msg, Cmd &cmd);
 
 		void					set_user_in_chan(User *user, Channel *chan);
 
@@ -63,5 +66,6 @@ class Server
 		std::map<int, User *>				_users;
 };
 
+bool	mask_off(std::string mask, std::string str); //utile
 
 #endif

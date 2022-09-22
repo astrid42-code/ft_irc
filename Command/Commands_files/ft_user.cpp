@@ -6,11 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/16 15:45:03 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:21:48 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
+// #include "../../Server/Server.hpp"
 
 
 // Command: USER
@@ -51,13 +52,13 @@ void user(Cmd &command)
     if (command.get_size() != 4)
 	{
 		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), command);
 		return ;
 	}
 	// std::cout << "setting the user" << std::endl;
 	if (command.get_value()[1].compare("anonymous") == 0 || command.get_value()[2].compare("anonymous") == 0)
 	{
-		command._server->get_msg(ERR_ALREADYREGISTRED, NULL, command);
+		command._server->send_msg(ERR_ALREADYREGISTRED, command);
 	}
 	else
 	{
@@ -69,11 +70,12 @@ void user(Cmd &command)
 	command._user->set_mod("");
 	command._user->set_pwd("");
 	command._user->set_sfd(command._sfd);
-	command._server->set_user(command._user); // to remove if user is already set
-
-	command._server->get_msg("RPL_WELCOME", command._user, command);
-	command._server->get_msg("RPL_YOURHOST", command._user, command);
-	command._server->get_msg("RPL_CREATED", command._user, command);
-	command._server->get_msg("RPL_MYINFO", command._user, command);
-	command._server->get_msg("RPL_MOTD", command._user, command);
+	command._server->set_user(command._user);
+	
+	command._server->send_msg(RPL_WELCOME, command);
+	command._server->send_msg(RPL_YOURHOST, command);
+	command._server->send_msg(RPL_CREATED, command);
+	command._server->send_msg(RPL_MYINFO(command._user->get_mod(), ), command);
+	command._server->send_msg(RPL_MOTDSTART(PINGU),command);
+	command._server->send_msg(RPL_MOTD("\r\n"), command);
 }

@@ -91,6 +91,6 @@ void privmsg(Cmd &command)
     // necessite d'etre dans un channel (?)
     // command.get_value()[0] la target = le user ou le channel qui recoit le msg
     // command.get_value()[1] le msg a envoyer a la target
-    // command._server->get_msg(command.get_value()[1], NULL, command)
-    // necessaire de chercher avant get_msg quelle est la target? comment la preciser ensuite (puisque ca peut etre user ou channel)?
+    // command._server->send_msg(command.get_value()[1], NULL, command)
+    // necessaire de chercher avant send_msg quelle est la target? comment la preciser ensuite (puisque ca peut etre user ou channel)?
 }

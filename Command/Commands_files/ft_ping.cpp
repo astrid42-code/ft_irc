@@ -37,15 +37,15 @@ void ping(Cmd &command)
 {
 	std::cout << "ft_ping" << std::endl;
 	if (!command.get_value().size())
-		command._server->get_msg(ERR_NOORIGIN, NULL, command);
+		command._server->send_msg(ERR_NOORIGIN, command);
 	else if (command.get_value().size() == 1)
 	{
 		if (command.get_value()[0].compare(command._user->get_nick()) != 0)
-			command._server->get_msg(ERR_NOSUCHSERVER(command.get_value()[0]), NULL, command);
+			command._server->send_msg(ERR_NOSUCHSERVER(command.get_value()[0]), command);
 		else
 		{
-			command._server->get_msg(command._user->get_hostname() + " PONG :" + command._user->get_nick(), NULL, command);
-			std::cout << "pong" << '\n';
+			command._server->send_msg(command._user->get_hostname() + " PONG :" + command._user->get_nick() + "\r\n", command);
+			std::cout << "pong" << std::endl;
 		}
 	}
 }

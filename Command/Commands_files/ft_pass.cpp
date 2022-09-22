@@ -35,12 +35,12 @@ void pass(Cmd &command)
 	std::cout << "pass test " << command.get_key() << std::endl;
 	if (command.get_value().size() != 1)
 	{
-		command._server->get_msg(ERR_NEEDMOREPARAMS(command.get_key()), command._user, command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), command);
 		return;
 	}
 	if (command.get_value()[0] == command._user->get_name())
 	{// value[0] etant le login (get_name())
-		command._server->get_msg(ERR_ALREADYREGISTRED, NULL, command);
+		command._server->send_msg(ERR_ALREADYREGISTRED, command);
 	}
 		return;
 }
