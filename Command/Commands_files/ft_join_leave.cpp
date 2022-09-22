@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 15:41:57 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 17:40:53 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,16 @@ void join(Cmd &command){
 		// std::cout << " USER MOD : " << command._user->get_mod() << std::endl;
 	}
 	command._server->set_user_in_chan(command._user, newOne);
-	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
+	// std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
 	
 	// command._server->get_msg("RPL_NAMREPLY", command._user, command);
 	// command._server->get_msg("RPL_ENDOFNAMES", command._user, command);
 	command._server->send_msg(353, "", command._user, command);
 	command._server->send_msg(366, "", command._user, command);
-
+	
+	// std::cout << "coucou 1 senttousers" << std::endl;
+	newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());
+	// std::cout << "coucou 2 senttousers" << std::endl;
 	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
 	// et etre crees separement (le client gere ensuite)

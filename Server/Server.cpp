@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 16:13:40 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/21 18:12:28 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ bool Server::set_pp(std::string port, std::string pwd)
 		//appeler la fonction chan.delUser() qui doit remove le User usr du Channel chan
 	}
 */
-
 std::string    Server::send_msg(int rpl, std::string msg, User * user, Cmd &cmd){
 	(void)msg;
 	std::string	res = ":";
@@ -246,7 +245,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n";
 				break;
 		case 353:
 				// std::cout << "RPL_NOREPLY " << cmd.get_value()[0] << std::endl;
-				res.append(RPL_NAMREPLY(cmd.get_value()[0]));
+				res.append(RPL_NAMREPLY(cmd.get_value()[0], user->get_name()));
 				break;
 		case 366:
 				res.append(RPL_ENDOFNAMES(cmd.get_value()[0]));
