@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:19 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/14 16:35:15 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:37:05 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@
 
 void kick(Cmd &command)
 {
-	std::cout << "kick test" << '\n';  
+	std::cout << "kick test" << std::endl;  
 	if (command.get_value().size() < 2)
-		command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), command);
+		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
 	if (command._user->get_mod().find("o") != std::string::npos)
 	{
 		Channel *chan;
@@ -70,11 +70,11 @@ void kick(Cmd &command)
 				user->remove_chan(chan); // need to include comment into the kick message...
 			}
 			else
-				command._server->send_msg(ERR_USERNOTINCHANNEL(command.get_value()[1], command.get_value()[0]), command);
+				command._server->send_msg(441, ERR_USERNOTINCHANNEL(command.get_value()[1], command.get_value()[0]), command);
 		}
 		else
-			command._server->send_msg(ERR_NOSUCHCHANNEL(command.get_value()[0]), command);
+			command._server->send_msg(403, ERR_NOSUCHCHANNEL(command.get_value()[0]), command);
 	}
 	else
-		command._server->send_msg(ERR_CHANOPRIVSNEEDED(command.get_value()[0]), command);
+		command._server->send_msg(482, ERR_CHANOPRIVSNEEDED(command.get_value()[0]), command);
 }

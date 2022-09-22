@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/21 15:21:48 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:50:59 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@
 void user(Cmd &command)
 {
 	std::vector<std::string>::iterator it;
-
+// (void)command;
 	printf("ft_user\n");
     if (command.get_size() != 4)
 	{
 		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
-		command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), command);
+		command._server->send_msg(461, "ERR_NEEDMOREPARAMS", command);
 		return ;
 	}
 	// std::cout << "setting the user" << std::endl;
 	if (command.get_value()[1].compare("anonymous") == 0 || command.get_value()[2].compare("anonymous") == 0)
 	{
-		command._server->send_msg(ERR_ALREADYREGISTRED, command);
+		command._server->send_msg(462, ERR_ALREADYREGISTRED, command);
 	}
 	else
 	{
@@ -71,11 +71,22 @@ void user(Cmd &command)
 	command._user->set_pwd("");
 	command._user->set_sfd(command._sfd);
 	command._server->set_user(command._user);
+	// command._server->send_msg(375, "", command._user, command);
+	// command._server->send_msg(376, "", command._user, command);
+
+	// send_msg(375, command._user, command);
+	// send_msg(376, command._user, command);
 	
-	command._server->send_msg(RPL_WELCOME, command);
-	command._server->send_msg(RPL_YOURHOST, command);
-	command._server->send_msg(RPL_CREATED, command);
-	command._server->send_msg(RPL_MYINFO(command._user->get_mod(), ), command);
-	command._server->send_msg(RPL_MOTDSTART(PINGU),command);
-	command._server->send_msg(RPL_MOTD("\r\n"), command);
+	// command._server->send_msg("RPL_WELCOME", command._user, command);
+	// command._server->send_msg("RPL_YOURHOST", command._user, command);
+	// command._server->send_msg("RPL_CREATED", command._user, command);
+	// command._server->send_msg("RPL_MYINFO", command._user, command);
+	// command._server->send_msg("RPL_MOTD", command._user, command);
+	
+	command._server->send_msg(1, RPL_WELCOME, command);
+	command._server->send_msg(2, RPL_YOURHOST, command);
+	command._server->send_msg(3, RPL_CREATED, command);
+	command._server->send_msg(4, RPL_MYINFO, command);
+	command._server->send_msg(375, RPL_MOTDSTART, command);
+	command._server->send_msg(0, RPL_MOTD(PINGU), command);
 }

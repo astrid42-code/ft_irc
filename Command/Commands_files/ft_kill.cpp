@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:50 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:37:11 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ void kill(Cmd &command)
                 std::cout << "kill the user " << command.get_value()[0] << " with comment :" << command.get_value()[1] << std::endl;
             }
             else
-                command._server->send_msg(ERR_NOSUCHNICK(command.get_value()[0]), command);
+                command._server->send_msg(401, ERR_NOSUCHNICK(command.get_value()[0]), command);
         }
         else
-            command._server->send_msg(ERR_NOPRIVILEGES, command);
+            command._server->send_msg(481, ERR_NOPRIVILEGES, command);
     }
     else
-        command._server->send_msg(ERR_NEEDMOREPARAMS(command.get_key()), command);
+        command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
 }

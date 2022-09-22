@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:42 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:51:22 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	who(Cmd &command)
 {
 	std::map<int, User *>	users = command._server->get_users();
 	std::vector<Channel *>	chans = command._user->get_chans();
-	User					*res;
 	bool					match = false;
 
 	std::cout << "who test" << std::endl;
@@ -59,14 +58,14 @@ void	who(Cmd &command)
 		{
 			if (command.get_size() >= 1 && command.get_value()[1][0] != '0' && command.get_value()[1][0] != '*' && mask_off(command.get_value()[1], itu->second->get_hostname()))
 			{
-				if (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o") != std::string::npos)
+				if (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o"))
 				{
-					command._server->send_msg(RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
 					match = true;
 				}
 				else if (command.get_size() == 1)
 				{
-					command._server->send_msg(RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
 					match = true;
 				}
 			}
@@ -80,12 +79,12 @@ void	who(Cmd &command)
 				}
 				if (serv)
 				{
-					command._server->send_msg(RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
 					match = true;
 				}
 			}
 		}
 	}
 	if (match == true)
-		command._server->send_msg(RPL_ENDOFWHO(command._server->get_ip()), command);
+		command._server->send_msg(315, RPL_ENDOFWHO(command._server->get_ip()), command);
 }
