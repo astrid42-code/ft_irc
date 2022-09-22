@@ -164,7 +164,7 @@ void	Channel::send_to_users(std::string const &msg){
 	std::map< int, User *>::iterator it;
 	std::cout << "SENDTOUSER " << _users.size() << std::endl;
 	std::cout << "MSG = "<< msg << std::endl;
-	for (it = _users.begin(); it != _users.end(); it++){
-		send((*it)->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
-	}
+	// for (it = _users.begin(); it != _users.end(); it++){
+	// 	send((*it)->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
+	// }
 }

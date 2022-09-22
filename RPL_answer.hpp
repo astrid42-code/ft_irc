@@ -29,7 +29,7 @@
 #define RPL_AWAY(nick) (nick + " :You have been marked as being away\r\n") // 301
 	// + envoyer nick du user en arg
 
-#define RPL_UMODEIS(nick, mode, param) (" " + user + " " + mode + " " + param + "\r\n") //221 
+#define RPL_UMODEIS(nick, mode, param) (" " + user + " " + mode + " " + param + " \r\n") //221 
 	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
 
 #define RPL_WHOISUSER(nick, user, host, name) (nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
@@ -77,7 +77,7 @@
 //    command.  If there are no channels available to return,
 //    only the end reply MUST be sent.
 
-#define RPL_CHANNELMODEIS(channel, mode, mode_params) (channel + mode + mode_params + "\r\n")
+#define RPL_CHANNELMODEIS(channel, mode) (channel + mode +  "-+OovaimnqpsrtklbeI\r\n") //324
 
 #define RPL_TOPIC(channel, topic) (" " + channel + " :" + topic + "\r\n") // 332
 	// + envoyer channel et topic (sujet du chan) en arg
@@ -115,7 +115,7 @@
 #define RPL_YOUREOPER (" :You are now an IRC operator\r\n") // 381
 // RPL_YOUREOPER is sent back to a client which has just successfully issued an OPER message and gained operator status.
 
-#define ERR_NOSUCHNICK(nick) (" " nick + " :No such nick/channel\r\n") // 401
+#define ERR_NOSUCHNICK(nick) (" " + nick + " :No such nick/channel\r\n") // 401
 	// + envoyer nick du user en arg
 // Used to indicate the nickname parameter supplied to a command is currently unused.
 
@@ -218,7 +218,7 @@
 // Returned to indicate a failed attempt at registering a connection for which a password was required and
 // was either not given or incorrect.
 
-#define ERR_KEYSET(channel) (" " + channel " :Channel key already set\r\n") // 467
+#define ERR_KEYSET(channel) (" " + channel + " :Channel key already set\r\n") // 467
 
 #define ERR_CHANNELISFULL(channel) (" " + channel + " :Cannot join channel (+l)\r\n") // 471
 	// + envoyer channel en arg
