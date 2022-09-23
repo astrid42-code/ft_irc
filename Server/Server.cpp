@@ -204,10 +204,11 @@ std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 	// res.append(user->get_nick() + "!" + user->get_user() + "@" + user->get_host());
 	res.append(cmd._user->get_hostname());
 	res.append(" ");
-	if (rpl < 10){
+	
+	if (rpl < 10 && rpl != 0){
 		res.append("00" + num_rpl);
 	}
-	else
+	else if (rpl != 0)
 		res.append(num_rpl);
 	res.append(" ");
 	// std::cout << "nick = " << user->get_nick() << std::endl;
@@ -215,7 +216,7 @@ std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 		res.append("*");
 	else
 		res.append(cmd._user->get_nick());
-
+	res.append(" ");
 	res.append(msg);
 	std::cout << "send msg : |" << res << "|" << std::endl;
 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
