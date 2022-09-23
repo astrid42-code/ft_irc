@@ -56,8 +56,7 @@
 
 void invite(Cmd &command)
 {
-    // (void)command;
-    std::cout << "invite test" << '\n';
+    std::cout << "invite test" << std::endl;
     if (command.get_value().size() != 2)
     {
         std::cout << "hello1" << std::endl;
