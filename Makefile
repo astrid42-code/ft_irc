@@ -19,6 +19,7 @@ CXXFLAGS	=	-Wall -Wextra -Werror --std=c++98 -g3
 RM			=	rm -f
 
 SRCS		=	main.cpp									\
+				mask_off.cpp								\
 				Server/Server.cpp							\
 				User/User.cpp								\
 				Command/Cmd.cpp								\
@@ -40,7 +41,6 @@ SRCS		=	main.cpp									\
 				Command/Commands_files/ft_mode.cpp			\
 				Channel/Channel.cpp							
 	
-#	mask_off.cpp								\
 
 INC			=	Server User Command Channel
 

@@ -43,7 +43,10 @@ int		main(int ac, char **av)
 	if (ac == 3)
 	{
 		Server server = Server(av[1], av[2]);
-		server.init();
+		if (server.init() < 0)
+		{
+			std::cerr << "error in catching server info... need free and a real call to err." << std::endl;
+		}
 	}
 	else
 	{
@@ -52,24 +55,6 @@ int		main(int ac, char **av)
 		test();
 		return (1);
 	}
-    
-	// 1 creer un objet de la class Server server > définir ce que l'objet server contient
-	// > un objet config dans lequel on récupère port et pwd (en vérifiant qu'ils suivent les règles de taille d'irc?)
-	// + récupérer le user (prévoir qu'il peut y en avoir plsrs, les mettre dans un tableau / vector)
-	// + pvr delete les users
-	// + de même avec les channels
-
-	// test();
-	// 2 signal?
-	// 3 set le port et le pwd du server avec av1 et 2 (des possibilités d'erreurs ici)
-	// if (server.set_pp(av[1], av[2]) != true){
-	// 	// std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
-	// 	return (1);
-	// }
-	
-	// 4 initialiser (lancer?) le server
-	// 5 lancer le programme dans une boucle (while (!end) end = c'est pas fini ici)
-    
     return (0);
 }
 

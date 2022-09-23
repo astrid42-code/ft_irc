@@ -1,7 +1,5 @@
 #include "Cmd.hpp"
 
-
-
 Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 {
 	// build les fcts cmds en reliant une string a la fct ou plutot faire un make_pair()?
@@ -10,7 +8,7 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 	_cmd["NICK"] = nick;
 	_cmd["USER"] = user;
 	_cmd["QUIT"] = quit;
-	_cmd["MODE"] = NULL;
+	_cmd["MODE"] = mode;
 
 	// channel cmds
 	_cmd["JOIN"] = join;
@@ -28,7 +26,6 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
 	_cmd["PING"] = ping;
-	_cmd["MODE"] = mode;
 }
 
 Cmd::Cmd(const Cmd & cp)
@@ -178,96 +175,6 @@ void	Cmd::print(void)
 	// 	std::cout << "no server" << std::endl;
 	std::cout << "end of Cmd.print()" << std::endl;
 }
-
-
-//autres cmds possibles?
-// - PART
-// Paramètres : <nom du chan> [<commentaire>]
-// Réponses possibles : ERR_NEEDMOREPARAMS (461), ERR_NOSUCHCHANNEL (403), ERR_NOTONCHANNEL (442)
-
-// Ce message permet de sortir d'un chan. 
-// - TOPIC
-// - MODE
-// 1 Message MODE (gestion des chans et des users dans le chan)
-// Paramètres : <nom du chan> <+|-|o|p|s|i|t|n|b|v|m>+ <autres paramètres>
-// Réponses possibles : ERR_NEEDMOREPARAMS (461), ERR_NOSUCHCHANNEL (403), ERR_NOTONCHANNEL (442), ERR_NOSUCHNICK (401), ERR_CHANOPRIVSNEEDED (482), RPL_CHANNELMODEIS (324), ERR_KEYSET (467), RPL_BANLIST (367), RPL_ENDOFBANLIST (368), ERR_UNKNOWNMODE (472)
-
-// Ce message permet aux ops de modifier la configuration du chan.
-// o : ajoute ou enlève le statut d'opérateur à un membre du chan.
-// v : ajoute ou enlève le voice à un membre du chan (autorisation d'envoyer des messages au chan en état de modération).
-// b : ajoute ou enlève un ban (interdiction d'entrer sur le chan).
-
-// l : ajoute (éventuellement modifie) ou enlève le nombre maximum d'utilisateurs pouvant entrer sur le chan.
-// k : ajoute (éventuellement modifie) ou enlève la clé du chan.
-// t : interdit aux non-chanops de modifier le topic du chan.
-// i : interdit l'entrée sur le chan aux non-invités.
-// m : interdit aux non-voices de parler sur le chan (modération du chan).
-// n : interdit les messages venant de personnes n'étant pas sur le chan.
-// s : Chan secret (n'apparait pas dans les listings à moins que l'utilisateur ne soit présent sur le chan).
-// p : Chan privé (ne divulgue pas d'informations autres que l'existence du chan dans les listings à moins que l'utilisateur ne soit présent sur le chan).
-
-// 2 Message MODE (gestion des utilisateurs)
-// Paramètres : <nick> <+|-|o|i>+
-// Réponses possibles : ERR_NEEDMOREPARAMS (461), ERR_USERSDONTMATCH (502), ERR_UMODEUNKNOWNFLAG (501), RPL_UMODEIS (221)
-
-// Ce message permet d'attribuer certains pouvoirs à certains utilisateurs.
-// o : ajoute ou enlève le statut d'IRCOP.
-// i : ajoute ou enlève le statut invisible (informations réduites dans le WHOIS). 
-
-// voir egalement section 3.1 du rfc 2812
-
-// - PING
-
-
-//       Command: PING
-//    Parameters: <server1> [ <server2> ]
-
-//    The PING command is used to test the presence of an active client or
-//    server at the other end of the connection.  Servers send a PING
-//    message at regular intervals if no other activity detected coming
-//    from a connection.  If a connection fails to respond to a PING
-//    message within a set amount of time, that connection is closed.  A
-//    PING message MAY be sent even if the connection is active.
-
-//    When a PING message is received, the appropriate PONG message MUST be
-//    sent as reply to <server1> (server which sent the PING message out)
-//    as soon as possible.  If the <server2> parameter is specified, it
-//    represents the target of the ping, and the message gets forwarded
-//    there.
-
-//    Numeric Replies:
-
-//            ERR_NOORIGIN                  ERR_NOSUCHSERVER
-
-//    Examples:
-
-//    PING tolsun.oulu.fi             ; Command to send a PING message to
-//                                    server
-
-//    PING WiZ tolsun.oulu.fi         ; Command from WiZ to send a PING
-//                                    message to server "tolsun.oulu.fi"
-
-//    PING :irc.funet.fi              ; Ping message sent by server
-//                                    "irc.funet.fi"
-
-// - PONG
-
-//       Command: PONG
-//    Parameters: <server> [ <server2> ]
-
-//    PONG message is a reply to ping message.  If parameter <server2> is
-//    given, this message MUST be forwarded to given target.  The <server>
-//    parameter is the name of the entity who has responded to PING message
-//    and generated this message.
-
-//    Numeric Replies:
-
-//            ERR_NOORIGIN                  ERR_NOSUCHSERVER
-
-//    Example:
-
-//    PONG csd.bu.edu tolsun.oulu.fi  ; PONG message from csd.bu.edu to
-//                                    tolsun.oulu.fi
 
 // - AWAY
 // - ISON

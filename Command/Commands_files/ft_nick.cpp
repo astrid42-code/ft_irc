@@ -37,36 +37,24 @@
 
 void nick(Cmd &command)
 {
-	// (void)command;
 	std::cout << "ft_nick" << std::endl;
 	if (command.get_size() == 0)
 	{
 		std::cout << "no nickname given." << std::endl;
-		command._server->send_msg(431, "ERR_NONICKNAMEGIVEN", command);
+		command._server->send_msg(431, ERR_NONICKNAMEGIVEN, command);
 	}
 	else
 	{
-			// std::cout << " coucou" << std::endl;
 		if (command._server->get_user(command.get_value()[0]) == NULL && command.get_value()[0].compare("anonymous") != 0)
 		{
 			std::cout << "nickname available." << std::endl;
 			if (command._user != NULL)
-			{
-				// std::cout << "set_nick." << std::endl;
 				command._user->set_nick(command.get_value()[0]);
-				// std::cout << "set_nick2." << std::endl;
-			}
-			/*else
-			{	
-				// std::cout << "set_user." << std::endl;
-				command._server->set_user(new User(command.get_value()[0], command._sfd));
-			}*/
-
 		}
 		else
 		{
 			std::cout << "nickname already in use." << std::endl;
-			command._server->send_msg(433, "ERR_NICKNAMEINUSE", command);
+			command._server->send_msg(433, ERR_NICKNAMEINUSE(command.get_value()[0]), command);
 		}
 		// attention : tester avec ou sans la casse		
 	}

@@ -84,7 +84,7 @@ void join(Cmd &command)
 
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
-		command._server->send_msg(461, "ERR_NEEDMOREPARAMS", command);
+		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
 	std::cout << "command.get_value" << command.get_value()[0] << std::endl;
 	newOne = command._server->get_chan(command.get_value()[0]);
 	std::cout << "Else" << std::endl;
@@ -107,8 +107,8 @@ void join(Cmd &command)
 	
 	// command._server->send_msg("RPL_NAMREPLY", command);
 	// command._server->send_msg("RPL_ENDOFNAMES", command);
-	command._server->send_msg(353, "RPL_NAMREPLY", command);
-	command._server->send_msg(366, "RPL_ENDOFNAMES", command);
+	command._server->send_msg(353, RPL_NAMREPLY(newOne->get_key()), command);
+	command._server->send_msg(366, RPL_ENDOFNAMES(newOne->get_key()), command);
 	
 	// std::cout << "coucou 1 senttousers" << std::endl;
 	newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());

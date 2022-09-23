@@ -133,7 +133,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_MOTDSTART (" :- " SERVERNAME " Message of the day - \r\n") // 375
 // ou servername??
 
-#define RPL_MOTD(text) (std::string(" :- ") + text + std::string("\r\n"))
+#define RPL_MOTD(text) (text + std::string("\r\n")) //std::string(" :- ") 
 
 #define RPL_ENDOFMOTD (" :End of MOTD command\r\n") // 376
 

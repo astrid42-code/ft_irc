@@ -154,54 +154,12 @@ std::string Server::get_pwd() const
 	return (_pwd);
 }
 
-bool Server::set_pp(std::string port, std::string pwd)
-{
-	_port = port;
-	_pwd = pwd;
-	// if (_port.size() != 4){
-	// 	std::cout << "There is an error in arguments!" << std::endl;
-	// 	return (false);
-	// }
-	// for (int i = 0; i < 4; i++){
-	// 	 if (!std::isdigit(_port[i], loc)){
-	// 		std::cout << "There is an error in arguments!" << std::endl;
-	// 		return (false);
-	// 	}
-	// }
-	// verifier la taille du pwd? (verifier dans les regles si taille min/max)
-	return (true);
-}
-/*
-	void onCmdReceived(std::string cmd) // /connect 127.0.0.1 6667 // /join ChannelID // msg "ID" "salut" // "wdhqiwudhqwuidhqwudhqwiudhwquidhqwiuhdqwuihdqwhiudqwhuidhq"
-	{
-		// appeler les fonctions onConnection, onMessageReceived, onDeconnection ... en fonction
-		// du retour du parsing
-	}
-
-	void onConnection(Channel chan, User usr)
-	{
-		//appeler la fonction chan.addUser(User usr) qui doit ajouter le User usr au Channel chan
-	}
-
-	void onMessageReceived(Channel chan, User usr, std::string msg)
-	{
-		// appeler la fonction chan.message(User usr, std::string msg) qui doit envoyer le message msg
-		// a tout les User de chan sauf usr
-	}
-
-	void onDeconnection(Channel chan, User usr)
-	{
-		//appeler la fonction chan.delUser() qui doit remove le User usr du Channel chan
-	}
-*/
 std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 {
 	(void)msg;
 	std::string	res = ":";
 	std::string num_rpl = SSTR(rpl);
 
-	// res.append(SERVER);
-	// res.append(user->get_nick() + "!" + user->get_user() + "@" + user->get_host());
 	res.append(cmd._user->get_hostname());
 	res.append(" ");
 	
@@ -211,7 +169,7 @@ std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 	else if (rpl != 0)
 		res.append(num_rpl);
 	res.append(" ");
-	// std::cout << "nick = " << user->get_nick() << std::endl;
+	std::cout << "nick = " << cmd._user->get_nick() << std::endl;
 	if (cmd._user->get_nick() == "")
 		res.append("*");
 	else
@@ -223,21 +181,10 @@ std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 	return (res);
 }
 
-
-// std::string Server::send_msg(std::string msg, User *user, Cmd &cmd)
-// std::string Server::get_msg(std::string msg, User *user, Cmd &cmd)
-// {
-// 	std::string	res = ":";
-	
-// 	res.append(msg);
-// 	std::cout << "send msg : |" << res << "|" << std::endl;
-// 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
-// 	return (res);
-// }
-
 static int make_socket_non_blocking(int sfd)
 {
 	int flags, s;
+
 	flags = fcntl(sfd, F_GETFL, 0);
 	if (flags == -1)
 	{
@@ -259,6 +206,7 @@ static int create_and_bind(std::string port)
 	struct addrinfo hints;
 	struct addrinfo *result, *rp;
 	int s, sfd;
+
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_UNSPEC;		 /* Return IPv4 and IPv6 choices */
 	hints.ai_socktype = SOCK_STREAM; /* We want a TCP socket */
@@ -275,11 +223,8 @@ static int create_and_bind(std::string port)
 		if (sfd == -1)
 			continue;
 		s = bind(sfd, rp->ai_addr, rp->ai_addrlen);
-		if (s == 0)
-		{
-			/* We managed to bind successfully! */
+		if (s == 0) /* We managed to bind successfully! */
 			break;
-		}
 		close(sfd);
 	}
 	if (rp == NULL)
@@ -293,14 +238,13 @@ static int create_and_bind(std::string port)
 
 void pre_parse(std::string buf, int sfd, Server *serv)
 {
-	int pos = 0;
+	std::size_t pos = 0;
 	std::string token;
 
 	std::cout << "buf = " << buf << std::endl;
 	User *usr = serv->get_user(sfd);
 	usr->buf.append(buf);
-	std::cout << "usr->buf.find(\"/r/n\", pos) :|" << usr->buf.find("\r\n", pos) << std::endl;
-	while (pos <= (int)usr->buf.length() && usr->buf.find("\r\n", 0) < usr->buf.npos)
+	while (pos < usr->buf.length() && usr->buf.find("\r\n", pos) != std::string::npos)
 	{
 		// std::cout << "Command " << std::endl;
 		Cmd *command = new Cmd();
@@ -319,19 +263,16 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 			std::cout << "_____UserFromFd_____" << std::endl;
 			command->_user->print();
 		}
-		// std::cout << "after get_user_fd " << std::endl;
-		if (usr->buf.find("\r\n", pos) < usr->buf.npos)
+		if ((usr->buf.find("\r\n", pos)) != std::string::npos)
 		{
 			token = usr->buf.substr(pos, usr->buf.find("\r\n", pos) - pos);
-			usr->buf.replace(0, usr->buf.find("\r\n", pos)+2, "");
+			usr->buf = usr->buf.substr(usr->buf.find("\r\n", pos) + 2);
 		}
-		pos = usr->buf.find("\n", pos) + 1;
+		else
+			pos = usr->buf.length();
+		std::cout << "token :|" << token << "|" << std::endl;
 		command->parse_cmd(token);
 		delete command;
-		if (pos > (int)usr->buf.length())
-		{
-			break ;
-		}
 	}
 }	
 

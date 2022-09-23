@@ -52,7 +52,7 @@ void user(Cmd &command)
     if (command.get_size() != 4)
 	{
 		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
-		command._server->send_msg(461, "ERR_NEEDMOREPARAMS", command);
+		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
 		return ;
 	}
 	// std::cout << "setting the user" << std::endl;

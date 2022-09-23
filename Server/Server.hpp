@@ -31,7 +31,6 @@ class Server
 
 		std::string							get_port() const;
 		std::string							get_pwd() const;
-		bool								set_pp(std::string port, std::string pwd); // parse et set le port et le pwd
 		void								onCmdReceived(std::string cmd);
 		void								onConnection(Channel chan);
 		void								onMessageReceived(Channel chan, User usr);
