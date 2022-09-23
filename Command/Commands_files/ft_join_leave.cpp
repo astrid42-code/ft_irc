@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:35:15 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/23 18:02:55 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,13 @@ void join(Cmd &command)
 		// 	command._server->set_user_in_chan(command._user, newOne);
 		command._server->set_user_in_chan(command._user, newOne);
 	}
-	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
+	// std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
 	
+	// std::cout << "coucou chan = " << newOne->get_name() << std::endl;
 	// command._server->send_msg("RPL_NAMREPLY", command);
 	// command._server->send_msg("RPL_ENDOFNAMES", command);
-	command._server->send_msg(353, RPL_NAMREPLY(newOne->get_key()), command);
-	command._server->send_msg(366, RPL_ENDOFNAMES(newOne->get_key()), command);
+	command._server->send_msg(353, RPL_NAMREPLY(newOne->get_name()), command);
+	command._server->send_msg(366, RPL_ENDOFNAMES(newOne->get_name()), command);
 	
 	// std::cout << "coucou 1 senttousers" << std::endl;
 	newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());
