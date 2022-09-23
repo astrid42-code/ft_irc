@@ -60,7 +60,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_WHOISUSER(nick, user, host, name) (nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
 	// + envoyer nick du user, user (?), host et real name en arg
 
-#define RPL_WHOISSERVER(nick, server_info) (nick + " " + SERVER + " :" + server_info + "\r\n") // 312
+#define RPL_WHOISSERVER(nick, server_info) (nick + " " + SERVERNAME + " :" + server_info + "\r\n") // 312
 	// + envoyer nick du user et server info (?)
 
 #define RPL_WHOISOPERATOR(nick) (nick + " :is an IRC operator\r\n") // 313
@@ -130,7 +130,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 //            server back to the client.  If there is no channel
 //            found as in the query, then only RPL_ENDOFNAMES is
 
-#define RPL_MOTDSTART (" :- " SERVER "Message of the day - \r\n") // 375
+#define RPL_MOTDSTART (" :- " SERVERNAME " Message of the day - \r\n") // 375
 // ou servername??
 
 #define RPL_MOTD(text) (std::string(" :- ") + text + std::string("\r\n"))

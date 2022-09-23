@@ -155,3 +155,13 @@ msgs a l'ouverture d'un channel
 
 a la fermeture :
 End of /WHO list
+
+
+pbs:
+- fichier mask
+- leave: ne reconnait plus le channel
+- nick mis a 001_ dans nick.cpp (modifie le nick)
+- err 353 et 366 concatenes avec le nick :
+send msg : |:asgaulti!001_@localhost 353 001_RPL_NAMREPLY|
+send msg : |:asgaulti!001_@localhost 366 001_RPL_ENDOFNAMES|
+- 
