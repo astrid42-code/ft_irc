@@ -60,20 +60,44 @@ void kick(Cmd &command)
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(),command.get_key()), command._sfd);
 	if (command._user->get_mod().find("o") != std::string::npos)
 	{
-		Channel *chan;
-		if ((chan = command._server->get_chan(command.get_value()[0])) != NULL)
+		Channel						*chan;
+		User						*user;
+		std::vector<std::string>	chans = div_string(command.get_value()[0], ',');
+		std::vector<std::string>	users = div_string(command.get_value()[1], ',');
+
+		if (chans.size() == 1)
 		{
-			User *user;
-			if ((user = chan->get_user(command.get_value()[1])) != NULL)
+			if ((chan = command._server->get_chan(chans[0])) != NULL)
 			{
-				std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
-				user->remove_chan(chan); // need to include comment into the kick message...
+				if ((user = chan->get_user(users[0])) != NULL)
+				{
+					std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
+					user->remove_chan(chan); // need to include comment into the kick message...
+				}
+				else
+					command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),command.get_value()[1], command.get_value()[0]), command._sfd);
 			}
 			else
-				command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),command.get_value()[1], command.get_value()[0]), command._sfd);
+				command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 		}
-		else
-			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+		else if (chans.size() > 1 && chans.size() == users.size())
+		{
+			for (size_t i = 0; i < chans.size(); i++)
+			{
+				if ((chan = command._server->get_chan(chans[i])) != NULL)
+				{
+					if ((user = chan->get_user(users[i])) != NULL)
+					{
+						std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
+						user->remove_chan(chan); // need to include comment into the kick message...
+					}
+					else
+						command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),users[i], chans[i]), command._sfd);
+				}
+				else
+					command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			}
+		}
 	}
 	else
 		command._server->send_msg(ERR_CHANOPRIVSNEEDED(command._user->get_hostname(), command.get_value()[0]), command._sfd);

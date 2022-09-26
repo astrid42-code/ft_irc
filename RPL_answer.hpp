@@ -63,7 +63,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_UMODEIS(localhost, nick, mode, param) (":" + localhost + " 221 " + nick + " :+" + mode + "" + param + " \r\n") //221 
 	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
 
-#define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 : " + nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
+#define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 : " + nick + " " + user + " " + host + " * :" + name + "\r\n") // 311
 	// + envoyer nick du user, user (?), host et real name en arg
 
 #define RPL_WHOISSERVER(localhost, nick, server_info) (":" + localhost + " 312 : " + nick + " " + SERVERNAME + " :" + server_info + "\r\n") // 312

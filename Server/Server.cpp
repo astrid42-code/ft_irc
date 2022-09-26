@@ -454,7 +454,7 @@ User	*Server::get_user(int key)
 
 User	*Server::get_user(std::string nick)
 {
-	std::cout << "OUAI" << std::endl;
+	// std::cout << "OUAI" << std::endl;
 	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
 	{
 		std::cout << "get_user boucle" << std::endl;

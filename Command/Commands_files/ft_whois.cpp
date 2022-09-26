@@ -57,7 +57,7 @@
 								   
 void	whois(Cmd &command)
 {
-	bool						user_found = false;
+	// bool						user_found = false;
 	User						*user = NULL;
 	std::map<int, User *>		users = command._server->get_users();
 	std::vector<std::string>	args;
@@ -72,9 +72,14 @@ void	whois(Cmd &command)
 			{
 				for (std::map<int, User *>::iterator at = users.begin(); at != users.end(); at++)
 				{
-					if (at->second->find_mod("i") == std::string::npos && mask_off(*it, at->second->get_hostname()))
+					if (at->second->find_mod("i") && (mask_off(*it, at->second->get_hostname())))
 					{
-						
+						if (user->find_mod("a"))
+							command._server->send_msg(RPL_AWAY(command._user->get_hostname(), at->second->get_nick(), at->second->get_away()), command._sfd);
+						command._server->send_msg(RPL_WHOISUSER(command._user->get_hostname(), at->second->get_nick(), at->second->get_user(), at->second->get_host(), at->second->get_name()), command._sfd);
+						if (user->find_mod("o"))
+							command._server->send_msg(RPL_WHOISOPERATOR(command._user->get_hostname(), at->second->get_nick()), command._sfd);
+						command._server->send_msg(RPL_ENDOFWHOIS(command._user->get_hostname(), command._user->get_nick()), command._sfd);
 					}
 				}
 			}
@@ -82,6 +87,7 @@ void	whois(Cmd &command)
 			{
 				if ((user = command._server->get_user(*it)) != NULL)
 				{
+					std::cout << "user found :" << user->get_nick() << std::endl;
 					if (!user->find_mod("i"))
 					{
 						if (user->find_mod("a"))
@@ -93,7 +99,10 @@ void	whois(Cmd &command)
 					}
 				}
 				else
+				{
+					std::cout << "user not found :" << std::endl;
 					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), *it), command._sfd);
+				}
 			}
 		}
 	}
