@@ -178,7 +178,6 @@ void			Channel::print(void)
 
 void	Channel::remove_user(User *user)
 {
-	// (void)user;
 	std::cout << "remove_user sfd = " << user->get_sfd() << std::endl;
 	_users.erase(user->get_sfd());
 }

@@ -130,7 +130,8 @@ void	join(Cmd &command)
 		{
 			std::map< int, User *>	users = chan->get_users();
 			chan->send_to_users(":" + command._user->get_hostname() + " JOIN " + chan->get_name());
-			command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_key(), chan->get_topic()), command._sfd);
+			if (!chan->get_topic().empty())
+				command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_key(), chan->get_topic()), command._sfd);
 			for (std::map< int, User *>::iterator it = users.begin(); it != users.end(); it++)
 				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key(), it->second->get_nick()), command._sfd);
 			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), chan->get_key()), command._sfd);
