@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-// #include "../../RPL_answer.hpp"
-#include "../../RPL_answer2.hpp"
+#include "../../RPL_answer.hpp"
+//#include "../../RPL_answer2.hpp"
 
 // Command: PASS
 //    Parameters: <password>
@@ -36,16 +36,16 @@ void pass(Cmd &command)
     std::cout << "pass test " << command.get_key() << std::endl;
     if (command.get_value().size() != 1)
 	{
-        command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
+        command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
         return;
     }
     if (command.get_value()[0] == command._user->get_name())
 	{// value[0] etant le login (get_name())
-		command._server->send_msg(462, ERR_ALREADYREGISTRED, command);
+		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
 	}
 	if (command.get_value()[0] == command._user->get_name())
 	{// value[0] etant le login (get_name())
-		command._server->send_msg(462, ERR_ALREADYREGISTRED, command);
+		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
 	}
 		return;
 }

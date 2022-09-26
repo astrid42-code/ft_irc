@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-// #include "../../RPL_answer.hpp"
-#include "../../RPL_answer2.hpp"
+#include "../../RPL_answer.hpp"
+//#include "../../RPL_answer2.hpp"
 #include "../../Server/Server.hpp"
 
 
@@ -85,7 +85,7 @@ void join(Cmd &command)
 
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
-		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 	std::cout << "command.get_value " << command.get_value()[0] << std::endl;
 	newOne = command._server->get_chan(command.get_value()[0]);
 	std::cout << "Else" << std::endl;
@@ -109,7 +109,6 @@ void join(Cmd &command)
 	else
 		newOne->set_topic("");
 	// std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
-	command._server->send_msg(42, newOne->get_name(), command);
 	
 
 	
@@ -163,7 +162,7 @@ void part(Cmd &command)
 	std::cout << "size " << command.get_value().size() << std::endl;
 	if (command.get_value().size() < 1)
 	{
-		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 		return;
 	}
 	std::cout << "chan " << command.get_value()[0] << std::endl;
@@ -171,7 +170,7 @@ void part(Cmd &command)
 	if (chan == NULL)
 	{
 		std::cout << "chan null" << std::endl;
-		command._server->send_msg(403, ERR_NOSUCHCHANNEL(command.get_value()[0]), command);
+		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 		return;
 	}
 	else
@@ -190,10 +189,9 @@ void part(Cmd &command)
 		//command._user->remove_chan(chan);
 	}
 	else
-		command._server->send_msg(442, ERR_NOTONCHANNEL(command.get_value()[0]), command);
+		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?
-
 }
 
 // a faire : boucle while si plss channels

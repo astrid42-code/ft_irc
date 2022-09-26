@@ -53,9 +53,9 @@ void list(Cmd &command)
 		for (std::map<std::string, Channel *>::iterator it = chan.begin(); it != chan.end(); it++)
 		{
 			if (it->second->get_mod().find('s') == std::string::npos && it->second->get_mod().find('p') == std::string::npos)
-				command._server->send_msg(322, RPL_LIST(it->first, it->second->get_mod(), it->second->get_topic()), command);
+				command._server->send_msg(RPL_LIST(command._user->get_hostname(), it->first, it->second->get_mod(), it->second->get_topic()), command._sfd);
 		}
-		command._server->send_msg(323, RPL_LISTEND, command);
+		command._server->send_msg(RPL_LISTEND(command._user->get_hostname()), command._sfd);
 	}
 	else
 	{
@@ -75,13 +75,13 @@ void list(Cmd &command)
 			if ((chan = command._server->get_chan(tmp)) != NULL)
 			{
 				if (chan->get_mod().find('s') == std::string::npos && chan->get_mod().find('p') == std::string::npos)
-					command._server->send_msg(322, RPL_LIST(chan->get_key(), chan->get_mod(), chan->get_topic()), command);
+					command._server->send_msg(RPL_LIST(command._user->get_hostname(), chan->get_key(), chan->get_mod(), chan->get_topic()), command._sfd);
 			}
 			else
-				command._server->send_msg(402, ERR_NOSUCHSERVER, command);
+				command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname()), command._sfd);
 			
 		}
-		command._server->send_msg(323, RPL_LISTEND, command);
+		command._server->send_msg(RPL_LISTEND(command._user->get_hostname()), command._sfd);
 	}
 	// tant que la liste de channels (separes par une ,) n est pas finie
 	// verifier si le channel existe dans la map de channels (et si arg[1] rajouter le topic associe)

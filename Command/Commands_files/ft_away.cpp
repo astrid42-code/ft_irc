@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-// #include "../../RPL_answer.hpp"
-#include "../../RPL_answer2.hpp"
+#include "../../RPL_answer.hpp"
+//#include "../../RPL_answer2.hpp"
 #include "../../Server/Server.hpp"
 
 // Command: AWAY
@@ -49,10 +49,9 @@ void	away(Cmd &command)
 	
 	std::cout << "away msg1 " << command.get_value()[0] << std::endl;
 	if (command.get_value()[0] == ""){
-		msg = AWAY_DEFAULT;
+		//msg = AWAY_DEFAULT;
 	}
 	else
 		msg = command.get_value()[0];
 	
-	command._server->send_msg(301, RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), msg), command);
 }

@@ -41,7 +41,7 @@ void nick(Cmd &command)
 	if (command.get_size() == 0)
 	{
 		std::cout << "no nickname given." << std::endl;
-		command._server->send_msg(431, ERR_NONICKNAMEGIVEN, command);
+		command._server->send_msg(ERR_NONICKNAMEGIVEN(command._user->get_hostname()), command._sfd);
 	}
 	else
 	{
@@ -54,7 +54,7 @@ void nick(Cmd &command)
 		else
 		{
 			std::cout << "nickname already in use." << std::endl;
-			command._server->send_msg(433, ERR_NICKNAMEINUSE(command.get_value()[0]), command);
+			command._server->send_msg(ERR_NICKNAMEINUSE(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 		}
 		// attention : tester avec ou sans la casse		
 	}

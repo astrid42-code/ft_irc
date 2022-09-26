@@ -154,16 +154,12 @@ std::string Server::get_pwd() const
 	return (_pwd);
 }
 
-std::string	Server::send_msg(int rpl, std::string msg, Cmd &cmd)
+int	Server::send_msg(std::string msg, int sfd)
 {
-	std::string	res = ":";
-	std::string num_rpl = SSTR(rpl);
-
-	res.append(msg);
-	
-	std::cout << "send msg : |" << res << "|" << std::endl;
-	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
-	return (res);	
+	int res;
+	std::cout << "send msg : |" << msg << "|" << std::endl;
+	res = send(sfd, msg.c_str(), msg.length(), MSG_CONFIRM);
+	return (res);
 }
 
 

@@ -63,11 +63,11 @@ void names(Cmd &command)
 			for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
 			{
 				if (it->second->get_mod().find("i") == std::string::npos)
-					command._server->send_msg(353, RPL_NAMREPLY(chan->get_key()), command);
+					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key()), command._sfd);
 			}
-			command._server->send_msg(366, RPL_ENDOFNAMES(chan->get_key()), command);
+			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), chan->get_key()), command._sfd);
 		}
 		else
-			command._server->send_msg(402, ERR_NOSUCHSERVER, command);
+			command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname()), command._sfd);
 	}
 }

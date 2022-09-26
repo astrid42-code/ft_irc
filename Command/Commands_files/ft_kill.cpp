@@ -74,11 +74,11 @@ void kill(Cmd &command)
                 std::cout << "kill the user " << command.get_value()[0] << " with comment :" << command.get_value()[1] << std::endl;
             }
             else
-                command._server->send_msg(401, ERR_NOSUCHNICK(command.get_value()[0]), command);
+                command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(),command.get_value()[0]), command._sfd);
         }
         else
-            command._server->send_msg(481, ERR_NOPRIVILEGES, command);
+            command._server->send_msg(ERR_NOPRIVILEGES(command._user->get_hostname()), command._sfd);
     }
     else
-        command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
+        command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 }
