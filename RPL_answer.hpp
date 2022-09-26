@@ -60,7 +60,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_NOWAWAY(localhost) (":" + localhost + " 306 :You have been marked as being away\r\n") //306
 
-#define RPL_UMODEIS(localhost, nick, mode, param) (":" + localhost + " 221 :" + mode + " " + param + " \r\n") //221 
+#define RPL_UMODEIS(localhost, nick, mode, param) (":" + localhost + " 221 " + nick + " :" + mode + " " + param + " \r\n") //221 
 	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
 
 #define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 : " + nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
@@ -245,7 +245,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server to any link which tries to change part of the registered details (such as
 // password or user details from second USER message).
 
-#define ERR_PASSWDMISMATCH(localhost) (":" + localhost + " 464 :Password incorrect\r\n") // 464
+#define ERR_PASSWDMISMATCH(localhost, nick) (":" + localhost + " 464 " + nick + " :Password incorrect\r\n") // 464
 // Returned to indicate a failed attempt at registering a connection for which a password was required and
 // was either not given or incorrect.
 
