@@ -140,10 +140,6 @@ void Server::set_ip(std::string ip)
 	}
 }
 
-/*std::string Server::form_msg(int code, std::string msg, User usr){
-	return (msg);
-}
-*/
 std::string Server::get_port() const
 {
 	return (_port);
@@ -227,13 +223,9 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 	usr->buf.append(buf);
 	while (pos < usr->buf.length() && usr->buf.find("\r\n", pos) != std::string::npos)
 	{
-		// std::cout << "Command " << std::endl;
 		Cmd *command = new Cmd();
-		// std::cout << "serv " << std::endl;
 		command->_server = serv;
-		// std::cout << "sfd " << std::endl;
 		command->_sfd = sfd;
-		// std::cout << "get_user_fd " << std::endl;
 		command->_user = command->get_user_fd();
 		if (command->_user == NULL)
 		{

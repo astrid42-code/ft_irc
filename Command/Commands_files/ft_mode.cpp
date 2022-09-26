@@ -164,7 +164,6 @@ bool		check_mode_string(Cmd &command, std::string mods)
 
 void		mode_user(Cmd &command)
 {
-	// (void)command;
 	if (command.get_value()[0].compare(command._user->get_nick()) == 0)
 	{
 		std::cout << "the user given in parameter match the user" << std::endl;
