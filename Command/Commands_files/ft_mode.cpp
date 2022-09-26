@@ -171,7 +171,7 @@ void		mode_user(Cmd &command)
 		if (command.get_size() == 1)
 		{
 			std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
-			command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_nick(), command._user->get_mod(), ""), command._sfd);
+			command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
 		}
 		else
 		{
@@ -235,4 +235,5 @@ void		mode(Cmd &command)
 		std::cout << "err need more params" << std::endl;
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 	}
+	command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
 }

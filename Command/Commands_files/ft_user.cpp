@@ -83,6 +83,7 @@ void user(Cmd &command)
 	command._server->send_msg(RPL_MOTDSTART(command._user->get_hostname()) , command._sfd);
 	command._server->send_msg(RPL_MOTD(command._user->get_hostname(), PINGU) , command._sfd);
 	command._server->send_msg(RPL_ENDOFMOTD(command._user->get_hostname()) , command._sfd);
+	std::cout << "MODE : " << command._user->get_mod() << std::endl;
 	//command._server->send_msg(RPL_MYINFO(command._user->get_hostname()),command._sfd);
 	// //command._server->send_msg("RPL_WELCOME", command._user, command);
 	// //command._server->send_msg("RPL_YOURHOST", command._user, command);
