@@ -19,7 +19,7 @@ CXXFLAGS	=	-Wall -Wextra -Werror --std=c++98 -g3
 RM			=	rm -f
 
 SRCS		=	main.cpp									\
-				mask_off.cpp								\
+				utils.cpp								\
 				Server/Server.cpp							\
 				User/User.cpp								\
 				Command/Cmd.cpp								\

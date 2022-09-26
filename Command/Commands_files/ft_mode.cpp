@@ -12,8 +12,6 @@ std::string	get_user_mode_string(User *user, std::string arg)
 		res = user->get_mod();
 	if (arg.find("+") != std::string::npos)
 	{
-		if (arg.find('a') != std::string::npos && res.find('a') == std::string::npos)
-			res = res.append("a"); // ou utiliser la fct away?
 		if (arg.find('i') != std::string::npos && res.find('i') == std::string::npos)
 			res = res.append("i");
 		if (arg.find('w') != std::string::npos && res.find('w') == std::string::npos)

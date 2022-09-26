@@ -28,6 +28,8 @@ class Channel
 		std::string						get_topic() const;
 		std::string						get_key() const;
 		unsigned int					get_limit() const;
+		std::string						get_mask() const;
+
 		void							set_name(std::string name);
 		void							set_users(std::map<int, User *> users);
 		bool							set_user(User *user);
@@ -37,6 +39,8 @@ class Channel
 		void							set_topic(std::string topic);
 		void							set_key(std::string key);
 		void							set_limit(unsigned int limit);
+		void							set_mask(std::string mask);
+
 		void							print(void);
 	
 		void							remove_user(User *user);
@@ -51,6 +55,7 @@ class Channel
 		std::string						_mod;
 		std::string						_topic;
 		std::string						_key;
+		std::string						_mask;
 		unsigned int					_limit;
 
 		//	MODS

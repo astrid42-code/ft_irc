@@ -64,6 +64,8 @@ class Server
 		std::map<int, User *>				_users;
 };
 
-bool	mask_off(std::string mask, std::string str); //utile
+//utils.cpp
+std::vector<std::string>	div_string(std::string str, char c);
+bool						mask_off(std::string mask, std::string str);
 
 #endif

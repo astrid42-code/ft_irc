@@ -54,7 +54,7 @@ void	who(Cmd &command)
 	std::cout << "who test" << std::endl;
 	for (std::map<int, User *>::iterator itu = users.begin(); itu != users.end(); itu++)
 	{
-		if (itu->second != command._user && itu->second->get_mod().find('i') == std::string::npos)
+		if (itu->second->get_mod().find('i') == std::string::npos)//itu->second != command._user && 
 		{
 			if (command.get_size() >= 1 && command.get_value()[1][0] != '0' && command.get_value()[1][0] != '*' && mask_off(command.get_value()[1], itu->second->get_hostname()))
 			{

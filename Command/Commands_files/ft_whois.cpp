@@ -84,8 +84,7 @@ void	whois(Cmd &command)
 					if (user->find_mod("o"))
 						command._server->send_msg(RPL_WHOISOPERATOR(command._user->get_hostname(), user->get_nick()), command._sfd);
 					if (user->find_mod("a"))
-						command._server->send_msg(RPL_AWAY(command._user->get_hostname(), user->get_nick()), command._sfd);
-					//away(command);
+						command._server->send_msg(RPL_AWAY(command._user->get_hostname(), user->get_nick(), user->get_away()), command._sfd);
 					command._server->send_msg(RPL_ENDOFWHOIS(command._user->get_hostname(), command._user->get_nick()), command._sfd);
 				}
 			}

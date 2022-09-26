@@ -149,6 +149,11 @@ std::string				User::get_hostname() const
 	return (_user + "!" + _nick + "@" + _host);
 }
 
+std::string				User::get_away() const
+{
+	return (_away);
+}
+
 void	User::set_user(std::string user)
 {
 	_user = user;
@@ -226,6 +231,11 @@ void	User::set_chan(Channel &chan)
 		std::cout << "it chan user : " << *it << std::endl;
 		
 	}
+}
+
+void	User::set_away(std::string msg)
+{
+	_away = msg;
 }
 
 // void	User::set_chan(Channel *chan){

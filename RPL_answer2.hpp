@@ -54,6 +54,10 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_AWAY(localhost, nick, msg) (localhost + " 301 " + nick + " :" + msg + "\r\n") // 301
 	// + envoyer nick du user en arg
 
+#define RPL_UNAWAY (":You are no longer marked as being away") //305
+
+#define RPL_NOWAWAY (":You have been marked as being away") //306
+
 #define ERR_UMODEUNKNOWNFLAG (" :Unknown MODE flag\r\n") //501
 // Returned by the server to indicate that a MODE message was sent with a nickname parameter and that
 // the a mode flag sent was not recognized. 

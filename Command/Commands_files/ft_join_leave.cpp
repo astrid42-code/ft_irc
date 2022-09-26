@@ -12,7 +12,6 @@
 
 #include "../Cmd.hpp"
 #include "../../RPL_answer.hpp"
-//#include "../../RPL_answer2.hpp"
 #include "../../Server/Server.hpp"
 
 
@@ -79,46 +78,64 @@
 //    :WiZ!jto@tolsun.oulu.fi JOIN #Twilight_zone ; JOIN message from WiZ
 //                                    on channel #Twilight_zone
 
-void join(Cmd &command)
+int		join_conditions(Channel *chan)
 {
-	Channel *newOne = NULL;
+	if (chan->get_mod().find("i") != std::string::npos)
+		return (0);
+	if ((chan->get_mod().find("I") != std::string::npos) && (chan->get_limit() == chan->get_users().size()))
+		return (0);
+	
+	return (1);
+}
+
+void	join(Cmd &command)
+{
+	Channel 					*chan = NULL;
+	std::vector<std::string>	chans;
+	bool						valid;
 
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
-	std::cout << "command.get_value " << command.get_value()[0] << std::endl;
-	newOne = command._server->get_chan(command.get_value()[0]);
-	std::cout << "Else" << std::endl;
-	if(newOne == NULL)
+	chans = div_string(command.get_value()[0], ',');
+	for (std::vector<std::string>::iterator it = chans.begin(); it != chans.end(); it++)
 	{
-		//std::cout << "NULL" << std::endl;
-		newOne = new Channel(command.get_value()[0]);
-		command._server->set_chan(newOne);
-		std::cout << "NEW CHAN : |" << newOne->get_name() << "|" << std::endl;
-		command._server->set_user_in_chan(command._user, newOne);
-		command._user->set_mod(command._user->get_mod() + "o");
+		valid = false;
+		if (!(chan = command._server->get_chan(*it)))
+		{
+			std::cout << "chanel creation..." << std::endl;
+			chan = new Channel(*it);
+			if (!command._server->set_chan(chan))
+				command._server->send_msg(ERR_UNAVAILRESOURCE(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			else
+			{
+				std::cout << "NEW CHAN : |" << chan->get_name() << "|" << std::endl;
+				command._server->set_user_in_chan(command._user, chan);
+				command._user->set_mod(command._user->get_mod() + "o");
+				valid = true;
+			}
+		}
+		else
+		{
+			std::cout << "user joining chanel..." << std::endl;
+			if (join_conditions(chan))
+			{
+					command._server->set_user_in_chan(command._user, chan);
+					valid = true;
+			}
+			else
+				command._server->send_msg(ERR_BADCHANMASK(command._user->get_hostname(), chan->get_key()), command._sfd);
+		}
+		if (valid == true)
+		{
+			std::map< int, User *>	users = chan->get_users();
+			chan->send_to_users(":" + command._user->get_hostname() + " JOIN " + chan->get_name());
+			command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_key(), chan->get_topic()), command._sfd);
+			for (std::map< int, User *>::iterator it = users.begin(); it != users.end(); it++)
+				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key(), it->second->get_nick()), command._sfd);
+			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), chan->get_key()), command._sfd);
+		}
 	}
-	else //for mode 'i' in chan you need a correct hostname to get into the chan or get invited by an op
-	{
-		// if (newOne->get_mod().find("i") != std::string::npos && command._user->get_hostname().find(""))
-		// 	command._server->set_user_in_chan(command._user, newOne);
-		command._server->set_user_in_chan(command._user, newOne);
-	}
-	if (command.get_value().size() == 2)
-		newOne->set_topic(command.get_value()[1]);
-	else
-		newOne->set_topic("");
-	// std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
-	
-
-	
-	// std::cout << "coucou 1 senttousers" << std::endl;
-	// newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());
-	// std::cout << "coucou 2 senttousers" << std::endl;
-	
-	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
-	// et etre crees separement (le client gere ensuite)
-	// a faire a la fin avec une boucle while ou for
 }
 
 // si user deja dans un channel, /join ce meme channel ne fait rien

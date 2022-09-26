@@ -12,6 +12,8 @@
 #define DATE "Mon Aug 25 16:57:33 2022"
 #define DEFAULT_NAME "toto"
 
+#define AWAY_DEFAULT (":You have been marked as being away")
+
 #define PINGU ("\n\
 dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
 HHP%%#%%%%%%%%%%%%%%%%#%%%%%%%#%%VHH \n\
@@ -51,10 +53,14 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg
 
-#define RPL_AWAY(localhost, nick) (":" + localhost + " 301 :" + nick + " :You have been marked as being away\r\n") // 301
+#define RPL_AWAY(localhost, nick, msg) (":" + localhost + " 301 :" + nick + msg + "\r\n") // 301
 	// + envoyer nick du user en arg
 
-#define RPL_UMODEIS(localhost, user, mode) (":" + localhost + " 221 " + user + " :+" + mode + " \r\n") //221 
+#define RPL_UNAWAY(localhost) (":" + localhost + " 305 :You are no longer marked as being away\r\n") //305
+
+#define RPL_NOWAWAY(localhost) (":" + localhost + " 306 :You have been marked as being away\r\n") //306
+
+#define RPL_UMODEIS(localhost, nick, mode, param) (":" + localhost + " 221 :" + mode + " " + param + " \r\n") //221 
 	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
 
 #define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 : " + nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
@@ -119,8 +125,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_WHOREPLY(localhost, channel, user, host, nick, name) (":" + localhost + " 352 : " + channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
 	// envoyer les args
 
-// #define RPL_NAMREPLY(channel, user) (" = " + channel + " :" + user) // 353
-#define RPL_NAMREPLY(localhost, channel) (":" + localhost + " 353 : = " + channel + "\r\n" ) // 353 + " :" + nicks??
+#define RPL_NAMREPLY(localhost, channel, nick) (":" + localhost + " 353 : = " + channel + ": " + nick + "\r\n" ) // 353 + " :" + nicks??
 	// + envoyer channel et nick du user en arg
 //  - "@" is used for secret channels, "*" for private
 //    channels, and "=" for others (public channels).

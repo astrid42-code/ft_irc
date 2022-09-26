@@ -39,8 +39,7 @@ class User
 		Channel					*get_channel(std::string name);
 		std::string				get_channel_name();
 		std::vector<Channel *>	get_chans() const;
-		// std::string		get_chan(int i) const;
-		// int				get_vchan_size() const;
+		std::string				get_away() const;
 
 		void			set_user(std::string user);
 		void			set_name(std::string name);
@@ -51,7 +50,7 @@ class User
 		void			set_operator(int op);
 		void			set_sfd(int sfd);
 		void			set_chan(Channel &chan);
-		// void			set_chan(Channel *chan);
+		void			set_away(std::string msg);
 
 		bool			check_nick(std::string new_nick);
 		bool			find_mod(std::string mod);
@@ -72,6 +71,7 @@ class User
 		std::string				_host;
 		int						_sfd;
 		int						_operator;
+		std::string				_away;
 		std::vector<Channel *>	_vchan; // liste des channels dans lesquels le user est connecte (quand il join)
 };
 

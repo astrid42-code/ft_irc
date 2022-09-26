@@ -63,7 +63,7 @@ void names(Cmd &command)
 			for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
 			{
 				if (it->second->get_mod().find("i") == std::string::npos)
-					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key()), command._sfd);
+					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key(), it->second->get_nick()), command._sfd);
 			}
 			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), chan->get_key()), command._sfd);
 		}
