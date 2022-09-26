@@ -194,21 +194,21 @@ void	User::set_sfd(int sfd)
 void	User::set_mod(std::string mod)
 {
 	// std::cout << " mode a ? " << mod << std::endl;
-	if (_mod.find("a") == std::string::npos && mod.find("a") != std::string::npos)
-		_mod += "a";
-		
-	else if (_mod.find("i") == std::string::npos && mod.find("i") != std::string::npos)
-		_mod += "i";
-	else if (_mod.find("w") == std::string::npos && mod.find("w") != std::string::npos)
-		_mod += "w";
-	else if (_mod.find("r") == std::string::npos && mod.find("r") != std::string::npos)
-		_mod += "r";
-	else if (_mod.find("o") == std::string::npos && mod.find("o") != std::string::npos)
-		_mod += "o";
-	else if (_mod.find("O") == std::string::npos && mod.find("O") != std::string::npos)
-		_mod += "O";
-	else if (_mod.find("s") == std::string::npos && mod.find("s") != std::string::npos)
-		_mod += "s";
+	// if (_mod.find("a") == std::string::npos && mod.find("a") != std::string::npos)
+	// 	_mod += "a";
+	// else if (_mod.find("i") == std::string::npos && mod.find("i") != std::string::npos)
+	// 	_mod += "i";
+	// else if (_mod.find("w") == std::string::npos && mod.find("w") != std::string::npos)
+	// 	_mod += "w";
+	// else if (_mod.find("r") == std::string::npos && mod.find("r") != std::string::npos)
+	// 	_mod += "r";
+	// else if (_mod.find("o") == std::string::npos && mod.find("o") != std::string::npos)
+	// 	_mod += "o";
+	// else if (_mod.find("O") == std::string::npos && mod.find("O") != std::string::npos)
+	// 	_mod += "O";
+	// else if (_mod.find("s") == std::string::npos && mod.find("s") != std::string::npos)
+	// 	_mod += "s";
+	_mod = mod;
 /*
 		a - user is flagged as away;
 		i - marks a users as invisible;

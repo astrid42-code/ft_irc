@@ -191,6 +191,7 @@ void	Channel::send_to_users(std::string const &msg)
 	std::cout << "MSG = "<< msg << std::endl;
 	for (it = _users.begin(); it != _users.end(); it++)
 	{
+		std::cout << msg << std::endl;
 		send(it->second->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
 	}
 }

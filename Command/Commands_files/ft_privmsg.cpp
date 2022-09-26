@@ -37,13 +37,14 @@
 //            ERR_NOSUCHNICK
 //            RPL_AWAY
 
-void send_msg_to_user(User *usr, std::string str, Cmd &command)
+void send_msg_to_user(User *usr, std::string str, Cmd &command, std::string chan)
 {
-	std::cout << "Sending :|" << str << "| to :" << usr->get_nick() << std::endl;
+	std::string msg = ":" + command._user->get_hostname() + " PRIVMSG " + chan + " :" + str + "\r\n";
+	std::cout << "Sending :|" << msg << "| to :" << usr->get_nick() << std::endl;
 	if (usr->find_mod("a"))
 		command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
 	else
-		send(usr->get_sfd(), str.c_str(), str.length(), MSG_CONFIRM);
+		send(usr->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
 }
 
 void send_msg_to_chan(Cmd &command, std::string destinataire)
@@ -71,7 +72,7 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 		{
 			std::cout << "User :" << command._user->get_nick() << std::endl;
 			if (command._user != it->second)
-				send_msg_to_user(it->second, command.get_value()[1], command);
+				send_msg_to_user(it->second, command.get_value()[1], command, destinataire);
 			it++;
 		}
 	}

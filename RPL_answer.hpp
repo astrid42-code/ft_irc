@@ -125,12 +125,12 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_WHOREPLY(localhost, channel, user, host, nick, name) (":" + localhost + " 352 : " + channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
 	// envoyer les args
 
-#define RPL_NAMREPLY(localhost, channel, nick) (":" + localhost + " 353 : = " + channel + ": " + nick + "\r\n" ) // 353 + " :" + nicks??
+#define RPL_NAMREPLY(localhost, channel, nick) (":" + localhost + " 353 : = " + channel + ": @" + nick + "\r\n" ) // 353 + " :" + nicks??
 	// + envoyer channel et nick du user en arg
 //  - "@" is used for secret channels, "*" for private
 //    channels, and "=" for others (public channels).
 
-#define RPL_ENDOFNAMES(localhost, channel) (":" + localhost + " 366 : " + channel + " :End of NAMES list\r\n") // 366
+#define RPL_ENDOFNAMES(localhost, nick, channel) (":" + localhost + " 366 " + nick + " " + channel + " :End of /NAMES list\r\n") // 366
 	// + envoyer channel en arg
 // To reply to a NAMES message, a reply pair consisting
 //            of RPL_NAMREPLY and RPL_ENDOFNAMES is sent by the

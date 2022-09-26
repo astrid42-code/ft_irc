@@ -65,7 +65,7 @@ void names(Cmd &command)
 				if (it->second->get_mod().find("i") == std::string::npos)
 					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key(), it->second->get_nick()), command._sfd);
 			}
-			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), chan->get_key()), command._sfd);
+			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_user() ,chan->get_key()), command._sfd);
 		}
 		else
 			command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname()), command._sfd);

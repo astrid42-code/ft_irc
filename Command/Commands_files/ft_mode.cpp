@@ -35,6 +35,7 @@ std::string	get_user_mode_string(User *user, std::string arg)
 			res = res.erase(res.find('O'), 1);
 		if (arg.find('s') != std::string::npos && res.find('s') != std::string::npos)
 			res = res.erase(res.find('s'), 1);
+		std::cout << "I : " << res << std::endl;
 		// if (arg.find('v') != std::string::npos && res.find('v') == std::string::npos)
 		// 	res = res.append("v");
 	}
@@ -162,7 +163,7 @@ bool		check_mode_string(Cmd &command, std::string mods)
 	return (1);
 }
 
-void		mode_user(Cmd &command)
+bool		mode_user(Cmd &command)
 {
 	// (void)command;
 	if (command.get_value()[0].compare(command._user->get_nick()) == 0)
@@ -176,7 +177,7 @@ void		mode_user(Cmd &command)
 		else
 		{
 			if (!check_mode_string(command, "-+aiwroOs"))
-				return ;
+				return (false);
         	command._user->set_mod(get_user_mode_string(command._user, command.get_value()[1]));
 		}
 	}
@@ -184,7 +185,9 @@ void		mode_user(Cmd &command)
 	{
 		std::cout << "the user given in parameter invalid" << std::endl;
 		command._server->send_msg(ERR_USERSDONTMATCH(command._user->get_hostname()), command._sfd);
+		return (false);
 	}
+	return (true);
 }
 
 void		mode_chan(Cmd &command)
@@ -226,14 +229,15 @@ void		mode(Cmd &command)
 		}
 		else
 		{
-			mode_user(command);
+			if (!mode_user(command))
+				return ;
 			command._user->print();
 		}
+		command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
 	}
 	else
 	{
 		std::cout << "err need more params" << std::endl;
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 	}
-	command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
 }
