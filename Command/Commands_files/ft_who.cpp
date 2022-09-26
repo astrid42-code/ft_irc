@@ -54,22 +54,22 @@ void	who(Cmd &command)
 	std::cout << "who test" << std::endl;
 	for (std::map<int, User *>::iterator itu = users.begin(); itu != users.end(); itu++)
 	{
-		// if (itu->second != command._user && itu->second->get_mod().find('i') == std::string::npos)
-		// {
-		// 	if (command.get_size() >= 1 && command.get_value()[1][0] != '0' && command.get_value()[1][0] != '*' && mask_off(command.get_value()[1], itu->second->get_hostname()))
-		// 	{
-		// 		if (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o"))
-		// 		{
-		// 			command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
-		// 			match = true;
-		// 		}
-		// 		else if (command.get_size() == 1)
-		// 		{
-		// 			command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
-		// 			match = true;
-		// 		}
-		// 	}
-		// 	else
+		if (itu->second->get_mod().find('i') == std::string::npos)//itu->second != command._user && 
+		{
+			if (command.get_size() >= 1 && command.get_value()[1][0] != '0' && command.get_value()[1][0] != '*' && mask_off(command.get_value()[1], itu->second->get_hostname()))
+			{
+				if (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o"))
+				{
+					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					match = true;
+				}
+				else if (command.get_size() == 1)
+				{
+					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					match = true;
+				}
+			}
+			else
 			{
 				bool	serv = true;
 				for (std::vector<Channel *>::iterator itc = chans.begin(); itc != chans.end(); itc++)
@@ -83,8 +83,8 @@ void	who(Cmd &command)
 					match = true;
 				}
 			}
-		// }
+		}
 	}
-	// if (match == true)
-	// 	command._server->send_msg(315, RPL_ENDOFWHO(command._server->get_ip()), command);
+	if (match == true)
+		command._server->send_msg(315, RPL_ENDOFWHO(command._server->get_ip()), command);
 }

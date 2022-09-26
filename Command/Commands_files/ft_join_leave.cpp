@@ -87,7 +87,7 @@ void join(Cmd &command)
 		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
 	std::cout << "command.get_value" << command.get_value()[0] << std::endl;
 	newOne = command._server->get_chan(command.get_value()[0]);
-	std::cout << "Else" << std::endl;
+	// std::cout << "Else" << std::endl;
 	if(newOne == NULL)
 	{
 		//std::cout << "NULL" << std::endl;
@@ -103,10 +103,8 @@ void join(Cmd &command)
 		// 	command._server->set_user_in_chan(command._user, newOne);
 		command._server->set_user_in_chan(command._user, newOne);
 	}
-	std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
+	std::cout << "join: user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
 	
-	// command._server->send_msg("RPL_NAMREPLY", command);
-	// command._server->send_msg("RPL_ENDOFNAMES", command);
 	command._server->send_msg(353, RPL_NAMREPLY(newOne->get_key()), command);
 	command._server->send_msg(366, RPL_ENDOFNAMES(newOne->get_key()), command);
 	
