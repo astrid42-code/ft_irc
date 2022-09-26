@@ -54,7 +54,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_AWAY(localhost, nick) (":" + localhost + " 301 :" + nick + " :You have been marked as being away\r\n") // 301
 	// + envoyer nick du user en arg
 
-#define RPL_UMODEIS(localhost, nick, mode, param) (":" + localhost + " 221 :" + mode + " " + param + " \r\n") //221 
+#define RPL_UMODEIS(localhost, user, mode) (":" + localhost + " 221 " + user + " :+" + mode + " \r\n") //221 
 	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
 
 #define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 : " + nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
