@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-#include "../../RPL_answer2.hpp"
+#include "../../RPL_answer.hpp"
 #include "../../Server/Server.hpp"
 
 
@@ -78,7 +78,17 @@
 //    :WiZ!jto@tolsun.oulu.fi JOIN #Twilight_zone ; JOIN message from WiZ
 //                                    on channel #Twilight_zone
 
-void join(Cmd &command)
+int		join_conditions(Channel *chan)
+{
+	if (chan->get_mod().find("i") != std::string::npos)
+		return (0);
+	if ((chan->get_mod().find("I") != std::string::npos) && (chan->get_limit() == chan->get_users().size()))
+		return (0);
+	
+	return (1);
+}
+
+void	join(Cmd &command)
 {
 	Channel 					*chan = NULL;
 	std::vector<std::string>	chans;
@@ -86,19 +96,17 @@ void join(Cmd &command)
 
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
-	{
-		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
-		return ;
-	}
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 	chans = div_string(command.get_value()[0], ',');
 	for (std::vector<std::string>::iterator it = chans.begin(); it != chans.end(); it++)
 	{
 		valid = false;
 		if (!(chan = command._server->get_chan(*it)))
 		{
-			chan = new Channel(command.get_value()[0]);
+			std::cout << "chanel creation..." << std::endl;
+			chan = new Channel(*it);
 			if (!command._server->set_chan(chan))
-				command._server->send_msg(437, ERR_UNAVAILRESOURCE(command.get_value()[0]), command);
+				command._server->send_msg(ERR_UNAVAILRESOURCE(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 			else
 			{
 				std::cout << "NEW CHAN : |" << chan->get_name() << "|" << std::endl;
@@ -109,21 +117,23 @@ void join(Cmd &command)
 		}
 		else
 		{
-			if (chan->get_mod().find("i") == std::string::npos)
+			std::cout << "user joining chanel..." << std::endl;
+			if (join_conditions(chan))
 			{
-				if (chan->get_mod().find("I") ==  std::string::npos || (chan->get_mod().find("I") != std::string::npos && mask_off(chan->get_mask(), command._user->get_hostname())))
-				{
 					command._server->set_user_in_chan(command._user, chan);
 					valid = true;
-				}
-				else
-					command._server->send_msg(476, ERR_BADCHANMASK(chan->get_key()), command);
 			}
+			else
+				command._server->send_msg(ERR_BADCHANMASK(command._user->get_hostname(), chan->get_key()), command._sfd);
 		}
 		if (valid == true)
 		{
-			command._server->send_msg(42, chan->get_name(), command);
-			chan->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN " + chan->get_name());
+			std::map< int, User *>	users = chan->get_users();
+			chan->send_to_users(":" + command._user->get_hostname() + " JOIN " + chan->get_name());
+			command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_key(), chan->get_topic()), command._sfd);
+			for (std::map< int, User *>::iterator it = users.begin(); it != users.end(); it++)
+				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key(), it->second->get_nick()), command._sfd);
+			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), chan->get_key()), command._sfd);
 		}
 	}
 }
@@ -169,7 +179,7 @@ void part(Cmd &command)
 	std::cout << "size " << command.get_value().size() << std::endl;
 	if (command.get_value().size() < 1)
 	{
-		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 		return;
 	}
 	std::cout << "chan " << command.get_value()[0] << std::endl;
@@ -177,7 +187,7 @@ void part(Cmd &command)
 	if (chan == NULL)
 	{
 		std::cout << "chan null" << std::endl;
-		command._server->send_msg(403, ERR_NOSUCHCHANNEL(command.get_value()[0]), command);
+		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 		return;
 	}
 	else
@@ -196,10 +206,9 @@ void part(Cmd &command)
 		//command._user->remove_chan(chan);
 	}
 	else
-		command._server->send_msg(442, ERR_NOTONCHANNEL(command.get_value()[0]), command);
+		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 // a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?
-
 }
 
 // a faire : boucle while si plss channels

@@ -154,16 +154,12 @@ std::string Server::get_pwd() const
 	return (_pwd);
 }
 
-std::string	Server::send_msg(int rpl, std::string msg, Cmd &cmd)
+int	Server::send_msg(std::string msg, int sfd)
 {
-	std::string	res = ":";
-	std::string num_rpl = SSTR(rpl);
-
-	res.append(msg);
-	
-	std::cout << "send msg : |" << res << "|" << std::endl;
-	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
-	return (res);	
+	int res;
+	std::cout << "send msg : |" << msg << "|" << std::endl;
+	res = send(sfd, msg.c_str(), msg.length(), MSG_CONFIRM);
+	return (res);
 }
 
 static int make_socket_non_blocking(int sfd)
@@ -415,31 +411,19 @@ void	Server::remove_user(User *user)
 }
 
 
-// recuperer la data du User
 Channel	*Server::get_chan(std::string key)
 {
 	std::map<std::string, Channel *>::iterator it;
-	// for (it = _channels.begin(); it != _channels.end(); it++){
-	// 	std::cout << "it name " << it->second->get_name() << std::endl;
-	// }
-	std::cout << "start" << std::endl;
 
-	// std::cout << "tmp_key = " << tmp_key << std::endl;
+	for (it = _channels.begin(); it != _channels.end(); it++)
+		std::cout << "it key :" << it->second->get_key() << std::endl;
 	it = _channels.find(key);
-	// std::cout << "mid" << std::endl;
 	if (it == _channels.end())
-	{
-		std::cout << "NULL" << std::endl;
 		return (NULL);
-	}
-	// std::cout <<  << it->second->size() << std::endl;
-	std::cout << "end" << std::endl;
 	return (it->second);
 }
 
-// size_t	Server::get_chan_size()
 
-// insert user in map
 bool	Server::set_chan(Channel *chan)
 {
 	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
@@ -448,7 +432,6 @@ bool	Server::set_chan(Channel *chan)
 	std::cout << "channel set in serv... chan name :" << chan->get_name() << std::endl;	
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
-// set le channel dans le serveur (la fct set_channel de Channel est inutilisee donc)
 
 
 std::map<int, User *>	Server::get_users(void) const

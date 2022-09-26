@@ -52,13 +52,13 @@ void user(Cmd &command)
     if (command.get_size() != 4)
 	{
 		std::cout << "error wrong number of params :" << command.get_size() << std::endl;
-		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 		return ;
 	}
 	// std::cout << "setting the user" << std::endl;
 	if (command.get_value()[1].compare("anonymous") == 0 || command.get_value()[2].compare("anonymous") == 0)
 	{
-		command._server->send_msg(462, ERR_ALREADYREGISTRED, command);
+		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
 	}
 	else
 	{
@@ -71,23 +71,30 @@ void user(Cmd &command)
 	command._user->set_pwd("");
 	command._user->set_sfd(command._sfd);
 	command._server->set_user(command._user);
-	// command._server->send_msg(375, "", command._user, command);
-	// command._server->send_msg(376, "", command._user, command);
+	//command._server->send_msg("", command._user, command);
+	//command._server->send_msg("", command._user, command);
 
 	// send_msg(375, command._user, command);
 	// send_msg(376, command._user, command);
+	command._server->send_msg(RPL_WELCOME(command._user->get_hostname(), command._user->get_nick()) ,command._sfd);
+	command._server->send_msg(RPL_YOURHOST(command._user->get_hostname()),command._sfd);
+	command._server->send_msg(RPL_CREATED(command._user->get_hostname()),command._sfd);
+	command._server->send_msg(RPL_MYINFO(command._user->get_hostname()),command._sfd);
+	command._server->send_msg(RPL_MOTDSTART(command._user->get_hostname()) , command._sfd);
+	command._server->send_msg(RPL_MOTD(command._user->get_hostname(), PINGU) , command._sfd);
+	command._server->send_msg(RPL_ENDOFMOTD(command._user->get_hostname()) , command._sfd);
+	//command._server->send_msg(RPL_MYINFO(command._user->get_hostname()),command._sfd);
+	// //command._server->send_msg("RPL_WELCOME", command._user, command);
+	// //command._server->send_msg("RPL_YOURHOST", command._user, command);
+	// //command._server->send_msg("RPL_CREATED", command._user, command);
+	// //command._server->send_msg("RPL_MYINFO", command._user, command);
+	// //command._server->send_msg("RPL_MOTD", command._user, command);
 	
-	// command._server->send_msg("RPL_WELCOME", command._user, command);
-	// command._server->send_msg("RPL_YOURHOST", command._user, command);
-	// command._server->send_msg("RPL_CREATED", command._user, command);
-	// command._server->send_msg("RPL_MYINFO", command._user, command);
-	// command._server->send_msg("RPL_MOTD", command._user, command);
-	
-	command._server->send_msg(1, RPL_WELCOME(command._user->get_hostname(), command._user->get_nick()), command);
-	command._server->send_msg(2, RPL_YOURHOST, command);
-	command._server->send_msg(3, RPL_CREATED, command);
-	command._server->send_msg(4, RPL_MYINFO, command);
-	command._server->send_msg(375, RPL_MOTDSTART, command);
-	command._server->send_msg(0, RPL_MOTD(PINGU), command);
-	command._server->send_msg(0, RPL_ENDOFMOTD, command);
+	//command._server->send_msg(1, RPL_WELCOME(command._user->get_hostname(), command._user->get_nick()), command);
+	//command._server->send_msg(2, RPL_YOURHOST, command);
+	//command._server->send_msg(3, RPL_CREATED, command);
+	//command._server->send_msg(4, RPL_MYINFO, command);
+	//command._server->send_msg(375, RPL_MOTDSTART, command);
+	//command._server->send_msg(0, RPL_MOTD(PINGU), command);
+	//command._server->send_msg(0, RPL_ENDOFMOTD, command);
 }

@@ -16,11 +16,11 @@ std::vector<std::string>	div_string(std::string str, char c)
 		i++;
 	}
 	res.push_back(str.substr(n, str.length()));
-	// std::cout << "div_string :" << std::endl;
-	// for (std::vector<std::string>::iterator it = res.begin(); it != res.end(); it++)
-	// {
-	// 	std::cout << "|" << *it << "|" << std::endl;
-	// }
+	std::cout << "div_string :" << std::endl;
+	for (std::vector<std::string>::iterator it = res.begin(); it != res.end(); it++)
+	{
+		std::cout << "|" << *it << "|" << std::endl;
+	}
 	return (res);
 }
 

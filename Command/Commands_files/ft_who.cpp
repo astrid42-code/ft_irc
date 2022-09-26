@@ -60,12 +60,12 @@ void	who(Cmd &command)
 			{
 				if (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o"))
 				{
-					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 					match = true;
 				}
 				else if (command.get_size() == 1)
 				{
-					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 					match = true;
 				}
 			}
@@ -79,12 +79,12 @@ void	who(Cmd &command)
 				}
 				if (serv)
 				{
-					command._server->send_msg(315, RPL_WHOREPLY(itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command);
+					command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 					match = true;
 				}
 			}
 		}
 	}
 	if (match == true)
-		command._server->send_msg(315, RPL_ENDOFWHO(command._server->get_ip()), command);
+		command._server->send_msg(RPL_ENDOFWHO(command._user->get_hostname(), command._server->get_ip()), command._sfd);
 }

@@ -60,25 +60,25 @@ void invite(Cmd &command)
     if (command.get_value().size() != 2)
     {
         std::cout << "hello1" << std::endl;
-        command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
+        ////command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
     }
     else if (command.get_value()[0] != command._user->get_name())
     {
 		std::cout << "hello2" << std::endl;
-        command._server->send_msg(401, ERR_NOSUCHNICK(command.get_value()[0]), command);
+        ////command._server->send_msg(401, ERR_NOSUCHNICK(command.get_value()[0]), command);
     }
     else if (command._user->get_mod() == "a")
     { // ou faire une recherche de la lettre a car plsrs lettres possibles?
         std::cout << "hello3" << std::endl;
-        // command._server->send_msg(301, RPL_AWAY(command._user->get_nick()), command);
+        // //command._server->send_msg(301, RPL_AWAY(command._user->get_nick()), command);
         away(command);
     }
-    // if (command._user->isonchan(chan_name) == 0)
-    //     command._server->send_msg(ERR_NOTONCHANNEL(chan_name), NULL);
-    
+     /*if (command._user->isonchan(chan_name) == 0)
+        command._server->send_msg(ERR_NOTONCHANNEL(chan_name), NULL);
+    */
     // si tout ok :
     // channel.invite(command._user->get_name()) > fct a faire dans la class channel pour connecter un user a un chan
-    command._server->send_msg(341, RPL_INVITING(command.get_value()[0], command.get_value()[1]), command);
+    ////command._server->send_msg(341, RPL_INVITING(command.get_value()[0], command.get_value()[1]), command);
     // arg RPL_inviting : channel puis user
     
 }

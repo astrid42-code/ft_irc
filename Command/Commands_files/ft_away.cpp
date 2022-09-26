@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-// #include "../../RPL_answer.hpp"
-#include "../../RPL_answer2.hpp"
+#include "../../RPL_answer.hpp"
+
 #include "../../Server/Server.hpp"
 
 // Command: AWAY
@@ -55,11 +55,11 @@ void	away(Cmd &command)
 	if (command._user->find_mod("a"))
 	{
 		command._user->set_mod(command._user->get_mod().erase(command._user->get_mod().find('a'), 1));
-		command._server->send_msg(305, RPL_UNAWAY, command);
+		command._server->send_msg(RPL_UNAWAY(command._user->get_hostname()), command._sfd);
 	}
 	else
 	{
 		command._user->set_mod(command._user->get_mod().append("a"));
-		command._server->send_msg(306, RPL_NOWAWAY, command);
+		command._server->send_msg(RPL_NOWAWAY(command._user->get_hostname()), command._sfd);
 	}
 }

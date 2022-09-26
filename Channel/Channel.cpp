@@ -1,11 +1,12 @@
 #include "Channel.hpp"
 
-Channel::Channel() : _name("NoName"), _ID("toto"), _mod(""), _topic("")
+Channel::Channel() : _name("NoName"), _ID("toto"), _mod(""), _topic(""), _key("name")
 {}
 
 Channel::Channel(std::string name)
 {
 	_name = name;
+	_key = name;
 }
 
 
@@ -182,11 +183,14 @@ void	Channel::remove_user(User *user)
 	_users.erase(user->get_sfd());
 }
 
-void	Channel::send_to_users(std::string const &msg){
+void	Channel::send_to_users(std::string const &msg)
+{
 	std::map< int, User *>::iterator it;
+
 	std::cout << "SENDTOUSER " << _users.size() << std::endl;
 	std::cout << "MSG = "<< msg << std::endl;
-	// for (it = _users.begin(); it != _users.end(); it++){
-	// 	send((*it)->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
-	// }
+	for (it = _users.begin(); it != _users.end(); it++)
+	{
+		send(it->second->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
+	}
 }

@@ -80,21 +80,20 @@ void	whois(Cmd &command)
 			{
 				if (!user->find_mod("i"))
 				{
-					command._server->send_msg(311, RPL_WHOISUSER(user->get_nick(), user->get_user(), user->get_host(), user->get_name()), command);
+					command._server->send_msg(RPL_WHOISUSER(command._user->get_hostname(), user->get_nick(), user->get_user(), user->get_host(), user->get_name()), command._sfd);
 					if (user->find_mod("o"))
-						command._server->send_msg(313, RPL_WHOISOPERATOR(user->get_nick()), command);
+						command._server->send_msg(RPL_WHOISOPERATOR(command._user->get_hostname(), user->get_nick()), command._sfd);
 					if (user->find_mod("a"))
-						// command._server->send_msg(301, RPL_AWAY(user->get_nick()), command);
-						away(command);
-					command._server->send_msg(318, RPL_ENDOFWHOIS(command._user->get_nick()), command);
+						command._server->send_msg(RPL_AWAY(command._user->get_hostname(), user->get_nick(), user->get_away()), command._sfd);
+					command._server->send_msg(RPL_ENDOFWHOIS(command._user->get_hostname(), command._user->get_nick()), command._sfd);
 				}
 			}
 			else
-				command._server->send_msg(401, ERR_NOSUCHNICK(command.get_value()[0]), command);
+				command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 		}
 	}
 	else if (command.get_size() == 2)
-		command._server->send_msg(402, ERR_NOSUCHSERVER, command);
+		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname()), command._sfd);
 	else
-		command._server->send_msg(431, ERR_NONICKNAMEGIVEN, command);
+		command._server->send_msg(ERR_NONICKNAMEGIVEN(command._user->get_hostname()), command._sfd);
 }

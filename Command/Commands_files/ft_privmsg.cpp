@@ -41,7 +41,9 @@ void send_msg_to_user(User *usr, std::string str, Cmd &command)
 {
 	std::cout << "Sending :|" << str << "| to :" << usr->get_nick() << std::endl;
 	if (usr->find_mod("a"))
-		command._server->send_msg(301, RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command);
+		command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
+	else
+		send(usr->get_sfd(), str.c_str(), str.length(), MSG_CONFIRM);
 }
 
 void send_msg_to_chan(Cmd &command, std::string destinataire)
@@ -54,7 +56,7 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 	chan = command._server->get_chan(destinataire.c_str());
 	std::cout << "RETOUR" << std::endl;
 	if (!chan || !chan->get_user(command._user->get_nick()))
-		command._server->send_msg(404, ERR_CANNOTSENDTOCHAN(destinataire), command);
+		command._server->send_msg(ERR_CANNOTSENDTOCHAN(command._user->get_hostname(), destinataire), command._sfd);
 	else
 	{
 		users = chan->get_users();
@@ -84,27 +86,22 @@ void privmsg(Cmd &command)
 	std::string destinataire;
 	destinataire = command.get_value().begin()[0];
 	if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1].empty()))
-		command._server->send_msg(412, ERR_NOTEXTTOSEND, command);
+		command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
 	if (destinataire.c_str()[0] == '#')
 	{
-		std::cout << "msg_to_chann" << std::endl;
+		std::cout << "msg_to_chan" << std::endl;
 		send_msg_to_chan(command, destinataire);
 	}
 	else
 	{
+		std::cout << "msg_to_user" << std::endl;
 		if ((user = command._server->get_user(destinataire)) != NULL)
 		{
 			if (user->find_mod("a"))
-				command._server->send_msg(301, RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command);
+				command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
 		}
 		else
-			command._server->send_msg(401, ERR_NOSUCHNICK(destinataire), command);
+			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
 	}
-	std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
-   // command.print();
-	// necessite d'etre dans un channel (?)
-	// command.get_value()[0] la target = le user ou le channel qui recoit le msg
-	// command.get_value()[1] le msg a envoyer a la target
-	// command._server->send_msg(command.get_value()[1], NULL, command)
-	// necessaire de chercher avant send_msg quelle est la target? comment la preciser ensuite (puisque ca peut etre user ou channel)?
+	// std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
 }
