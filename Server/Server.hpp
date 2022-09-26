@@ -31,6 +31,7 @@ class Server
 
 		std::string							get_port() const;
 		std::string							get_pwd() const;
+		void								set_pwd(std::string pwd);
 		void								onCmdReceived(std::string cmd);
 		void								onConnection(Channel chan);
 		void								onMessageReceived(Channel chan, User usr);

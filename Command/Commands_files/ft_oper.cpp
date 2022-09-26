@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:00:36 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 17:27:08 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,23 @@
 
 void oper(Cmd &command)
 {
-    std::cout << "oper test" << std::endl;
-    if (command.get_size() == 2)
-    {
-        std::cout << "|" << command.get_value()[0] << "| |" << command.get_value()[0] << "|" << std::endl;
-    }
+	std::cout << "oper test" << std::endl;
+		std::cout << "|" << command.get_value()[0] << "| |" << command.get_value()[1] << "|" << std::endl;
+	if (command.get_size() != 2)
+	{
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
+		return;	
+	}
+	if (command._server->get_pwd() != command.get_value()[1]){
+		std::cout << "pas lol" << std::endl;
+		command._server->send_msg(ERR_PASSWDMISMATCH(command._user->get_hostname(), command._user->get_nick()), command._sfd);
+		return;
+	}
+	else{
+		if (command._user->find_mod("o") == 1)
+			return;
+		command._user->set_mod(command._user->get_mod() + "o");
+		command._server->send_msg(RPL_YOUREOPER(command._user->get_hostname()), command._sfd);
+		return;
+	}
 }
