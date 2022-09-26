@@ -6,12 +6,31 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 10:02:13 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 17:50:48 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
 #include "../../RPL_answer.hpp"
+
+// The commands described here are used to register a connection with an
+//    IRC server as a user as well as to correctly disconnect.
+
+//    A "PASS" command is not required for a client connection to be
+//    registered, but it MUST precede the latter of the NICK/USER
+//    combination (for a user connection) or the SERVICE command (for a
+//    service connection). The RECOMMENDED order for a client to register
+//    is as follows:
+
+//                            1. Pass message
+//            2. Nick message                 2. Service message
+//            3. User message
+
+//    Upon success, the client will receive an RPL_WELCOME (for users) or
+//    RPL_YOURESERVICE (for services) message indicating that the
+//    connection is now registered and known the to the entire IRC network.
+//    The reply message MUST contain the full client identifier upon which
+//    it was registered.
 
 
 // Command: PASS
@@ -33,19 +52,19 @@
 
 void pass(Cmd &command)
 {
-    std::cout << "pass test " << command.get_key() << std::endl;
+    // std::cout << "pass test " << std::endl;
     if (command.get_value().size() != 1)
 	{
         command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
         return;
     }
-    if (command.get_value()[0] == command._user->get_name())
-	{// value[0] etant le login (get_name())
+    if (!command._server->get_pwd().empty()) // si on n'a pas le droit de changer le pwd (sinon je sais pas quel type d'erreru c ca)
+	{
 		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
-	}
-	if (command.get_value()[0] == command._user->get_name())
-	{// value[0] etant le login (get_name())
-		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
-	}
 		return;
+	}
+	else if (command._user->get_pwd().empty())
+		command._server->set_pwd(command.get_value()[0]);
 }
+
+// a verifier : pour le pwd server ou / et user?
