@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:31:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:20:45 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,32 +154,111 @@ std::string Server::get_pwd() const
 	return (_pwd);
 }
 
-std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
+std::string	Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 {
-	(void)msg;
 	std::string	res = ":";
 	std::string num_rpl = SSTR(rpl);
 
-	res.append(cmd._user->get_hostname());
-	res.append(" ");
-	
-	if (rpl < 10 && rpl != 0){
-		res.append("00" + num_rpl);
-	}
-	else if (rpl != 0)
-		res.append(num_rpl);
-	res.append(" ");
-	std::cout << "nick = " << cmd._user->get_nick() << std::endl;
-	if (cmd._user->get_nick() == "")
-		res.append("*");
-	else
-		res.append(cmd._user->get_nick());
-	res.append(" ");
 	res.append(msg);
+	
 	std::cout << "send msg : |" << res << "|" << std::endl;
 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
-	return (res);
+	return (res);	
 }
+
+
+// std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
+// {
+// 	std::string	res = ":";
+// 	std::string num_rpl = SSTR(rpl);
+	
+// 	if (rpl == 42)
+// 	{
+// 		// std::string nicks = cmd._user->get_nick();
+// 		// // res.append(nicks + " ");
+// 		// res.append("JOIN" + msg.substr(0, msg.size()) + " ");
+// 		// res.append(" @" + nicks + " ");
+// 		// remplir la string avec les nicks qui sont dans le channel
+// 		// tq les users presents dans le channel (it != users.end())
+// 		// while (cmd._server->get_chan(msg)->get_users())
+// 		// {
+// 		// 	// if () // si le mode user est oper
+// 		// 		nicks.append("@");
+// 		// 	nicks.append(); // ajouter le nickname
+// 		// 	// incrementer (mais quoi puisque pas d'iterator la ??)
+// 		// }
+// // ajouter les 2 define (353 et 366) dans le msg : en envoyant les msgs ou en append?
+// 		// cmd._server->send_msg(353, RPL_NAMREPLY(msg, nicks), cmd);
+// 		// cmd._server->send_msg(366, RPL_ENDOFNAMES(msg), cmd);
+		
+		
+// 		res.append(cmd._user->get_hostname());
+// 		res.append(" " + SSTR(353) + " ");
+// 		res.append(cmd._user->get_nick() + " ");
+// 		res.append(RPL_NAMREPLY(msg.substr(1, msg.size())));
+		
+// 		res.append("::");
+// 		res.append(cmd._user->get_hostname());
+// 		res.append(" " + SSTR(366) + " ");
+// 		res.append(cmd._user->get_nick() + " ");
+// 		res.append( RPL_ENDOFNAMES(msg.substr(1, msg.size())));
+		
+// 		// if (cmd._server->get_chan(msg)->get_topic() == ""){
+// 		// 	res.append(cmd._user->get_hostname());
+// 		// 	res.append(" " + SSTR(331) + " ");
+// 		// 	if (cmd._user->get_nick() == "")
+// 		// 		res.append("*");
+// 		// 	else
+// 		// 		res.append(cmd._user->get_nick());
+// 		// 	res.append(" ");
+// 		// 	res.append(RPL_NOTOPIC(msg));
+// 		// }
+// 		// else
+// 		// {
+// 		// 	res.append(cmd._user->get_hostname());
+// 		// 	res.append(" " + SSTR(332) + " ");
+// 		// 	if (cmd._user->get_nick() == "")
+// 		// 		res.append("*");
+// 		// 	else
+// 		// 		res.append(cmd._user->get_nick());
+// 		// 	res.append(" ");
+// 		// 	res.append(RPL_TOPIC(msg, cmd._server->get_chan(msg)->get_topic()));
+// 		// }
+// 	// + checker si topic ou non et ajouter le rpl correspondant en fonction 
+// 	// puis envoyer le tout aux users du channel
+
+// 	// a verifier : doit on tout envoyer ensemble ou peut on envoyer au fur et a mesure?
+
+// 	// std::cout << "nick = " << cmd._user->get_nick() << std::endl;
+
+// std::cout << "debug send msg : |" << res << "|" << std::endl;
+// 		send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
+// 		return (res);
+// 	}
+// 	else
+// 	{
+// 		res.append(cmd._user->get_hostname());
+// 		res.append(" ");
+		
+// 		if (rpl < 10 && rpl != 0){
+// 			res.append("00" + num_rpl + " ");
+// 		}
+// 		else if (rpl != 0 && rpl != 42)
+// 			res.append(num_rpl + " ");
+// 		else if (rpl == 0)	
+// 			res.append(" ");
+// 		if (cmd._user->get_nick() == "")
+// 			res.append("*");
+// 		else
+// 			res.append(cmd._user->get_nick());
+// 		res.append(" ");
+// 	}
+// 	res.append(msg);
+	
+// 	std::cout << "send msg : |" << res << "|" << std::endl;
+// 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
+// 	return (res);
+// }
 
 static int make_socket_non_blocking(int sfd)
 {
@@ -438,10 +517,9 @@ Channel	*Server::get_chan(std::string key)
 	// 	std::cout << "it name " << it->second->get_name() << std::endl;
 	// }
 	std::cout << "start" << std::endl;
-	std::string tmp_key = "#";
-	tmp_key.append(key);
+
 	// std::cout << "tmp_key = " << tmp_key << std::endl;
-	it = _channels.find(tmp_key);
+	it = _channels.find(key);
 	// std::cout << "mid" << std::endl;
 	if (it == _channels.end())
 	{

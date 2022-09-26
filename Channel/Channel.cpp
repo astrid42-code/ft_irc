@@ -1,6 +1,6 @@
 #include "Channel.hpp"
 
-Channel::Channel() : _name("NoName"), _ID("toto"), _mod("")
+Channel::Channel() : _name("NoName"), _ID("toto"), _mod(""), _topic("")
 {}
 
 Channel::Channel(std::string name)

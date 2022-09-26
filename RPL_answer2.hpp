@@ -1,5 +1,5 @@
-#ifndef RPL_ANSWER_HPP
-#define RPL_ANSWER_HPP
+#ifndef RPL_ANSWER2_HPP
+#define RPL_ANSWER2_HPP
 
 #include <iostream>
 #include "Command/Cmd.hpp"
@@ -11,6 +11,7 @@
 #define VERSION "1.69" // version actuelle a verifier
 #define DATE "Mon Aug 25 16:57:33 2022"
 #define DEFAULT_NAME "toto"
+#define AWAY_DEFAULT "You have been marked as being away\r\n"
 
 #define PINGU ("\n\
 dHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHb \n\
@@ -37,10 +38,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH \n\
 VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
-#define RPL_WELCOME(user, nick, host) (" :Welcome to the Internet Relay Network " + user + "!" + nick + "@" + host + "\r\n") //001
-// #define RPL_WELCOME(nick, user, host) (nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay Network\r\n") //001
-        	// + envoyer <nick>!<user>@<host>) en arguments
-			// + ajouter dessin?
+#define RPL_WELCOME(localhost, nick) (":" + localhost + " 001 " + nick + " :Welcome to the Internet Relay Network " + localhost + "\r\n") //001
 
 #define RPL_YOURHOST (" :Your host is " SERVER ", running version" VERSION "\r\n") //002
 
@@ -48,14 +46,25 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_MYINFO (" :" SERVERNAME " " VERSION " aiwroOs OovaimnpsrtklbeI\r\n") // 004
 	// + envoyer nombre de users en fct de leur mode (nbr de users connectes, nbre d'invisible users connectes)
-	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
-	//  et channels avalaible en arg
 
-#define RPL_AWAY(nick) (nick + " :You have been marked as being away\r\n") // 301
+
+#define RPL_UMODEIS(localhost, nick, user, mode, param) (":" + localhost + " 221 " + nick + " :" + user + " " + mode + " " + param + " \r\n") //221 
+	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
+
+#define RPL_AWAY(localhost, nick, msg) (localhost + " 301 " + nick + " :" + msg + "\r\n") // 301
 	// + envoyer nick du user en arg
 
-#define RPL_UMODEIS(nick, mode, param) (" " + user + " " + mode + " " + param + " \r\n") //221 
-	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
+#define ERR_UMODEUNKNOWNFLAG (" :Unknown MODE flag\r\n") //501
+// Returned by the server to indicate that a MODE message was sent with a nickname parameter and that
+// the a mode flag sent was not recognized. 
+
+#define ERR_USERSDONTMATCH (" :Cant change mode for other users\r\n") //502
+//Error sent to any user trying to view or change the user mode for a user other than themselves. 
+
+// a redefinir :
+
+
+
 
 #define RPL_WHOISUSER(nick, user, host, name) (nick + " " + user + " " + host + "* :" + name + "\r\n") // 311
 	// + envoyer nick du user, user (?), host et real name en arg
@@ -282,12 +291,6 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // If a client sends an OPER message and the server has not been configured to allow connections from the
 // client's host as an operator, this error MUST be returned.
 
-#define ERR_UMODEUNKNOWNFLAG (" :Unknown MODE flag\r\n") //501
-// Returned by the server to indicate that a MODE message was sent with a nickname parameter and that
-// the a mode flag sent was not recognized. 
-
-#define ERR_USERSDONTMATCH (" :Cant change mode for other users\r\n") //502
-//Error sent to any user trying to view or change the user mode for a user other than themselves. 
 
 #endif
 

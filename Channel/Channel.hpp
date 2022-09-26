@@ -46,6 +46,7 @@ class Channel
 	private:
 		std::string						_name; // must start with '&', '#', '+' or '!' with a max of (50) char and must not contain any ' ' (spaces), G (^G or ASCII 7) or a comma (',')
 		std::map< int, User *>			_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
+		// faire un vector plutot qu'une map??
 		std::string						_ID; // depends of time ?
 		std::string						_mod;
 		std::string						_topic;

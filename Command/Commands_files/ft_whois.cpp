@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:04:08 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/11 12:36:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:33:03 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	whois(Cmd &command)
 					if (user->find_mod("o"))
 						command._server->send_msg(313, RPL_WHOISOPERATOR(user->get_nick()), command);
 					if (user->find_mod("a"))
-						command._server->send_msg(301, RPL_AWAY(user->get_nick()), command);
+						// command._server->send_msg(301, RPL_AWAY(user->get_nick()), command);
+						away(command);
 					command._server->send_msg(318, RPL_ENDOFWHOIS(command._user->get_nick()), command);
 				}
 			}

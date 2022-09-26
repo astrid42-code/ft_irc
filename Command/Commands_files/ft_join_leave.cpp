@@ -6,12 +6,13 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/23 18:02:55 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:02:18 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-#include "../../RPL_answer.hpp"
+// #include "../../RPL_answer.hpp"
+#include "../../RPL_answer2.hpp"
 #include "../../Server/Server.hpp"
 
 
@@ -85,7 +86,7 @@ void join(Cmd &command)
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
 		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
-	std::cout << "command.get_value" << command.get_value()[0] << std::endl;
+	std::cout << "command.get_value " << command.get_value()[0] << std::endl;
 	newOne = command._server->get_chan(command.get_value()[0]);
 	std::cout << "Else" << std::endl;
 	if(newOne == NULL)
@@ -103,16 +104,17 @@ void join(Cmd &command)
 		// 	command._server->set_user_in_chan(command._user, newOne);
 		command._server->set_user_in_chan(command._user, newOne);
 	}
+	if (command.get_value().size() == 2)
+		newOne->set_topic(command.get_value()[1]);
+	else
+		newOne->set_topic("");
 	// std::cout << "coucou3 user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
+	command._server->send_msg(42, newOne->get_name(), command);
 	
-	// std::cout << "coucou chan = " << newOne->get_name() << std::endl;
-	// command._server->send_msg("RPL_NAMREPLY", command);
-	// command._server->send_msg("RPL_ENDOFNAMES", command);
-	command._server->send_msg(353, RPL_NAMREPLY(newOne->get_name()), command);
-	command._server->send_msg(366, RPL_ENDOFNAMES(newOne->get_name()), command);
+
 	
 	// std::cout << "coucou 1 senttousers" << std::endl;
-	newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());
+	// newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());
 	// std::cout << "coucou 2 senttousers" << std::endl;
 	
 	// si plsrs channels dans arg1 ils doivent etre separes par des virgules

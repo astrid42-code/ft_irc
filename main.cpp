@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/15 20:14:36 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/24 18:09:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		main(int ac, char **av)
 	{
 		std::cout << "There is an error in arguments : ./ircserv <port> <password>" << std::endl;
 		std::cout << "starting tests" << std::endl;
-		test();
+		// test();
 		return (1);
 	}
     return (0);

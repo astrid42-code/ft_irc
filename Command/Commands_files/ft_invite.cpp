@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:30:21 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:32:30 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void invite(Cmd &command)
     else if (command._user->get_mod() == "a")
     { // ou faire une recherche de la lettre a car plsrs lettres possibles?
         std::cout << "hello3" << std::endl;
-        command._server->send_msg(301, RPL_AWAY(command._user->get_nick()), command);
+        // command._server->send_msg(301, RPL_AWAY(command._user->get_nick()), command);
+        away(command);
     }
     // if (command._user->isonchan(chan_name) == 0)
     //     command._server->send_msg(ERR_NOTONCHANNEL(chan_name), NULL);
