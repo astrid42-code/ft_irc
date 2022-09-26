@@ -40,7 +40,8 @@ void ping(Cmd &command)
 		command._server->send_msg(409, ERR_NOORIGIN, command);
 	else if (command.get_value().size() == 1)
 	{
-		if (command.get_value()[0].compare(command._user->get_nick()) != 0)
+		// std::cout << "ping verif : " << command.get_value()[0] << " " << command._user->get_user() << std::endl;
+		if (command.get_value()[0].compare(command._user->get_user()) != 0)
 			command._server->send_msg(402, ERR_NOSUCHSERVER, command);
 		else
 		{

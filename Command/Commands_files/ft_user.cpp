@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:50:59 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:00:34 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,11 @@ void user(Cmd &command)
 	// command._server->send_msg("RPL_MYINFO", command._user, command);
 	// command._server->send_msg("RPL_MOTD", command._user, command);
 	
-	command._server->send_msg(1, RPL_WELCOME, command);
+	command._server->send_msg(1, RPL_WELCOME(command._user->get_hostname(), command._user->get_nick()), command);
 	command._server->send_msg(2, RPL_YOURHOST, command);
 	command._server->send_msg(3, RPL_CREATED, command);
 	command._server->send_msg(4, RPL_MYINFO, command);
 	command._server->send_msg(375, RPL_MOTDSTART, command);
 	command._server->send_msg(0, RPL_MOTD(PINGU), command);
+	command._server->send_msg(0, RPL_ENDOFMOTD, command);
 }

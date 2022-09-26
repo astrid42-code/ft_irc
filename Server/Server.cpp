@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:31:09 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:20:45 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,31 +154,16 @@ std::string Server::get_pwd() const
 	return (_pwd);
 }
 
-std::string    Server::send_msg(int rpl, std::string msg, Cmd &cmd)
+std::string	Server::send_msg(int rpl, std::string msg, Cmd &cmd)
 {
-	(void)msg;
 	std::string	res = ":";
 	std::string num_rpl = SSTR(rpl);
 
-	res.append(cmd._user->get_hostname());
-	res.append(" ");
-	
-	if (rpl < 10 && rpl != 0){
-		res.append("00" + num_rpl);
-	}
-	else if (rpl != 0)
-		res.append(num_rpl);
-	res.append(" ");
-	std::cout << "nick = " << cmd._user->get_nick() << std::endl;
-	if (cmd._user->get_nick() == "")
-		res.append("*");
-	else
-		res.append(cmd._user->get_nick());
-	res.append(" ");
 	res.append(msg);
+	
 	std::cout << "send msg : |" << res << "|" << std::endl;
 	send(cmd._sfd, res.c_str(), res.length(), MSG_CONFIRM);
-	return (res);
+	return (res);	
 }
 
 static int make_socket_non_blocking(int sfd)
@@ -438,10 +423,9 @@ Channel	*Server::get_chan(std::string key)
 	// 	std::cout << "it name " << it->second->get_name() << std::endl;
 	// }
 	std::cout << "start" << std::endl;
-	std::string tmp_key = "#";
-	tmp_key.append(key);
+
 	// std::cout << "tmp_key = " << tmp_key << std::endl;
-	it = _channels.find(tmp_key);
+	it = _channels.find(key);
 	// std::cout << "mid" << std::endl;
 	if (it == _channels.end())
 	{
@@ -461,8 +445,7 @@ bool	Server::set_chan(Channel *chan)
 	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
 
 	p = _channels.insert(make_pair(chan->get_name(), chan));
-	std::cout << "channel name " << chan->get_name() << std::endl;	
-	// chan->set_name(chan->get_name());
+	std::cout << "channel set in serv... chan name :" << chan->get_name() << std::endl;	
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 // set le channel dans le serveur (la fct set_channel de Channel est inutilisee donc)

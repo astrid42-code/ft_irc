@@ -6,12 +6,13 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:46:33 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:02:13 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-#include "../../RPL_answer.hpp"
+// #include "../../RPL_answer.hpp"
+#include "../../RPL_answer2.hpp"
 
 // Command: PASS
 //    Parameters: <password>

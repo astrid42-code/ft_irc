@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/20 15:03:53 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 12:01:40 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,11 @@ std::string				User::get_hostname() const
 	return (_user + "!" + _nick + "@" + _host);
 }
 
+std::string				User::get_away() const
+{
+	return (_away);
+}
+
 void	User::set_user(std::string user)
 {
 	_user = user;
@@ -188,8 +193,10 @@ void	User::set_sfd(int sfd)
 
 void	User::set_mod(std::string mod)
 {
+	// std::cout << " mode a ? " << mod << std::endl;
 	if (_mod.find("a") == std::string::npos && mod.find("a") != std::string::npos)
 		_mod += "a";
+		
 	else if (_mod.find("i") == std::string::npos && mod.find("i") != std::string::npos)
 		_mod += "i";
 	else if (_mod.find("w") == std::string::npos && mod.find("w") != std::string::npos)
@@ -224,6 +231,11 @@ void	User::set_chan(Channel &chan)
 		std::cout << "it chan user : " << *it << std::endl;
 		
 	}
+}
+
+void	User::set_away(std::string msg)
+{
+	_away = msg;
 }
 
 // void	User::set_chan(Channel *chan){

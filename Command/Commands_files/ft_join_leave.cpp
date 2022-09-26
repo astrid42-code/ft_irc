@@ -6,12 +6,12 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:35:15 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 10:02:18 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
-#include "../../RPL_answer.hpp"
+#include "../../RPL_answer2.hpp"
 #include "../../Server/Server.hpp"
 
 
@@ -80,41 +80,52 @@
 
 void join(Cmd &command)
 {
-	Channel *newOne = NULL;
+	Channel 					*chan = NULL;
+	std::vector<std::string>	chans;
+	bool						valid;
 
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
 	if (!command.get_value().size())
+	{
 		command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
-	std::cout << "command.get_value" << command.get_value()[0] << std::endl;
-	newOne = command._server->get_chan(command.get_value()[0]);
-	// std::cout << "Else" << std::endl;
-	if(newOne == NULL)
-	{
-		//std::cout << "NULL" << std::endl;
-		newOne = new Channel(command.get_value()[0]);
-		command._server->set_chan(newOne);
-		std::cout << "NEW CHAN : |" << newOne->get_name() << "|" << std::endl;
-		command._server->set_user_in_chan(command._user, newOne);
-		command._user->set_mod(command._user->get_mod() + "o");
+		return ;
 	}
-	else //for mode 'i' in chan you need a correct hostname to get into the chan or get invited by an op
+	chans = div_string(command.get_value()[0], ',');
+	for (std::vector<std::string>::iterator it = chans.begin(); it != chans.end(); it++)
 	{
-		// if (newOne->get_mod().find("i") != std::string::npos && command._user->get_hostname().find(""))
-		// 	command._server->set_user_in_chan(command._user, newOne);
-		command._server->set_user_in_chan(command._user, newOne);
+		valid = false;
+		if (!(chan = command._server->get_chan(*it)))
+		{
+			chan = new Channel(command.get_value()[0]);
+			if (!command._server->set_chan(chan))
+				command._server->send_msg(437, ERR_UNAVAILRESOURCE(command.get_value()[0]), command);
+			else
+			{
+				std::cout << "NEW CHAN : |" << chan->get_name() << "|" << std::endl;
+				command._server->set_user_in_chan(command._user, chan);
+				command._user->set_mod(command._user->get_mod() + "o");
+				valid = true;
+			}
+		}
+		else
+		{
+			if (chan->get_mod().find("i") == std::string::npos)
+			{
+				if (chan->get_mod().find("I") ==  std::string::npos || (chan->get_mod().find("I") != std::string::npos && mask_off(chan->get_mask(), command._user->get_hostname())))
+				{
+					command._server->set_user_in_chan(command._user, chan);
+					valid = true;
+				}
+				else
+					command._server->send_msg(476, ERR_BADCHANMASK(chan->get_key()), command);
+			}
+		}
+		if (valid == true)
+		{
+			command._server->send_msg(42, chan->get_name(), command);
+			chan->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN " + chan->get_name());
+		}
 	}
-	std::cout << "join: user = " << newOne->get_user(command._user->get_sfd()) << std::endl;
-	
-	command._server->send_msg(353, RPL_NAMREPLY(newOne->get_key()), command);
-	command._server->send_msg(366, RPL_ENDOFNAMES(newOne->get_key()), command);
-	
-	// std::cout << "coucou 1 senttousers" << std::endl;
-	newOne->send_to_users(":" + command._user->get_nick() + "!" + command._user->get_user() + "@" + command._user->get_host() + " JOIN :" + newOne->get_name());
-	// std::cout << "coucou 2 senttousers" << std::endl;
-	
-	// si plsrs channels dans arg1 ils doivent etre separes par des virgules
-	// et etre crees separement (le client gere ensuite)
-	// a faire a la fin avec une boucle while ou for
 }
 
 // si user deja dans un channel, /join ce meme channel ne fait rien

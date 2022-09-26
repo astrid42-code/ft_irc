@@ -158,10 +158,28 @@ End of /WHO list
 
 
 pbs:
-- fichier mask
 - leave: ne reconnait plus le channel
-- nick mis a 001_ dans nick.cpp (modifie le nick)
-- err 353 et 366 concatenes avec le nick :
-send msg : |:asgaulti!001_@localhost 353 001_RPL_NAMREPLY|
-send msg : |:asgaulti!001_@localhost 366 001_RPL_ENDOFNAMES|
-- 
+
+- segfault si un seul arg a l'execution > retirer la fct test (dans le cas d'erreur du main) ok
+
+- map _users dans channel a transformer en vector? (plus suimple a parcourir, pas forcement utile de faire une map?)
+
+- initialiser toutes les donnees dans les constructeurs
+
+- fermeture du server
+
+- welcome to the ... msg devient le token du mode une fois sur 2
+(i am gonna ragequit)
+
+
+- msg attendu pour JOIN
+:dasanter!dasanter@localhost 353 dasanter  = test ::dasanter!dasanter@localhost 366 dasanter  test :End of NAMES list
+
+actuellement
+:asgaulti!kakou@localhost 353 kakou  = dodo
+::asgaulti!kakou@localhost 366 kakou  dodo :End of NAMES list
+
+
+refaire les define en mettant tout en argument de chaque define 
+> a faire dans un nouveau fichier pour eviter les cacas
+

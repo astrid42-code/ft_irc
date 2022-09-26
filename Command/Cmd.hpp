@@ -7,7 +7,8 @@
 #include <iterator>
 #include "../User/User.hpp"
 #include "../Server/Server.hpp"
-#include "../RPL_answer.hpp"
+// #include "../RPL_answer.hpp"
+#include "../RPL_answer2.hpp"
 
 class User;
 
@@ -73,5 +74,6 @@ void	whois(Cmd &command);
 void	pass(Cmd &command);
 void	names(Cmd &command);
 void	mode(Cmd &command);
+void	away(Cmd &command);
 
 #endif

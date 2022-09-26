@@ -71,7 +71,11 @@ std::string	get_chan_mode_string(Channel *chan, std::string arg, Cmd &command)
 			}
 		}
 		if (arg.find('a') != std::string::npos && res.find('a') == std::string::npos)
-			res = res.append("a");
+		{
+			away(command);
+			// res = res.append("a");
+			// command._server->send_msg(301, RPL_AWAY(command._user->get_nick()), command);
+		}	
 		if (arg.find('i') != std::string::npos && res.find('i') == std::string::npos)
 			res = res.append("i");
 		if (arg.find('m') != std::string::npos && res.find('m') == std::string::npos)
@@ -106,7 +110,11 @@ std::string	get_chan_mode_string(Channel *chan, std::string arg, Cmd &command)
 			}
 		}
 		if (arg.find('a') != std::string::npos && res.find('a') != std::string::npos)
-			res = res.append("a");
+		{
+			away(command);
+			// res = res.append("a");
+			// command._server->send_msg(301, RPL_AWAY(command._user->get_nick()), command);
+		}
 		if (arg.find('i') != std::string::npos && res.find('i') != std::string::npos)
 			res = res.append("i");
 		if (arg.find('m') != std::string::npos && res.find('m') != std::string::npos)
@@ -163,7 +171,7 @@ void		mode_user(Cmd &command)
 		if (command.get_size() == 1)
 		{
 			std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
-			command._server->send_msg(221, "RPL_UMODEIS", command);
+			command._server->send_msg(221, RPL_UMODEIS(command._user->get_hostname(), command._user->get_nick(), command._user->get_user(), command._user->get_mod(), ""), command);
 		}
 		else
 		{

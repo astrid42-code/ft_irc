@@ -1,6 +1,6 @@
 #include "Channel.hpp"
 
-Channel::Channel() : _name("NoName"), _ID("toto"), _mod("")
+Channel::Channel() : _name("NoName"), _ID("toto"), _mod(""), _topic("")
 {}
 
 Channel::Channel(std::string name)
@@ -91,6 +91,11 @@ unsigned int	Channel::get_limit() const
 	return (_limit);
 }
 
+std::string		Channel::get_mask() const
+{
+	return (_mask);
+}
+
 
 void			Channel::set_name(std::string name)
 {
@@ -151,6 +156,11 @@ void			Channel::set_key(std::string key)
 void			Channel::set_limit(unsigned int limit)
 {
 	_limit = limit;
+}
+
+void			Channel::set_mask(std::string mask)
+{
+	_mask = mask;
 }
 
 void			Channel::print(void)
