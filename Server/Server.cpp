@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 10:20:45 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/26 16:28:22 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,11 @@ std::string Server::get_port() const
 std::string Server::get_pwd() const
 {
 	return (_pwd);
+}
+
+void	Server::set_pwd(std::string pwd)
+{
+	_pwd = pwd;
 }
 
 int	Server::send_msg(std::string msg, int sfd)

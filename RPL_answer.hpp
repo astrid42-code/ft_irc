@@ -245,7 +245,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server to any link which tries to change part of the registered details (such as
 // password or user details from second USER message).
 
-#define ERR_PASSWDMISMATCH(localhost) (":" + localhost + " 464 :Password incorrect\r\n") // 464
+#define ERR_PASSWDMISMATCH(localhost, nick) (":" + localhost + " 464 " + nick + " :Password incorrect\r\n") // 464
 // Returned to indicate a failed attempt at registering a connection for which a password was required and
 // was either not given or incorrect.
 
