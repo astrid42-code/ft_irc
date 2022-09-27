@@ -51,7 +51,7 @@ class Server
 		std::locale							loc;
 
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
-		// std::string				get_msg(std::string msg, User *user, Cmd &cmd);
+		// std::string				get_msg(std::string msg, User	 *user, Cmd &cmd);
 		int   								send_msg(std::string msg, int sfd);
 		void								set_user_in_chan(User *user, Channel *chan);
 

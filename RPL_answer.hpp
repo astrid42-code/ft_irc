@@ -54,6 +54,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 	//  et channels avalaible en arg
 
 #define PRIVMSG(localhost, chan, str) (":" + localhost + " PRIVMSG " + chan + " :" + str + "\r\n")
+#define NOTICE(localhost, chan, str) (":" + localhost + " NOTICE " + chan + " :" + str + "\r\n")
 
 #define PART(localhost, chan, str) (":" + localhost + " PART " + chan + "\r\n")
 

@@ -146,7 +146,7 @@ std::vector<Channel *>	User::get_chans() const
 
 std::string				User::get_hostname() const
 {
-	return (_user + "!" + _nick + "@" + _host);
+	return (_nick + "!" + _user + "@" + _host);
 }
 
 std::string				User::get_away() const

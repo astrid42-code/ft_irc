@@ -96,11 +96,11 @@ void privmsg(Cmd &command)
 		{
 			if (user->find_mod("a"))
 				command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
+			else
+				command._server->send_msg(PRIVMSG(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
 		}
 		else
 			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
-		if (command._server->get_user(destinataire))
-			command._server->send_msg(PRIVMSG(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
 	}
 	// std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
 }
