@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 17:50:48 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/27 18:04:41 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void pass(Cmd &command)
 	}
 	else if (command._user->get_pwd().empty())
 		command._server->set_pwd(command.get_value()[0]);
+
+
 }
 
 // a verifier : pour le pwd server ou / et user?
