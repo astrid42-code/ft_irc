@@ -31,13 +31,14 @@ bool	mask_off(std::string mask, std::string str)
 	std::size_t					j;
 	std::size_t					n = 0;
 
+	std::cout << "mask_off ok ?" << std::endl;
 	while (i < mask.length())
 	{
 		j = i;
 		if ((i = mask.find("*")) != std::string::npos)
 		{
-			mask_div[n++] = mask.substr(j, i - j);
-			std::cout << "|" << mask_div[n - 1] << "|" << std::endl;
+			mask_div.push_back(mask.substr(j, i - j));
+			std::cout << "|" << mask_div.back() << "|" << std::endl;
 		}
 		else
 			i = mask.length();
@@ -45,7 +46,6 @@ bool	mask_off(std::string mask, std::string str)
 	if (mask_div.empty())
 		mask_div[0] = mask;
 	i = 0;
-	n = 0;
 	while (n < mask_div.size())
 	{
 		j = i;

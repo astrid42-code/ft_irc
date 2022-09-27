@@ -59,11 +59,12 @@ void	who(Cmd &command)
 		if (itu->second && itu->second->find_mod("i") && itu->second != command._user)
 		{
 			std::cout << "ok bug relou" << std::endl;
-			if (command.get_size() >= 1 && command.get_value()[1][0] != '0' && command.get_value()[1].compare("*") != 0)
+			if (command.get_size() >= 1 && command.get_value()[0].compare("0") != 0 && command.get_value()[0].compare("*") != 0)
 			{
+				std::cout << "ok bug" << std::endl;
 				if (mask_off(command.get_value()[0], itu->second->get_hostname()) || mask_off(command.get_value()[0], itu->second->get_name()) || mask_off(command.get_value()[0], SERVER))
 				{
-					if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1][0] == 'o' && itu->second->find_mod("o")))
+					if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1].compare("o") == 0 && itu->second->find_mod("o")))
 					{
 						command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 						match = true;
