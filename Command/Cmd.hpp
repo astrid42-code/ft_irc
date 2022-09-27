@@ -51,6 +51,8 @@ class Cmd
 		int								_size; // taille du vector value (il ne faut pas utiliser ca... mais _cmd.size())
 };
 
+int		check_condition(Cmd &command, std::string key);
+
 //parametre : ref sur la struct avec les donnees utiles a utiliser pour les cds (_value/args, )
 void	nick(Cmd &command);
 void	user(Cmd &command);

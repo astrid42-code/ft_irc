@@ -53,7 +53,10 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg
 
+#define NICK(localhost, nick) (":" + localhost + " NICK " + nick + "\r\n")
+
 #define PRIVMSG(localhost, chan, str) (":" + localhost + " PRIVMSG " + chan + " :" + str + "\r\n")
+
 #define NOTICE(localhost, chan, str) (":" + localhost + " NOTICE " + chan + " :" + str + "\r\n")
 
 #define PART(localhost, chan, str) (":" + localhost + " PART " + chan + " :" + str + "\r\n")

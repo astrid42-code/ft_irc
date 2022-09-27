@@ -74,6 +74,7 @@ void	who(Cmd &command)
 			}
 			else
 			{
+				std::cout << "ok wtf" << std::endl;
 				serv = true;
 				for (std::vector<Channel *>::iterator itc = chans.begin(); itc != chans.end(); itc++)
 				{

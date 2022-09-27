@@ -37,19 +37,19 @@ bool	mask_off(std::string mask, std::string str)
 		j = i;
 		if ((i = mask.find("*")) != std::string::npos)
 		{
-			mask_div.push_back(mask.substr(j, i - j));
+			mask_div.push_back(mask.substr(j, i++ - j));
 			std::cout << "|" << mask_div.back() << "|" << std::endl;
 		}
 		else
 			i = mask.length();
 	}
 	if (mask_div.empty())
-		mask_div[0] = mask;
+		mask_div.push_back(mask);
 	i = 0;
 	while (n < mask_div.size())
 	{
 		j = i;
-		if ((i = str.find(mask_div[n], j)) == std::string::npos)
+		if (!mask_div[n].empty() && (i = str.find(mask_div[n], j)) == std::string::npos)
 		{
 			std::cout << "false :" << mask_div[n] << std::endl;
 			return (false);
@@ -59,4 +59,22 @@ bool	mask_off(std::string mask, std::string str)
 	}
 	std::cout << "mask_off ok" << std::endl;
 	return (true);
+}
+
+int		check_condition(Cmd &command, std::string key)
+{
+	if (key.compare("PASS") == 0 && command._user->get_valid() == 0)
+		return (1);
+	else if (key.compare("NICK") == 0 && (command._user->get_valid() == 1 || command._user->get_valid() == 3))
+		return (1);
+	else if (key.compare("USER") == 0 && command._user->get_valid() == 2)
+		return (1);
+	else if (command._user->get_valid() == 3 && (key.compare("JOIN") == 0 || key.compare("INVITE") == 0
+			|| key.compare("KICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
+			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0
+			|| key.compare("LIST") == 0 || key.compare("NAMES") == 0 || key.compare("PING") == 0
+			|| key.compare("PART") == 0 || key.compare("MODE") == 0 || key.compare("AWAY") == 0
+			|| key.compare("WHOIS") == 0 || key.compare("NOTICE") == 0))
+		return (1);
+	return (0);
 }

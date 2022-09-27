@@ -66,16 +66,12 @@ void user(Cmd &command)
 		command._user->set_host(command.get_value()[2]);
 	}
 	command._user->set_name(command.get_value()[3]);
-	command._user->set_operator(0);
+	if (command._user->get_valid() == 2)
+		command._user->set_valid(3);
 	command._user->set_mod("");
-	command._user->set_pwd("");
 	command._user->set_sfd(command._sfd);
 	command._server->set_user(command._user);
-	//command._server->send_msg("", command._user, command);
-	//command._server->send_msg("", command._user, command);
 
-	// send_msg(375, command._user, command);
-	// send_msg(376, command._user, command);
 	command._server->send_msg(RPL_WELCOME(command._user->get_hostname(), command._user->get_nick()) ,command._sfd);
 	command._server->send_msg(RPL_YOURHOST(command._user->get_hostname()),command._sfd);
 	command._server->send_msg(RPL_CREATED(command._user->get_hostname()),command._sfd);
@@ -84,18 +80,4 @@ void user(Cmd &command)
 	command._server->send_msg(RPL_MOTD(command._user->get_hostname(), PINGU) , command._sfd);
 	command._server->send_msg(RPL_ENDOFMOTD(command._user->get_hostname()) , command._sfd);
 	std::cout << "MODE : " << command._user->get_mod() << std::endl;
-	//command._server->send_msg(RPL_MYINFO(command._user->get_hostname()),command._sfd);
-	// //command._server->send_msg("RPL_WELCOME", command._user, command);
-	// //command._server->send_msg("RPL_YOURHOST", command._user, command);
-	// //command._server->send_msg("RPL_CREATED", command._user, command);
-	// //command._server->send_msg("RPL_MYINFO", command._user, command);
-	// //command._server->send_msg("RPL_MOTD", command._user, command);
-	
-	//command._server->send_msg(1, RPL_WELCOME(command._user->get_hostname(), command._user->get_nick()), command);
-	//command._server->send_msg(2, RPL_YOURHOST, command);
-	//command._server->send_msg(3, RPL_CREATED, command);
-	//command._server->send_msg(4, RPL_MYINFO, command);
-	//command._server->send_msg(375, RPL_MOTDSTART, command);
-	//command._server->send_msg(0, RPL_MOTD(PINGU), command);
-	//command._server->send_msg(0, RPL_ENDOFMOTD, command);
 }

@@ -78,38 +78,15 @@ int		Cmd::get_size(void) const
 	return (_size);
 }
 
-int		check_condition(std::string key)
-{
-	if (key.compare("JOIN") == 0 || key.compare("USER") == 0 || key.compare("INVITE") == 0
-			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
-			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
-			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0 || key.compare("PING") == 0
-			|| key.compare("PART") == 0 || key.compare("MODE") == 0 || key.compare("AWAY") == 0 || key.compare("NOTICE") == 0)
-		return (1);
-	return (0);
-}
-
 User *Cmd::get_user_fd()
 {
 	std::map<int, User *> tmp = _server->get_users();
 	std::map<int, User *>::iterator it = tmp.find(_sfd);
 
-	// std::cout << "get_user_fd" << std::endl;
-	// if (!_server->get_users().empty())
-	// {
-		// it = _server->get_users().find(_sfd);
-
-		if (it == tmp.end())
-		{
-			// std::cout << "user not found" << std::endl;
-			return (NULL);
-		}
-		else
-		{
-			// std::cout << "user found" << std::endl;
-			return (it->second);
-		}
-	// }
+	if (it == tmp.end())
+		return (NULL);
+	else
+		return (it->second);
 	return (NULL);
 }
 
@@ -125,7 +102,7 @@ void Cmd::parse_cmd(std::string str)
 	std::cout << "parse_cmd" << std::endl;
 	key = str.substr(0, str.find(' '));
 	size = str.size() - key.size();
-	if (check_condition(key))
+	if (check_condition(*this, key))
 	{
 		std::cout << "check key done" << std::endl;
 		set_key(key);
@@ -171,10 +148,6 @@ void	Cmd::print(void)
 		_user->print();
 	else
 	 	std::cout << "no user" << std::endl;
-	// if (_server)
-	// 	std::cout << _server->print() << std::endl;
-	// else
-	// 	std::cout << "no server" << std::endl;
 	std::cout << "end of Cmd.print()" << std::endl;
 }
 

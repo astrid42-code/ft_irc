@@ -12,7 +12,7 @@
 
 #include "User.hpp"
 	
-User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _pwd("pwd"), _mod(""),  _host(""), _operator(0)
+User::User() : _user("toto"), _name("titi toto"), _nick("titi"), _mod(""),  _host(""), _valid(0)
 {
 	// std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
@@ -25,6 +25,7 @@ User::User(std::string prenom, std::string name, std::string nickname)
 	_user = prenom;
 	_name = name;
 	_nick = nickname;
+	_valid = 0;
 	// std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
@@ -35,6 +36,7 @@ User::User(std::string nickname, int sdf)
 {
 	_nick = nickname;
 	_sfd = sdf;
+	_valid = 0;
 	// std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
@@ -44,6 +46,7 @@ User::User(std::string nickname, int sdf)
 User::User(int sdf)
 {
 	_sfd = sdf;
+	_valid = 0;
 }
 
 User::~User()
@@ -61,16 +64,15 @@ User					&User::operator=(const User & user_cp)
 	_user = user_cp._user;
 	_name = user_cp._name;
 	_nick = user_cp._nick;
-	_pwd = user_cp._pwd;
 	_mod = user_cp._mod;
-	_operator = user_cp._operator;
+	_valid = user_cp._valid;
 	return (*this);
 }
 
 bool					User::operator==(const User & user_cp)
 {
-	if (_user == user_cp._user && _name == user_cp._name && _nick == user_cp._nick &&
-		_pwd == user_cp._pwd && _mod == user_cp._mod && _operator == user_cp._operator)
+	if (_user == user_cp._user && _name == user_cp._name && _nick == user_cp._nick
+		&& _mod == user_cp._mod && _valid == user_cp._valid)
 		return (true);
 	return (false);
 }
@@ -95,11 +97,6 @@ std::string				User::get_host() const
 	return (_host);
 }
 
-std::string				User::get_pwd() const
-{
-	return (_pwd);
-}
-
 std::string				User::get_mod() const
 {
 	return (_mod);
@@ -110,9 +107,9 @@ int						User::get_sfd() const
 	return (_sfd);
 }
 
-int						User::get_operator() const
+int						User::get_valid() const
 {
-	return (_operator);
+	return (_valid);
 }
 
 Channel					*User::get_channel(std::string name)
@@ -175,14 +172,9 @@ void	User::set_host(std::string host)
 	_host = host;
 }
 
-void	User::set_pwd(std::string pwd)
+void	User::set_valid(int op)
 {
-	_pwd = pwd;
-}
-
-void	User::set_operator(int op)
-{
-	_operator = op;
+	_valid = op;
 }
 
 void	User::set_sfd(int sfd)
@@ -193,21 +185,6 @@ void	User::set_sfd(int sfd)
 
 void	User::set_mod(std::string mod)
 {
-	// std::cout << " mode a ? " << mod << std::endl;
-	// if (_mod.find("a") == std::string::npos && mod.find("a") != std::string::npos)
-	// 	_mod += "a";
-	// else if (_mod.find("i") == std::string::npos && mod.find("i") != std::string::npos)
-	// 	_mod += "i";
-	// else if (_mod.find("w") == std::string::npos && mod.find("w") != std::string::npos)
-	// 	_mod += "w";
-	// else if (_mod.find("r") == std::string::npos && mod.find("r") != std::string::npos)
-	// 	_mod += "r";
-	// else if (_mod.find("o") == std::string::npos && mod.find("o") != std::string::npos)
-	// 	_mod += "o";
-	// else if (_mod.find("O") == std::string::npos && mod.find("O") != std::string::npos)
-	// 	_mod += "O";
-	// else if (_mod.find("s") == std::string::npos && mod.find("s") != std::string::npos)
-	// 	_mod += "s";
 	_mod = mod;
 /*
 		a - user is flagged as away;
@@ -237,10 +214,6 @@ void	User::set_away(std::string msg)
 {
 	_away = msg;
 }
-
-// void	User::set_chan(Channel *chan){
-// 	_vchan.push_back(chan);
-// }
 
 // a faire avant de stocker le user dans une map/un vector
 bool	User::check_nick(std::string new_nick)
@@ -275,10 +248,11 @@ bool	User::find_mod(std::string mod)
 
 void	User::print(void) const
 {
-	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | pwd:" + _pwd << " | operator:" + SSTR(_operator) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
+	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | operator:" + SSTR(_valid) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
 }
 
-bool User::isOnChan(std::string chan_name){
+bool User::isOnChan(std::string chan_name)
+{
 	std::vector<Channel *>::iterator	it;
 	it = _vchan.begin();
 	// std::string 	vchan_tmp = "#";
@@ -307,7 +281,8 @@ bool User::isOnChan(std::string chan_name){
 	return false;
 }
 
-void	User::remove_chan(Channel * channel){
+void	User::remove_chan(Channel * channel)
+{
 	(void)channel;
 	std::vector<Channel *>::iterator it;
 	
@@ -324,6 +299,6 @@ void	User::remove_chan(Channel * channel){
 
 std::ostream	&operator<<(std::ostream &os, const User &user_cp)
 {
-	os << "user :" + user_cp.get_user() + " | name:" + user_cp.get_name() + " | nick:" + user_cp.get_nick() + " | pwd:" + user_cp.get_pwd() + " | operator:" + SSTR(user_cp.get_operator()) + " | mod:" + user_cp.get_mod() + " | sfd:" + SSTR(user_cp.get_sfd());
+	os << "user :" + user_cp.get_user() + " | name:" + user_cp.get_name() + " | nick:" + user_cp.get_nick() + " | operator:" + SSTR(user_cp.get_valid()) + " | mod:" + user_cp.get_mod() + " | sfd:" + SSTR(user_cp.get_sfd());
 	return (os);
 }
