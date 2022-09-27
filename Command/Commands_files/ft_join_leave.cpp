@@ -111,7 +111,8 @@ void	join(Cmd &command)
 			{
 				std::cout << "NEW CHAN : |" << chan->get_name() << "|" << std::endl;
 				command._server->set_user_in_chan(command._user, chan);
-				command._user->set_mod(command._user->get_mod() + "o");
+				if (!command._user->find_mod("o"))
+					command._user->set_mod(command._user->get_mod() + "o");
 				valid = true;
 			}
 		}

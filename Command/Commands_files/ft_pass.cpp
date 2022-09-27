@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/27 18:04:41 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/27 19:04:40 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,22 @@
 
 void pass(Cmd &command)
 {
-    // std::cout << "pass test " << std::endl;
+    std::cout << "pass test " << std::endl;
     if (command.get_value().size() != 1)
 	{
         command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
-        return;
     }
-    if (!command._server->get_pwd().empty()) // si on n'a pas le droit de changer le pwd (sinon je sais pas quel type d'erreru c ca)
+    else
 	{
-		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
-		return;
+		if (command._server->get_pwd().compare(command.get_value()[0]) == 0)
+		{
+			if (command._user->get_valid() == 0)
+			{
+				command._user->set_valid(1);
+				std::cout << "YEAH" << std::endl;
+			}
+		}
 	}
-	else if (command._user->get_pwd().empty())
-		command._server->set_pwd(command.get_value()[0]);
-
-
 }
 
 // a verifier : pour le pwd server ou / et user?
