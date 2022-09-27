@@ -196,7 +196,13 @@ void part(Cmd &command)
 	}
 	else	
 	{
-		command._server->send_msg(PART(command._user->get_hostname(),chan->get_key(),"Ciao"),command._sfd);
+		std::string msg;
+		if (command.get_size() >= 2)
+			msg = command.get_value()[1];
+		else
+			msg = "Ciao !!";
+		chan->send_to_users(PART(command._user->get_hostname(),chan->get_key(),msg));
+
 		chan->remove_user(command._user);
 	}
 	// if (command._server->get_chan(command.get_value()[0])->size() == 0)
