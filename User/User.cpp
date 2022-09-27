@@ -292,12 +292,12 @@ bool User::isOnChan(std::string chan_name){
 		std::cout << "isonchan _vchan NULL" << std::endl;
 		return false;
 	}
-	// for (it = _vchan.begin(); it < _vchan.end(); it++){
-	// 	// std::cout << "it getname = " << std::endl;
-	// 	// std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
-	// 	if ((*it)->get_name().compare(chan_name) == 0)
-	// 		return true;
-	// }
+	for (it = _vchan.begin(); it < _vchan.end(); it++){
+		// std::cout << "it getname = " << std::endl;
+		// std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
+		if ((*it)->get_name().compare(chan_name) == 0)
+			return true;
+	}
 	
 	// for (unsigned i = 0; i < _vchan.size(); i++){
 	// 	std::cout << "value isonchan " << _vchan.at(i) << std::endl;
