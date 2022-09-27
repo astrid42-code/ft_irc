@@ -73,6 +73,7 @@ void kick(Cmd &command)
 				{
 					std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
 					user->remove_chan(chan); // need to include comment into the kick message...
+					command._server->send_msg(KICK(command._user->get_hostname(), chans[0], users[0]), command._sfd);
 				}
 				else
 					command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),command.get_value()[1], command.get_value()[0]), command._sfd);
@@ -90,6 +91,7 @@ void kick(Cmd &command)
 					{
 						std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
 						user->remove_chan(chan); // need to include comment into the kick message...
+						command._server->send_msg(KICK(command._user->get_hostname(), chans[i], users[i]), command._sfd);
 					}
 					else
 						command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),users[i], chans[i]), command._sfd);

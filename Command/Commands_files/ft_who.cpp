@@ -55,7 +55,7 @@ void	who(Cmd &command)
 	std::cout << "who test" << std::endl;
 	for (std::map<int, User *>::iterator itu = users.begin(); itu != users.end(); itu++)
 	{
-		if (itu->second->get_mod().find('i') == std::string::npos && itu->second != command._user)
+		if (itu->second && itu->second->get_mod().find('i') == std::string::npos && itu->second != command._user)
 		{
 			if (command.get_size() >= 1 && command.get_value()[1][0] != '0' && command.get_value()[1].compare("*") != 0)
 			{
@@ -66,6 +66,7 @@ void	who(Cmd &command)
 						command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 						match = true;
 					}
+					std::cout << "WTF WHO NOT WOKING" << std::endl;
 				}
 			}
 			else
@@ -85,6 +86,8 @@ void	who(Cmd &command)
 						match = true;
 					}
 				}
+				std::cout << "WTF WHO NOT WOKING 2" << std::endl;
+
 			}
 		}
 	}
