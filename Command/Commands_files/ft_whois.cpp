@@ -96,6 +96,7 @@ void	whois(Cmd &command)
 						if (user->find_mod("o"))
 							command._server->send_msg(RPL_WHOISOPERATOR(command._user->get_hostname(), user->get_nick()), command._sfd);
 						command._server->send_msg(RPL_ENDOFWHOIS(command._user->get_hostname(), command._user->get_nick()), command._sfd);
+						std::cout << "WTF WHOIS NOT WORKING" << std::endl;
 					}
 				}
 				else

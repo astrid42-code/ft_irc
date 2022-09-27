@@ -66,6 +66,7 @@ void	who(Cmd &command)
 						command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 						match = true;
 					}
+					std::cout << "WTF WHO NOT WOKING" << std::endl;
 				}
 			}
 			else
@@ -85,6 +86,8 @@ void	who(Cmd &command)
 						match = true;
 					}
 				}
+					std::cout << "WTF WHO NOT WOKING 2" << std::endl;
+
 			}
 		}
 	}

@@ -93,6 +93,75 @@ std::string Server::get_ip()
 	return (_ip);
 }
 
+std::string Server::get_port() const
+{
+	return (_port);
+}
+
+std::string Server::get_pwd() const
+{
+	return (_pwd);
+}
+
+
+std::map<int, User *>	Server::get_users(void) const
+{
+	return (_users);
+}
+
+std::map<std::string, Channel *>	Server::get_chans(void) const
+{
+	return (_channels);
+}
+
+// recuperer la data du User
+User	*Server::get_user(int key)
+{
+	std::map<int, User *>::iterator it;
+
+	it = _users.find(key);
+	if (it == _users.end())
+		return (NULL);
+	return (it->second);
+}
+
+User	*Server::get_user(std::string nick)
+{
+	// std::cout << "OUAI" << std::endl;
+	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
+	{
+		std::cout << "get_user boucle" << std::endl;
+		if (it->second->get_nick() == nick)
+			return (it->second);
+	}
+	return (NULL);
+}
+
+Channel	*Server::get_chan(std::string key)
+{
+	std::map<std::string, Channel *>::iterator it;
+
+	for (it = _channels.begin(); it != _channels.end(); it++)
+		std::cout << "it key :" << it->second->get_key() << std::endl;
+	it = _channels.find(key);
+	if (it == _channels.end())
+		return (NULL);
+	return (it->second);
+}
+
+void	Server::set_pwd(std::string pwd)
+{
+	_pwd = pwd;
+}
+
+int	Server::send_msg(std::string msg, int sfd)
+{
+	int res;
+	std::cout << "send msg : |" << msg << "|" << std::endl;
+	res = send(sfd, msg.c_str(), msg.length(), MSG_CONFIRM);
+	return (res);
+}
+
 void Server::set_ip(std::string ip)
 {
 	int sock = socket(PF_INET, SOCK_DGRAM, 0);
@@ -138,29 +207,6 @@ void Server::set_ip(std::string ip)
 		ip = buf;
 		return;
 	}
-}
-
-std::string Server::get_port() const
-{
-	return (_port);
-}
-
-std::string Server::get_pwd() const
-{
-	return (_pwd);
-}
-
-void	Server::set_pwd(std::string pwd)
-{
-	_pwd = pwd;
-}
-
-int	Server::send_msg(std::string msg, int sfd)
-{
-	int res;
-	std::cout << "send msg : |" << msg << "|" << std::endl;
-	res = send(sfd, msg.c_str(), msg.length(), MSG_CONFIRM);
-	return (res);
 }
 
 static int make_socket_non_blocking(int sfd)
@@ -407,20 +453,6 @@ void	Server::remove_user(User *user)
 	_users.erase(_users.find(user->get_sfd()));
 }
 
-
-Channel	*Server::get_chan(std::string key)
-{
-	std::map<std::string, Channel *>::iterator it;
-
-	for (it = _channels.begin(); it != _channels.end(); it++)
-		std::cout << "it key :" << it->second->get_key() << std::endl;
-	it = _channels.find(key);
-	if (it == _channels.end())
-		return (NULL);
-	return (it->second);
-}
-
-
 bool	Server::set_chan(Channel *chan)
 {
 	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
@@ -429,41 +461,6 @@ bool	Server::set_chan(Channel *chan)
 	std::cout << "channel set in serv... chan name :" << chan->get_name() << std::endl;	
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
-
-
-std::map<int, User *>	Server::get_users(void) const
-{
-	return (_users);
-}
-
-std::map<std::string, Channel *>	Server::get_chans(void) const
-{
-	return (_channels);
-}
-
-// recuperer la data du User
-User	*Server::get_user(int key)
-{
-	std::map<int, User *>::iterator it;
-
-	it = _users.find(key);
-	if (it == _users.end())
-		return (NULL);
-	return (it->second);
-}
-
-User	*Server::get_user(std::string nick)
-{
-	// std::cout << "OUAI" << std::endl;
-	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
-	{
-		std::cout << "get_user boucle" << std::endl;
-		if (it->second->get_nick() == nick)
-			return (it->second);
-	}
-	return (NULL);
-}
-
 
 // insert user in map
 bool	Server::set_user(User *user)
