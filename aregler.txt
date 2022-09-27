@@ -1,0 +1,19 @@
+- plusieurs channels, ne trouve pas les autres noms 
+- ne trouve pas les channels pour leave
+- met en operateur quand on cree un channel (ok mais : ) ajoute les o a la suite quand on cree d'autres channels ex : si 3 channels crees : iooo
+- fermeture propre du serveur
+- penser a delete les new a la fermeture (d'une commande ou du serveur) : new pour channel et user non faits actuellement (cmd ok)
+- equivalent de poll utilise? a ne mettre qu'une fois
+- pb dans l'utilisation de fcnt? (voir la grammaire demandee dans la correc)
+- retirer les cout de debug et d'ffichage d'infos
+- si nick donne dans nc, a la connexion, msg :
+Irssi: Your nick is owned by  [@] 
+et nick initialise a _ ???
++ msg d'accueil incomplet (lie a ca ou autre?)
+- si nc lance apres la co du user, ouvre un nouveau fd (normal??)
+- join par nc ne sembla pas se co au channel? ni pvr envoyer des msgs
+- cmd a faire : notice + si necessaire : toutes les commandes de channel 
+- mode n'affiche rien en channel, normal?
+- who test segfault apres un pong parfois
+
+

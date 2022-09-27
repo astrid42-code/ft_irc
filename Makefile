@@ -6,7 +6,7 @@
 #    By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/06 16:19:07 by asgaulti          #+#    #+#              #
-#    Updated: 2022/09/24 13:37:04 by asgaulti         ###   ########.fr        #
+#    Updated: 2022/09/27 14:38:12 by asgaulti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS		=	main.cpp									\
 				Command/Commands_files/ft_ping.cpp			\
 				Command/Commands_files/ft_mode.cpp			\
 				Command/Commands_files/ft_away.cpp			\
+				Command/Commands_files/ft_notice.cpp			\
 				Channel/Channel.cpp							
 	
 
