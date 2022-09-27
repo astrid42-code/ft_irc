@@ -55,7 +55,7 @@ void	who(Cmd &command)
 	std::cout << "who test" << std::endl;
 	for (std::map<int, User *>::iterator itu = users.begin(); itu != users.end(); itu++)
 	{
-		if (itu->second->get_mod().find('i') == std::string::npos && itu->second != command._user)
+		if (itu->second && itu->second->get_mod().find('i') == std::string::npos && itu->second != command._user)
 		{
 			if (command.get_size() >= 1 && command.get_value()[1][0] != '0' && command.get_value()[1].compare("*") != 0)
 			{

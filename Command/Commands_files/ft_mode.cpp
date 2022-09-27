@@ -1,7 +1,5 @@
 #include "../Cmd.hpp"
 
-// IF MOD IS NEEDED FOR A COMMAND AND THE USER DON'T HAVE IT USE "ERR_CHANOPRIVSNEEDED"
-
 std::string	get_user_mode_string(User *user, std::string arg)
 {
 	(void)user;
@@ -197,7 +195,7 @@ void		mode_chan(Cmd &command)
 		chan->print();
 		if (command.get_size() == 1)
 		{
-			std::cout << chan->get_mod() << std::endl;// put this in a message to the client
+			// std::cout << chan->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_CHANNELMODEIS(command._user->get_hostname(), chan->get_name(), chan->get_mod()), command._sfd);
 		}
 		else

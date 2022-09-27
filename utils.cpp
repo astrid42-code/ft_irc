@@ -57,5 +57,6 @@ bool	mask_off(std::string mask, std::string str)
 		else
 			n++;
 	}
+	std::cout << "mask_off ok" << std::endl;
 	return (true);
 }
