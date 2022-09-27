@@ -136,8 +136,6 @@ std::string	get_chan_mode_string(Channel *chan, std::string arg, Cmd &command)
 
 bool		check_mode_string(Cmd &command, std::string mods)
 {
-		// (void)command;
-		// (void)mods;
 	std::string::iterator	it = command.get_value()[1].begin();
 	int						i;
 
@@ -170,7 +168,7 @@ bool		mode_user(Cmd &command)
 		std::cout << "the user given in parameter match the user" << std::endl;
 		if (command.get_size() == 1)
 		{
-			std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
+			// std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
 		}
 		else

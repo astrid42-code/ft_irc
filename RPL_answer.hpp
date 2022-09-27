@@ -110,7 +110,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_CHANNELMODEIS(localhost, channel, mode) (":" + localhost + " 324 : " + channel + mode +  "-+OovaimnqpsrtklbeI\r\n") //324
 
-#define RPL_NOTOPIC(localhost, channel) (":" + localhost + " 331 : " + channel + " :No topic is set") // 331
+#define RPL_NOTOPIC(lcalhost, channel) (":" + localhost + " 331 : " + channel + " :No topic is set") // 331
 
 #define RPL_TOPIC(localhost, channel, topic) (":" + localhost + " 332 : " + channel + " :" + topic + "\r\n") // 332
 	// + envoyer channel et topic (sujet du chan) en arg
