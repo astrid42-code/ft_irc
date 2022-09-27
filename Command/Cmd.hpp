@@ -61,6 +61,7 @@ void	part(Cmd &command);
 void	list(Cmd &command);
 
 void	privmsg(Cmd &command);
+void	notice(Cmd &command);
 void	who(Cmd &command);
 
 void	ping(Cmd &command);

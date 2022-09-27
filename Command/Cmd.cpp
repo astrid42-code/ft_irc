@@ -17,6 +17,7 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 
 	// advanced cmds
 	_cmd["PRIVMSG"] = privmsg;
+	_cmd["NOTICE"] = notice;
 	_cmd["WHO"] = who;
 
 	_cmd["INVITE"] = invite;
@@ -83,7 +84,7 @@ int		check_condition(std::string key)
 			|| key.compare("KICK") == 0 || key.compare("NICK") == 0 || key.compare("OPER") == 0 || key.compare("QUIT") == 0 
 			|| key.compare("KILL") == 0 || key.compare("PRIVMSG") == 0 || key.compare("WHO") == 0 || key.compare("WHOIS") == 0
 			|| key.compare("LIST") == 0 || key.compare("PASS") == 0 || key.compare("NAMES") == 0 || key.compare("PING") == 0
-			|| key.compare("PART") == 0 || key.compare("MODE") == 0 || key.compare("AWAY") == 0)
+			|| key.compare("PART") == 0 || key.compare("MODE") == 0 || key.compare("AWAY") == 0 || key.compare("NOTICE") == 0)
 		return (1);
 	return (0);
 }

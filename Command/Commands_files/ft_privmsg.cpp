@@ -60,12 +60,10 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 	{
 		users = chan->get_users();
 		it = users.begin();
-		if (it != users.end())
-			std::cout << "diff" << std::endl;
-		else
-		{
-			std::cout << "equal" << std::endl;
-		}
+		// if (it != users.end())
+		// 	std::cout << "" << std::endl;
+		// else
+		// 	std::cout << "no users" << std::endl;
 		while (it != users.end())
 		{
 			std::cout << "User :" << command._user->get_nick() << std::endl;

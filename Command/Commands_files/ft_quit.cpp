@@ -33,6 +33,15 @@
 
 void quit(Cmd &command)
 {
-    std::cout << "quit msg " << command.get_value()[0] << std::endl;
-    // //command._server->send_msg(command.get_value()[0], command._user, command);
+	if (command.get_size() == 1)
+	{
+		std::vector<Channel *>	chans = command._user->get_chans();
+
+		std::cout << "quit msg " << command.get_value()[0] << std::endl;
+		for (std::vector<Channel *>::iterator it = chans.begin(); it != chans.end(); it++)
+			(*it)->send_to_users(":" + command._user->get_hostname() + " QUIT :" + command.get_value()[0]);
+	}
+	command._server->send_msg("ERROR\r\n", command._sfd);
+	close(command._sfd); //... j'arrive pas a forcer le client a fermer sa connection (try avec nc)
+	command._server->remove_user(command._user);
 }
