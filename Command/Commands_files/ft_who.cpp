@@ -86,7 +86,7 @@ void	who(Cmd &command)
 						match = true;
 					}
 				}
-					std::cout << "WTF WHO NOT WOKING 2" << std::endl;
+				std::cout << "WTF WHO NOT WOKING 2" << std::endl;
 
 			}
 		}

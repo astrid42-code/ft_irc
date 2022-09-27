@@ -59,6 +59,8 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define JOIN(localhost, chan) (":" + localhost + " JOIN " + chan + "\r\n")
 
+#define KICK(localhost, chan, nick) (":" + localhost + " KICK " + chan + " " + nick + "\r\n")
+
 #define RPL_AWAY(localhost, nick, msg) (":" + localhost + " 301 :" + nick + msg + "\r\n") // 301
 	// + envoyer nick du user en arg
 

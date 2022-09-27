@@ -72,7 +72,7 @@ void	whois(Cmd &command)
 			{
 				for (std::map<int, User *>::iterator at = users.begin(); at != users.end(); at++)
 				{
-					if (at->second->find_mod("i") && (mask_off(*it, at->second->get_hostname())))
+					if (!at->second->find_mod("i") && mask_off(*it, at->second->get_hostname()))
 					{
 						if (user->find_mod("a"))
 							command._server->send_msg(RPL_AWAY(command._user->get_hostname(), at->second->get_nick(), at->second->get_away()), command._sfd);
