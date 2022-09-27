@@ -129,12 +129,12 @@ void	join(Cmd &command)
 		if (valid == true)
 		{
 			std::map< int, User *>	users = chan->get_users();
-			chan->send_to_users(":" + command._user->get_hostname() + " JOIN " + chan->get_name());
-			if (!chan->get_topic().empty())
-				command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_key(), chan->get_topic()), command._sfd);
+			command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_key(), chan->get_topic()), command._sfd);
 			for (std::map< int, User *>::iterator it = users.begin(); it != users.end(); it++)
 				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key(), it->second->get_nick()), command._sfd);
 			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_user(), chan->get_key()), command._sfd);
+			chan->send_to_users(JOIN(command._user->get_hostname(),chan->get_key()));
+		
 		}
 	}
 }
@@ -191,24 +191,21 @@ void part(Cmd &command)
 		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 		return;
 	}
-	else
+	else if (!command._user->isOnChan(command.get_value()[0]))
+	{
+		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+	}
+	else	
+	{
+		command._server->send_msg(PART(command._user->get_hostname(),chan->get_key(),"Ciao"),command._sfd);
 		chan->remove_user(command._user);
-
+	}
 	// if (command._server->get_chan(command.get_value()[0])->size() == 0)
 		
 
 	// std::string tmp = "#";
 	// tmp.append(command.get_value()[1]);
-	// > checker si le user est dans le channel avant de le sortir
-	std::cout << "command.get_value()[0] :" << command.get_value()[0] << std::endl;
-	if (command._user->isOnChan(command.get_value()[0]))
-	{
-		std::cout << "IL EST SUR LE CHAN " << std::endl;
-		//command._user->remove_chan(chan);
-	}
-	else
-		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
-// a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
+	// > checker si le user est dans le channel avant de le sortir// a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
 // + passer les get channel et user en & plutot que ptr?
 }
 

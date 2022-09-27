@@ -53,6 +53,12 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg
 
+#define PRIVMSG(localhost, chan, str) (":" + localhost + " PRIVMSG " + chan + " :" + str + "\r\n")
+
+#define PART(localhost, chan, str) (":" + localhost + " PART " + chan + "\r\n")
+
+#define JOIN(localhost, chan) (":" + localhost + " JOIN " + chan + "\r\n")
+
 #define RPL_AWAY(localhost, nick, msg) (":" + localhost + " 301 :" + nick + msg + "\r\n") // 301
 	// + envoyer nick du user en arg
 

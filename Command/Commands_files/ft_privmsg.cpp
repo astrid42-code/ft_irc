@@ -39,12 +39,10 @@
 
 void send_msg_to_user(User *usr, std::string str, Cmd &command, std::string chan)
 {
-	std::string msg = ":" + command._user->get_hostname() + " PRIVMSG " + chan + " :" + str + "\r\n";
-	std::cout << "Sending :|" << msg << "| to :" << usr->get_nick() << std::endl;
 	if (usr->find_mod("a"))
 		command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
 	else
-		send(usr->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
+		command._server->send_msg(PRIVMSG(command._user->get_hostname(), chan, str), usr->get_sfd());
 }
 
 void send_msg_to_chan(Cmd &command, std::string destinataire)
@@ -101,6 +99,8 @@ void privmsg(Cmd &command)
 		}
 		else
 			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
+		if (command._server->get_user(destinataire))
+			command._server->send_msg(PRIVMSG(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
 	}
 	// std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
 }
