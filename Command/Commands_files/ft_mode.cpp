@@ -195,7 +195,7 @@ void		mode_chan(Cmd &command)
 		chan->print();
 		if (command.get_size() == 1)
 		{
-			// std::cout << chan->get_mod() << std::endl;// put this in a message to the client
+			std::cout << chan->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_CHANNELMODEIS(command._user->get_hostname(), chan->get_name(), chan->get_mod()), command._sfd);
 		}
 		else
@@ -214,13 +214,17 @@ void		mode_chan(Cmd &command)
 
 void		mode(Cmd &command)
 {
+	Channel *chan;
+
 	std::cout << "ft_mode start" << std::endl;
 	if (command.get_size() >= 1)
 	{
-		if (command.get_value()[0][0] == '#')
+		if (command.get_value()[0].find("#") == 0)
 		{
 			mode_chan(command);
-			command._user->get_channel(command.get_value()[0])->print();
+			chan = command._user->get_channel(command.get_value()[0]);
+			if (chan)
+				chan->print();
 		}
 		else
 		{
