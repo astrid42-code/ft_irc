@@ -54,13 +54,13 @@
 #include <string.h>
 #include <cstring>
 
-Server::Server() : _port("6667"), _pwd("pwd")
+Server::Server() : _port("6667"), _pwd("pwd"), _time(std::time(NULL))
 {
 	std::cout << "Hi there, nice to see you!" << std::endl;
 	set_ip(_ip);
 }
 
-Server::Server(std::string port, std::string pwd) : _port(port), _pwd(pwd)
+Server::Server(std::string port, std::string pwd) : _port(port), _pwd(pwd), _time(std::time(NULL))
 {
 	std::cout << "Hi there, nice to see you!" << std::endl;
 	// parser port et pwd ici ou dans une fct set plutot?
@@ -149,9 +149,46 @@ Channel	*Server::get_chan(std::string key)
 	return (it->second);
 }
 
+std::time_t	Server::get_time()
+{
+	return(_time);
+}
+
+void	Server::set_time(std::time_t time)
+{
+	_time = time;
+}
+
 void	Server::set_pwd(std::string pwd)
 {
 	_pwd = pwd;
+}
+
+bool	Server::set_chan(Channel *chan)
+{
+	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
+
+	p = _channels.insert(make_pair(chan->get_name(), chan));
+	std::cout << "channel set in serv... chan name :" << chan->get_name() << std::endl;	
+	return (p.second); // if bool == true user succesfully join server else nick name already in use
+}
+
+// insert user in map
+bool	Server::set_user(User *user)
+{
+	std::pair<std::map<int, User *>::iterator, bool> p;
+
+	std::cout << "set_user server " << user->get_sfd() << std::endl;
+	p = _users.insert(std::make_pair(user->get_sfd(), user));
+	return (p.second); // if bool == true user succesfully join server else nick name already in use
+}
+
+void	Server::set_user_in_chan(User *user, Channel *chan)
+{
+	std::vector<Channel *>::iterator it;
+	
+	chan->set_user(user);
+	user->set_chan(*chan);
 }
 
 int	Server::send_msg(std::string msg, int sfd)
@@ -271,6 +308,11 @@ void pre_parse(std::string buf, int sfd, Server *serv)
 		command->_server = serv;
 		command->_sfd = sfd;
 		command->_user = command->get_user_fd();
+		if (std::time(NULL) - command->_server->get_time() > TIME_LIMIT)
+		{
+			std::cout << "going to ping ?" << std::endl;
+			ping(*command);
+		} // timer to ping user
 		if (command->_user == NULL)
 		{
 			std::cout << "_____NoUserFromFd_____" << std::endl;
@@ -445,37 +487,3 @@ void	Server::remove_user(User *user)
 	}
 	_users.erase(_users.find(user->get_sfd()));
 }
-
-bool	Server::set_chan(Channel *chan)
-{
-	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
-
-	p = _channels.insert(make_pair(chan->get_name(), chan));
-	std::cout << "channel set in serv... chan name :" << chan->get_name() << std::endl;	
-	return (p.second); // if bool == true user succesfully join server else nick name already in use
-}
-
-// insert user in map
-bool	Server::set_user(User *user)
-{
-	std::pair<std::map<int, User *>::iterator, bool> p;
-
-	std::cout << "set_user server " << user->get_sfd() << std::endl;
-	p = _users.insert(std::make_pair(user->get_sfd(), user));
-	return (p.second); // if bool == true user succesfully join server else nick name already in use
-}
-
-void	Server::set_user_in_chan(User *user, Channel *chan)
-{
-	std::vector<Channel *>::iterator it;
-	
-	chan->set_user(user);
-	user->set_chan(*chan);
-	// std::cout << "coucou2 user = " << chan->get_user(user->get_sfd()) << std::endl;
-	// for (it = user->_vchan.begin(); it != user->_vchan.end(); it++)
-	// for (int i = 0; i < user->get_chan.size(); i++)
-	// {
-	// 	std::cout << "chan user : " << user->get_chan(i) << std::endl;
-	// }
-}
-

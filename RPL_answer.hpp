@@ -11,6 +11,7 @@
 #define VERSION "1.69" // version actuelle a verifier
 #define DATE "Mon Aug 25 16:57:33 2022"
 #define DEFAULT_NAME "toto"
+#define TIME_LIMIT 60
 
 #define AWAY_DEFAULT (":You have been marked as being away")
 
@@ -52,6 +53,10 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 	// + envoyer nombre de users en fct de leur mode (nbr de users connectes, nbre d'invisible users connectes)
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg
+
+#define PING(localhost) (std::string("PING :") + SERVER + "\r\n")
+
+#define PONG() (std::string("PONG :") + SERVER + "\r\n")
 
 #define NICK(localhost, nick) (":" + localhost + " NICK " + nick + "\r\n")
 
@@ -162,7 +167,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 	// + envoyer nick du user en arg
 // Used to indicate the nickname parameter supplied to a command is currently unused.
 
-#define ERR_NOSUCHSERVER(localhost) (":" + localhost + " 402 : " + SERVERNAME " :No such server\r\n") // 402
+#define ERR_NOSUCHSERVER(localhost, serv) (":" + localhost + " 402 : " + serv + " :No such server\r\n") // 402
 // - Used to indicate the server name given currently does not exist.
 
 #define ERR_NOSUCHCHANNEL(localhost, channel) (":" + localhost + " 403 : " + channel + " :No such channel\r\n") // 403

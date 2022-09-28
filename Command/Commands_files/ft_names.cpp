@@ -67,7 +67,7 @@ void names(Cmd &command)
 			}
 			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_user() ,chan->get_key()), command._sfd);
 		}
-		else
-			command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname()), command._sfd);
 	}
+	else if (command.get_size() == 2)
+		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[1]), command._sfd);
 }

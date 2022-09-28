@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/28 18:28:07 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/28 19:02:05 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 
 void quit(Cmd &command)
 {
+	User *tmp;
+
 	if (command.get_size() == 1)
 	{
 		std::vector<Channel *>	chans = command._user->get_chans();
@@ -43,6 +45,7 @@ void quit(Cmd &command)
 	}
 	command._server->send_msg("ERROR\r\n", command._sfd);
 	close(command._sfd); //... j'arrive pas a forcer le client a fermer sa connection (try avec nc)
+	tmp = command._user;
 	command._server->remove_user(command._user);
 
 	// pb : error: object backing the pointer will be destroyed at the end of the full-expression [-Werror,-Wdangling-gsl]
@@ -56,4 +59,5 @@ void quit(Cmd &command)
 			chans.erase(it->first); // effacer la cle du channel
 		}
 	}
+	delete tmp;
 }

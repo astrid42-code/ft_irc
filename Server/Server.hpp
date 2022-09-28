@@ -44,6 +44,8 @@ class Server
 		User								*get_user(std::string nick);
 		std::map<int, User *>				get_users(void) const;
 		std::string							get_ip();
+		std::time_t							get_time();
+		void								set_time(std::time_t time);
 		void 								set_ip(std::string ip);
 		bool								set_user(User *user);
 		void								remove_user(User *user);
@@ -63,6 +65,7 @@ class Server
 		std::string							_msg; // msg envoye par le serveur (ex : msgs d'erreurs)
 		std::map<std::string, Channel *>	_channels;
 		std::map<int, User *>				_users;
+		std::time_t							_time;
 };
 
 //utils.cpp
