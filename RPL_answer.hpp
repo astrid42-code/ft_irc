@@ -81,7 +81,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_WHOISSERVER(localhost, nick, server_info) (":" + localhost + " 312 : " + nick + " " + SERVERNAME + " :" + server_info + "\r\n") // 312
 	// + envoyer nick du user et server info (?)
 
-#define RPL_WHOISOPERATOR(localhost, nick) (":" + localhost + " 313 : " + nick + " :is an IRC operator\r\n") // 313
+#define RPL_WHOISOPERATOR(localhost, nick) (":" + localhost + " 313 : " + nick  + " :is an IRC operator\r\n") // 313
 
 #define RPL_ENDOFWHO(localhost, name) (":" + localhost + " 315 : " + name + " :End of WHO list\r\n") // mode_params 315
 	// + envoyer nick (?) du user en arg

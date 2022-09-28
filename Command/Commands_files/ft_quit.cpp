@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:50:29 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:28:07 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,16 @@ void quit(Cmd &command)
 	command._server->send_msg("ERROR\r\n", command._sfd);
 	close(command._sfd); //... j'arrive pas a forcer le client a fermer sa connection (try avec nc)
 	command._server->remove_user(command._user);
+
+	// pb : error: object backing the pointer will be destroyed at the end of the full-expression [-Werror,-Wdangling-gsl]
+	std::map<std::string, Channel *> chans = command._server->get_chans();
+	for (std::map<std::string, Channel *>::iterator it = chans.begin(); it != chans.end(); it++)
+	{
+		std::cout << " size chans = " << chans.size() << std::endl;
+		if (it->second && erase_chan(it->second)) // si le chan est empty
+		{
+			delete it->second;
+			chans.erase(it->first); // effacer la cle du channel
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:42 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/23 09:50:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/28 13:31:10 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	who(Cmd &command)
 			}
 		}
 	}
+	std::cout << "coucou who" << std::endl;
 	if (match == true)
 		command._server->send_msg(RPL_ENDOFWHO(command._user->get_hostname(), command._server->get_ip()), command._sfd);
 }

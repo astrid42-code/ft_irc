@@ -16,6 +16,10 @@ et nick initialise a _ ???
 - mode n'affiche rien en channel, normal?
 - who test segfault apres un pong parfois
 
+- si plsrs chans, et qu'on en quitte un (pas le dernier) ca crashe
+- quit et leave : la taille de la map de chans dans le server ne reduit pas quand on delete un chan dans leave
++ pb de double free 
+
 
 a faire :
 verifier affichage msg du whois et who

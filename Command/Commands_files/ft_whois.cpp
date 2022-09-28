@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:04:08 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 10:33:03 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/28 13:33:34 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ void	whois(Cmd &command)
 			{
 				if ((user = command._server->get_user(*it)) != NULL)
 				{
-					std::cout << "user found :" << user->get_nick() << std::endl;
 					if (!user->find_mod("i"))
 					{
 						if (user->find_mod("a"))
 							command._server->send_msg(RPL_AWAY(command._user->get_hostname(), user->get_nick(), user->get_away()), command._sfd);
 						command._server->send_msg(RPL_WHOISUSER(command._user->get_hostname(), user->get_nick(), user->get_user(), user->get_host(), user->get_name()), command._sfd);
+					std::cout << "user found :" << user->get_nick() << std::endl;
 						if (user->find_mod("o"))
 							command._server->send_msg(RPL_WHOISOPERATOR(command._user->get_hostname(), user->get_nick()), command._sfd);
 						user_found = true;

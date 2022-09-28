@@ -68,5 +68,6 @@ class Server
 //utils.cpp
 std::vector<std::string>	div_string(std::string str, char c);
 bool						mask_off(std::string mask, std::string str);
+bool						erase_chan(Channel *chan);
 
 #endif

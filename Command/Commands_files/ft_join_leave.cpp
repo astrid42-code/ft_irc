@@ -6,14 +6,14 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 10:02:18 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:58:41 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Cmd.hpp"
 #include "../../RPL_answer.hpp"
 #include "../../Server/Server.hpp"
-
+// #include "../../utils.cpp"
 
 // Paramètres : <nom du chan> [<clé>]
 // Réponses possibles : ERR_NEEDMOREPARAMS (461), ERR_BANNEDFROMCHAN (474), ERR_INVITEONLYCHAN (473), ERR_BADCHANNELKEY (475), ERR_CHANNELISFULL (471), ERR_NOSUCHCHANNEL (403), RPL_TOPIC (332)
@@ -203,8 +203,17 @@ void part(Cmd &command)
 		else
 			msg = "Ciao !!";
 		chan->send_to_users(PART(command._user->get_hostname(),chan->get_key(),msg));
-
 		chan->remove_user(command._user);
+		if (erase_chan(chan)) // si le chan est empty
+		{
+			std::cout << "coucou delete chan" << std::endl;
+			command._server->get_chans().erase(chan->get_key());
+			delete command._server->get_chan(chan->get_key());
+			std::cout << "size map de chans : " << command._server->get_chans().size() << std::endl;
+			
+			// + delete le chan dans server
+			// delete chan;
+		}
 	}
 	// if (command._server->get_chan(command.get_value()[0])->size() == 0)
 		
