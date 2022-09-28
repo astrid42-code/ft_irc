@@ -203,7 +203,6 @@ void part(Cmd &command)
 		else
 			msg = "Ciao !!";
 		chan->send_to_users(PART(command._user->get_hostname(),chan->get_key(),msg));
-
 		chan->remove_user(command._user);
 	}
 	// if (command._server->get_chan(command.get_value()[0])->size() == 0)

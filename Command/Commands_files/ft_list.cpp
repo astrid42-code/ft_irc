@@ -57,7 +57,7 @@ void list(Cmd &command)
 		}
 		command._server->send_msg(RPL_LISTEND(command._user->get_hostname()), command._sfd);
 	}
-	else
+	else if (command.get_size() == 1)
 	{
 		Channel 		*chan;
 		unsigned long	i = 0;
@@ -77,12 +77,11 @@ void list(Cmd &command)
 				if (chan->get_mod().find('s') == std::string::npos && chan->get_mod().find('p') == std::string::npos)
 					command._server->send_msg(RPL_LIST(command._user->get_hostname(), chan->get_key(), chan->get_mod(), chan->get_topic()), command._sfd);
 			}
-			else
-				command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname()), command._sfd);
-			
 		}
 		command._server->send_msg(RPL_LISTEND(command._user->get_hostname()), command._sfd);
 	}
+	else if (command.get_size() > 1)
+		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[1]), command._sfd);
 	// tant que la liste de channels (separes par une ,) n est pas finie
 	// verifier si le channel existe dans la map de channels (et si arg[1] rajouter le topic associe)
 }

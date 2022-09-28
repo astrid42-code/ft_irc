@@ -33,6 +33,8 @@
 
 void quit(Cmd &command)
 {
+	User *tmp;
+
 	if (command.get_size() == 1)
 	{
 		std::vector<Channel *>	chans = command._user->get_chans();
@@ -43,5 +45,7 @@ void quit(Cmd &command)
 	}
 	command._server->send_msg("ERROR\r\n", command._sfd);
 	close(command._sfd); //... j'arrive pas a forcer le client a fermer sa connection (try avec nc)
+	tmp = command._user;
 	command._server->remove_user(command._user);
+	delete tmp;
 }

@@ -26,7 +26,8 @@ Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 	_cmd["KILL"] = kill;
 	_cmd["WHOIS"] = whois;
 	_cmd["PASS"] = pass;
-	_cmd["PING"] = ping;
+	_cmd["PING"] = pong;
+	_cmd["PONG"] = ping;
 	_cmd["AWAY"] = away;
 }
 

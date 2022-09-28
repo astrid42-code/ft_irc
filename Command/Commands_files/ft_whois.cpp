@@ -107,7 +107,7 @@ void	whois(Cmd &command)
 		}
 	}
 	else if (command.get_size() == 2)
-		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname()), command._sfd);
+		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 	else
 		command._server->send_msg(ERR_NONICKNAMEGIVEN(command._user->get_hostname()), command._sfd);
 	if (user_found)
