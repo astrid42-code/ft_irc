@@ -25,8 +25,6 @@ class User
 		User			&operator=(const User & user_cp);
 		bool			operator==(const User & user_cp);
 
-		std::string				buf;
-
 		std::string 			get_user() const;
 		std::string				get_name() const;
 		std::string 			get_nick() const;

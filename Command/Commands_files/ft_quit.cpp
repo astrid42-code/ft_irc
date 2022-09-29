@@ -65,7 +65,7 @@ void quit(Cmd &command)
 				it++;
 			}
 		}
-		// command._server->send_msg(QUIT(user->get_hostname(), msg), command._sfd);
+		command._server->send_msg(QUIT(user->get_hostname(), msg), command._sfd);
 		command._server->remove_user(user);
 	}
 	delete user;
