@@ -80,9 +80,9 @@ int		check_condition(Cmd &command, std::string key)
 }
 
 // fct pour savoir s'il faut erase le channel (s'il est empty de users : erase)
-bool	erase_chan(Channel *chan)
+bool	erase_chan(Channel *chan, User *user)
 {
-	if (chan->get_users().empty()) // si le vector _users est empty
+	if (chan->get_users().empty() || (user != NULL && chan->get_users().size() == 1 && chan->get_user(user->get_nick()) == user)) // si le vector _users est empty
 		return (true);
 	return (false); // s'il reste des users
 }

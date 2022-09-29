@@ -112,7 +112,11 @@ void	join(Cmd &command)
 				std::cout << "NEW CHAN : |" << chan->get_name() << "|" << std::endl;
 				command._server->set_user_in_chan(command._user, chan);
 				if (!command._user->find_mod("o"))
+				{
+					std::cout << "inside creator op chan" << std::endl;
 					command._user->set_mod(command._user->get_mod() + "o");
+					std::cout << command._user->find_mod("o") << std::endl;
+				}
 				valid = true;
 			}
 		}
@@ -175,54 +179,46 @@ void	join(Cmd &command)
 
 void part(Cmd &command)
 {
-	// (void)command;
+	Channel						*chan;
+	std::vector<std::string>	args;
+	std::vector<Channel *>		*chans;
+
 	std::cout << "part test" << std::endl;
-	std::cout << "size " << command.get_value().size() << std::endl;
 	if (command.get_value().size() < 1)
 	{
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 		return;
 	}
-	std::cout << "chan " << command.get_value()[0] << std::endl;
-	Channel * chan = command._server->get_chan(command.get_value()[0]);
-	if (chan == NULL)
+	args = div_string(command.get_value()[0], ',');
+	for (size_t i = 0; i < args.size(); i++)
 	{
-		std::cout << "chan null" << std::endl;
-		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
-		return;
-	}
-	else if (!command._user->isOnChan(command.get_value()[0]))
-	{
-		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
-	}
-	else	
-	{
-		std::string msg;
-		if (command.get_size() >= 2)
-			msg = command.get_value()[1];
-		else
-			msg = "Ciao !!";
-		chan->send_to_users(PART(command._user->get_hostname(),chan->get_key(),msg));
-		chan->remove_user(command._user);
-		if (erase_chan(chan)) // si le chan est empty
+		chan = command._server->get_chan(args[i]);
+		if (chan == NULL)
 		{
-			std::cout << "coucou delete chan" << std::endl;
-			command._server->get_chans().erase(chan->get_key());
-			delete command._server->get_chan(chan->get_key());
-			std::cout << "size map de chans : " << command._server->get_chans().size() << std::endl;
-			
-			// + delete le chan dans server
-			// delete chan;
+			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			continue;
+		}
+		if (!command._user->get_channel(args[i]))
+			command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+		else	
+		{
+			std::string msg;
+			if (command.get_size() == 2)
+				msg = command.get_value()[1];
+			else
+				msg = "Ciao !!";
+			chan->send_to_users(PART(command._user->get_hostname(),chan->get_key(),msg));
+			chan->remove_user(command._user);
+			chans = command._user->get_chans();
+			if (command._user->it_chan(chan->get_name()) != chans->end())
+				chans->erase(command._user->it_chan(chan->get_name()));
+			if (erase_chan(chan, command._user))
+			{
+				std::cout << "erase_chan" << std::endl;
+				command._server->get_chans()->erase(chan->get_key());
+				delete chan;
+				std::cout << "size map de chans : " << command._server->get_chans()->size() << std::endl;
+			}
 		}
 	}
-	// if (command._server->get_chan(command.get_value()[0])->size() == 0)
-		
-
-	// std::string tmp = "#";
-	// tmp.append(command.get_value()[1]);
-	// > checker si le user est dans le channel avant de le sortir// a faire en amont : aller verifier qu'au join, le chan est bien set dans la map, et que le user est mis dans le chan
-// + passer les get channel et user en & plutot que ptr?
 }
-
-// a faire : boucle while si plss channels
-// + quitter le channel

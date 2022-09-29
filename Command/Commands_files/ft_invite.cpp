@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 10:32:30 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/29 15:47:53 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,47 @@
 //    INVITE Wiz #Twilight_Zone       ; Command to invite WiZ to
 //                                    #Twilight_zone
 
+
+// msgs erreurs ok, mais a verifier avec nc pour l'affichage exact
+// + tester avec deux utilisateurs au moins
+
+
 void invite(Cmd &command)
 {
+	
     std::cout << "invite test" << std::endl;
     if (command.get_value().size() != 2)
-    {
-        std::cout << "hello1" << std::endl;
-        ////command._server->send_msg(461, ERR_NEEDMOREPARAMS(command.get_key()), command);
-    }
-    else if (command.get_value()[0] != command._user->get_name())
-    {
-		std::cout << "hello2" << std::endl;
-        ////command._server->send_msg(401, ERR_NOSUCHNICK(command.get_value()[0]), command);
-    }
-    else if (command._user->get_mod() == "a")
-    { // ou faire une recherche de la lettre a car plsrs lettres possibles?
-        std::cout << "hello3" << std::endl;
-        // //command._server->send_msg(301, RPL_AWAY(command._user->get_nick()), command);
-        away(command);
-    }
-     /*if (command._user->isonchan(chan_name) == 0)
-        command._server->send_msg(ERR_NOTONCHANNEL(chan_name), NULL);
-    */
-    // si tout ok :
-    // channel.invite(command._user->get_name()) > fct a faire dans la class channel pour connecter un user a un chan
-    ////command._server->send_msg(341, RPL_INVITING(command.get_value()[0], command.get_value()[1]), command);
-    // arg RPL_inviting : channel puis user
-    
+	{
+		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
+		return ;
+	}
+    else if (command.get_value()[0] != command._user->get_nick())
+	{
+		command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command._user->get_nick()), command._sfd);
+		return ;
+	}
+	else if (!command._user->get_channel(command.get_value()[1])) 
+	{
+		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[1]), command._sfd);
+		return ;
+	}
+	else if (command._server->get_user(command.get_value()[0])->get_channel(command.get_value()[1]))
+	{
+		command._server->send_msg(ERR_USERONCHANNEL(command._user->get_hostname(), command.get_value()[0], command.get_value()[1]), command._sfd);
+		return ;
+	}
+	if (command._user->find_mod("a"))
+	{
+		command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
+		return ;
+	}
+    if (command._server->get_chan(command.get_value()[1])->get_mod().find('i'))
+	{
+		if (!command._user->find_mod("o"))
+		{
+			command._server->send_msg(ERR_CHANOPRIVSNEEDED(command._user->get_hostname(), command.get_value()[1]), command._sfd);
+			return ;
+		}
+	}
+    command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._sfd);
 }
