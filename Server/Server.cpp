@@ -298,47 +298,6 @@ static int create_and_bind(std::string port)
 	}
 	freeaddrinfo(result);
 	return (sfd);
-}
-
-void pre_parse(std::string buf, int sfd, Server *serv)
-{
-	std::size_t pos = 0;
-	std::string token;
-
-	std::cout << "buf = " << buf << std::endl;
-	User *usr = serv->get_user(sfd);
-	usr->buf.append(buf);
-	while (pos < usr->buf.length() && usr->buf.find("\r\n", pos) != std::string::npos)
-	{
-		Cmd *command = new Cmd();
-		command->_server = serv;
-		command->_sfd = sfd;
-		command->_user = command->get_user_fd();
-		if (std::time(NULL) - command->_server->get_time() > TIME_LIMIT)
-		{
-			std::cout << "going to ping ?" << std::endl;
-			ping(*command);
-		} // timer to ping user
-		if (command->_user == NULL)
-		{
-			std::cout << "_____NoUserFromFd_____" << std::endl;
-		}
-		else
-		{
-			std::cout << "_____UserFromFd_____" << std::endl;
-			command->_user->print();
-		}
-		if ((usr->buf.find("\r\n", pos)) != std::string::npos)
-		{
-			token = usr->buf.substr(pos, usr->buf.find("\r\n", pos) - pos);
-			usr->buf = usr->buf.substr(usr->buf.find("\r\n", pos) + 2);
-		}
-		else
-			pos = usr->buf.length();
-		std::cout << "token :|" << token << "|" << std::endl;
-		command->parse_cmd(token);
-		delete command;
-	}
 }	
 
 // https://www.ibm.com/docs/en/i/7.3?topic=designs-example-nonblocking-io-select
@@ -462,6 +421,7 @@ int	Server::init()
 						done = 1;
 						break;
 					}
+					std::cout << "preparse..." << std::endl;
 					pre_parse(buf, events[i].data.fd, this);
 				}
 				if (done)
