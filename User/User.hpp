@@ -37,7 +37,7 @@ class User
 		std::string				get_hostname() const;
 		Channel					*get_channel(std::string name);
 		std::string				get_channel_name();
-		std::vector<Channel *>	get_chans() const;
+		std::vector<Channel *>	*get_chans() const;
 		std::string				get_away() const;
 
 		void			set_user(std::string user);
@@ -54,7 +54,7 @@ class User
 		bool			find_mod(std::string mod);
 		void			print(void) const;
 
-		bool			isOnChan(std::string chan_name);
+		std::vector<Channel *>::iterator	it_chan(std::string chan_name);
 
 		void			remove_chan(Channel * channel);
 
@@ -69,7 +69,7 @@ class User
 		int						_sfd;
 		int						_valid;
 		std::string				_away;
-		std::vector<Channel *>	_vchan; // liste des channels dans lesquels le user est connecte (quand il join)
+		std::vector<Channel *>	*_vchan; // liste des channels dans lesquels le user est connecte (quand il join)
 };
 
 // std::ostream		&operator<<(std::ostream os, const User &user_cp);

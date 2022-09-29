@@ -54,6 +54,8 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 	// (prevoir fcts dans class users pour comptabiliser les users co en fct de leurs statuts, a envoyer en arguments)
 	//  et channels avalaible en arg
 
+#define QUIT(localhost, msg) (localhost + " QUIT :" + msg + "\r\n")
+
 #define PING(localhost) (std::string("PING :") + SERVER + "\r\n")
 
 #define PONG() (std::string("PONG :") + SERVER + "\r\n")
@@ -308,7 +310,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server to indicate that a MODE message was sent with a nickname parameter and that
 // the a mode flag sent was not recognized. 
 
-#define ERR_USERSDONTMATCH(localhost) (":" + localhost + " 502 :Cant change mode for other users\r\n") //502
+#define ERR_USERSDONTMATCH(localhost) (":" + localhost + " 502 :Cannot change mode for other users\r\n") //502
 //Error sent to any user trying to view or change the user mode for a user other than themselves. 
 
 #endif

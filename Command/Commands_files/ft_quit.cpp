@@ -33,31 +33,40 @@
 
 void quit(Cmd &command)
 {
-	User *tmp;
+	User										*user = command._user;
+	std::string									msg = "";
+	std::map<std::string, Channel *>			*chans = command._server->get_chans();
+	std::map<std::string, Channel *>::iterator	it;
 
-	if (command.get_size() == 1)
+	std::cout << "quit test" << std::endl;
+	if (!chans->empty())
 	{
-		std::vector<Channel *>	chans = command._user->get_chans();
-
-		std::cout << "quit msg " << command.get_value()[0] << std::endl;
-		for (std::vector<Channel *>::iterator it = chans.begin(); it != chans.end(); it++)
-			(*it)->send_to_users(":" + command._user->get_hostname() + " QUIT :" + command.get_value()[0]);
-	}
-	command._server->send_msg("ERROR\r\n", command._sfd);
-	close(command._sfd); //... j'arrive pas a forcer le client a fermer sa connection (try avec nc)
-	tmp = command._user;
-	command._server->remove_user(command._user);
-
-	// pb : error: object backing the pointer will be destroyed at the end of the full-expression [-Werror,-Wdangling-gsl]
-	std::map<std::string, Channel *> chans = command._server->get_chans();
-	for (std::map<std::string, Channel *>::iterator it = chans.begin(); it != chans.end(); it++)
-	{
-		std::cout << " size chans = " << chans.size() << std::endl;
-		if (it->second && erase_chan(it->second)) // si le chan est empty
+		it = chans->begin();
+		if (command.get_size() == 1)
 		{
-			delete it->second;
-			chans.erase(it->first); // effacer la cle du channel
+			msg = command.get_value()[0];
+			std::cout << "quit msg " << msg << std::endl;
 		}
+		while (it != chans->end())
+		{
+			if (erase_chan(it->second, user))
+			{
+				Channel *tmp = it->second;
+
+				chans->erase(it);
+				std::cout << "elem erased" << std::endl;// effacer la cle du channel
+				delete (tmp);
+				std::cout << "elem deleted" << std::endl;// effacer la cle du channel
+				it = chans->begin();
+			}
+			else
+			{
+				it->second->send_to_users(QUIT(user->get_hostname(), msg));
+				it++;
+			}
+		}
+		// command._server->send_msg(QUIT(user->get_hostname(), msg), command._sfd);
+		command._server->remove_user(user);
 	}
-	delete tmp;
+	delete user;
 }

@@ -47,13 +47,13 @@
 
 void	who(Cmd &command)
 {
-	std::map<int, User *>	users = command._server->get_users();
-	std::vector<Channel *>	chans = command._user->get_chans();
+	std::map<int, User *>	*users = command._server->get_users();
+	std::vector<Channel *>	*chans = command._user->get_chans();
 	bool					match = false;
 	bool					serv;
 
 	std::cout << "who test" << std::endl;
-	for (std::map<int, User *>::iterator itu = users.begin(); itu != users.end(); itu++)
+	for (std::map<int, User *>::iterator itu = users->begin(); itu != users->end(); itu++)
 	{
 		std::cout << "ok bug is relou" << std::endl;
 		if (itu->second && itu->second->find_mod("i") && itu->second != command._user)
@@ -76,7 +76,7 @@ void	who(Cmd &command)
 			{
 				std::cout << "ok wtf" << std::endl;
 				serv = true;
-				for (std::vector<Channel *>::iterator itc = chans.begin(); itc != chans.end(); itc++)
+				for (std::vector<Channel *>::iterator itc = chans->begin(); itc != chans->end(); itc++)
 				{
 					if (itu->second->find_mod("i") || itu->second->get_channel((*itc)->get_key()) != NULL)
 						serv = false;

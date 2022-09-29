@@ -38,7 +38,6 @@ Cmd::Cmd(const Cmd & cp)
 
 Cmd::~Cmd()
 {
-	// clear ?
 	std::cout << "Command destroyed..." << std::endl;
 }
 
@@ -81,10 +80,10 @@ int		Cmd::get_size(void) const
 
 User *Cmd::get_user_fd()
 {
-	std::map<int, User *> tmp = _server->get_users();
-	std::map<int, User *>::iterator it = tmp.find(_sfd);
+	std::map<int, User *> *tmp = _server->get_users();
+	std::map<int, User *>::iterator it = tmp->find(_sfd);
 
-	if (it == tmp.end())
+	if (it == tmp->end())
 		return (NULL);
 	else
 		return (it->second);

@@ -58,11 +58,15 @@ Server::Server() : _port("6667"), _pwd("pwd"), _time(std::time(NULL))
 {
 	std::cout << "Hi there, nice to see you!" << std::endl;
 	set_ip(_ip);
+	_users = new std::map<int, User *>();
+	_channels = new std::map<std::string, Channel *>();
 }
 
 Server::Server(std::string port, std::string pwd) : _port(port), _pwd(pwd), _time(std::time(NULL))
 {
 	std::cout << "Hi there, nice to see you!" << std::endl;
+	_users = new std::map<int, User *>();
+	_channels = new std::map<std::string, Channel *>();
 	// parser port et pwd ici ou dans une fct set plutot?
 	// si tout ok, msg de bienvenue; sinon
 }
@@ -78,6 +82,8 @@ Server::~Server()
 	// > faire une fct get_users qui recupere tous les users
 	// boucle for pour tous les delete (fct delUsers a creer)
 	std::cout << "Bye, see you soon!" << std::endl;
+	delete _users;
+	delete _channels;
 }
 
 Server &Server::operator=(const Server &serv_op)
@@ -104,12 +110,12 @@ std::string Server::get_pwd() const
 }
 
 
-std::map<int, User *>	Server::get_users(void) const
+std::map<int, User *>	*Server::get_users(void) const
 {
 	return (_users);
 }
 
-std::map<std::string, Channel *>	Server::get_chans(void) const
+std::map<std::string, Channel *>	*Server::get_chans(void) const
 {
 	return (_channels);
 }
@@ -119,8 +125,8 @@ User	*Server::get_user(int key)
 {
 	std::map<int, User *>::iterator it;
 
-	it = _users.find(key);
-	if (it == _users.end())
+	it = _users->find(key);
+	if (it == _users->end())
 		return (NULL);
 	return (it->second);
 }
@@ -128,7 +134,7 @@ User	*Server::get_user(int key)
 User	*Server::get_user(std::string nick)
 {
 	// std::cout << "OUAI" << std::endl;
-	for (std::map<int, User *>::iterator it = _users.begin(); it != _users.end(); it++)
+	for (std::map<int, User *>::iterator it = _users->begin(); it != _users->end(); it++)
 	{
 		std::cout << "get_user boucle" << std::endl;
 		if (it->second->get_nick() == nick)
@@ -141,10 +147,10 @@ Channel	*Server::get_chan(std::string key)
 {
 	std::map<std::string, Channel *>::iterator it;
 
-	for (it = _channels.begin(); it != _channels.end(); it++)
+	for (it = _channels->begin(); it != _channels->end(); it++)
 		std::cout << "it key :" << it->second->get_key() << std::endl;
-	it = _channels.find(key);
-	if (it == _channels.end())
+	it = _channels->find(key);
+	if (it == _channels->end())
 		return (NULL);
 	return (it->second);
 }
@@ -168,7 +174,7 @@ bool	Server::set_chan(Channel *chan)
 {
 	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
 
-	p = _channels.insert(make_pair(chan->get_name(), chan));
+	p = _channels->insert(make_pair(chan->get_name(), chan));
 	std::cout << "channel set in serv... chan name :" << chan->get_name() << std::endl;	
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
@@ -179,7 +185,7 @@ bool	Server::set_user(User *user)
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
 	std::cout << "set_user server " << user->get_sfd() << std::endl;
-	p = _users.insert(std::make_pair(user->get_sfd(), user));
+	p = _users->insert(std::make_pair(user->get_sfd(), user));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 
@@ -474,16 +480,16 @@ int	Server::init()
 
 void	Server::remove_user(User *user)
 {
-	std::vector<Channel *> v_chan;
-	std::vector<Channel *>::iterator it;
+	// std::vector<Channel *>				*v_chan;
+	// std::vector<Channel *>::iterator	it;
 
 
-	v_chan = user->get_chans();
-	it = v_chan.begin();
-	while (it != v_chan.end())
-	{
-		(*it)->remove_user(user);
-		it++;
-	}
-	_users.erase(_users.find(user->get_sfd()));
+	// v_chan = user->get_chans();
+	// it = v_chan->begin();
+	// while (it != v_chan->end())
+	// {
+	// 	(*it)->remove_user(user);
+	// 	it++;
+	// }
+	_users->erase(_users->find(user->get_sfd()));
 }

@@ -38,11 +38,11 @@ class Server
 		void								onDeconnection(Channel chan);
 		int									init();
 		Channel								*get_chan(std::string key);
-		std::map<std::string, Channel *>	get_chans() const;
+		std::map<std::string, Channel *>	*get_chans() const;
 		bool								set_chan(Channel *chan);
 		User								*get_user(int key);
 		User								*get_user(std::string nick);
-		std::map<int, User *>				get_users(void) const;
+		std::map<int, User *>				*get_users(void) const;
 		std::string							get_ip();
 		std::time_t							get_time();
 		void								set_time(std::time_t time);
@@ -63,14 +63,14 @@ class Server
 		int									fd;
 		std::string 						_ip;
 		std::string							_msg; // msg envoye par le serveur (ex : msgs d'erreurs)
-		std::map<std::string, Channel *>	_channels;
-		std::map<int, User *>				_users;
+		std::map<std::string, Channel *>	*_channels;
+		std::map<int, User *>				*_users;
 		std::time_t							_time;
 };
 
 //utils.cpp
 std::vector<std::string>	div_string(std::string str, char c);
 bool						mask_off(std::string mask, std::string str);
-bool						erase_chan(Channel *chan);
+bool						erase_chan(Channel *chan, User *user);
 
 #endif

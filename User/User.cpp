@@ -26,6 +26,7 @@ User::User(std::string prenom, std::string name, std::string nickname)
 	_name = name;
 	_nick = nickname;
 	_valid = 0;
+	_vchan = new std::vector<Channel *>();
 	// std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
@@ -37,6 +38,7 @@ User::User(std::string nickname, int sdf)
 	_nick = nickname;
 	_sfd = sdf;
 	_valid = 0;
+	_vchan = new std::vector<Channel *>();
 	// std::cout << "User create by default." << std::endl;
 	// parser avec regles user (voir notes)
 	// msg de bienvenue reprenant le login user? <apparament dans une autre fonction (utilisation de la commande USER pour set les informations...)>
@@ -47,11 +49,13 @@ User::User(int sdf)
 {
 	_sfd = sdf;
 	_valid = 0;
+	_vchan = new std::vector<Channel *>();
 }
 
 User::~User()
 {
-	// delete les differents users	
+	std::cout << "User destroyed..." << std::endl;
+	delete (_vchan);
 }
 
 User					&User::operator=(const User & user_cp)
@@ -116,9 +120,9 @@ Channel					*User::get_channel(std::string name)
 {
 	std::vector<Channel *>::iterator	it;
 
-	for (it = _vchan.begin(); it != _vchan.end(); it++)
+	for (it = _vchan->begin(); it != _vchan->end(); it++)
 	{
-		if ((*it)->get_name().compare(name) == 0)
+		if ((*it)->get_key().compare(name) == 0)
 			return (*it);
 	}
 	return (NULL);
@@ -129,14 +133,14 @@ std::string				User::get_channel_name()
 	std::vector<Channel *>::iterator	it;
 	std::string							names = "";
 
-	for (it = _vchan.begin(); it != _vchan.end(); it++)
+	for (it = _vchan->begin(); it != _vchan->end(); it++)
 	{
 		names.append((*it)->get_key());
 	}
 	return (names);
 }
 
-std::vector<Channel *>	User::get_chans() const
+std::vector<Channel *>	*User::get_chans() const
 {
 	return (_vchan);
 }
@@ -202,9 +206,9 @@ void	User::set_chan(Channel &chan)
 	std::vector<Channel *>::iterator it;
 	// std::cout << "coucou 1 set_chan user" << std::endl;
 	
-	_vchan.push_back(&chan);
+	_vchan->push_back(&chan);
 	
-	for (it = _vchan.begin(); it != _vchan.end(); it++){
+	for (it = _vchan->begin(); it != _vchan->end(); it++){
 		std::cout << "it chan user : " << *it << std::endl;
 		
 	}
@@ -241,7 +245,7 @@ bool	User::check_nick(std::string new_nick)
 
 bool	User::find_mod(std::string mod)
 {
-	if (_mod.find(mod) == 0)
+	if (_mod.find(mod) != std::string::npos)
 		return (1);
 	return (0);
 }
@@ -251,47 +255,31 @@ void	User::print(void) const
 	std::cout << "user :" + _user << " | name:" + _name << " | nick:" + _nick << " | operator:" + SSTR(_valid) << " | mod:" + _mod  << " | sfd:" + SSTR(_sfd) << std::endl;
 }
 
-bool User::isOnChan(std::string chan_name)
+std::vector<Channel *>::iterator	User::it_chan(std::string chan_name)
 {
 	std::vector<Channel *>::iterator	it;
-	it = _vchan.begin();
-	// std::string 	vchan_tmp = "#";
-
-	std::cout << "vchan.size " << _vchan.size() << std::endl;
-	std::cout << "chan name isonchan : " << chan_name << std::endl;
-	// vchan_tmp.append(chan_name);
-	// std::cout << "tmp chan name isonchan : " << vchan_tmp << std::endl;
 	
-	if (_vchan.size() == 0){
-		std::cout << "isonchan _vchan NULL" << std::endl;
-		return false;
-	}
-	for (it = _vchan.begin(); it < _vchan.end(); it++){
-		// std::cout << "it getname = " << std::endl;
-		// std::cout << (*it)->get_name() << std::endl; // segfault > comment recuperer le nom du channel dans _chan??
+	std::cout << "searching for chan pos :" << chan_name << std::endl;
+	for (it = _vchan->begin(); it < _vchan->end(); it++)
+	{
 		if ((*it)->get_name().compare(chan_name) == 0)
-			return true;
+			return it;
 	}
-	
-	// for (unsigned i = 0; i < _vchan.size(); i++){
-	// 	std::cout << "value isonchan " << _vchan.at(i) << std::endl;
-	// 	if (_vchan.at(i) == chan_name)
-	// 		return (true);
-	// }
-	return false;
+	return it;
 }
 
 void	User::remove_chan(Channel * channel)
 {
-	(void)channel;
 	std::vector<Channel *>::iterator it;
 	
-	for (it = _vchan.begin(); it != _vchan.end(); it++){
-		// if (*it == channel)
-		std::cout << "remove_chan channel  = " << (*it)->get_name() << std::endl;
-		if (it != _vchan.end()){
-			_vchan.erase(it);
-		std::cout << "COUCOU REMOVE CHAN" << std::endl;
+	if (!channel)
+		return ;
+	for (it = _vchan->begin(); it != _vchan->end(); it++)
+	{
+		if (*it == channel)
+		{
+			std::cout << "remove_chan channel  = " << (*it)->get_name() << std::endl;
+			_vchan->erase(it);
 			return;
 		}
 	}

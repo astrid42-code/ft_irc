@@ -59,7 +59,7 @@ void	whois(Cmd &command)
 {
 	bool						user_found = false;
 	User						*user = NULL;
-	std::map<int, User *>		users = command._server->get_users();
+	std::map<int, User *>		*users = command._server->get_users();
 	std::vector<std::string>	args;
 
 	std::cout << "whois test" << std::endl;
@@ -70,7 +70,7 @@ void	whois(Cmd &command)
 		{
 			if (it->find("*") != std::string::npos)
 			{
-				for (std::map<int, User *>::iterator at = users.begin(); at != users.end(); at++)
+				for (std::map<int, User *>::iterator at = users->begin(); at != users->end(); at++)
 				{
 					if (at->second && !at->second->find_mod("i") && mask_off(*it, at->second->get_hostname()))
 					{

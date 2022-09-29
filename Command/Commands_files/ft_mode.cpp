@@ -193,10 +193,8 @@ bool		mode_user(Cmd &command)
 	return (true);
 }
 
-void		mode_chan(Cmd &command)
+void		mode_chan(Cmd &command, Channel *chan)
 {
-	Channel		*chan = command._user->get_channel(command.get_value()[0]);
-
 	if (chan)
 	{
 		std::cout << "the channel given in parameter match the user" << std::endl;
@@ -216,24 +214,17 @@ void		mode_chan(Cmd &command)
 	else
 	{
 		std::cout << "the channel given in parameter invalid" << std::endl;
-		command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command.get_value()[1] ,command.get_value()[0]), command._sfd);
+		command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command._user->get_nick(),command.get_value()[0]), command._sfd);
 	}
 }
 
 void		mode(Cmd &command)
 {
-	Channel *chan;
-
 	std::cout << "ft_mode start" << std::endl;
 	if (command.get_size() >= 1)
 	{
 		if (command.get_value()[0].find("#") == 0)
-		{
-			mode_chan(command);
-			chan = command._user->get_channel(command.get_value()[0]);
-			if (chan)
-				chan->print();
-		}
+			mode_chan(command, command._user->get_channel(command.get_value()[0]));
 		else
 		{
 			if (!mode_user(command))

@@ -48,9 +48,9 @@ void list(Cmd &command)
 	std::cout << "list test" << std::endl;
 	if (command.get_size() == 0)
 	{
-		std::map<std::string, Channel *> chan = command._server->get_chans();
+		std::map<std::string, Channel *> *chans = command._server->get_chans();
 
-		for (std::map<std::string, Channel *>::iterator it = chan.begin(); it != chan.end(); it++)
+		for (std::map<std::string, Channel *>::iterator it = chans->begin(); it != chans->end(); it++)
 		{
 			if (it->second->get_mod().find('s') == std::string::npos && it->second->get_mod().find('p') == std::string::npos)
 				command._server->send_msg(RPL_LIST(command._user->get_hostname(), it->first, it->second->get_mod(), it->second->get_topic()), command._sfd);
