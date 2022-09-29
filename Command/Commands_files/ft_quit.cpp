@@ -45,6 +45,7 @@ void quit(Cmd &command)
 	}
 	command._server->send_msg("ERROR\r\n", command._sfd);
 	close(command._sfd); //... j'arrive pas a forcer le client a fermer sa connection (try avec nc)
+	std::cout << " size chans = " << std::endl;
 	tmp = command._user;
 	command._server->remove_user(command._user);
 
@@ -55,8 +56,8 @@ void quit(Cmd &command)
 		std::cout << " size chans = " << chans.size() << std::endl;
 		if (it->second && erase_chan(it->second)) // si le chan est empty
 		{
-			delete it->second;
 			chans.erase(it->first); // effacer la cle du channel
+			delete it->second;
 		}
 	}
 	delete tmp;
