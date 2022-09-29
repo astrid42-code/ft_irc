@@ -64,23 +64,37 @@ void invite(Cmd &command)
 	
     std::cout << "invite test" << std::endl;
     if (command.get_value().size() != 2)
+	{
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
+		return ;
+	}
     else if (command.get_value()[0] != command._user->get_nick())
+	{
 		command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command._user->get_nick()), command._sfd);
-	else if (!command._user->isOnChan(command.get_value()[1])) 
+		return ;
+	}
+	else if (!command._user->get_channel(command.get_value()[1])) 
+	{
 		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[1]), command._sfd);
-	// std::cout << "user invite= " << command._server->get_user(command._user->get_nick()) << std::endl;
-    // std::cout << "is on chan ? " << command._server->get_user(command._user->get_nick())->isOnChan(command.get_value()[1]) << std::endl;
-	else if (command._server->get_user(command.get_value()[0])->isOnChan(command.get_value()[1]))
+		return ;
+	}
+	else if (command._server->get_user(command.get_value()[0])->get_channel(command.get_value()[1]))
+	{
 		command._server->send_msg(ERR_USERONCHANNEL(command._user->get_hostname(), command.get_value()[0], command.get_value()[1]), command._sfd);
-	// if ou else if? (ca doit quand meme pvr inviter ou pas?)
+		return ;
+	}
 	if (command._user->find_mod("a"))
+	{
 		command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
-    // si tout ok :
+		return ;
+	}
     if (command._server->get_chan(command.get_value()[1])->get_mod().find('i'))
 	{
 		if (!command._user->find_mod("o"))
+		{
 			command._server->send_msg(ERR_CHANOPRIVSNEEDED(command._user->get_hostname(), command.get_value()[1]), command._sfd);
+			return ;
+		}
 	}
     command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._sfd);
 }
