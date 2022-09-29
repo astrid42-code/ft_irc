@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 16:28:22 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:33:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ User	*Server::get_user(int key)
 
 User	*Server::get_user(std::string nick)
 {
-	// std::cout << "OUAI" << std::endl;
+	// std::cout << "nick" << std::endl;
 	for (std::map<int, User *>::iterator it = _users->begin(); it != _users->end(); it++)
 	{
 		std::cout << "get_user boucle" << std::endl;

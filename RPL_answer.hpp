@@ -248,7 +248,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server whenever a client tries to perform a channel affecting command for which the
 // client isn't a member.
 
-#define ERR_USERONCHANNEL(localhost, user, channel) (":" + localhost + " 443 : " + user + channel + " :is already on channel\r\n") // 443
+#define ERR_USERONCHANNEL(localhost, user, channel) (":" + localhost + " 443 " + user + " " + channel + " :is already on channel\r\n") // 443
 	// + envoyer user et channel en arg
 // Returned when a client tries to invite a user to a channel they are already on.
 

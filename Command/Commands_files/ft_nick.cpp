@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:45:38 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:38:40 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void nick(Cmd &command)
 	}
 	else
 	{
+		//revoir si pb ici de comparaison de nickname
 		if (command._server->get_user(command.get_value()[0]) == NULL && command.get_value()[0].compare("anonymous") != 0)
 		{
 			std::cout << "nickname available." << std::endl;

@@ -21,6 +21,9 @@ et nick initialise a _ ???
 
 
 a faire :
-verifier affichage msg du whois et who
-> whois * et who *
-who : n'afficher que les gens dans le meme channel que moi???
+- revoir si pb dans ft_nick de comparaison de nickname
+- si invitation dans NC pas de msg dans irssi pour prevenir qu'on est invite 
+- INVITE kakou #fff^M
+:prout!asgaulti@localhost 442 #fff :You're not on that channel
+alors que celui qui invite est la
+else if (!command._user->get_channel(command.get_value()[1])) : verifier le nom du channel renvoye dans cette fct (avec ou sans #)

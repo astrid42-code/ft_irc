@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/29 15:47:53 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:49:45 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ void invite(Cmd &command)
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 		return ;
 	}
-    else if (command.get_value()[0] != command._user->get_nick())
+    else if (!command._server->get_user(command.get_value()[0]))
+		// ou?? : command.get_value()[0] != command._user->get_nick()) // a revoir > pas la bonne comparaison
 	{
-		command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command._user->get_nick()), command._sfd);
+		command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 		return ;
 	}
-	else if (!command._user->get_channel(command.get_value()[1])) 
+	else if (!command._user->get_channel(command.get_value()[1])) // checker le nom du channel renvoye ici
 	{
 		command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[1]), command._sfd);
 		return ;
