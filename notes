@@ -89,51 +89,12 @@ https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-3
 
 
 
-msgs de depart (lances au moment de la co :)
-exemple du server shibrc
-
- Irssi v1.2.2-1ubuntu1.1 - https://irssi.org                                                                                                                                                                                                       
-16:54 -!- Irssi: Looking up shibrc.ml
-16:54 -!- Irssi: Connecting to shibrc.ml [51.210.4.233] port 6667
-16:54 -!- Irssi: Connection to shibrc.ml established
-16:54 -!- You're now known as kakou
-16:54 -!- Welcome to the Internet Relay Network kakou!asgaulti@62.210.33.192
-16:54 -!- Your host is 62.210.33.192, running version 1.69
-16:54 -!- This server was created Thu Aug 11 12:49:46 2022
-16:54 -!- ShibRC 1.69 aiwro Oovimnptkl
-16:54 -!- There are 1 users and 0 invisible on 1 servers
-16:54 -!- 0 operator(s) online
-16:54 -!- 0 unknown connection(s)
-16:54 -!- 0 channels formed
-16:54 -!- I have 1 clients and 0 servers
-16:54 -!- - ShibRC Message of the day - 
-
-(puis dessin )
-
-16:54 -!- Welcome to ShibRC, enjoy your stay !
-16:54 -!- - 
-16:54 -!- End of /MOTD command
-16:54 -!- Your user mode is [+wi]
-
-
 cmds prioritaires 
 ping (client envoie ping on repond PONG) et pong
 leave (faire une fct Channel.remove(User) && User.remove(Channel))
 remove de getuser et de getchannel devrait suffire
 
-quit (inverse de connect) et leave (inverse de join)
-
-
-a faire : leave :
-verifier que le user est bien retirer du channel (dans channel et dans server ??)
-retirer le channel de server (?) et de user
-
 a faire : whois (liste des gens, ...)
-
-
-pb a regler pour leave :
-dans user::isonchan > comment recuperer le nom du channel dans vchan pour voir s'il est correctement set?
-
 
 fct rpl qui recoit l'int du cas d'erreur et renvoie une string
 dedans : le switch en fct du numero de la reponse
@@ -144,19 +105,6 @@ ou
 map avec int en key et msg d'erreur avec ou sans arguments
 
 
-msgs a l'ouverture d'un channel
-15:31 [Users #dodo]
-15:31 [@kakou] 
-15:31 -!- Irssi: #dodo: Total of 1 nicks [1 ops, 0 halfops, 0 voices, 0 normal]
-15:31 -!- kakou [asgaulti@62.210.32.226] has joined #dodo
-
-+
- [15:32] [@kakou] [2:shibrc/#dodo(+n)] [Act: 1] > ok
-
-a la fermeture :
-End of /WHO list
-
-
 pbs:
 - leave: ne reconnait plus le channel
 
@@ -164,13 +112,5 @@ pbs:
 
 - fermeture du server
 
-
-
-- msg attendu pour JOIN
-:dasanter!dasanter@localhost 353 dasanter  = test ::dasanter!dasanter@localhost 366 dasanter  test :End of NAMES list
-
-actuellement
-:asgaulti!kakou@localhost 353 kakou  = dodo
-::asgaulti!kakou@localhost 366 kakou  dodo :End of NAMES list
 
 
