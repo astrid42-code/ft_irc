@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 11:57:10 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 17:17:30 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,17 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 void privmsg(Cmd &command)
 {
 	User *user;
+	
+	std::cout << "size value privmsg : " << command.get_size() << std::endl;
 
 	std::cout << "privmsg test" << std::endl;
 	std::string destinataire;
 	destinataire = command.get_value().begin()[0];
-	if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1].empty()))
+	if (command.get_size() == 1){
+		command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
+		return;
+	}
+	else if ((command.get_size() == 2 && command.get_value()[1].empty()))
 		command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
 	if (destinataire.c_str()[0] == '#')
 	{

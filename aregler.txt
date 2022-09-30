@@ -37,3 +37,8 @@ pbs?
 
 
 
+netcat:
+
+PRIVMSG #cd:^M  segfault (#cd n'etant pas un channel existant)
+
+
