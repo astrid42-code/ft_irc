@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:19 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:37:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:43:37 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,17 @@ void kick(Cmd &command)
 					std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
 					user->remove_chan(chan); // need to include comment into the kick message...
 					command._server->send_msg(KICK(command._user->get_hostname(), chans[0], users[0]), command._sfd);
+					return;
 				}
-				else
+				else{
 					command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),command.get_value()[1], command.get_value()[0]), command._sfd);
+					return;
+				}
 			}
-			else
+			else{
 				command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+				return;
+			}
 		}
 		else if (chans.size() > 1 && chans.size() == users.size())
 		{
@@ -95,15 +100,22 @@ void kick(Cmd &command)
 						std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
 						user->remove_chan(chan); // need to include comment into the kick message...
 						command._server->send_msg(KICK(command._user->get_hostname(), chans[i], users[i]), command._sfd);
+						return;
 					}
-					else
+					else{
 						command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),users[i], chans[i]), command._sfd);
+						return;
+					}
 				}
-				else
+				else{
 					command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+					return;
+				}
 			}
 		}
 	}
-	else
+	else{
 		command._server->send_msg(ERR_CHANOPRIVSNEEDED(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+		return;
+	}
 }

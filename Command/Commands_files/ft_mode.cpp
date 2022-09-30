@@ -7,7 +7,7 @@ void		chan_print(Channel *chan, Cmd &command, std::string arg)
 		std::cout << chan->get_mask() << std::endl;
 		// need to send it to user.
 		command._server->send_msg(RPL_INVITELIST(command._user->get_hostname(), chan->get_name(), chan->get_mask()), command._sfd);
-
+		// return;
 	}
 }
 
@@ -23,7 +23,7 @@ bool		check_mode_string(Cmd &command, std::string mods)
 		{
 			std::cout << "the modes given in parameter are invalid" << std::endl;
 			command._server->send_msg(ERR_UMODEUNKNOWNFLAG(command._user->get_hostname()), command._sfd);
-			return (0);
+			// return (0);
 		}
 		if (i == 1 && *it == '+')
 			return (0);
@@ -88,8 +88,10 @@ std::string	chan_mode_plus(Channel *chan, Cmd &command, std::string res, std::st
 					res += "k";
 				}
 			}
-			else
+			else{
 				command._server->send_msg(ERR_KEYSET(command._user->get_hostname(), chan->get_name()), command._sfd);
+				// return("");
+			}
 		}
 		if (arg.find('l') != std::string::npos && res.find('l') == std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
 		{
@@ -110,6 +112,7 @@ std::string	chan_mode_plus(Channel *chan, Cmd &command, std::string res, std::st
 				{
 					command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[++(*n)], chan->get_name()), command._sfd); // nick de l'invitant ou de l'invite???
 					command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[*n], chan->get_name()), tmp->get_sfd());
+					// return("");
 				}
 			}
 			res = res.append("i");
@@ -214,6 +217,7 @@ bool		mode_user(Cmd &command)
 		{
 			// std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
+			// return(false);
 		}
 		else
 		{
@@ -241,6 +245,7 @@ void		mode_chan(Cmd &command, Channel *chan)
 		{
 			std::cout << chan->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_CHANNELMODEIS(command._user->get_hostname(), chan->get_name(), chan->get_mod()), command._sfd);
+			// return;
 		}
 		else
 		{
@@ -253,6 +258,7 @@ void		mode_chan(Cmd &command, Channel *chan)
 	{
 		std::cout << "the channel given in parameter invalid" << std::endl;
 		command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command._user->get_nick(),command.get_value()[0]), command._sfd);
+		// return;
 	}
 }
 
@@ -270,10 +276,14 @@ void		mode(Cmd &command)
 			command._user->print();
 		}
 		command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
+		// return;
 	}
 	else
 	{
 		std::cout << "err need more params" << std::endl;
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
+		// return;
 	}
 }
+
+// tous les return commentes viennent de moi a priori (signe astrid) pour checker avant de les valider

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/28 18:58:41 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:39:39 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,19 @@ bool		join_conditions(Channel *chan, Cmd &command)
 	{
 		command._server->send_msg(ERR_INVITEONLYCHAN(command._user->get_hostname(), chan->get_name()), command._sfd);
 		res = false;
+		return (res);
 	}
 	if ((chan->get_mod().find("l") != std::string::npos) && (chan->get_limit() == chan->get_users().size()))
 	{
 		command._server->send_msg(ERR_CHANNELISFULL(command._user->get_hostname(), chan->get_name()), command._sfd);
 		res = false;
+		return (res);
 	}
 	if ((chan->get_mod().find("I") != std::string::npos) && !mask_off(chan->get_mask() ,command._user->get_hostname()))
 	{
 		command._server->send_msg(ERR_BADCHANMASK(command._user->get_hostname(), chan->get_name()), command._sfd);
 		res = false;
+		return (res);
 	}
 	return (res);
 }
@@ -118,8 +121,10 @@ void	join(Cmd &command)
 	bool						valid;
 
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
-	if (!command.get_value().size())
+	if (!command.get_value().size()){
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
+		return;		
+	}
 	chans = div_string(command.get_value()[0], ',');
 	if(command.get_value().size() == 2)
 		keys = div_string(command.get_value()[1], ',');
@@ -132,8 +137,10 @@ void	join(Cmd &command)
 			{
 				std::cout << "chanel creation..." << std::endl;
 				chan = new Channel(chans[i]);
-				if (!command._server->set_chan(chan))
+				if (!command._server->set_chan(chan)){
 					command._server->send_msg(ERR_UNAVAILRESOURCE(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+					return;
+				}
 				else
 				{
 					std::cout << "NEW CHAN : |" << chan->get_name() << "|" << std::endl;
@@ -150,8 +157,10 @@ void	join(Cmd &command)
 		}
 		else
 		{
-			if (command.get_value().size() >= 2 && i < keys.size() && keys[i].compare(chan->get_key()) != 0)
+			if (command.get_value().size() >= 2 && i < keys.size() && keys[i].compare(chan->get_key()) != 0){
 				command._server->send_msg(ERR_BADCHANNELKEY(command._user->get_hostname(), chan->get_name()), command._sfd);
+				return;
+			}
 			else
 			{
 				std::cout << "user joining chanel..." << std::endl;
@@ -170,6 +179,7 @@ void	join(Cmd &command)
 				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
 			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_nick(), chan->get_name()), command._sfd);
 			chan->send_to_users(JOIN(command._user->get_hostname(),chan->get_name()));
+			return;
 		}
 	}
 }
@@ -229,8 +239,10 @@ void part(Cmd &command)
 			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
 			continue;
 		}
-		if (!command._user->get_channel(args[i]))
+		if (!command._user->get_channel(args[i])){
 			command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			return;
+		}
 		else	
 		{
 			std::string msg;

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 17:17:30 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 19:01:54 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@
 
 void send_msg_to_user(User *usr, std::string str, Cmd &command, std::string chan)
 {
-	if (usr->find_mod("a"))
+	if (usr->find_mod("a")){
 		command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
-	else
+		return;
+	}
+	else{
 		command._server->send_msg(PRIVMSG(command._user->get_hostname(), chan, str), usr->get_sfd());
+		return;
+	}
 }
 
 void send_msg_to_chan(Cmd &command, std::string destinataire)
@@ -54,8 +58,10 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 	std::cout << "________msg_to_chan________" << std::endl;
 	chan = command._server->get_chan(destinataire.c_str());
 	std::cout << "RETOUR" << std::endl;
-	if (!chan || !chan->get_user(command._user->get_nick()))
+	if (!chan || !chan->get_user(command._user->get_nick())){
 		command._server->send_msg(ERR_CANNOTSENDTOCHAN(command._user->get_hostname(), destinataire), command._sfd);
+		return;
+	}
 	else
 	{
 		users = chan->get_users();
@@ -88,8 +94,10 @@ void privmsg(Cmd &command)
 		command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
 		return;
 	}
-	else if ((command.get_size() == 2 && command.get_value()[1].empty()))
+	else if ((command.get_size() == 2 && command.get_value()[1].empty())){
 		command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
+		return;
+	}
 	if (destinataire.c_str()[0] == '#')
 	{
 		std::cout << "msg_to_chan" << std::endl;
@@ -100,13 +108,19 @@ void privmsg(Cmd &command)
 		std::cout << "msg_to_user" << std::endl;
 		if ((user = command._server->get_user(destinataire)) != NULL)
 		{
-			if (user->find_mod("a"))
+			if (user->find_mod("a")){
 				command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
-			else
+				return;
+			}
+			else{
 				command._server->send_msg(PRIVMSG(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
+				return;	
+			}
 		}
-		else
+		else{
 			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
+			return;
+		}
 	}
 	// std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
 }
