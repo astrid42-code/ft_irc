@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/28 19:02:05 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 13:46:27 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ void quit(Cmd &command)
 		command._server->send_msg(QUIT(user->get_hostname(), msg), command._sfd);
 		command._server->remove_user(user);
 	}
+	std::cout << "test close :" << command._user->get_sfd() << std::endl;
+	close(command._user->get_sfd());
 	delete user;
 }

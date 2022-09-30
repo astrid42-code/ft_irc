@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 12:33:25 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 12:01:40 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 11:12:49 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ Channel					*User::get_channel(std::string name)
 
 	for (it = _vchan->begin(); it != _vchan->end(); it++)
 	{
-		if ((*it)->get_name().compare(name) == 0)
+		// std::cout << "key " << name << " get_key " << (*it)->get_key() << std::endl;
+		if ((*it)->get_key().compare(name) == 0)
 			return (*it);
 	}
 	return (NULL);

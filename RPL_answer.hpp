@@ -136,7 +136,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // When sending a TOPIC message to determine the channel topic, one of two replies is sent.  If
 // the topic is set, RPL_TOPIC is sent back else RPL_NOTOPIC.
 
-#define RPL_INVITING(localhost, channel, nick) (":" + localhost + " 341 : " + nick + " " + channel + "\r\n") // 341
+#define RPL_INVITING(localhost, channel, nick) (":" + localhost + " 341 " + " INVITE " + nick + " " + channel + "\r\n") // 341
 	// + envoyer channel et nick du user en arg
 // Returned by the server to indicate that the attempted INVITE message was successful and is
 // being passed onto the end client.
