@@ -75,7 +75,7 @@ void list(Cmd &command)
 			if ((chan = command._server->get_chan(tmp)) != NULL)
 			{
 				if (chan->get_mod().find('s') == std::string::npos && chan->get_mod().find('p') == std::string::npos)
-					command._server->send_msg(RPL_LIST(command._user->get_hostname(), chan->get_key(), chan->get_mod(), chan->get_topic()), command._sfd);
+					command._server->send_msg(RPL_LIST(command._user->get_hostname(), chan->get_name(), chan->get_mod(), chan->get_topic()), command._sfd);
 			}
 		}
 		command._server->send_msg(RPL_LISTEND(command._user->get_hostname()), command._sfd);

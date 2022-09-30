@@ -100,5 +100,4 @@ void invite(Cmd &command)
 	}
     command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._sfd); // nick de l'invitant ou de l'invite???
 	command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._server->get_user(command.get_value()[0])->get_sfd());
-
 }

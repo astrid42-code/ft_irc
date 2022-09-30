@@ -148,7 +148,7 @@ Channel	*Server::get_chan(std::string key)
 	std::map<std::string, Channel *>::iterator it;
 
 	for (it = _channels->begin(); it != _channels->end(); it++)
-		std::cout << "it key :" << it->second->get_key() << std::endl;
+		std::cout << "it key :" << it->second->get_name() << std::endl;
 	it = _channels->find(key);
 	if (it == _channels->end())
 		return (NULL);

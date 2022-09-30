@@ -57,7 +57,10 @@ void kick(Cmd &command)
 {
 	std::cout << "kick test" << std::endl;  
 	if (command.get_value().size() < 2)
+	{
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(),command.get_key()), command._sfd);
+		return ;
+	}
 	if (command._user->get_mod().find("o") != std::string::npos)
 	{
 		Channel						*chan;
