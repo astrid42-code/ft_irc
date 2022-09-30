@@ -76,7 +76,7 @@ std::string	chan_mode_plus(Channel *chan, Cmd &command, std::string res, std::st
 			}
 		}
 		else
-			command._server->send_msg(ERR_KEYSET(command._user->get_hostname(), chan->get_key()), command._sfd);
+			command._server->send_msg(ERR_KEYSET(command._user->get_hostname(), chan->get_name()), command._sfd);
 	}
 	if (arg.find('l') != std::string::npos && res.find('l') == std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
 	{

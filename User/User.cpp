@@ -122,7 +122,7 @@ Channel					*User::get_channel(std::string name)
 
 	for (it = _vchan->begin(); it != _vchan->end(); it++)
 	{
-		if ((*it)->get_key().compare(name) == 0)
+		if ((*it)->get_name().compare(name) == 0)
 			return (*it);
 	}
 	return (NULL);
@@ -135,7 +135,7 @@ std::string				User::get_channel_name()
 
 	for (it = _vchan->begin(); it != _vchan->end(); it++)
 	{
-		names.append((*it)->get_key());
+		names.append((*it)->get_name());
 	}
 	return (names);
 }

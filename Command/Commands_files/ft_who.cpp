@@ -78,7 +78,7 @@ void	who(Cmd &command)
 				serv = true;
 				for (std::vector<Channel *>::iterator itc = chans->begin(); itc != chans->end(); itc++)
 				{
-					if (itu->second->find_mod("i") || itu->second->get_channel((*itc)->get_key()) != NULL)
+					if (itu->second->find_mod("i") || itu->second->get_channel((*itc)->get_name()) != NULL)
 						serv = false;
 				}
 				if (serv)
