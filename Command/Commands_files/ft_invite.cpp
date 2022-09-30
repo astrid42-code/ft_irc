@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/29 18:49:45 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 12:02:48 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void invite(Cmd &command)
 {
 	
     std::cout << "invite test" << std::endl;
+	// std::cout << " chan name " << command._user->get_channel(command.get_value()[1]) << std::endl;
     if (command.get_value().size() != 2)
 	{
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
@@ -97,5 +98,5 @@ void invite(Cmd &command)
 			return ;
 		}
 	}
-    command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._sfd);
+    command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._sfd); // nick de l'invitant ou de l'invite???
 }

@@ -27,3 +27,13 @@ a faire :
 :prout!asgaulti@localhost 442 #fff :You're not on that channel
 alors que celui qui invite est la
 else if (!command._user->get_channel(command.get_value()[1])) : verifier le nom du channel renvoye dans cette fct (avec ou sans #)
+> looks ok finally
+
+pbs?
+- quand on change le nick il ne change pas sur la ligne d'affichage bleue
+- le programme continue a tourner dans le terminal apres quit
+- invite n'a pas l'air d'envoyer le msg d'invitation a la personne invitee
+- quit sur nc ne deco pas
+
+
+
