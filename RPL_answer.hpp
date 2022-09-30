@@ -141,6 +141,12 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server to indicate that the attempted INVITE message was successful and is
 // being passed onto the end client.
 
+#define RPL_INVITELIST(localhost, channel, invitemask) (":" + localhost + " 346 : " + channel + " " + invitemask)
+
+#define RPL_ENDOFINVITELIST(localhost, channel) (":" + localhost + " 347 : " + channel + " :End of channel invite list")
+
+
+
 #define RPL_WHOREPLY(localhost, channel, user, host, nick, name) (":" + localhost + " 352 : " + channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
 	// envoyer les args
 
@@ -231,7 +237,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // already exists by another server).
 
 #define ERR_UNAVAILRESOURCE(localhost, nick_chan) (":" + localhost + " 437 : " + nick_chan + " :Nick/channel is temporarily unavailable\r\n") // 437
-	// + envoyer channel ou nick en arg
+// + envoyer channel ou nick en arg
 // - Returned by a server to a user trying to join a channel
 //            currently blocked by the channel delay mechanism.
 
