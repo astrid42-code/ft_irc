@@ -13,8 +13,9 @@
 #include "Server/Server.hpp"
 #include "Command/Cmd.hpp"
 #include "User/User.hpp"
+#include <signal.h>
 
-void	test()
+void test()
 {
 	std::cout << "Welcome in my test" << std::endl;
 	Server test("127.0.0.1", "6667");
@@ -37,13 +38,55 @@ void	test()
 	std::cout << "_____________Server : ________________" << std::endl;
 }
 
-int		main(int ac, char **av)
+Server *getset_serv(Server *server)
+{
+
+	static Server *serv;
+	if (server)
+	{
+		serv = server;
+		return (serv);
+	}
+	else
+	{
+		return (serv);
+	}
+}
+
+void sig_handler(int sig)
+{
+	std::map<int, User *> *users;
+	std::map<std::string, Channel *>	*chans;
+	Server *serv = getset_serv(NULL);
+	if (serv && sig == SIGINT)
+	{
+		users = serv->get_users();
+		chans = serv->get_chans();
+		std::cout << "Closing Connections" << std::endl;
+		for (std::map<int, User *>::iterator it = users->begin(); it != users->end(); it++)
+		{
+			serv->send_msg(QUIT(it->second->get_hostname(), "Server is Closing ... Sorry :/ "), it->second->get_sfd());
+			close(it->second->get_sfd());
+			delete it->second;
+		}
+		for (std::map<std::string, Channel *>::iterator it = chans->begin(); it != chans->end(); it++)
+		{
+			delete it->second;
+		}
+		delete serv;
+		exit(0);
+	}
+}
+
+int main(int ac, char **av)
 {
 	(void)av;
 	if (ac == 3)
 	{
-		Server server = Server(av[1], av[2]);
-		if (server.init() < 0)
+		Server *server = new Server(av[1], av[2]);
+		getset_serv(server);
+		signal(SIGINT, sig_handler);
+		if (server->init() < 0)
 		{
 			std::cerr << "error in catching server info... need free and a real call to err." << std::endl;
 		}
@@ -55,6 +98,5 @@ int		main(int ac, char **av)
 		// test();
 		return (1);
 	}
-    return (0);
+	return (0);
 }
-

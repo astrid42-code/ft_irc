@@ -275,21 +275,21 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned to indicate a failed attempt at registering a connection for which a password was required and
 // was either not given or incorrect.
 
-#define ERR_KEYSET(localhost, channel) (":" + localhost + " 467 : " + channel + " :Channel key already set\r\n") // 467
+#define ERR_KEYSET(localhost, channel) (":" + localhost + " 467 " + channel + " :Channel key already set\r\n") // 467
 
-#define ERR_CHANNELISFULL(localhost, channel) (":" + localhost + " 471 : " + channel + " :Cannot join channel (+l)\r\n") // 471
+#define ERR_CHANNELISFULL(localhost, channel) (":" + localhost + " 471 " + channel + " :Cannot join channel (+l)\r\n") // 471
 	// + envoyer channel en arg
 
-#define ERR_INVITEONLYCHAN(localhost, channel) (":" + localhost + " 473 : " + channel + " :Cannot join channel (+i)\r\n") // 473
+#define ERR_INVITEONLYCHAN(localhost, channel) (":" + localhost + " 473 " + channel + " :Cannot join channel (+i)\r\n") // 473
 	// + envoyer channel en arg
 
-#define ERR_BANNEDFROMCHAN(localhost, channel) (":" + localhost + " 474 : " + channel + " :Cannot join channel (+b)\r\n") // 474
+#define ERR_BANNEDFROMCHAN(localhost, channel) (":" + localhost + " 474 " + channel + " :Cannot join channel (+b)\r\n") // 474
 	// + envoyer channel en arg
 
-#define ERR_BADCHANNELKEY(localhost, channel) (":" + localhost + " 475 : " + channel + " :Cannot join channel (+k)\r\n") // 475
+#define ERR_BADCHANNELKEY(localhost, channel) (":" + localhost + " 475 " + channel + " :Cannot join channel (+k)\r\n") // 475
 	// + envoyer channel en arg
 
-#define ERR_BADCHANMASK(localhost, channel) (":" + localhost + " 476 : " + channel + " :Bad Channel Mask\r\n") // 476
+#define ERR_BADCHANMASK(localhost, channel) (":" + localhost + " 476 " + channel + " :Bad Channel Mask\r\n") // 476
 	// + envoyer channel en arg
 
 #define ERR_NOPRIVILEGES(localhost) (":" + localhost + " 481 :Permission Denied- You're not an IRC operator\r\n") // 481
