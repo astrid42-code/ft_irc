@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/29 18:33:52 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 17:32:39 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ Server::Server(std::string port, std::string pwd) : _port(port), _pwd(pwd), _tim
 	_users = new std::map<int, User *>();
 	_channels = new std::map<std::string, Channel *>();
 	srv_events = NULL;
-	// parser port et pwd ici ou dans une fct set plutot?
-	// si tout ok, msg de bienvenue; sinon
 }
 
 Server::Server(const Server &serv_cp)
@@ -80,9 +78,6 @@ Server::Server(const Server &serv_cp)
 
 Server::~Server()
 {
-	// recuperer les Users (a mettre dans un vector, map pas utile ici car c pour tous les retirer)
-	// > faire une fct get_users qui recupere tous les users
-	// boucle for pour tous les delete (fct delUsers a creer)
 	std::cout << "Bye, see you soon!" << std::endl;
 	delete _users;
 	delete _channels;
@@ -124,7 +119,6 @@ std::map<std::string, Channel *>	*Server::get_chans(void) const
 	return (_channels);
 }
 
-// recuperer la data du User
 User	*Server::get_user(int key)
 {
 	std::map<int, User *>::iterator it;
@@ -137,10 +131,8 @@ User	*Server::get_user(int key)
 
 User	*Server::get_user(std::string nick)
 {
-	// std::cout << "nick" << std::endl;
 	for (std::map<int, User *>::iterator it = _users->begin(); it != _users->end(); it++)
 	{
-		std::cout << "get_user boucle" << std::endl;
 		if (it->second->get_nick().compare(nick) == 0)
 			return (it->second);
 	}
@@ -151,8 +143,6 @@ Channel	*Server::get_chan(std::string key)
 {
 	std::map<std::string, Channel *>::iterator it;
 
-	for (it = _channels->begin(); it != _channels->end(); it++)
-		std::cout << "it key :" << it->second->get_name() << std::endl;
 	it = _channels->find(key);
 	if (it == _channels->end())
 		return (NULL);
@@ -179,7 +169,6 @@ bool	Server::set_chan(Channel *chan)
 	std::pair<std::map<std::string, Channel *>::iterator, bool> p;
 
 	p = _channels->insert(make_pair(chan->get_name(), chan));
-	std::cout << "channel set in serv... chan name :" << chan->get_name() << std::endl;	
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
 
@@ -188,7 +177,6 @@ bool	Server::set_user(User *user)
 {
 	std::pair<std::map<int, User *>::iterator, bool> p;
 
-	std::cout << "set_user server " << user->get_sfd() << std::endl;
 	p = _users->insert(std::make_pair(user->get_sfd(), user));
 	return (p.second); // if bool == true user succesfully join server else nick name already in use
 }
@@ -204,7 +192,6 @@ void	Server::set_user_in_chan(User *user, Channel *chan)
 int	Server::send_msg(std::string msg, int sfd)
 {
 	int res;
-	std::cout << "send msg : |" << msg << "|" << std::endl;
 	res = send(sfd, msg.c_str(), msg.length(), MSG_CONFIRM);
 	return (res);
 }
@@ -250,7 +237,6 @@ void Server::set_ip(std::string ip)
 	}
 	else
 	{
-		std::cout << "Local ip address: " << buf << std::endl;
 		ip = buf;
 		return;
 	}
@@ -428,12 +414,12 @@ int	Server::init()
 						done = 1;
 						break;
 					}
-					std::cout << "preparse..." << std::endl;
+					// std::cout << "preparse..." << std::endl;
 					pre_parse(buf, events[i].data.fd, this);
 				}
 				if (done)
 				{
-					std::cout << "Closed connection on descriptor " << events[i].data.fd << std::endl;
+					// std::cout << "Closed connection on descriptor " << events[i].data.fd << std::endl;
 					close(events[i].data.fd);
 				}
 			}

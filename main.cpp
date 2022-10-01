@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:21:31 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/24 18:09:52 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 17:29:11 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void test()
 		(*test.get_chan("#test")).set_user(dasanter);
 		(*test.get_chan("#blabla")).set_user(tamigore);
 	}
-	(*test.get_chan("#test")).print();
-	(*test.get_chan("#blabla")).print();
+	// (*test.get_chan("#test")).print();
+	// (*test.get_chan("#blabla")).print();
 	std::cout << "_____________Server : ________________" << std::endl;
 }
 
