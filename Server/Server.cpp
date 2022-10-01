@@ -58,6 +58,7 @@ Server::Server() : _port("6667"), _pwd("pwd"), _time(std::time(NULL))
 {
 	std::cout << "Hi there, nice to see you!" << std::endl;
 	set_ip(_ip);
+	srv_events = NULL;
 	_users = new std::map<int, User *>();
 	_channels = new std::map<std::string, Channel *>();
 }
@@ -67,6 +68,7 @@ Server::Server(std::string port, std::string pwd) : _port(port), _pwd(pwd), _tim
 	std::cout << "Hi there, nice to see you!" << std::endl;
 	_users = new std::map<int, User *>();
 	_channels = new std::map<std::string, Channel *>();
+	srv_events = NULL;
 	// parser port et pwd ici ou dans une fct set plutot?
 	// si tout ok, msg de bienvenue; sinon
 }
@@ -84,6 +86,8 @@ Server::~Server()
 	std::cout << "Bye, see you soon!" << std::endl;
 	delete _users;
 	delete _channels;
+	if (srv_events != NULL)
+		free(srv_events);
 }
 
 Server &Server::operator=(const Server &serv_op)
@@ -294,6 +298,8 @@ static int create_and_bind(std::string port)
 	if (rp == NULL)
 	{
 		std::cerr << "Could not bind" << std::endl;
+		freeaddrinfo(result);
+		freeaddrinfo(rp);
 		return -1;
 	}
 	freeaddrinfo(result);
@@ -310,7 +316,7 @@ int	Server::init()
 
 	sfd = create_and_bind(_port.c_str());
 	if (sfd == -1)
-		exit(1);
+		return (-1);
 	s = make_socket_non_blocking(sfd);
 	if (s == -1)
 		return (-1);
@@ -337,6 +343,7 @@ int	Server::init()
 	}
 	/* Buffer where events are returned */
 	events = (epoll_event *)calloc(MAXEVENTS, sizeof(event));
+	srv_events = events;
 	/* The event loop */
 	while (1)
 	{
