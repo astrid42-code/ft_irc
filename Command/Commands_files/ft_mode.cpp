@@ -1,16 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_mode.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/01 17:00:59 by asgaulti          #+#    #+#             */
+/*   Updated: 2022/10/01 17:03:34 by asgaulti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Cmd.hpp"
 
 void		chan_print(Channel *chan, Cmd &command, std::string arg)
 {
 	if (arg.compare("I") == 0)
-	{
-		// std::cout << chan->get_mask() << std::endl;
 		command._server->send_msg(RPL_INVITELIST(command._user->get_hostname(), chan->get_name(), chan->get_mask()), command._sfd);
-	}
-	else if (arg.compare("b") == 0)
-	{
-		
-	}
 }
 
 bool		check_mode_string(Cmd &command, std::string args, std::string mods)
@@ -21,7 +26,6 @@ bool		check_mode_string(Cmd &command, std::string args, std::string mods)
 	{
 		if (mods.find(*it) == std::string::npos)
 		{
-			std::cout << "the modes given in parameter are invalid" << std::endl;
 			command._server->send_msg(ERR_UMODEUNKNOWNFLAG(command._user->get_hostname()), command._sfd);
 			return (false);
 		}
@@ -39,8 +43,6 @@ bool		check_mode_string(Cmd &command, std::string args, std::string mods)
 
 std::string	get_user_mode_string(User *user, std::string arg)
 {
-	(void)user;
-	(void)arg;
 	std::string res = "";
 
 	if (user)
@@ -68,7 +70,6 @@ std::string	get_user_mode_string(User *user, std::string arg)
 			res = res.erase(res.find('O'), 1);
 		if (arg.find('s') != std::string::npos && res.find('s') != std::string::npos)
 			res = res.erase(res.find('s'), 1);
-		std::cout << "I : " << res << std::endl;
 	}
 	return (res);
 }
@@ -87,12 +88,10 @@ std::string	chan_mode_plus(Channel *chan, Cmd &command, std::string res, std::st
 					res += "k";
 				}
 			}
-			else{
+			else
 				command._server->send_msg(ERR_KEYSET(command._user->get_hostname(), chan->get_name()), command._sfd);
-				// return("");
-			}
 		}
-		if (arg.find('l') != std::string::npos && res.find('l') == std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
+		if (arg.find('l') != std::string::npos && res.find('l') == std::string::npos)
 		{
 			if (*n + 1 < command.get_size() && !command.get_value()[*n + 1].empty())
 			{
@@ -111,7 +110,6 @@ std::string	chan_mode_plus(Channel *chan, Cmd &command, std::string res, std::st
 				{
 					command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[++(*n)], chan->get_name()), command._sfd); // nick de l'invitant ou de l'invite???
 					command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[*n], chan->get_name()), tmp->get_sfd());
-					// return("");
 				}
 			}
 			res = res.append("i");
@@ -144,7 +142,7 @@ std::string	chan_mode_minus(Channel *chan,Cmd &command, std::string res, std::st
 {
 	for (size_t i = 0; i < arg.size(); i++)
 	{
-		if (arg[i] == 'k' && res.find('k') != std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
+		if (arg[i] == 'k' && res.find('k') != std::string::npos)
 		{
 			if ((*n + 1 < command.get_size()) && !command.get_value()[*n + 1].empty() && chan->get_key().compare(command.get_value()[*n + 1]) == 0)
 			{	
@@ -153,7 +151,7 @@ std::string	chan_mode_minus(Channel *chan,Cmd &command, std::string res, std::st
 				(*n)++;
 			}
 		}
-		if (arg[i] == 'l' && res.find('l') != std::string::npos)//&& (command._user->get_mod().find("o") || command._user->get_mod().find("O")))
+		if (arg[i] == 'l' && res.find('l') != std::string::npos)
 		{
 			chan->set_limit(4294967295);
 			res = res.erase(res.find('l'), 1);
@@ -211,10 +209,8 @@ bool		mode_user(Cmd &command)
 {
 	if (command.get_value()[0].compare(command._user->get_nick()) == 0)
 	{
-		// std::cout << "the user given in parameter match the user" << std::endl;
 		if (command.get_size() == 1)
 		{
-			// std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
 			return (false);
 		}
@@ -227,7 +223,6 @@ bool		mode_user(Cmd &command)
 	}
 	else
 	{
-		// std::cout << "the user given in parameter invalid" << std::endl;
 		command._server->send_msg(ERR_USERSDONTMATCH(command._user->get_hostname(), command._user->get_nick()), command._sfd);
 		return (false);
 	}
@@ -238,8 +233,6 @@ bool		mode_chan(Cmd &command, Channel *chan)
 {
 	if (chan)
 	{
-		// std::cout << "the channel given in parameter match the user" << std::endl;
-		// chan->print();
 		if (command.get_size() == 1)
 		{
 			command._server->send_msg(RPL_CHANNELMODEIS(command._user->get_hostname(), chan->get_name(), chan->get_mod()), command._sfd);
@@ -247,7 +240,7 @@ bool		mode_chan(Cmd &command, Channel *chan)
 		}
 		else
 		{
-			if (!check_mode_string(command, command.get_value()[1], "-+OovaimnqpsrtklbI")) // e = exeption mask (useless ?)
+			if (!check_mode_string(command, command.get_value()[1], "-+OovaimnqpsrtklbI"))
 				return (false);
 			chan->set_mod(get_chan_mode_string(chan, command));
 			return (true);
@@ -264,7 +257,6 @@ void		mode(Cmd &command)
 {
 	bool	res = false;
 
-	std::cout << "ft_mode start" << std::endl;
 	if (command.get_size() >= 1)
 	{
 		if (command.get_value()[0].find("#") == 0)
@@ -277,5 +269,3 @@ void		mode(Cmd &command)
 	else
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 }
-
-// tous les return commentes viennent de moi a priori (signe astrid) pour checker avant de les valider

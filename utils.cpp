@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/01 17:23:54 by asgaulti          #+#    #+#             */
+/*   Updated: 2022/10/01 17:24:04 by asgaulti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Server/Server.hpp"
 
 void	pre_parse(std::string buf, int sfd, Server *serv)
@@ -6,29 +18,19 @@ void	pre_parse(std::string buf, int sfd, Server *serv)
 	std::string token;
 	std::string pre_buf = "";
 
-	std::cout << "buf = " << buf << std::endl;
 	pre_buf.append(buf);
 	while (pos < pre_buf.length() && pre_buf.find("\r\n", pos) != std::string::npos)
 	{
-		std::cout << "while loop preparse" << std::endl;
 		Cmd *command = new Cmd();
 		command->_server = serv;
 		command->_sfd = sfd;
 		command->_user = command->get_user_fd();
 		if (std::time(NULL) - command->_server->get_time() > TIME_LIMIT)
-		{
-			std::cout << "going to ping ?" << std::endl;
 			ping(*command);
-		} // timer to ping user
 		if (command->_user == NULL)
-		{
-			std::cout << "_____NoUserFromFd_____" << std::endl;
 			pos = pre_buf.length();
-		}
 		else
 		{
-			std::cout << "_____UserFromFd_____" << std::endl;
-			command->_user->print();
 			if ((pre_buf.find("\r\n", pos)) != std::string::npos)
 			{
 				token = pre_buf.substr(pos, pre_buf.find("\r\n", pos) - pos);
@@ -36,7 +38,6 @@ void	pre_parse(std::string buf, int sfd, Server *serv)
 			}
 			else
 				pos = pre_buf.length();
-			std::cout << "token :|" << token << "|" << std::endl;
 			command->parse_cmd(token);
 		}
 		delete command;
@@ -59,11 +60,6 @@ std::vector<std::string>	div_string(std::string str, char c)
 		i++;
 	}
 	res.push_back(str.substr(n, str.length()));
-	std::cout << "div_string :" << std::endl;
-	for (std::vector<std::string>::iterator it = res.begin(); it != res.end(); it++)
-	{
-		std::cout << "|" << *it << "|" << std::endl;
-	}
 	return (res);
 }
 
@@ -74,15 +70,11 @@ bool	mask_off(std::string mask, std::string str)
 	std::size_t					j;
 	std::size_t					n = 0;
 
-	std::cout << "mask_off ok ?" << std::endl;
 	while (i < mask.length())
 	{
 		j = i;
 		if ((i = mask.find("*")) != std::string::npos)
-		{
 			mask_div.push_back(mask.substr(j, i++ - j));
-			std::cout << "|" << mask_div.back() << "|" << std::endl;
-		}
 		else
 			i = mask.length();
 	}
@@ -93,14 +85,10 @@ bool	mask_off(std::string mask, std::string str)
 	{
 		j = i;
 		if (!mask_div[n].empty() && (i = str.find(mask_div[n], j)) == std::string::npos)
-		{
-			std::cout << "false :" << mask_div[n] << std::endl;
 			return (false);
-		}
 		else
 			n++;
 	}
-	std::cout << "mask_off ok" << std::endl;
 	return (true);
 }
 
@@ -122,10 +110,9 @@ int		check_condition(Cmd &command, std::string key)
 	return (0);
 }
 
-// fct pour savoir s'il faut erase le channel (s'il est empty de users : erase)
 bool	erase_chan(Channel *chan, User *user)
 {
-	if (chan->get_users().empty() || (user != NULL && chan->get_users().size() == 1 && chan->get_user(user->get_nick()) == user)) // si le vector _users est empty
+	if (chan->get_users().empty() || (user != NULL && chan->get_users().size() == 1 && chan->get_user(user->get_nick()) == user))
 		return (true);
-	return (false); // s'il reste des users
+	return (false);
 }

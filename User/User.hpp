@@ -67,11 +67,7 @@ class User
 		int						_sfd;
 		int						_valid;
 		std::string				_away;
-		std::vector<Channel *>	*_vchan; // liste des channels dans lesquels le user est connecte (quand il join)
+		std::vector<Channel *>	*_vchan;
 };
 
-// std::ostream		&operator<<(std::ostream os, const User &user_cp);
-
 #endif
-
-// associer le user a la map de channels auxquels il est connecte (ici ou dans le server?)

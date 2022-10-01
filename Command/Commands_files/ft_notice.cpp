@@ -1,24 +1,20 @@
-#include "../Cmd.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_notice.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/01 17:04:30 by asgaulti          #+#    #+#             */
+/*   Updated: 2022/10/01 17:05:37 by asgaulti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// 3.3.2 Notice
+#include "../Cmd.hpp"
 
 //       Command: NOTICE
 //    Parameters: <msgtarget> <text>
 
-//    The NOTICE command is used similarly to PRIVMSG.  The difference
-//    between NOTICE and PRIVMSG is that automatic replies MUST NEVER be
-//    sent in response to a NOTICE message.  This rule applies to servers
-//    too - they MUST NOT send any error reply back to the client on
-//    receipt of a notice.  The object of this rule is to avoid loops
-//    between clients automatically sending something in response to
-//    something it received.
-
-//    This command is available to services as well as users.
-
-//    This is typically used by services, and automatons (clients with
-//    either an AI or other interactive program controlling their actions).
-
-//    See PRIVMSG for more details on replies and examples.
 
 void send_msg_to_chan_not(Cmd &command, std::string destinataire)
 {
@@ -57,13 +53,9 @@ void	notice(Cmd &command)
 		return;
 	destinataire = command.get_value().begin()[0];
 	if (destinataire.c_str()[0] == '#')
-	{
-		std::cout << "msg_to_chan" << std::endl;
 		send_msg_to_chan_not(command, destinataire);
-	}
 	else
 	{
-		std::cout << "msg_to_user" << std::endl;
 		if ((user = command._server->get_user(destinataire)) != NULL)
 		{
 			if (user->find_mod("a"))
