@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/10/01 11:59:50 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 16:34:25 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void invite(Cmd &command)
 	else
 	{
 		if (!(user = command._server->get_user(command.get_value()[0])))
-			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command.get_value()[0], command.get_value()[1]), command._sfd);
 		else
 		{
 			if (user->find_mod("a"))

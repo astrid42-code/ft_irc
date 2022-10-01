@@ -88,7 +88,8 @@ int main(int ac, char **av)
 		signal(SIGINT, sig_handler);
 		if (server->init() < 0)
 		{
-			std::cerr << "error in catching server info... need free and a real call to err." << std::endl;
+			delete server;
+			//std::cerr << "error in catching server info... need free and a real call to err." << std::endl;
 		}
 	}
 	else

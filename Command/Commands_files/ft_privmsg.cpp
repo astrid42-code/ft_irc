@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/10/01 12:16:37 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 14:12:32 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void privmsg(Cmd &command)
 						command._server->send_msg(PRIVMSG(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
 				}
 				else
-					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
+					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire, ""), command._sfd);
 			}
 		}
 	}
