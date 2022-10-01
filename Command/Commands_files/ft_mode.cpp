@@ -11,31 +11,28 @@ void		chan_print(Channel *chan, Cmd &command, std::string arg)
 	}
 }
 
-bool		check_mode_string(Cmd &command, std::string mods)
+bool		check_mode_string(Cmd &command, std::string args, std::string mods)
 {
-	int						i;
+	int	i = 0;
 
-	if (command.get_size() < 2)
-		return (0);
-	i = 0;
-	for (std::string::iterator it = command.get_value()[1].begin(); it != command.get_value()[1].end(); it++)
+	for (std::string::iterator it = args.begin(); it != args.end(); it++)
 	{
 		if (mods.find(*it) == std::string::npos)
 		{
 			std::cout << "the modes given in parameter are invalid" << std::endl;
 			command._server->send_msg(ERR_UMODEUNKNOWNFLAG(command._user->get_hostname()), command._sfd);
-			// return (0);
+			return (false);
 		}
 		if (i == 1 && *it == '+')
-			return (0);
+			return (false);
 		else if (i == 2 && *it == '-')
-			return (0);
+			return (false);
 		if (*it == '-')
 			i = 1;
 		else if (*it == '+')
 			i = 2;
 	}
-	return (1);
+	return (true);
 }
 
 std::string	get_user_mode_string(User *user, std::string arg)
@@ -212,78 +209,71 @@ bool		mode_user(Cmd &command)
 {
 	if (command.get_value()[0].compare(command._user->get_nick()) == 0)
 	{
-		std::cout << "the user given in parameter match the user" << std::endl;
+		// std::cout << "the user given in parameter match the user" << std::endl;
 		if (command.get_size() == 1)
 		{
 			// std::cout << command._user->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
-			// return(false);
+			return (false);
 		}
 		else
 		{
-			if (!check_mode_string(command, "-+aiwroOs"))
+			if (!check_mode_string(command, command.get_value()[1],"-+aiwroOs"))
 				return (false);
         	command._user->set_mod(get_user_mode_string(command._user, command.get_value()[1]));
 		}
 	}
 	else
 	{
-		std::cout << "the user given in parameter invalid" << std::endl;
+		// std::cout << "the user given in parameter invalid" << std::endl;
 		command._server->send_msg(ERR_USERSDONTMATCH(command._user->get_hostname(), command._user->get_nick()), command._sfd);
 		return (false);
 	}
 	return (true);
 }
 
-void		mode_chan(Cmd &command, Channel *chan)
+bool		mode_chan(Cmd &command, Channel *chan)
 {
 	if (chan)
 	{
-		std::cout << "the channel given in parameter match the user" << std::endl;
-		chan->print();
+		// std::cout << "the channel given in parameter match the user" << std::endl;
+		// chan->print();
 		if (command.get_size() == 1)
 		{
-			std::cout << chan->get_mod() << std::endl;// put this in a message to the client
 			command._server->send_msg(RPL_CHANNELMODEIS(command._user->get_hostname(), chan->get_name(), chan->get_mod()), command._sfd);
-			// return;
+			return (false);
 		}
 		else
 		{
-			if (!check_mode_string(command, "-+OovaimnqpsrtklbI")) // e = exeption mask (useless ?)
-				return ;
+			if (!check_mode_string(command, command.get_value()[1], "-+OovaimnqpsrtklbI")) // e = exeption mask (useless ?)
+				return (false);
 			chan->set_mod(get_chan_mode_string(chan, command));
+			return (true);
 		}
 	}
 	else
 	{
-		std::cout << "the channel given in parameter invalid" << std::endl;
 		command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command._user->get_nick(), command._user->get_nick(),command.get_value()[0]), command._sfd);
-		// return;
+		return (false);
 	}
 }
 
 void		mode(Cmd &command)
 {
+	bool	res = false;
+
 	std::cout << "ft_mode start" << std::endl;
 	if (command.get_size() >= 1)
 	{
 		if (command.get_value()[0].find("#") == 0)
-			mode_chan(command, command._user->get_channel(command.get_value()[0]));
+			res = mode_chan(command, command._user->get_channel(command.get_value()[0]));
 		else
-		{
-			if (!mode_user(command))
-				return ;
-			command._user->print();
-		}
-		command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
-		// return;
+			res = mode_user(command);
+		if (res == true)
+			command._server->send_msg(RPL_UMODEIS(command._user->get_hostname(), command._user->get_user(), command._user->get_mod(), ""), command._sfd);
 	}
 	else
-	{
-		std::cout << "err need more params" << std::endl;
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
-		// return;
-	}
 }
 
 // tous les return commentes viennent de moi a priori (signe astrid) pour checker avant de les valider
