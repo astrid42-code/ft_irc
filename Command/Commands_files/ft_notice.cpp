@@ -27,7 +27,6 @@ void send_msg_to_user_not(User *usr, std::string str, Cmd &command, std::string 
 	std::cout << "Sending :|" << msg << "| to :" << usr->get_nick() << std::endl;
 	if (usr->find_mod("a"))
 		return;
-		// command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
 	else
 		send(usr->get_sfd(), msg.c_str(), msg.length(), MSG_CONFIRM);
 }
@@ -43,7 +42,6 @@ void send_msg_to_chan_not(Cmd &command, std::string destinataire)
 	std::cout << "RETOUR" << std::endl;
 	if (!chan || !chan->get_user(command._user->get_nick()))
 		return;
-		// command._server->send_msg(ERR_CANNOTSENDTOCHAN(command._user->get_hostname(), destinataire), command._sfd);
 	else
 	{
 		users = chan->get_users();
@@ -72,7 +70,6 @@ void	notice(Cmd &command)
 	destinataire = command.get_value().begin()[0];
 	if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1].empty()))
 		return;
-		// command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
 	if (destinataire.c_str()[0] == '#')
 	{
 		std::cout << "msg_to_chan" << std::endl;
@@ -83,15 +80,17 @@ void	notice(Cmd &command)
 		std::cout << "msg_to_user" << std::endl;
 		if ((user = command._server->get_user(destinataire)) != NULL)
 		{
-			if (user->find_mod("a"))
+			if (user->find_mod("a")){
 				command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
-			if (command._server->get_user(destinataire))
-			command._server->send_msg(NOTICE(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
+				// return; // or not return? (peut passer par les 2 rpl ou pas?)
+			}
+			if (command._server->get_user(destinataire)){
+				command._server->send_msg(NOTICE(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
+				return;
+			}
 
 		}
 		else
 			return;
-			// command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
 	}
-	// std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
 }

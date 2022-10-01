@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 17:18:44 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 10:00:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 19:02:12 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void user(Cmd &command)
 	if (command.get_value()[1].compare("anonymous") == 0 || command.get_value()[2].compare("anonymous") == 0)
 	{
 		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
+		return;
 	}
 	else
 	{

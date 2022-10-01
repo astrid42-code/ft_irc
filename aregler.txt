@@ -37,3 +37,13 @@ pbs?
 
 
 
+netcat:
+
+
+
+
+pb a regler : le msg de ERR_NOSUCHCHANNEL ne s'affiche pas correctement (voire plus du tout maintenant)
+
+
+:toto!asg@62.210.32.248 433 toto toto :Nickname is already in us:toto!asg@62.210.32.248 433 toto toto :Nickname is already in use
+:kakou!asgaulti@localhost 433 : kakou :Nickname is already in use

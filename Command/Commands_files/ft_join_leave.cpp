@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/28 18:58:41 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 10:42:04 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ bool		bad_chan(std::string chan_name, Cmd &command)
 {
 	if (chan_name.compare("#") == 0 || (chan_name.find("!") == 0) || (chan_name.find("@") == 0))
 	{
-		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), chan_name), command._sfd);
+		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), chan_name), command._sfd);
 		return (false);
 	}
 	return (true);
@@ -121,8 +121,10 @@ void	join(Cmd &command)
 	bool						valid;
 
 	std::cout << "_______________________entree dans Join ______________" << std::endl;
-	if (!command.get_value().size())
+	if (!command.get_value().size()){
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
+		return;		
+	}
 	chans = div_string(command.get_value()[0], ',');
 	if(command.get_value().size() == 2)
 		keys = div_string(command.get_value()[1], ',');
@@ -135,8 +137,10 @@ void	join(Cmd &command)
 			{
 				std::cout << "chanel creation..." << std::endl;
 				chan = new Channel(chans[i]);
-				if (!command._server->set_chan(chan))
+				if (!command._server->set_chan(chan)){
 					command._server->send_msg(ERR_UNAVAILRESOURCE(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+					return;
+				}
 				else
 				{
 					std::cout << "NEW CHAN : |" << chan->get_name() << "|" << std::endl;
@@ -168,6 +172,7 @@ void	join(Cmd &command)
 				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
 			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_nick(), chan->get_name()), command._sfd);
 			chan->send_to_users(JOIN(command._user->get_hostname(),chan->get_name()));
+			return;
 		}
 	}
 }
@@ -178,13 +183,7 @@ void	join(Cmd &command)
 // Command: PART
 //    Parameters: <channel> *( "," <channel> ) [ <Part Message> ]
 
-//    The PART command causes the user sending the message to be removed
-//    from the list of active members for all given channels listed in the
-//    parameter string.  If a "Part Message" is given, this will be sent
-//    instead of the default message, the nickname.  This request is always
-//    granted by the server.
-
-//    Servers MUST be able to parse arguments in the form of a list of
+//    The PART command causes the user sendiNOSUCHCHs in the form of a list of
 //    target, but SHOULD NOT use lists when sending PART messages to
 //    clients.
 
@@ -227,7 +226,7 @@ void part(Cmd &command)
 	for (size_t i = 0; i < args.size(); i++)
 	{
 		if ((chan = command._server->get_chan(args[i])) == NULL)
-			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
 		else
 		{
 			if (!command._user->get_channel(args[i]))

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 11:57:10 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:16:37 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@
 
 void send_msg_to_user(User *usr, std::string str, Cmd &command, std::string chan)
 {
-	if (usr->find_mod("a"))
+	if (usr->find_mod("a")){
 		command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
-	else
+		return;
+	}
+	else{
 		command._server->send_msg(PRIVMSG(command._user->get_hostname(), chan, str), usr->get_sfd());
+		return;
+	}
 }
 
 void send_msg_to_chan(Cmd &command, std::string destinataire)
@@ -54,8 +58,10 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 	std::cout << "________msg_to_chan________" << std::endl;
 	chan = command._server->get_chan(destinataire.c_str());
 	std::cout << "RETOUR" << std::endl;
-	if (!chan || !chan->get_user(command._user->get_nick()))
-		command._server->send_msg(ERR_CANNOTSENDTOCHAN(command._user->get_hostname(), destinataire), command._sfd);
+	if (!chan || !chan->get_user(command._user->get_nick())){
+		command._server->send_msg(ERR_CANNOTSENDTOCHAN(command._user->get_hostname(), command._user->get_nick(), destinataire), command._sfd);
+		return;
+	}
 	else
 	{
 		users = chan->get_users();
@@ -78,6 +84,8 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 void privmsg(Cmd &command)
 {
 	User *user;
+	
+	std::cout << "size value privmsg : " << command.get_size() << std::endl;
 
 	std::cout << "privmsg test" << std::endl;
 	std::string destinataire;
