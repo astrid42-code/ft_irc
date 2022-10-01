@@ -78,7 +78,7 @@ void	kick(Cmd &command)
 	std::cout << "kick test" << std::endl;
 	if (!kick_check(command))
 		return ;
-	if (chans.size() == 1)
+	if (chans.size() == 1 && users.size() == 1)
 	{
 		if ((chan = command._server->get_chan(chans[0])) != NULL)
 		{
@@ -89,7 +89,7 @@ void	kick(Cmd &command)
 				command._server->send_msg(KICK(command._user->get_hostname(), chans[0], users[0]), command._sfd);
 			}
 			else
-				command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),command.get_value()[1], command.get_value()[0]), command._sfd);
+				command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command._user->get_nick() ,command.get_value()[1], command.get_value()[0]), command._sfd);
 		}
 		else
 			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(),command.get_value()[0]), command._sfd);
@@ -107,7 +107,7 @@ void	kick(Cmd &command)
 					command._server->send_msg(KICK(command._user->get_hostname(), chans[i], users[i]), command._sfd);
 				}
 				else
-					command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(),users[i], chans[i]), command._sfd);
+					command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command._user->get_nick(), users[i], chans[i]), command._sfd);
 			}
 			else
 				command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
