@@ -45,7 +45,7 @@ class User
 		void			set_mod(std::string mod);
 		void			set_valid(int op);
 		void			set_sfd(int sfd);
-		void			set_chan(Channel &chan);
+		void			set_chan(Channel *chan);
 		void			set_away(std::string msg);
 
 		bool			check_nick(std::string new_nick);
