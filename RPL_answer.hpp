@@ -171,7 +171,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_YOUREOPER(localhost) (":" + localhost + " 381 : You are now an IRC operator\r\n") // 381
 // RPL_YOUREOPER is sent back to a client which has just successfully issued an OPER message and gained operator status.
 
-#define ERR_NOSUCHNICK(localhost, nick) (":" + localhost + " 401 : " + nick + ": No such nick\r\n") // 401 nick
+#define ERR_NOSUCHNICK(localhost, nick, channel) (":" + localhost + " 401 " + nick + " " + channel + ": No such nick/channel\r\n") // 401 nick
 	// + envoyer nick du user en arg
 // Used to indicate the nickname parameter supplied to a command is currently unused.
 
@@ -215,9 +215,9 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define ERR_NOTEXTTOSEND(localhost) (":" + localhost + " 412 :No text to send\r\n") // 412
 
-#define ERR_NOTOPLEVEL(localhost, mask) (":" + localhost + " 413 : " + mask + " :No toplevel domain specified\r\n") // 413
+#define ERR_NOTOPLEVEL(localhost, mask) (":" + localhost + " 413 " + mask + " :No toplevel domain specified\r\n") // 413
 
-#define ERR_WILDTOPLEVEL(localhost, mask) (":" + localhost + " 414 : " + mask + " :Wildcard in toplevel domain\r\n") // 414
+#define ERR_WILDTOPLEVEL(localhost, mask) (":" + localhost + " 414 " + mask + " :Wildcard in toplevel domain\r\n") // 414
 
 #define ERR_NONICKNAMEGIVEN(localhost) (":" + localhost + " 431 :No nickname given\r\n") // 431
 // - Returned when a nickname parameter expected for a command and isn't found.
@@ -297,7 +297,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 //            MUST return this error to indicate the attempt was
 //            unsuccessful.
 
-#define ERR_CHANOPRIVSNEEDED(localhost, channel) (":" + localhost + " 482 : " + channel + " :You're not channel operator\r\n") // 482
+#define ERR_CHANOPRIVSNEEDED(localhost, channel) (":" + localhost + " 482 " + channel + " :You're not channel operator\r\n") // 482
 	// + envoyer nom du channel en arg
 // Any command requiring 'chanop' privileges (such as MODE messages) MUST return this error if the client
 // making the attempt is not a chanop on the specified channel.
