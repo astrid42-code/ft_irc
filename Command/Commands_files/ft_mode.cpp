@@ -13,11 +13,12 @@ void		chan_print(Channel *chan, Cmd &command, std::string arg)
 
 bool		check_mode_string(Cmd &command, std::string mods)
 {
-	std::string::iterator	it = command.get_value()[1].begin();
 	int						i;
 
+	if (command.get_size() < 2)
+		return (0);
 	i = 0;
-	while (it != command.get_value()[1].end())
+	for (std::string::iterator it = command.get_value()[1].begin(); it != command.get_value()[1].end(); it++)
 	{
 		if (mods.find(*it) == std::string::npos)
 		{
@@ -33,7 +34,6 @@ bool		check_mode_string(Cmd &command, std::string mods)
 			i = 1;
 		else if (*it == '+')
 			i = 2;
-		it++;
 	}
 	return (1);
 }

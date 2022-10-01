@@ -85,6 +85,7 @@ void	kick(Cmd &command)
 			if ((user = chan->get_user(users[0])) != NULL)
 			{
 				std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
+				chan->send_to_users(KICK(command._user->get_hostname(), chans[0], users[0]));
 				user->remove_chan(chan); // need to include comment into the kick message...
 				command._server->send_msg(KICK(command._user->get_hostname(), chans[0], users[0]), command._sfd);
 			}
@@ -101,7 +102,9 @@ void	kick(Cmd &command)
 			if ((chan = command._server->get_chan(chans[i])) != NULL)
 			{
 				if ((user = chan->get_user(users[i])) != NULL)
-				{	std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
+				{
+					std::cout << "you kicked " << command._user->get_nick() << " from " << command.get_value()[0] << " chan..." << std::endl;
+					chan->send_to_users(KICK(command._user->get_hostname(), chans[i], users[i]));
 					user->remove_chan(chan); // need to include comment into the kick message...
 					command._server->send_msg(KICK(command._user->get_hostname(), chans[i], users[i]), command._sfd);
 				}

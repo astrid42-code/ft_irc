@@ -84,16 +84,14 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 void privmsg(Cmd &command)
 {
 	User *user;
-	
-	std::cout << "size value privmsg : " << command.get_size() << std::endl;
+	std::string destinataire;
 
 	std::cout << "privmsg test" << std::endl;
-	std::string destinataire;
-	destinataire = command.get_value().begin()[0];
 	if (command.get_size() < 1)
 		command._server->send_msg(ERR_NORECIPIENT(command._user->get_hostname()), command._sfd);
 	else
 	{
+		destinataire = command.get_value().begin()[0];
 		if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1].empty()))
 			command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
 		else
