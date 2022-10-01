@@ -72,7 +72,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define KICK(localhost, chan, nick) (":" + localhost + " KICK " + chan + " " + nick + "\r\n")
 
-#define RPL_AWAY(localhost, nick, msg) (":" + localhost + " 301 :" + nick + msg + "\r\n") // 301
+#define RPL_AWAY(localhost, nick, msg) (":" + localhost + " 301 " + nick + msg + "\r\n") // 301
 	// + envoyer nick du user en arg
 
 #define RPL_UNAWAY(localhost) (":" + localhost + " 305 :You are no longer marked as being away\r\n") //305
@@ -82,7 +82,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_UMODEIS(localhost, nick, mode, param) (":" + localhost + " 221 " + nick + " :+" + mode + "" + param + " \r\n") //221 
 	// To answer a query about a client's own mode, RPL_UMODEIS is sent back. 
 
-#define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 : " + nick + " " + user + " " + host + " * :" + name + "\r\n") // 311
+#define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 " + nick + " " + user + " " + host + " * :" + name + "\r\n") // 311
 	// + envoyer nick du user, user (?), host et real name en arg
 
 #define RPL_WHOISSERVER(localhost, nick, server_info) (":" + localhost + " 312 : " + nick + " " + SERVERNAME + " :" + server_info + "\r\n") // 312
@@ -215,9 +215,9 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define ERR_NOTEXTTOSEND(localhost) (":" + localhost + " 412 :No text to send\r\n") // 412
 
-#define ERR_NOTOPLEVEL(localhost, mask) (":" + localhost + " 413 : " + mask + " :No toplevel domain specified\r\n") // 413
+#define ERR_NOTOPLEVEL(localhost, mask) (":" + localhost + " 413 " + mask + " :No toplevel domain specified\r\n") // 413
 
-#define ERR_WILDTOPLEVEL(localhost, mask) (":" + localhost + " 414 : " + mask + " :Wildcard in toplevel domain\r\n") // 414
+#define ERR_WILDTOPLEVEL(localhost, mask) (":" + localhost + " 414 " + mask + " :Wildcard in toplevel domain\r\n") // 414
 
 #define ERR_NONICKNAMEGIVEN(localhost) (":" + localhost + " 431 :No nickname given\r\n") // 431
 // - Returned when a nickname parameter expected for a command and isn't found.
@@ -297,7 +297,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 //            MUST return this error to indicate the attempt was
 //            unsuccessful.
 
-#define ERR_CHANOPRIVSNEEDED(localhost, channel) (":" + localhost + " 482 : " + channel + " :You're not channel operator\r\n") // 482
+#define ERR_CHANOPRIVSNEEDED(localhost, channel) (":" + localhost + " 482 " + channel + " :You're not channel operator\r\n") // 482
 	// + envoyer nom du channel en arg
 // Any command requiring 'chanop' privileges (such as MODE messages) MUST return this error if the client
 // making the attempt is not a chanop on the specified channel.

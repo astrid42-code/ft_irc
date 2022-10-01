@@ -4,10 +4,12 @@ void		chan_print(Channel *chan, Cmd &command, std::string arg)
 {
 	if (arg.compare("I") == 0)
 	{
-		std::cout << chan->get_mask() << std::endl;
-		// need to send it to user.
+		// std::cout << chan->get_mask() << std::endl;
 		command._server->send_msg(RPL_INVITELIST(command._user->get_hostname(), chan->get_name(), chan->get_mask()), command._sfd);
-		// return;
+	}
+	else if (arg.compare("b") == 0)
+	{
+		
 	}
 }
 

@@ -86,10 +86,9 @@ void invite(Cmd &command)
 					else
 					{
 						if (chan->get_mod().find('i') && (!command._user->find_mod("o") && !command._user->find_mod("O")))
-								command._server->send_msg(ERR_CHANOPRIVSNEEDED(command._user->get_hostname(), command.get_value()[1]), command._sfd);
+							command._server->send_msg(ERR_CHANOPRIVSNEEDED(command._user->get_hostname(), command.get_value()[1]), command._sfd);
 						else
 						{
-							// command._server->set_user_in_chan(user, chan);
 							command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._sfd); // nick de l'invitant ou de l'invite???
 							command._server->send_msg(RPL_INVITING(command._user->get_hostname(), command.get_value()[1], command.get_value()[0]), command._server->get_user(command.get_value()[0])->get_sfd());
 						}

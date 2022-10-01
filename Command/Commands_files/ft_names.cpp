@@ -50,6 +50,8 @@
 
 void names(Cmd &command)
 {
+	bool	verif = false;
+
 	std::cout << "name test" << std::endl;
 	if (command.get_size() == 1)
 	{
@@ -57,21 +59,36 @@ void names(Cmd &command)
 
 		if ((chan = command._server->get_chan(command.get_value()[0])) != NULL)
 		{
-			std::map<int, User *> users;
+			std::map<int, User *> users = chan->get_users();
 
-			users = chan->get_users();
-			for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
+			if (!users.empty())
 			{
-				if (it->second->get_mod().find("i") == std::string::npos)
-					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
-					// return;
+				for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
+				{
+					if (!it->second->find_mod("i"))
+					{
+						verif = true;
+						command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
+					}
+				}
 			}
-			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_user() ,chan->get_name()), command._sfd);
-			return;
 		}
 	}
-	else if (command.get_size() == 2){
+	else if (command.get_size() == 2)
 		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[1]), command._sfd);
-		return;
+	else
+	{
+		std::map<int, User *> *users = command._server->get_users();
+
+		for (std::map<int, User *>::iterator it = users->begin(); it != users->end(); it++)
+		{
+			if (!it->second->find_mod("i"))
+			{
+				verif = true;
+				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), "*", it->second->get_nick()), command._sfd);
+			}
+		}
 	}
+	if (verif == true)
+					command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_user(), "*"), command._sfd);
 }

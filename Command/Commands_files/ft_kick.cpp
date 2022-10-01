@@ -72,12 +72,12 @@ void	kick(Cmd &command)
 {
 	Channel						*chan;
 	User						*user;
-	std::vector<std::string>	chans = div_string(command.get_value()[0], ',');
-	std::vector<std::string>	users = div_string(command.get_value()[1], ',');
 
 	std::cout << "kick test" << std::endl;
 	if (!kick_check(command))
 		return ;
+	std::vector<std::string>	chans = div_string(command.get_value()[0], ',');
+	std::vector<std::string>	users = div_string(command.get_value()[1], ',');
 	if (chans.size() == 1 && users.size() == 1)
 	{
 		if ((chan = command._server->get_chan(chans[0])) != NULL)

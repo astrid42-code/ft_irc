@@ -39,31 +39,19 @@ void nick(Cmd &command)
 {
 	std::cout << "ft_nick" << std::endl;
 	if (command.get_size() == 0)
-	{
-		std::cout << "no nickname given." << std::endl;
 		command._server->send_msg(ERR_NONICKNAMEGIVEN(command._user->get_hostname()), command._sfd);
-		return;
-	}
 	else
 	{
-		//revoir si pb ici de comparaison de nickname
 		if (command._server->get_user(command.get_value()[0]) == NULL && command.get_value()[0].compare("anonymous") != 0)
 		{
-			// std::cout << "nickname available." << std::endl;
-			command._user->set_nick(command.get_value()[0]);
 			if (command._user->get_valid() == 1)
 				command._user->set_valid(2);
-			else{
-				command._server->send_msg(NICK(command._user->get_hostname(), command._user->get_nick()), command._sfd);
-				return;
-			}
+			else
+				command._server->send_msg(NICK(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			command._user->set_nick(command.get_value()[0]);
 		}
 		else
-		{
-			// std::cout << "nickname already in use." << std::endl;
 			command._server->send_msg(ERR_NICKNAMEINUSE(command._user->get_hostname(), command.get_value()[0]), command._sfd);
-			return;
-		}	
 	}
 }
 
