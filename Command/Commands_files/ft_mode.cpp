@@ -257,7 +257,7 @@ void		mode_chan(Cmd &command, Channel *chan)
 	else
 	{
 		std::cout << "the channel given in parameter invalid" << std::endl;
-		command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command._user->get_nick(),command.get_value()[0]), command._sfd);
+		command._server->send_msg(ERR_USERNOTINCHANNEL(command._user->get_hostname(), command._user->get_nick(), command._user->get_nick(),command.get_value()[0]), command._sfd);
 		// return;
 	}
 }
