@@ -246,7 +246,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 //            when the desired nickname is blocked by the nick delay
 //            mechanism.
 
-#define ERR_USERNOTINCHANNEL(localhost, nick, channel) (":" + localhost + " 441 " + nick + " " + channel + " :They aren't on that channel\r\n") // 441
+#define ERR_USERNOTINCHANNEL(localhost, user, nick, channel) (":" + localhost + " 441 " + user + " " + nick + " " + channel + " :They aren't on that channel\r\n") // 441
 	// + envoyer user et channel en arg
 // - Returned by the server to indicate that the target user of the command is not on the given channel.
 
@@ -263,7 +263,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server to indicate that the client MUST be registered before the server will allow it
 // to be parsed in detail.
 
-#define ERR_NEEDMOREPARAMS(localhost, key) (":" + localhost + " 461 : " + key + " :Not enough parameters\r\n") // 461
+#define ERR_NEEDMOREPARAMS(localhost, key) (":" + localhost + " 461 " + key + " :Not enough parameters\r\n") // 461
 	// + envoyer key (nom de cmd) en arg
 // Returned by the server by numerous commands to indicate to the client that it didn't supply enough parameters.
 
