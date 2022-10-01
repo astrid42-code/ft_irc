@@ -49,7 +49,7 @@ class Server
 		void 								set_ip(std::string ip);
 		bool								set_user(User *user);
 		void								remove_user(User *user);
-		
+		struct epoll_event					*srv_events;
 		std::locale							loc;
 
 		// faire une fct qui recupere les msg et les imprime (stocke dans _msg)
