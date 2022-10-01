@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:50 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 18:44:20 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:00:36 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void kill(Cmd &command)
                 std::cout << "kill the user " << command.get_value()[0] << " with comment :" << command.get_value()[1] << std::endl;
             }
             else{
-                command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(),command.get_value()[0]), command._sfd);
+                command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
                 return;
             }
         }

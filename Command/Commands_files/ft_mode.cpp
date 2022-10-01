@@ -229,7 +229,7 @@ bool		mode_user(Cmd &command)
 	else
 	{
 		std::cout << "the user given in parameter invalid" << std::endl;
-		command._server->send_msg(ERR_USERSDONTMATCH(command._user->get_hostname()), command._sfd);
+		command._server->send_msg(ERR_USERSDONTMATCH(command._user->get_hostname(), command._user->get_nick()), command._sfd);
 		return (false);
 	}
 	return (true);

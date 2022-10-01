@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:28:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 18:39:39 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 10:42:04 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ bool		bad_chan(std::string chan_name, Cmd &command)
 {
 	if (chan_name.compare("#") == 0 || (chan_name.find("!") == 0) || (chan_name.find("@") == 0))
 	{
-		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), chan_name), command._sfd);
+		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), chan_name), command._sfd);
 		return (false);
 	}
 	return (true);
@@ -190,13 +190,7 @@ void	join(Cmd &command)
 // Command: PART
 //    Parameters: <channel> *( "," <channel> ) [ <Part Message> ]
 
-//    The PART command causes the user sending the message to be removed
-//    from the list of active members for all given channels listed in the
-//    parameter string.  If a "Part Message" is given, this will be sent
-//    instead of the default message, the nickname.  This request is always
-//    granted by the server.
-
-//    Servers MUST be able to parse arguments in the form of a list of
+//    The PART command causes the user sendiNOSUCHCHs in the form of a list of
 //    target, but SHOULD NOT use lists when sending PART messages to
 //    clients.
 
@@ -234,9 +228,10 @@ void part(Cmd &command)
 	for (size_t i = 0; i < args.size(); i++)
 	{
 		chan = command._server->get_chan(args[i]);
+		// std::cout << "chan name : " << chan->get_name() << std::endl;
 		if (chan == NULL)
 		{
-			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
 			continue;
 		}
 		if (!command._user->get_channel(args[i])){

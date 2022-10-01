@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:17 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 19:01:54 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:16:37 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void send_msg_to_chan(Cmd &command, std::string destinataire)
 	chan = command._server->get_chan(destinataire.c_str());
 	std::cout << "RETOUR" << std::endl;
 	if (!chan || !chan->get_user(command._user->get_nick())){
-		command._server->send_msg(ERR_CANNOTSENDTOCHAN(command._user->get_hostname(), destinataire), command._sfd);
+		command._server->send_msg(ERR_CANNOTSENDTOCHAN(command._user->get_hostname(), command._user->get_nick(), destinataire), command._sfd);
 		return;
 	}
 	else
@@ -118,7 +118,7 @@ void privmsg(Cmd &command)
 			}
 		}
 		else{
-			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
+			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command._user->get_nick(), destinataire), command._sfd);
 			return;
 		}
 	}

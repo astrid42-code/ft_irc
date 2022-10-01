@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:04:08 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 19:05:25 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:01:16 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	whois(Cmd &command)
 				else
 				{
 					std::cout << "user not found :" << std::endl;
-					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), *it), command._sfd);
+					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command._user->get_nick(), *it), command._sfd);
 					return;
 				}
 			}

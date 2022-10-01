@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:55:49 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 19:06:34 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 11:59:50 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void invite(Cmd &command)
     else if (!command._server->get_user(command.get_value()[0]))
 		// ou?? : command.get_value()[0] != command._user->get_nick()) // a revoir > pas la bonne comparaison
 	{
-		command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+		command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
 		return ;
 	}
 	else if (!command._user->get_channel(command.get_value()[1])) // checker le nom du channel renvoye ici

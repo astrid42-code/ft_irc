@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:19 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 18:43:37 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 19:20:08 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void kick(Cmd &command)
 				}
 			}
 			else{
-				command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+				command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
 				return;
 			}
 		}
@@ -108,7 +108,7 @@ void kick(Cmd &command)
 					}
 				}
 				else{
-					command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+					command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
 					return;
 				}
 			}
