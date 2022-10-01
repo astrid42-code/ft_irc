@@ -419,7 +419,7 @@ int	Server::init()
 						if (errno != EAGAIN)
 						{
 							std::cerr << "read" << std::endl;
-							done = 1;
+							done = -1;
 						}
 						break;
 					}
@@ -429,7 +429,8 @@ int	Server::init()
 						break;
 					}
 					std::cout << "preparse..." << std::endl;
-					pre_parse(buf, events[i].data.fd, this);
+					if (done != -1)
+						pre_parse(buf, events[i].data.fd, this);
 				}
 				if (done)
 				{
@@ -447,16 +448,5 @@ int	Server::init()
 
 void	Server::remove_user(User *user)
 {
-	// std::vector<Channel *>				*v_chan;
-	// std::vector<Channel *>::iterator	it;
-
-
-	// v_chan = user->get_chans();
-	// it = v_chan->begin();
-	// while (it != v_chan->end())
-	// {
-	// 	(*it)->remove_user(user);
-	// 	it++;
-	// }
 	_users->erase(_users->find(user->get_sfd()));
 }

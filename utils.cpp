@@ -4,41 +4,42 @@ void	pre_parse(std::string buf, int sfd, Server *serv)
 {
 	std::size_t pos = 0;
 	std::string token;
-	std::string pre_buf = "";
 
 	std::cout << "buf = " << buf << std::endl;
-	pre_buf.append(buf);
-	while (pos < pre_buf.length() && pre_buf.find("\r\n", pos) != std::string::npos)
+	User *usr = serv->get_user(sfd);
+	if (usr == NULL)
+		return;
+	usr->buf.append(buf);
+	while (usr != NULL && pos < usr->buf.length() && usr->buf.find("\r\n", pos) != std::string::npos)
 	{
-		std::cout << "while loop preparse" << std::endl;
+
+		// std::cout << "Command " << std::endl;
 		Cmd *command = new Cmd();
+		// std::cout << "serv " << std::endl;
 		command->_server = serv;
+		// std::cout << "sfd " << std::endl;
 		command->_sfd = sfd;
+		// std::cout << "get_user_fd " << std::endl;
 		command->_user = command->get_user_fd();
-		if (std::time(NULL) - command->_server->get_time() > TIME_LIMIT)
-		{
-			std::cout << "going to ping ?" << std::endl;
-			ping(*command);
-		} // timer to ping user
 		if (command->_user == NULL)
 		{
 			std::cout << "_____NoUserFromFd_____" << std::endl;
-			pos = pre_buf.length();
 		}
 		else
 		{
 			std::cout << "_____UserFromFd_____" << std::endl;
 			command->_user->print();
-			if ((pre_buf.find("\r\n", pos)) != std::string::npos)
-			{
-				token = pre_buf.substr(pos, pre_buf.find("\r\n", pos) - pos);
-				pre_buf = pre_buf.substr(pre_buf.find("\r\n", pos) + 2);
-			}
-			else
-				pos = pre_buf.length();
-			std::cout << "token :|" << token << "|" << std::endl;
-			command->parse_cmd(token);
 		}
+		if ((usr->buf.find("\r\n", pos)) != std::string::npos)
+		{
+			token = usr->buf.substr(pos, usr->buf.find("\r\n", pos) - pos);
+			usr->buf = usr->buf.substr(usr->buf.find("\r\n", pos) + 2);
+		}
+		else
+			pos = usr->buf.length();
+		std::cout << "token :|" << token << "|" << std::endl;
+		command->parse_cmd(token);
+		usr = serv->get_user(sfd);
 		delete command;
 	}
 }

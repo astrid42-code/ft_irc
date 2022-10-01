@@ -67,11 +67,9 @@ void quit(Cmd &command)
 				it++;
 			}
 		}
-		command._server->send_msg(QUIT(user->get_hostname(), msg), command._sfd);
-		command._server->remove_user(user);
 	}
-	std::cout << "test close :" << command._user->get_sfd() << std::endl;
+	command._server->send_msg(QUIT(user->get_hostname(), msg), command._sfd);
+	command._server->remove_user(user);
 	close(command._user->get_sfd());
 	delete user;
-	close(sfd);
 }

@@ -21,6 +21,7 @@ class User
 		User(std::string nickname, int sdf);
 		User(int sdf);
 		~User();
+		std::string buf;
 
 		User			&operator=(const User & user_cp);
 		bool			operator==(const User & user_cp);
