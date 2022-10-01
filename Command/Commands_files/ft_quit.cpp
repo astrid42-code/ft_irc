@@ -37,7 +37,9 @@ void quit(Cmd &command)
 	std::string									msg = "";
 	std::map<std::string, Channel *>			*chans = command._server->get_chans();
 	std::map<std::string, Channel *>::iterator	it;
+	int sfd;
 
+	sfd = user->get_sfd();
 	std::cout << "quit test" << std::endl;
 	if (!chans->empty())
 	{
@@ -71,4 +73,5 @@ void quit(Cmd &command)
 	std::cout << "test close :" << command._user->get_sfd() << std::endl;
 	close(command._user->get_sfd());
 	delete user;
+	close(sfd);
 }

@@ -202,13 +202,12 @@ void	User::set_mod(std::string mod)
 */
 }
 
-void	User::set_chan(Channel &chan)
+void	User::set_chan(Channel *chan)
 {
 	std::vector<Channel *>::iterator it;
 	// std::cout << "coucou 1 set_chan user" << std::endl;
 	
-	_vchan->push_back(&chan);
-	
+	_vchan->push_back(chan);
 	for (it = _vchan->begin(); it != _vchan->end(); it++){
 		std::cout << "it chan user : " << *it << std::endl;
 		

@@ -4,7 +4,7 @@ void	pre_parse(std::string buf, int sfd, Server *serv)
 {
 	std::size_t pos = 0;
 	std::string token;
-	std::string pre_buf;
+	std::string pre_buf = "";
 
 	std::cout << "buf = " << buf << std::endl;
 	pre_buf.append(buf);

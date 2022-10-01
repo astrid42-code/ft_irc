@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:04:08 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/10/01 14:12:56 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 16:32:37 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ void	whois(Cmd &command)
 				{
 					if (at->second && !at->second->find_mod("i") && mask_off(*it, at->second->get_hostname()))
 					{
-						if (at->second->find_mod("a")){
+						if (at->second->find_mod("a"))
 							command._server->send_msg(RPL_AWAY(command._user->get_hostname(), at->second->get_nick(), at->second->get_away()), command._sfd);
-							// return; // a verifier
-						}
 						command._server->send_msg(RPL_WHOISUSER(command._user->get_hostname(), at->second->get_nick(), at->second->get_user(), at->second->get_host(), at->second->get_name()), command._sfd);
 						if (at->second->find_mod("o"))
 							command._server->send_msg(RPL_WHOISOPERATOR(command._user->get_hostname(), at->second->get_nick()), command._sfd);
@@ -104,20 +102,15 @@ void	whois(Cmd &command)
 				else
 				{
 					std::cout << "user not found :" << std::endl;
-					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), *it, ""), command._sfd);
-					return;
+					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), *it), command._sfd);
 				}
 			}
 		}
 	}
-	else if (command.get_size() == 2){
+	else if (command.get_size() == 2)
 		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[0]), command._sfd);
-		return;
-	}
-	else{
+	else
 		command._server->send_msg(ERR_NONICKNAMEGIVEN(command._user->get_hostname()), command._sfd);
-		return;
-	}
 	if (user_found)
 		command._server->send_msg(RPL_ENDOFWHOIS(command._user->get_hostname(), command._user->get_nick()), command._sfd);
 }

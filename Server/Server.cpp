@@ -137,7 +137,7 @@ User	*Server::get_user(std::string nick)
 	for (std::map<int, User *>::iterator it = _users->begin(); it != _users->end(); it++)
 	{
 		std::cout << "get_user boucle" << std::endl;
-		if (it->second->get_nick() == nick)
+		if (it->second->get_nick().compare(nick) == 0)
 			return (it->second);
 	}
 	return (NULL);
@@ -194,7 +194,7 @@ void	Server::set_user_in_chan(User *user, Channel *chan)
 	std::vector<Channel *>::iterator it;
 	
 	chan->set_user(user);
-	user->set_chan(*chan);
+	user->set_chan(chan);
 }
 
 int	Server::send_msg(std::string msg, int sfd)
