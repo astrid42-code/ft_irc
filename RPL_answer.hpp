@@ -62,7 +62,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define NICK(localhost, nick) (":" + localhost + " NICK " + nick + "\r\n")
 
-#define PRIVMSG(localhost, chan, str) (":" + localhost + " PRIVMSG " + chan + " :" + str + "\r\n")
+#define PRIVMSG(localhost, dest, str) (":" + localhost + " PRIVMSG " + dest + " :" + str + "\r\n")
 
 #define NOTICE(localhost, chan, str) (":" + localhost + " NOTICE " + chan + " :" + str + "\r\n")
 
@@ -321,7 +321,3 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 //Error sent to any user trying to view or change the user mode for a user other than themselves. 
 
 #endif
-
-
-// introuvable dans la doc
-// ERR_TOOMANYMATCHES 

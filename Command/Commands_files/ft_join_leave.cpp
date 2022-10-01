@@ -166,7 +166,7 @@ void	join(Cmd &command)
 		if (valid == true)
 		{
 			std::map< int, User *>	users = chan->get_users();
-			command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_name(), chan->get_topic()), command._sfd);
+			// command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_name(), chan->get_topic()), command._sfd);
 			for (std::map< int, User *>::iterator it = users.begin(); it != users.end(); it++)
 				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
 			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_nick(), chan->get_name()), command._sfd);

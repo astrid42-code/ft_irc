@@ -38,7 +38,7 @@ void ping(Cmd &command)
 	std::cout << "ping test" << std::endl;
 	if (std::time(NULL) - command._server->get_time() > TIME_LIMIT)
 	{
-		std::cout << std::time(NULL) - command._server->get_time() << std::endl;
+		// std::cout << std::time(NULL) - command._server->get_time() << std::endl;
 		command._server->send_msg(PING(), command._sfd);
 		command._server->set_time(std::time(NULL));
 	}

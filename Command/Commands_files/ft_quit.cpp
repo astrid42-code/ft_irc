@@ -73,5 +73,4 @@ void quit(Cmd &command)
 	std::cout << "test close :" << command._user->get_sfd() << std::endl;
 	close(command._user->get_sfd());
 	delete user;
-	close(sfd);
 }

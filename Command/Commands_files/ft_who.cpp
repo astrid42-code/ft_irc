@@ -50,7 +50,6 @@ void	who(Cmd &command)
 	std::map<int, User *>	*users = command._server->get_users();
 	std::vector<Channel *>	*chans = command._user->get_chans();
 	bool					match = false;
-	bool					serv;
 
 	std::cout << "who test" << std::endl;
 	for (std::map<int, User *>::iterator itu = users->begin(); itu != users->end(); itu++)
@@ -76,19 +75,15 @@ void	who(Cmd &command)
 			else
 			{
 				std::cout << "ok wtf" << std::endl;
-				serv = true;
 				for (std::vector<Channel *>::iterator itc = chans->begin(); itc != chans->end(); itc++)
 				{
-					if (itu->second->find_mod("i") || itu->second->get_channel((*itc)->get_name()) == NULL)
-						serv = false;
-				}
-				if (serv)
-				{
-					std::cout << "user is not in the same serv..." << std::endl;
-					if (command.get_size() < 2 || (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o")))
+					if (itu->second->find_mod("i"))
 					{
-						command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
-						match = true;
+						if (command.get_size() < 2 || (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o")))
+						{
+							command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
+							match = true;
+						}
 					}
 				}
 				std::cout << "WTF WHO NOT WOKING 2" << std::endl;
