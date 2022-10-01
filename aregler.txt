@@ -44,6 +44,3 @@ netcat:
 
 pb a regler : le msg de ERR_NOSUCHCHANNEL ne s'affiche pas correctement (voire plus du tout maintenant)
 
-
-:toto!asg@62.210.32.248 441 toto titi #dodo :They aren't on that channel
-:kakou!asgaulti@localhost 441 titi #dodo :They aren't on that channel
