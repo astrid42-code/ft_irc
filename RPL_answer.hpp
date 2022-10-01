@@ -171,7 +171,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_YOUREOPER(localhost) (":" + localhost + " 381 : You are now an IRC operator\r\n") // 381
 // RPL_YOUREOPER is sent back to a client which has just successfully issued an OPER message and gained operator status.
 
-#define ERR_NOSUCHNICK(localhost, nick) (":" + localhost + " 401 " + nick + " :No such nick/channel\r\n") // 401
+#define ERR_NOSUCHNICK(localhost, nick) (":" + localhost + " 401 : " + nick + ": No such nick\r\n") // 401 nick
 	// + envoyer nick du user en arg
 // Used to indicate the nickname parameter supplied to a command is currently unused.
 

@@ -82,25 +82,33 @@ void privmsg(Cmd &command)
 	std::cout << "privmsg test" << std::endl;
 	std::string destinataire;
 	destinataire = command.get_value().begin()[0];
-	if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1].empty()))
-		command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
-	if (destinataire.c_str()[0] == '#')
-	{
-		std::cout << "msg_to_chan" << std::endl;
-		send_msg_to_chan(command, destinataire);
-	}
+	if (command.get_size() < 1)
+		command._server->send_msg(ERR_NORECIPIENT(command._user->get_hostname()), command._sfd);
 	else
 	{
-		std::cout << "msg_to_user" << std::endl;
-		if ((user = command._server->get_user(destinataire)) != NULL)
-		{
-			if (user->find_mod("a"))
-				command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
-			else
-				command._server->send_msg(PRIVMSG(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
-		}
+		if (command.get_size() == 1 || (command.get_size() == 2 && command.get_value()[1].empty()))
+			command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
 		else
-			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
+		{
+			if (destinataire.c_str()[0] == '#')
+			{
+				std::cout << "msg_to_chan" << std::endl;
+				send_msg_to_chan(command, destinataire);
+			}
+			else
+			{
+				std::cout << "msg_to_user" << std::endl;
+				if ((user = command._server->get_user(destinataire)) != NULL)
+				{
+					if (user->find_mod("a"))
+						command._server->send_msg(RPL_AWAY(command._user->get_hostname(), command._user->get_nick(), command._user->get_away()), command._sfd);
+					else
+						command._server->send_msg(PRIVMSG(command._user->get_hostname(), destinataire,command.get_value()[1]),command._server->get_user(destinataire)->get_sfd());
+				}
+				else
+					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), destinataire), command._sfd);
+			}
+		}
 	}
 	// std::cout << "destinataire : |" << destinataire.c_str() << "|" << std::endl;
 }
