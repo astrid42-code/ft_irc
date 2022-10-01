@@ -2,8 +2,6 @@
 
 Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 {
-	// build les fcts cmds en reliant une string a la fct ou plutot faire un make_pair()?
-
 	// basic cmds
 	_cmd["NICK"] = nick;
 	_cmd["USER"] = user;
@@ -37,9 +35,7 @@ Cmd::Cmd(const Cmd & cp)
 }
 
 Cmd::~Cmd()
-{
-	std::cout << "Command destroyed..." << std::endl;
-}
+{}
 
 Cmd & Cmd::operator=(const Cmd &cmd_op)
 {
@@ -64,7 +60,6 @@ void Cmd::set_value(std::vector<std::string> value)
 
 std::vector<std::string>	Cmd::get_value(void) const
 {
-	// std::cout << "get value"  << std::endl;
 	return (_value);
 }
 
@@ -92,19 +87,18 @@ User *Cmd::get_user_fd()
 
 void Cmd::parse_cmd(std::string str)
 {
-	std::string key; // pour recuperer la key (1er mot de str)
+	std::string key;
 	size_t start;
 	size_t end = 0;
 	size_t size;
 	std::string tmp_val;
 	std::string	trailing;
 	int tmp = 0;
-	std::cout << "parse_cmd" << std::endl;
+
 	key = str.substr(0, str.find(' '));
 	size = str.size() - key.size();
 	if (check_condition(*this, key))
 	{
-		std::cout << "check key done" << std::endl;
 		set_key(key);
 		if (size == 0)
 		{
@@ -119,7 +113,6 @@ void Cmd::parse_cmd(std::string str)
 			if (tmp_val.find(':', start) != std::string::npos && tmp_val.find(':', start) < end)
 				break ;
 			_value.push_back(tmp_val.substr(start, end - start));
-			std::cout << "_value" << tmp << " = " << _value[tmp] << std::endl;
 			tmp++;
 		}
 		if (tmp_val.find(':') != std::string::npos)
@@ -127,29 +120,27 @@ void Cmd::parse_cmd(std::string str)
 			trailing = tmp_val.substr(tmp_val.find(':') + 1, tmp_val.find("\r\n") - tmp_val.find(':') + 1);
 			_value.push_back(trailing);
 			tmp++;
-			std::cout << "tvalue" << tmp << " = " << _value.back() << std::endl;
 		}
 		set_size(tmp);
 		_cmd[_key](*this);
 	}
 }
 
-void	Cmd::print(void)
-{
-	std::vector<std::string>::iterator it = _value.begin();
+// void	Cmd::print(void)
+// {
+// 	std::vector<std::string>::iterator it = _value.begin();
 
-	std::cout << "key: " + _key << std::endl;
-	while (it != _value.end())
-	{
-		std::cout << it->data() << std::endl;
-		it++;
-	}
-	if (_user)
-		_user->print();
-	else
-	 	std::cout << "no user" << std::endl;
-	std::cout << "end of Cmd.print()" << std::endl;
-}
+// 	while (it != _value.end())
+// 	{
+// 		std::cout << it->data() << std::endl;
+// 		it++;
+// 	}
+// 	if (_user)
+// 		_user->print();
+// 	else
+// 	 	std::cout << "no user" << std::endl;
+// 	std::cout << "end of Cmd.print()" << std::endl;
+// }
 
 // - AWAY
 // - ISON

@@ -48,15 +48,19 @@ class Channel
 		void							send_to_users(std::string const &msg);
 
 	private:
-		std::string						_name; // must start with '&', '#', '+' or '!' with a max of (50) char and must not contain any ' ' (spaces), G (^G or ASCII 7) or a comma (',')
-		std::map< int, User *>			_users; // une map de users avec une key en int pour l'id? et value = un objet user avec toutes les infos pour chaque)
-		// faire un vector plutot qu'une map??
-		std::string						_ID; // depends of time ?
+		std::string						_name;
+		std::map< int, User *>			_users;
+		std::string						_ID;
 		std::string						_mod;
 		std::string						_topic;
 		std::string						_key;
 		std::string						_mask;
 		unsigned int					_limit;
+
+};
+
+
+#endif
 
 		//	MODS
 		// O - give "channel creator" status;
@@ -84,8 +88,3 @@ class Channel
 		//	MODE    - Change the channel's mode, as well as members' privileges
 		//	PRIVMSG - Sending messages to the channel (mode +n, +m, +v)
 		//	TOPIC   - Change the channel topic in a mode +t channel
-
-};
-
-
-#endif

@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:02:15 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/30 13:46:27 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/10/01 17:12:25 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,6 @@
 
 // Command: QUIT
 //    Parameters: [ <Quit Message> ]
-
-//    A client session is terminated with a quit message.  The server
-//    acknowledges this by sending an ERROR message to the client.
-
-//    Numeric Replies:
-
-//            None.
-
-//    Example:
-
-//    QUIT :Gone to have lunch        ; Preferred message format.
-
-//    :syrk!kalt@millennium.stealth.net QUIT :Gone to have lunch ; User
-//                                    syrk has quit IRC to have lunch.
-
 
 void quit(Cmd &command)
 {
@@ -40,15 +25,11 @@ void quit(Cmd &command)
 	int sfd;
 
 	sfd = user->get_sfd();
-	std::cout << "quit test" << std::endl;
 	if (!chans->empty())
 	{
 		it = chans->begin();
 		if (command.get_size() == 1)
-		{
 			msg = command.get_value()[0];
-			std::cout << "quit msg " << msg << std::endl;
-		}
 		while (it != chans->end())
 		{
 			if (erase_chan(it->second, user))
@@ -56,9 +37,7 @@ void quit(Cmd &command)
 				Channel *tmp = it->second;
 
 				chans->erase(it);
-				std::cout << "elem erased" << std::endl;// effacer la cle du channel
 				delete (tmp);
-				std::cout << "elem deleted" << std::endl;// effacer la cle du channel
 				it = chans->begin();
 			}
 			else
