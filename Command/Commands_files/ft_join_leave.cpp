@@ -78,29 +78,29 @@
 //    :WiZ!jto@tolsun.oulu.fi JOIN #Twilight_zone ; JOIN message from WiZ
 //                                    on channel #Twilight_zone
 
-bool		join_conditions(Channel *chan, Cmd &command)
+bool		join_conditions(Channel *chan, Cmd &command, size_t i, std::vector<std::string>	keys)
 {
-	bool	res = true;
-
+	if (command.get_value().size() >= 2 && i < keys.size() && keys[i].compare(chan->get_key()) != 0)
+	{
+		command._server->send_msg(ERR_BADCHANNELKEY(command._user->get_hostname(), chan->get_name()), command._sfd);
+		return (false);
+	}
 	if (chan->get_mod().find("i") != std::string::npos)
 	{
 		command._server->send_msg(ERR_INVITEONLYCHAN(command._user->get_hostname(), chan->get_name()), command._sfd);
-		res = false;
-		return (res);
+		return (false);
 	}
 	if ((chan->get_mod().find("l") != std::string::npos) && (chan->get_limit() == chan->get_users().size()))
 	{
 		command._server->send_msg(ERR_CHANNELISFULL(command._user->get_hostname(), chan->get_name()), command._sfd);
-		res = false;
-		return (res);
+		return (false);
 	}
 	if ((chan->get_mod().find("I") != std::string::npos) && !mask_off(chan->get_mask() ,command._user->get_hostname()))
 	{
 		command._server->send_msg(ERR_BADCHANMASK(command._user->get_hostname(), chan->get_name()), command._sfd);
-		res = false;
-		return (res);
+		return (false);
 	}
-	return (res);
+	return (true);
 }
 
 bool		bad_chan(std::string chan_name, Cmd &command)
@@ -157,18 +157,11 @@ void	join(Cmd &command)
 		}
 		else
 		{
-			if (command.get_value().size() >= 2 && i < keys.size() && keys[i].compare(chan->get_key()) != 0){
-				command._server->send_msg(ERR_BADCHANNELKEY(command._user->get_hostname(), chan->get_name()), command._sfd);
-				return;
-			}
-			else
+			std::cout << "user joining chanel..." << std::endl;
+			if (join_conditions(chan, command, i, keys))
 			{
-				std::cout << "user joining chanel..." << std::endl;
-				if (join_conditions(chan, command))
-				{
-						command._server->set_user_in_chan(command._user, chan);
-						valid = true;
-				}
+					command._server->set_user_in_chan(command._user, chan);
+					valid = true;
 			}
 		}
 		if (valid == true)
@@ -217,6 +210,7 @@ void part(Cmd &command)
 	Channel						*chan;
 	std::vector<std::string>	args;
 	std::vector<Channel *>		*chans;
+	std::string					msg;
 
 	std::cout << "part test" << std::endl;
 	if (command.get_value().size() < 1)
@@ -224,38 +218,33 @@ void part(Cmd &command)
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 		return;
 	}
+	if (command.get_size() == 2)
+		msg = command.get_value()[1];
+	else
+		msg = "Ciao !!";
 	args = div_string(command.get_value()[0], ',');
 	for (size_t i = 0; i < args.size(); i++)
 	{
-		chan = command._server->get_chan(args[i]);
-		// std::cout << "chan name : " << chan->get_name() << std::endl;
-		if (chan == NULL)
-		{
+		if ((chan = command._server->get_chan(args[i])) == NULL)
 			command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), command.get_value()[0]), command._sfd);
-			continue;
-		}
-		if (!command._user->get_channel(args[i])){
-			command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
-			return;
-		}
-		else	
+		else
 		{
-			std::string msg;
-			if (command.get_size() == 2)
-				msg = command.get_value()[1];
-			else
-				msg = "Ciao !!";
-			chan->send_to_users(PART(command._user->get_hostname(),chan->get_name(),msg));
-			chan->remove_user(command._user);
-			chans = command._user->get_chans();
-			if (command._user->it_chan(chan->get_name()) != chans->end())
-				chans->erase(command._user->it_chan(chan->get_name()));
-			if (erase_chan(chan, command._user))
+			if (!command._user->get_channel(args[i]))
+				command._server->send_msg(ERR_NOTONCHANNEL(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			else	
 			{
-				std::cout << "erase_chan" << std::endl;
-				command._server->get_chans()->erase(chan->get_name());
-				delete chan;
-				std::cout << "size map de chans : " << command._server->get_chans()->size() << std::endl;
+				chan->send_to_users(PART(command._user->get_hostname(),chan->get_name(),msg));
+				chan->remove_user(command._user);
+				chans = command._user->get_chans();
+				if (command._user->it_chan(chan->get_name()) != chans->end())
+					chans->erase(command._user->it_chan(chan->get_name()));
+				if (erase_chan(chan, command._user))
+				{
+					std::cout << "erase_chan" << std::endl;
+					command._server->get_chans()->erase(chan->get_name());
+					delete chan;
+					std::cout << "size map de chans : " << command._server->get_chans()->size() << std::endl;
+				}
 			}
 		}
 	}

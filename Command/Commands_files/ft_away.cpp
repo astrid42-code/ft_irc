@@ -48,7 +48,7 @@ void	away(Cmd &command)
 	std::string msg;
 	
 	std::cout << "away" << std::endl;
-	if (command.get_value()[0].empty())
+	if (command.get_size() < 1 || command.get_value()[0].empty())
 		msg = AWAY_DEFAULT;
 	else
 		msg = command.get_value()[0];
