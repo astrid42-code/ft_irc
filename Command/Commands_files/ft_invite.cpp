@@ -70,7 +70,7 @@ void invite(Cmd &command)
 	else
 	{
 		if (!(user = command._server->get_user(command.get_value()[0])))
-			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command.get_value()[0]), command._sfd);
+			command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), command.get_value()[0], command.get_value()[1]), command._sfd);
 		else
 		{
 			if (user->find_mod("a"))

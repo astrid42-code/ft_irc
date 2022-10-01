@@ -102,7 +102,7 @@ void	whois(Cmd &command)
 				else
 				{
 					std::cout << "user not found :" << std::endl;
-					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), *it), command._sfd);
+					command._server->send_msg(ERR_NOSUCHNICK(command._user->get_hostname(), *it, ""), command._sfd);
 				}
 			}
 		}
