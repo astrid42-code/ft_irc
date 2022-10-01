@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 11:03:42 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/28 13:31:10 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 19:03:05 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	who(Cmd &command)
 					{
 						command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 						match = true;
+						// return; // a verifier
 					}
 					std::cout << "WTF WHO NOT WOKING" << std::endl;
 				}
@@ -78,7 +79,7 @@ void	who(Cmd &command)
 				serv = true;
 				for (std::vector<Channel *>::iterator itc = chans->begin(); itc != chans->end(); itc++)
 				{
-					if (itu->second->find_mod("i") || itu->second->get_channel((*itc)->get_key()) != NULL)
+					if (itu->second->find_mod("i") || itu->second->get_channel((*itc)->get_name()) != NULL)
 						serv = false;
 				}
 				if (serv)
@@ -88,6 +89,7 @@ void	who(Cmd &command)
 					{
 						command._server->send_msg(RPL_WHOREPLY(command._user->get_hostname(), itu->second->get_channel_name(), itu->second->get_user(), itu->second->get_host(), itu->second->get_nick(), itu->second->get_name()), command._sfd);
 						match = true;
+						// return // a verifier
 					}
 				}
 				std::cout << "WTF WHO NOT WOKING 2" << std::endl;

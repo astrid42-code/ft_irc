@@ -136,10 +136,16 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // When sending a TOPIC message to determine the channel topic, one of two replies is sent.  If
 // the topic is set, RPL_TOPIC is sent back else RPL_NOTOPIC.
 
-#define RPL_INVITING(localhost, channel, nick) (":" + localhost + " 341 : " + nick + " " + channel + "\r\n") // 341
+#define RPL_INVITING(localhost, channel, nick) (":" + localhost + " 341 " + " INVITE " + nick + " " + channel + "\r\n") // 341
 	// + envoyer channel et nick du user en arg
 // Returned by the server to indicate that the attempted INVITE message was successful and is
 // being passed onto the end client.
+
+#define RPL_INVITELIST(localhost, channel, invitemask) (":" + localhost + " 346 : " + channel + " " + invitemask)
+
+#define RPL_ENDOFINVITELIST(localhost, channel) (":" + localhost + " 347 : " + channel + " :End of channel invite list")
+
+
 
 #define RPL_WHOREPLY(localhost, channel, user, host, nick, name) (":" + localhost + " 352 : " + channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
 	// envoyer les args
@@ -165,30 +171,31 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define RPL_YOUREOPER(localhost) (":" + localhost + " 381 : You are now an IRC operator\r\n") // 381
 // RPL_YOUREOPER is sent back to a client which has just successfully issued an OPER message and gained operator status.
 
-#define ERR_NOSUCHNICK(localhost, nick) (":" + localhost + " 401 " + nick + " :No such nick/channel\r\n") // 401
+#define ERR_NOSUCHNICK(localhost, nick) (":" + localhost + " 401 : " + nick + ": No such nick\r\n") // 401 nick
 	// + envoyer nick du user en arg
 // Used to indicate the nickname parameter supplied to a command is currently unused.
 
-#define ERR_NOSUCHSERVER(localhost, serv) (":" + localhost + " 402 : " + serv + " :No such server\r\n") // 402
+#define ERR_NOSUCHSERVER(localhost, serv) (":" + localhost + " 402 " + serv + " :No such server\r\n") // 402
 // - Used to indicate the server name given currently does not exist.
 
-#define ERR_NOSUCHCHANNEL(localhost, channel) (":" + localhost + " 403 : " + channel + " :No such channel\r\n") // 403
+#define ERR_NOSUCHCHANNEL(localhost, nick, channel) (":" + localhost + " 403 " + nick + " " + channel + " :No such channel\r\n") // 403
+// #define ERR_NOSUCHCHANNEL(localhost, nick, channel) (":" + localhost + " 403 " + nick + " : " + channel + " :No such channel\r\n") // 403
 	// + envoyer channel name en arg
 // Used to indicate the given channel name is invalid.
 
-#define ERR_CANNOTSENDTOCHAN(localhost, channel) (":" + localhost + " 404 : " + channel + " :Cannot send to channel\r\n") // 404
+#define ERR_CANNOTSENDTOCHAN(localhost, nick, channel) (":" + localhost + " 404 " + nick + " " + channel + " :Cannot send to channel\r\n") // 404
 	// + envoyer channel name en arg
 // - Sent to a user who is either (a) not on a channel which is mode +n or (b) not a chanop (or mode +v) on
 //  a channel which has mode +m set or where the user is
 //  banned and is trying to send a PRIVMSG message to that channel.
 
 
-#define ERR_TOOMANYCHANNELS(localhost, channel) (":" + localhost + " 405 : " + channel + " :You have joined too many channels\r\n") // 405
+#define ERR_TOOMANYCHANNELS(localhost, channel) (":" + localhost + " 405 " + channel + " :You have joined too many channels\r\n") // 405
 	// + envoyer channel name en arg
 // - Sent to a user when they have joined the maximum number of allowed channels and they try to join
 // another channel.
 
-#define ERR_TOOMANYTARGETS(localhost, target) (":" + localhost + " 407 : " + target + " :<error code> recipients. <abort message>\r\n") // 407
+#define ERR_TOOMANYTARGETS(localhost, target) (":" + localhost + " 407 " + target + " :<error code> recipients. <abort message>\r\n") // 407
 	// + envoyer target (user?) en arg
 //  - Returned to a client which is attempting to send a
 //    PRIVMSG/NOTICE using the user@host destination format
@@ -215,23 +222,23 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 #define ERR_NONICKNAMEGIVEN(localhost) (":" + localhost + " 431 :No nickname given\r\n") // 431
 // - Returned when a nickname parameter expected for a command and isn't found.
 
-#define ERR_ERRONEUSNICKNAME(localhost, nick) (":" + localhost + " 432 : " + nick + " :Erroneous nickname\r\n") // 432
+#define ERR_ERRONEUSNICKNAME(localhost, nick) (":" + localhost + " 432 " + nick + " :Erroneous nickname\r\n") // 432
 	// + envoyer nick en arg
 // - Returned after receiving a NICK message which contains
 //            characters which do not fall in the defined set.  See
 //            section 2.3.1 for details on valid nicknames.
 
-#define ERR_NICKNAMEINUSE(localhost, nick) (":" + localhost + " 433 : " + nick + " :Nickname is already in use\r\n") // 433
+#define ERR_NICKNAMEINUSE(localhost, nick) (":" + localhost + " 433 " + nick + " " + nick + " :Nickname is already in use\r\n") // 433
 	// + envoyer nick en arg
 // - Returned when a NICK message is processed that results in an attempt to change to a currently existing nickname.
 
-#define ERR_NICKCOLLISION(localhost, nick, user, host) (":" + localhost + " 436 : " + nick + " :Nickname collision KILL from " + user + "@" + host + "\r\n") // 436 
+#define ERR_NICKCOLLISION(localhost, nick, user, host) (":" + localhost + " 436 " + nick + " :Nickname collision KILL from " + user + "@" + host + "\r\n") // 436 
 	// + envoyer nick, user (nom dans l'email?) et host (fin adresse mail ?) en arg
 // - Returned by a server to a client when it detects a nickname collision (registered of a NICK that
 // already exists by another server).
 
-#define ERR_UNAVAILRESOURCE(localhost, nick_chan) (":" + localhost + " 437 : " + nick_chan + " :Nick/channel is temporarily unavailable\r\n") // 437
-	// + envoyer channel ou nick en arg
+#define ERR_UNAVAILRESOURCE(localhost, nick_chan) (":" + localhost + " 437 " + nick_chan + " :Nick/channel is temporarily unavailable\r\n") // 437
+// + envoyer channel ou nick en arg
 // - Returned by a server to a user trying to join a channel
 //            currently blocked by the channel delay mechanism.
 
@@ -239,7 +246,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 //            when the desired nickname is blocked by the nick delay
 //            mechanism.
 
-#define ERR_USERNOTINCHANNEL(localhost, nick, channel) (":" + localhost + " 441 : " + nick + " " + channel + " :They aren't on that channel\r\n") // 441
+#define ERR_USERNOTINCHANNEL(localhost, user, nick, channel) (":" + localhost + " 441 " + user + " " + nick + " " + channel + " :They aren't on that channel\r\n") // 441
 	// + envoyer user et channel en arg
 // - Returned by the server to indicate that the target user of the command is not on the given channel.
 
@@ -248,7 +255,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server whenever a client tries to perform a channel affecting command for which the
 // client isn't a member.
 
-#define ERR_USERONCHANNEL(localhost, user, channel) (":" + localhost + " 443 : " + user + channel + " :is already on channel\r\n") // 443
+#define ERR_USERONCHANNEL(localhost, user, channel) (":" + localhost + " 443 " + user + " " + channel + " :is already on channel\r\n") // 443
 	// + envoyer user et channel en arg
 // Returned when a client tries to invite a user to a channel they are already on.
 
@@ -256,7 +263,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server to indicate that the client MUST be registered before the server will allow it
 // to be parsed in detail.
 
-#define ERR_NEEDMOREPARAMS(localhost, key) (":" + localhost + " 461 : " + key + " :Not enough parameters\r\n") // 461
+#define ERR_NEEDMOREPARAMS(localhost, key) (":" + localhost + " 461 " + key + " :Not enough parameters\r\n") // 461
 	// + envoyer key (nom de cmd) en arg
 // Returned by the server by numerous commands to indicate to the client that it didn't supply enough parameters.
 
@@ -268,21 +275,21 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned to indicate a failed attempt at registering a connection for which a password was required and
 // was either not given or incorrect.
 
-#define ERR_KEYSET(localhost, channel) (":" + localhost + " 467 : " + channel + " :Channel key already set\r\n") // 467
+#define ERR_KEYSET(localhost, channel) (":" + localhost + " 467 " + channel + " :Channel key already set\r\n") // 467
 
-#define ERR_CHANNELISFULL(localhost, channel) (":" + localhost + " 471 : " + channel + " :Cannot join channel (+l)\r\n") // 471
+#define ERR_CHANNELISFULL(localhost, channel) (":" + localhost + " 471 " + channel + " :Cannot join channel (+l)\r\n") // 471
 	// + envoyer channel en arg
 
-#define ERR_INVITEONLYCHAN(localhost, channel) (":" + localhost + " 473 : " + channel + " :Cannot join channel (+i)\r\n") // 473
+#define ERR_INVITEONLYCHAN(localhost, channel) (":" + localhost + " 473 " + channel + " :Cannot join channel (+i)\r\n") // 473
 	// + envoyer channel en arg
 
-#define ERR_BANNEDFROMCHAN(localhost, channel) (":" + localhost + " 474 : " + channel + " :Cannot join channel (+b)\r\n") // 474
+#define ERR_BANNEDFROMCHAN(localhost, channel) (":" + localhost + " 474 " + channel + " :Cannot join channel (+b)\r\n") // 474
 	// + envoyer channel en arg
 
-#define ERR_BADCHANNELKEY(localhost, channel) (":" + localhost + " 475 : " + channel + " :Cannot join channel (+k)\r\n") // 475
+#define ERR_BADCHANNELKEY(localhost, channel) (":" + localhost + " 475 " + channel + " :Cannot join channel (+k)\r\n") // 475
 	// + envoyer channel en arg
 
-#define ERR_BADCHANMASK(localhost, channel) (":" + localhost + " 476 : " + channel + " :Bad Channel Mask\r\n") // 476
+#define ERR_BADCHANMASK(localhost, channel) (":" + localhost + " 476 " + channel + " :Bad Channel Mask\r\n") // 476
 	// + envoyer channel en arg
 
 #define ERR_NOPRIVILEGES(localhost) (":" + localhost + " 481 :Permission Denied- You're not an IRC operator\r\n") // 481
@@ -310,7 +317,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 // Returned by the server to indicate that a MODE message was sent with a nickname parameter and that
 // the a mode flag sent was not recognized. 
 
-#define ERR_USERSDONTMATCH(localhost) (":" + localhost + " 502 :Cannot change mode for other users\r\n") //502
+#define ERR_USERSDONTMATCH(localhost, nick) (":" + localhost + " 502 " + nick + " :Cannot change mode for other users\r\n") //502
 //Error sent to any user trying to view or change the user mode for a user other than themselves. 
 
 #endif

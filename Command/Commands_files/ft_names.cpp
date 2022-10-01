@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:58:21 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/25 18:00:07 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:55:18 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,15 @@ void names(Cmd &command)
 			for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
 			{
 				if (it->second->get_mod().find("i") == std::string::npos)
-					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_key(), it->second->get_nick()), command._sfd);
+					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
+					// return;
 			}
-			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_user() ,chan->get_key()), command._sfd);
+			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_user() ,chan->get_name()), command._sfd);
+			return;
 		}
 	}
-	else if (command.get_size() == 2)
+	else if (command.get_size() == 2){
 		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[1]), command._sfd);
+		return;
+	}
 }

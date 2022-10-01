@@ -1,12 +1,11 @@
 #include "Channel.hpp"
 
-Channel::Channel() : _name("NoName"), _ID("toto"), _mod(""), _topic(""), _key("name")
+Channel::Channel() : _name("NoName"), _ID("toto"), _mod(""), _topic(""), _key("")
 {}
 
 Channel::Channel(std::string name)
 {
 	_name = name;
-	_key = name;
 }
 
 

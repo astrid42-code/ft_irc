@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:31:20 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/27 19:04:40 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:59:17 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void pass(Cmd &command)
     if (command.get_value().size() != 1)
 	{
         command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
+		return;
     }
     else
 	{
@@ -66,6 +67,10 @@ void pass(Cmd &command)
 				command._user->set_valid(1);
 				std::cout << "YEAH" << std::endl;
 			}
+		}
+		else{
+			command._server->send_msg(ERR_PASSWDMISMATCH(command._user->get_hostname(), command._user->get_nick()), command._sfd);
+			return;
 		}
 	}
 }

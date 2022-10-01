@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:56:57 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:45:38 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:56:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,29 @@ void nick(Cmd &command)
 	{
 		std::cout << "no nickname given." << std::endl;
 		command._server->send_msg(ERR_NONICKNAMEGIVEN(command._user->get_hostname()), command._sfd);
+		return;
 	}
 	else
 	{
+		//revoir si pb ici de comparaison de nickname
 		if (command._server->get_user(command.get_value()[0]) == NULL && command.get_value()[0].compare("anonymous") != 0)
 		{
-			std::cout << "nickname available." << std::endl;
+			// std::cout << "nickname available." << std::endl;
 			command._user->set_nick(command.get_value()[0]);
 			if (command._user->get_valid() == 1)
 				command._user->set_valid(2);
-			else
+			else{
 				command._server->send_msg(NICK(command._user->get_hostname(), command._user->get_nick()), command._sfd);
+				return;
+			}
 		}
 		else
 		{
-			std::cout << "nickname already in use." << std::endl;
+			// std::cout << "nickname already in use." << std::endl;
 			command._server->send_msg(ERR_NICKNAMEINUSE(command._user->get_hostname(), command.get_value()[0]), command._sfd);
-		}
-		// attention : tester avec ou sans la casse		
+			return;
+		}	
 	}
-	// std::cout << "endofnickname" << std::endl;
 }
 
 // test :

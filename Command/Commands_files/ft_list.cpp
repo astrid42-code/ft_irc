@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 11:38:02 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/22 16:37:01 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:47:36 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,13 @@ void list(Cmd &command)
 
 		for (std::map<std::string, Channel *>::iterator it = chans->begin(); it != chans->end(); it++)
 		{
-			if (it->second->get_mod().find('s') == std::string::npos && it->second->get_mod().find('p') == std::string::npos)
+			if (it->second->get_mod().find('s') == std::string::npos && it->second->get_mod().find('p') == std::string::npos){
 				command._server->send_msg(RPL_LIST(command._user->get_hostname(), it->first, it->second->get_mod(), it->second->get_topic()), command._sfd);
+				// return; // ou pas de return (car RPL_LISTEND apres)??
+			}
 		}
 		command._server->send_msg(RPL_LISTEND(command._user->get_hostname()), command._sfd);
+		return;
 	}
 	else if (command.get_size() == 1)
 	{
@@ -75,13 +78,17 @@ void list(Cmd &command)
 			if ((chan = command._server->get_chan(tmp)) != NULL)
 			{
 				if (chan->get_mod().find('s') == std::string::npos && chan->get_mod().find('p') == std::string::npos)
-					command._server->send_msg(RPL_LIST(command._user->get_hostname(), chan->get_key(), chan->get_mod(), chan->get_topic()), command._sfd);
+					command._server->send_msg(RPL_LIST(command._user->get_hostname(), chan->get_name(), chan->get_mod(), chan->get_topic()), command._sfd);
+					// return; // (meme question qu'au debut)
 			}
 		}
 		command._server->send_msg(RPL_LISTEND(command._user->get_hostname()), command._sfd);
+		return;
 	}
-	else if (command.get_size() > 1)
+	else if (command.get_size() > 1){
 		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[1]), command._sfd);
+		return;
+	}
 	// tant que la liste de channels (separes par une ,) n est pas finie
 	// verifier si le channel existe dans la map de channels (et si arg[1] rajouter le topic associe)
 }

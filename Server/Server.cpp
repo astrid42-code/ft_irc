@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:44:24 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 16:28:22 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:33:52 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ User	*Server::get_user(int key)
 
 User	*Server::get_user(std::string nick)
 {
-	// std::cout << "OUAI" << std::endl;
+	// std::cout << "nick" << std::endl;
 	for (std::map<int, User *>::iterator it = _users->begin(); it != _users->end(); it++)
 	{
 		std::cout << "get_user boucle" << std::endl;
@@ -148,7 +148,7 @@ Channel	*Server::get_chan(std::string key)
 	std::map<std::string, Channel *>::iterator it;
 
 	for (it = _channels->begin(); it != _channels->end(); it++)
-		std::cout << "it key :" << it->second->get_key() << std::endl;
+		std::cout << "it key :" << it->second->get_name() << std::endl;
 	it = _channels->find(key);
 	if (it == _channels->end())
 		return (NULL);

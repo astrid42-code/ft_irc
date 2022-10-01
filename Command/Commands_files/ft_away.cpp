@@ -6,7 +6,7 @@
 /*   By: asgaulti <asgaulti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 13:30:27 by asgaulti          #+#    #+#             */
-/*   Updated: 2022/09/26 12:12:30 by asgaulti         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:36:36 by asgaulti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	away(Cmd &command)
 	std::string msg;
 	
 	std::cout << "away" << std::endl;
-	if (command.get_value()[0].empty())
+	if (command.get_size() < 1 || command.get_value()[0].empty())
 		msg = AWAY_DEFAULT;
 	else
 		msg = command.get_value()[0];
@@ -56,10 +56,12 @@ void	away(Cmd &command)
 	{
 		command._user->set_mod(command._user->get_mod().erase(command._user->get_mod().find('a'), 1));
 		command._server->send_msg(RPL_UNAWAY(command._user->get_hostname()), command._sfd);
+		return;
 	}
 	else
 	{
 		command._user->set_mod(command._user->get_mod().append("a"));
 		command._server->send_msg(RPL_NOWAWAY(command._user->get_hostname()), command._sfd);
+		return;
 	}
 }
