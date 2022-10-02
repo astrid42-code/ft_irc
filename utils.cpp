@@ -17,7 +17,6 @@ void	pre_parse(std::string buf, int sfd, Server *serv)
 	std::size_t pos = 0;
 	std::string token;
 
-	// std::cout << "buf = " << buf << std::endl;
 	User *usr = serv->get_user(sfd);
 	if (usr == NULL)
 		return;
@@ -36,7 +35,10 @@ void	pre_parse(std::string buf, int sfd, Server *serv)
 		if (command->_user == NULL)
 			std::cout << "_____NoUserFromFd_____" << std::endl;
 		else
+		{
 			std::cout << "_____UserFromFd_____" << std::endl;
+			std::cout << command->_user << std::endl;
+		}
 		if ((usr->buf.find("\r\n", pos)) != std::string::npos)
 		{
 			token = usr->buf.substr(pos, usr->buf.find("\r\n", pos) - pos);

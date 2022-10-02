@@ -30,9 +30,7 @@ void pass(Cmd &command)
 			if (command._user->get_valid() == 0)
 				command._user->set_valid(1);
 		}
-		else{
+		else
 			command._server->send_msg(ERR_PASSWDMISMATCH(command._user->get_hostname(), command._user->get_nick()), command._sfd);
-			return;
-		}
 	}
 }

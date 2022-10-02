@@ -414,12 +414,11 @@ int	Server::init()
 						done = 1;
 						break;
 					}
-					std::cout << "preparse..." << std::endl;
 					pre_parse(buf, events[i].data.fd, this);
 				}
 				if (done)
 				{
-					// std::cout << "Closed connection on descriptor " << events[i].data.fd << std::endl;
+					std::cout << "Closed connection on descriptor " << events[i].data.fd << std::endl;
 					close(events[i].data.fd);
 				}
 			}

@@ -23,20 +23,26 @@ void quit(Cmd &command)
 
 	if (!chans->empty())
 	{
+		std::map<std::string, Channel *>::iterator	it = chans->begin();
 		if (command.get_size() == 1)
 			msg = command.get_value()[0];
-		for (std::map<std::string, Channel *>::iterator	it = chans->begin(); it != chans->end(); it++)
+		while (it != chans->end())
 		{
 			if (erase_chan(it->second, command._user))
 			{
 				Channel *tmp = it->second;
-
-				chans->erase(it);
+				std::map<std::string, Channel *>::iterator t;
+				t = it;
+				it++;
+				chans->erase(t);
 				delete (tmp);
-				it = chans->begin();
 			}
 			else
+			{
 				it->second->send_to_users(QUIT(command._user->get_hostname(), msg));
+				it->second->remove_user(command._user);
+				it++;
+			}
 		}
 	}
 	command._server->send_msg(QUIT(command._user->get_hostname(), msg), command._sfd);

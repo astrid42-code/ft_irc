@@ -24,19 +24,18 @@ void user(Cmd &command)
 		command._server->send_msg(ERR_NEEDMOREPARAMS(command._user->get_hostname(), command.get_key()), command._sfd);
 		return ;
 	}
-	if (command.get_value()[1].compare("anonymous") == 0 || command.get_value()[2].compare("anonymous") == 0)
+	if (command.get_value()[0].compare("anonymous") == 0 || command.get_value()[2].compare("anonymous") == 0)
 	{
 		command._server->send_msg(ERR_ALREADYREGISTRED(command._user->get_hostname()), command._sfd);
 		return;
 	}
-	else
-	{
-		command._user->set_user(command.get_value()[1]);
-		command._user->set_host(command.get_value()[2]);
-	}
-	command._user->set_name(command.get_value()[3]);
 	if (command._user->get_valid() == 2)
 		command._user->set_valid(3);
+	else
+		return ;
+	command._user->set_user(command.get_value()[0]);
+	command._user->set_host(command.get_value()[2]);
+	command._user->set_name(command.get_value()[3]);
 	command._user->set_mod("");
 	command._user->set_sfd(command._sfd);
 	command._server->set_user(command._user);

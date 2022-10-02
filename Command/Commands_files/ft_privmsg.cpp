@@ -60,6 +60,7 @@ void privmsg(Cmd &command)
 			command._server->send_msg(ERR_NOTEXTTOSEND(command._user->get_hostname()), command._sfd);
 		else
 		{
+			std::cout << "sending message to " << destinataire << std::endl;
 			if (destinataire.c_str()[0] == '#')
 				send_msg_to_chan(command, destinataire);
 			else
