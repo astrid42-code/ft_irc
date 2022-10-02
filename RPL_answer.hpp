@@ -74,9 +74,9 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_UMODEIS(localhost, nick, mode, param) (":" + localhost + " 221 " + nick + " :+" + mode + "" + param + " \r\n") //221
 
-#define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 : " + nick + " " + user + " " + host + " * :" + name + "\r\n") // 311
+#define RPL_WHOISUSER(localhost, nick, user, host, name) (":" + localhost + " 311 " + nick + " " + user + " " + host + " * :" + name + "\r\n") // 311
 
-#define RPL_WHOISSERVER(localhost, nick, server_info) (":" + localhost + " 312 : " + nick + " " + SERVERNAME + " :" + server_info + "\r\n") // 312
+#define RPL_WHOISSERVER(localhost, nick, server_info) (":" + localhost + " 312 " + nick + " " + SERVERNAME + " :" + server_info + "\r\n") // 312
 
 #define RPL_WHOISOPERATOR(localhost, nick) (":" + localhost + " 313 " + nick  + " :is an IRC operator\r\n") // 313
 
@@ -92,7 +92,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_LISTEND(localhost) (" :End of LIST\r\n") // 323
 
-#define RPL_CHANNELMODEIS(localhost, channel, mode) (":" + localhost + " 324 " + channel + mode +  "-+OovaimnqpsrtklbeI\r\n") //324
+#define RPL_CHANNELMODEIS(localhost, channel, mode) (":" + localhost + " 324 " + mode + " " + channel + " :" + mode +  "\r\n") //324
 
 #define RPL_NOTOPIC(lcalhost, channel) (":" + localhost + " 331 : " + channel + " :No topic is set") // 331
 
