@@ -94,17 +94,17 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_CHANNELMODEIS(localhost, channel, mode) (":" + localhost + " 324 " + mode + " " + channel + " :" + mode +  "\r\n") //324
 
-#define RPL_NOTOPIC(lcalhost, channel) (":" + localhost + " 331 : " + channel + " :No topic is set") // 331
+#define RPL_NOTOPIC(lcalhost, channel) (":" + localhost + " 331 " + channel + " :No topic is set") // 331
 
-#define RPL_TOPIC(localhost, channel, topic) (":" + localhost + " 332 : " + channel + " :" + topic + "\r\n") // 332
+#define RPL_TOPIC(localhost, channel, topic) (":" + localhost + " 332 " + channel + " :" + topic + "\r\n") // 332
 
 #define RPL_INVITING(localhost, channel, nick) (":" + localhost + " 341 " + " INVITE " + nick + " " + channel + "\r\n") // 341
 
-#define RPL_INVITELIST(localhost, channel, invitemask) (":" + localhost + " 346 : " + channel + " " + invitemask)
+#define RPL_INVITELIST(localhost, channel, invitemask) (":" + localhost + " 346 " + channel + " " + invitemask)
 
-#define RPL_ENDOFINVITELIST(localhost, channel) (":" + localhost + " 347 : " + channel + " :End of channel invite list")
+#define RPL_ENDOFINVITELIST(localhost, channel) (":" + localhost + " 347 " + channel + " :End of channel invite list")
 
-#define RPL_WHOREPLY(localhost, channel, user, host, nick, name) (":" + localhost + " 352 : " + channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
+#define RPL_WHOREPLY(localhost, channel, user, host, nick, name) (":" + localhost + " 352 " + channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
 
 #define RPL_NAMREPLY(localhost, channel, nick) (":" + localhost + " 353 " + nick + " = " + channel + " :" + nick + " @" + nick + "\r\n" ) // 353
 

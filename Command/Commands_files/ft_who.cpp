@@ -23,7 +23,7 @@ void	who(Cmd &command)
 
 	for (std::map<int, User *>::iterator itu = users->begin(); itu != users->end(); itu++)
 	{
-		if (itu->second && itu->second->find_mod("i") && itu->second != command._user)
+		if (itu->second && !itu->second->find_mod("i") && itu->second != command._user)
 		{
 			if (command.get_size() >= 1 && command.get_value()[0].compare("0") != 0 && command.get_value()[0].compare("*") != 0)
 			{
@@ -41,7 +41,7 @@ void	who(Cmd &command)
 			{
 				for (std::vector<Channel *>::iterator itc = chans->begin(); itc != chans->end(); itc++)
 				{
-					if (itu->second->find_mod("i"))
+					if (!itu->second->find_mod("i"))
 					{
 						if (command.get_size() < 2 || (command.get_size() == 2 && command.get_value()[2][0] == 'o' && itu->second->find_mod("o")))
 						{
