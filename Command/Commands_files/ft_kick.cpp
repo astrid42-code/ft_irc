@@ -31,8 +31,8 @@ bool	kick_check(Cmd &command)
 
 void	kick(Cmd &command)
 {
-	Channel						*chan;
-	User						*user;
+	User	*user;
+	Channel	*chan;
 
 	if (!kick_check(command))
 		return ;

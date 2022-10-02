@@ -202,6 +202,7 @@ std::string	get_chan_mode_string(Channel *chan, Cmd &command)
 		else
 			chan_print(chan, command, arg);
 	}
+	std::cout << res << std::endl;
 	return (res);
 }
 

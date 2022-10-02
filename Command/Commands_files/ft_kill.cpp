@@ -22,7 +22,7 @@ void kill(Cmd &command)
 
 	if (command.get_size() == 2)
 	{
-		if (command._user->get_mod().find("o") != std::string::npos)
+		if (command._user->find_mod("o") || command._user->find_mod("O"))
 		{
 			if ((user = command._server->get_user(command.get_value()[0])) != NULL)
 			{

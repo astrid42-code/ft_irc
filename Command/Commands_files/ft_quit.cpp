@@ -18,21 +18,16 @@
 
 void quit(Cmd &command)
 {
-	User										*user = command._user;
 	std::string									msg = "";
 	std::map<std::string, Channel *>			*chans = command._server->get_chans();
-	std::map<std::string, Channel *>::iterator	it;
-	int sfd;
 
-	sfd = user->get_sfd();
 	if (!chans->empty())
 	{
-		it = chans->begin();
 		if (command.get_size() == 1)
 			msg = command.get_value()[0];
-		while (it != chans->end())
+		for (std::map<std::string, Channel *>::iterator	it = chans->begin(); it != chans->end(); it++)
 		{
-			if (erase_chan(it->second, user))
+			if (erase_chan(it->second, command._user))
 			{
 				Channel *tmp = it->second;
 
@@ -41,14 +36,11 @@ void quit(Cmd &command)
 				it = chans->begin();
 			}
 			else
-			{
-				it->second->send_to_users(QUIT(user->get_hostname(), msg));
-				it++;
-			}
+				it->second->send_to_users(QUIT(command._user->get_hostname(), msg));
 		}
-		command._server->send_msg(QUIT(user->get_hostname(), msg), command._sfd);
-		command._server->remove_user(user);
+		// command._server->send_msg(QUIT(command._user->get_hostname(), msg), command._sfd);
+		command._server->remove_user(command._user);
 	}
 	close(command._user->get_sfd());
-	delete user;
+	delete command._user;
 }

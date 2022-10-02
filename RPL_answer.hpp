@@ -78,21 +78,21 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_WHOISSERVER(localhost, nick, server_info) (":" + localhost + " 312 : " + nick + " " + SERVERNAME + " :" + server_info + "\r\n") // 312
 
-#define RPL_WHOISOPERATOR(localhost, nick) (":" + localhost + " 313 : " + nick  + " :is an IRC operator\r\n") // 313
+#define RPL_WHOISOPERATOR(localhost, nick) (":" + localhost + " 313 " + nick  + " :is an IRC operator\r\n") // 313
 
-#define RPL_ENDOFWHO(localhost, name) (":" + localhost + " 315 : " + name + " :End of WHO list\r\n") // 315
+#define RPL_ENDOFWHO(localhost, name) (":" + localhost + " 315 " + name + " :End of WHO list\r\n") // 315
 
-#define RPL_WHOISIDLE(localhost, nick, integer) (":" + localhost + " 317 : " + nick + " " + integer " :seconds idle\r\n") // 317
+#define RPL_WHOISIDLE(localhost, nick, integer) (":" + localhost + " 317 " + nick + " " + integer " :seconds idle\r\n") // 317
 
-#define RPL_ENDOFWHOIS(localhost, nick) (":" + localhost + " 318 : " + nick + " :End of WHOIS list\r\n") // 318
+#define RPL_ENDOFWHOIS(localhost, nick) (":" + localhost + " 318 " + nick + " :End of WHOIS list\r\n") // 318
 
-#define RPL_WHOISCHANNELS(localhost, nick, channel) (":" + localhost + " 319 : " + nick + " :*( ( "@" / "+" ) " + channel + " \r\n" ) // 319
+#define RPL_WHOISCHANNELS(localhost, nick, channel) (":" + localhost + " 319 " + nick + " :*( ( "@" / "+" ) " + channel + " \r\n" ) // 319
 
-#define RPL_LIST(localhost, channel, mode, topic) (":" + localhost + " 322 : " + channel + " " +  mode + " :" + topic + "\r\n") // 322
+#define RPL_LIST(localhost, channel, mode, topic) (":" + localhost + " 322 " + channel + " " +  mode + " :" + topic + "\r\n") // 322
 
 #define RPL_LISTEND(localhost) (" :End of LIST\r\n") // 323
 
-#define RPL_CHANNELMODEIS(localhost, channel, mode) (":" + localhost + " 324 : " + channel + mode +  "-+OovaimnqpsrtklbeI\r\n") //324
+#define RPL_CHANNELMODEIS(localhost, channel, mode) (":" + localhost + " 324 " + channel + mode +  "-+OovaimnqpsrtklbeI\r\n") //324
 
 #define RPL_NOTOPIC(lcalhost, channel) (":" + localhost + " 331 : " + channel + " :No topic is set") // 331
 
@@ -106,7 +106,7 @@ VHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHGGN94\r\n")
 
 #define RPL_WHOREPLY(localhost, channel, user, host, nick, name) (":" + localhost + " 352 : " + channel + " " + user + " " + host + " " + SERVER + " " + nick + " : 0 " + name + "\r\n") // 352
 
-#define RPL_NAMREPLY(localhost, channel, nick) (":" + localhost + " 353 : = " + channel + ": @" + nick + "\r\n" ) // 353 
+#define RPL_NAMREPLY(localhost, channel, nick) (":" + localhost + " 353 " + nick + " = " + channel + " :" + nick + " @" + nick + "\r\n" ) // 353
 
 #define RPL_ENDOFNAMES(localhost, nick, channel) (":" + localhost + " 366 " + nick + " " + channel + " :End of /NAMES list\r\n") // 366
 

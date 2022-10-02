@@ -43,7 +43,7 @@ bool		join_conditions(Channel *chan, Cmd &command, size_t i, std::vector<std::st
 
 bool		bad_chan(std::string chan_name, Cmd &command)
 {
-	if (chan_name.compare("#") == 0 || (chan_name.find("!") == 0) || (chan_name.find("@") == 0))
+	if (chan_name.compare("#") == 0 || (chan_name.find("!") == 0) || (chan_name.find("@") == 0) || chan_name.find("#") == std::string::npos)
 	{
 		command._server->send_msg(ERR_NOSUCHCHANNEL(command._user->get_hostname(), command._user->get_nick(), chan_name), command._sfd);
 		return (false);
@@ -97,10 +97,18 @@ void	join(Cmd &command)
 		if (valid == true)
 		{
 			std::map< int, User *>	users = chan->get_users();
-			// command._server->send_msg(RPL_TOPIC(command._user->get_hostname(), chan->get_name(), chan->get_topic()), command._sfd);
+			bool					rep = false;
+			
 			for (std::map< int, User *>::iterator it = users.begin(); it != users.end(); it++)
-				command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
-			command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_nick(), chan->get_name()), command._sfd);
+			{
+				if (!it->second->find_mod("i"))
+				{
+					rep = true;
+					command._server->send_msg(RPL_NAMREPLY(command._user->get_hostname(), chan->get_name(), it->second->get_nick()), command._sfd);
+				}
+			}
+			if (rep)
+				command._server->send_msg(RPL_ENDOFNAMES(command._user->get_hostname(), command._user->get_nick(), chan->get_name()), command._sfd);
 			chan->send_to_users(JOIN(command._user->get_hostname(),chan->get_name()));
 		}
 	}
