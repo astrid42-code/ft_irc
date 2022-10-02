@@ -405,7 +405,7 @@ int	Server::init()
 						if (errno != EAGAIN)
 						{
 							std::cerr << "read" << std::endl;
-							done = 1;
+							done = -1;
 						}
 						break;
 					}
@@ -414,7 +414,7 @@ int	Server::init()
 						done = 1;
 						break;
 					}
-					// std::cout << "preparse..." << std::endl;
+					std::cout << "preparse..." << std::endl;
 					pre_parse(buf, events[i].data.fd, this);
 				}
 				if (done)
@@ -433,6 +433,5 @@ int	Server::init()
 
 void	Server::remove_user(User *user)
 {
-
 	_users->erase(_users->find(user->get_sfd()));
 }

@@ -38,9 +38,9 @@ void quit(Cmd &command)
 			else
 				it->second->send_to_users(QUIT(command._user->get_hostname(), msg));
 		}
-		// command._server->send_msg(QUIT(command._user->get_hostname(), msg), command._sfd);
-		command._server->remove_user(command._user);
 	}
+	command._server->send_msg(QUIT(command._user->get_hostname(), msg), command._sfd);
+	command._server->remove_user(command._user);
 	close(command._user->get_sfd());
 	delete command._user;
 }
