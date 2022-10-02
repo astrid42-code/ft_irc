@@ -26,8 +26,6 @@ void	pong(Cmd &command)
 		if (command.get_value()[0].compare(command._user->get_nick()) == 0)
 			command._server->send_msg(PONG(), command._sfd);
 	}
-	else if (command.get_value().size() == 2){
+	else if (command.get_value().size() == 2)
 		command._server->send_msg(ERR_NOSUCHSERVER(command._user->get_hostname(), command.get_value()[1]), command._sfd);
-		return;
-	}
 }

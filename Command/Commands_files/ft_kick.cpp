@@ -46,6 +46,7 @@ void	kick(Cmd &command)
 			{
 				chan->send_to_users(KICK(command._user->get_hostname(), chans[0], users[0]));
 				user->remove_chan(chan);
+				chan->remove_user(user);
 				command._server->send_msg(KICK(command._user->get_hostname(), chans[0], users[0]), command._sfd);
 			}
 			else
@@ -64,6 +65,7 @@ void	kick(Cmd &command)
 				{
 					chan->send_to_users(KICK(command._user->get_hostname(), chans[i], users[i]));
 					user->remove_chan(chan);
+					chan->remove_user(user);
 					command._server->send_msg(KICK(command._user->get_hostname(), chans[i], users[i]), command._sfd);
 				}
 				else

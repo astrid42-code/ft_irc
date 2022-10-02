@@ -156,6 +156,3 @@ void Cmd::parse_cmd(std::string str)
 // - TIME
 // - VERSION
 // - WHOWAS
-
-
-// https://mathieu-lemoine.developpez.com/tutoriels/irc/protocole/?page=page-4
