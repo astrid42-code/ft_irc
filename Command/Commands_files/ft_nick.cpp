@@ -23,6 +23,7 @@ void nick(Cmd &command)
 		command._server->send_msg(ERR_NONICKNAMEGIVEN(command._user->get_hostname()), command._sfd);
 	else
 	{
+		command.get_value()[0] = to_upper(command.get_value()[0]);
 		if (command._server->get_user(command.get_value()[0]) == NULL && command.get_value()[0].compare("anonymous") != 0)
 		{
 			if (command._user->get_valid() == 1)

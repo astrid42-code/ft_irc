@@ -1,5 +1,4 @@
 #include "Cmd.hpp"
-
 Cmd::Cmd(): _server(NULL), _user(NULL), _key(""), _size(0)
 {
 	// basic cmds
@@ -97,6 +96,7 @@ void Cmd::parse_cmd(std::string str)
 
 	key = str.substr(0, str.find(' '));
 	size = str.size() - key.size();
+	key = to_upper(key);
 	if (check_condition(*this, key))
 	{
 		set_key(key);

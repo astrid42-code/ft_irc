@@ -397,8 +397,8 @@ int	Server::init()
 				while (1)
 				{
 					ssize_t count;
-					char buf[512];
-					bzero(buf, 512);
+					char buf[3000];
+					bzero(buf, 3000);
 					count = recv(events[i].data.fd, buf, sizeof(buf), MSG_DONTWAIT);
 					if (count == -1)
 					{

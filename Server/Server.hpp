@@ -73,5 +73,6 @@ std::vector<std::string>	div_string(std::string str, char c);
 bool						mask_off(std::string mask, std::string str);
 bool						erase_chan(Channel *chan, User *user);
 void						pre_parse(std::string buf, int sfd, Server *serv);
+std::string 				to_upper(std::string str);
 
 #endif

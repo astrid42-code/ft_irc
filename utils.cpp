@@ -119,6 +119,24 @@ int		check_condition(Cmd &command, std::string key)
 	return (0);
 }
 
+std::string to_upper(std::string str)
+{
+	char tmp;
+	std::string ret;
+	size_t i = 0;
+
+	while (i < str.length())
+	{
+		if (str.c_str()[i] >= 'a' && str.c_str()[i] <= 'z')
+			tmp = str.c_str()[i] - 32;
+		else 
+			tmp = str.c_str()[i];
+		ret.push_back(tmp);
+		i++;
+	}
+	return (ret);
+}
+
 bool	erase_chan(Channel *chan, User *user)
 {
 	if (chan->get_users().empty() || (user != NULL && chan->get_users().size() == 1 && chan->get_user(user->get_nick()) == user))
